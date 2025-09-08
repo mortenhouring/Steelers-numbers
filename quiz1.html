@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Quiz Question</title>
+  <title>Quiz 1</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body class="quiz1">
   <main>
-    <p id="question">[QUESTION_PHRASE]</p>
+    <p id="question">Loading question...</p>
 
     <!-- Display-only answer box -->
     <div id="answer-display" class="answer-display">--</div>
@@ -29,57 +29,6 @@
     <button class="go-button">Go</button>
   </main>
 
-  <script>
-    // ======== Quiz1 numeric buttons logic ========
-    const answerDisplay = document.getElementById('answer-display');
-    const numberButtons = document.querySelectorAll('.num');
-    const goButton = document.querySelector('.go-button');
-    let currentAnswer = '';
-
-    // Retrieve current question data
-    let currentQuestionIndex = parseInt(localStorage.getItem('currentQuestionIndex'), 10) || 0;
-    let score = parseInt(localStorage.getItem('score'), 10) || 0;
-    let roster = [];
-
-    fetch('currentroster.json')
-      .then(res => res.json())
-      .then(data => {
-        roster = data;
-        const player = roster[currentQuestionIndex];
-
-        // Randomized question phrasing
-        const questionPhrases = [
-          `What jersey number does ${player.player_name} wear?`,
-          `Guess the number for ${player.player_name}`,
-          `Which number is ${player.player_name}'s jersey?`,
-          `Enter ${player.player_name}'s jersey number`,
-          `${player.player_name}'s number is?`
-        ];
-        document.getElementById('question').textContent =
-          questionPhrases[Math.floor(Math.random() * questionPhrases.length)];
-
-        // Numeric button click events
-        numberButtons.forEach(button => {
-          button.addEventListener('click', () => {
-            if (currentAnswer.length < 2) {
-              currentAnswer += button.textContent;
-              answerDisplay.textContent = currentAnswer;
-            }
-          });
-        });
-
-        // Go button click
-        goButton.addEventListener('click', () => {
-          const answer = parseInt(currentAnswer, 10);
-          localStorage.setItem('lastAnswer', answer);
-
-          if (answer === player.number) score++;
-          localStorage.setItem('score', score);
-
-          // Move to quiz2.html
-          window.location.href = 'quiz2.html';
-        });
-      });
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
