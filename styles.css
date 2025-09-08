@@ -1,71 +1,213 @@
+/* General resets */
 body {
-    margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif;
-    background-color: white;
-    color: black;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background-color: #000;
+  color: #fff;
+  text-align: center;
 }
 
-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 32px;
-    background-color: #333;
-    color: white;
-    position: relative;
-    height: 120px;
+main {
+  padding: 20px;
 }
 
-header h1 {
-    font-size: 3em;
-    margin: 0;
+/* Headings */
+h1 {
+  font-size: 2.2rem;
+  margin: 20px 0;
+}
+
+/* Intro text */
+.intro-text {
+  font-size: 1.3rem;
+  margin-bottom: 25px;
+}
+
+/* Menu button grid */
+.button-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.menu-button {
+  background: #ffb612;
+  border: none;
+  border-radius: 8px;
+  padding: 18px;
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #000;
+  text-decoration: none;
+  transition: transform 0.1s;
+}
+
+.menu-button:hover {
+  transform: scale(1.05);
+}
+
+/* Hamburger menu */
+.menu-container {
+  position: absolute;
+  top: 15px;
+  right: 15px;
 }
 
 .hamburger-menu {
-    font-size: 4.5em;
-    background: none;
-    border: 4px solid white;
-    border-radius: 12px;
-    color: white;
-    cursor: pointer;
-    padding: 18px;
+  font-size: 2.5rem; /* Bigger icon */
+  background: transparent;
+  border: 2px solid #fff; /* White outline */
+  border-radius: 6px;
+  padding: 6px 14px;
+  color: #fff;
+  cursor: pointer;
 }
 
 .dropdown-content {
-    display: none;
-    position: absolute;
-    right: 0;
-    top: 100%;
-    background-color: #f9f9f9;
-    min-width: 450px;
-    z-index: 1;
-    box-shadow: 0 0 12px rgba(0,0,0,0.3);
+  display: none;
+  position: absolute;
+  right: 0;
+  background: #222;
+  border: 2px solid #fff;
+  border-radius: 6px;
+  min-width: 200px;
+  margin-top: 10px;
+  z-index: 1;
 }
 
 .dropdown-content a {
-    padding: 40px 50px;
-    display: block;
-    text-decoration: none;
-    color: black;
-    font-size: 2.2em;
+  display: block;
+  padding: 14px;
+  font-size: 1.2rem;
+  color: #fff;
+  text-decoration: none;
+  border-bottom: 1px solid #444;
+}
+
+.dropdown-content a:last-child {
+  border-bottom: none;
 }
 
 .dropdown-content a:hover {
-    background-color: #eee;
+  background: #333;
 }
 
-.dropdown-content.show {
-    display: block;
+/* Question page */
+#question {
+  font-size: 1.5rem;
+  margin-bottom: 20px;
 }
 
-.home-button-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 25px;
-    width: 100%;
-    max-width: 500px;
+#answer-box {
+  font-size: 1.5rem;
+  padding: 12px;
+  border: 2px solid #fff;
+  border-radius: 6px;
+  text-align: center;
+  margin-bottom: 20px;
+  width: 80px;
 }
 
-.home-button-grid button {
-    font-size: 
+/* Number keypad */
+.number-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+  justify-content: center;
+  margin-bottom: 25px;
+}
+
+.number-grid .num {
+  background: #444;
+  border: 2px solid #fff;
+  border-radius: 8px;
+  font-size: 1.6rem;
+  padding: 20px;
+  color: #fff;
+  cursor: pointer;
+}
+
+.number-grid .num:active {
+  background: #666;
+}
+
+/* Go button */
+.go-button {
+  background: #ffb612;
+  border: none;
+  border-radius: 8px;
+  padding: 16px 30px;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #000;
+  cursor: pointer;
+}
+
+.go-button:hover {
+  transform: scale(1.05);
+}
+
+/* Quiz feedback page */
+#score, #remaining {
+  display: block;
+  font-size: 1.4rem;
+  margin: 10px 0;
+}
+
+#feedback {
+  font-size: 1.4rem;
+  margin: 15px 0;
+}
+
+#player-image {
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  border: 3px solid #fff;
+  margin: 15px 0;
+}
+
+#player-name {
+  font-size: 1.6rem;
+  font-weight: bold;
+}
+
+#player-position {
+  font-size: 1.2rem;
+  color: #bbb;
+}
+
+#player-trivia {
+  font-size: 1rem;
+  margin-top: 12px;
+  padding: 0 15px;
+  line-height: 1.4;
+}
+
+/* End screen */
+#final-score {
+  font-size: 2rem;
+  font-weight: bold;
+  margin: 20px 0;
+}
+
+#personal-best-message {
+  font-size: 1.2rem;
+  margin: 15px 0;
+}
+
+#retry-button, #menu-button {
+  background: #ffb612;
+  border: none;
+  border-radius: 8px;
+  padding: 14px 28px;
+  font-size: 1.3rem;
+  font-weight: bold;
+  margin: 10px;
+  cursor: pointer;
+  color: #000;
+}
+
+#retry-button:hover, #menu-button:hover {
+  transform: scale(1.05);
+}
