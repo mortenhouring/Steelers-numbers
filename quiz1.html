@@ -1,25 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Steelers Quiz 1</title>
-<link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Steelers Quiz 1</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
-<body>
-  <header>
-    <h1>Steelers Quiz</h1>
-  </header>
-
+<body class="quiz1">
   <main>
-    <!-- Question Display -->
-    <div id="question" class="question">Loading question...</div>
-
-    <!-- Answer Display -->
-    <div id="answer-display" class="answer-display"></div>
-
-    <!-- Numeric Keypad -->
-    <div class="keypad">
+    <p id="question">Loading question...</p>
+    <div id="answer-display" class="answer-display"> </div>
+    <div class="number-grid">
       <button class="num">1</button>
       <button class="num">2</button>
       <button class="num">3</button>
@@ -33,7 +24,6 @@
       <button class="go-button">Go</button>
     </div>
   </main>
-
   <script src="script.js"></script>
 </body>
 </html>
