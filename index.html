@@ -1,0 +1,15 @@
+<header>
+    <h1 style="float: left;">Do you remember?</h1>
+    <div style="float: right;">
+        <button onclick="document.getElementById('dropdownMenu').classList.toggle('show')">MENU_BUTTON</button>
+        <div id="dropdownMenu" class="dropdown-content" style="display: none; position: absolute; background-color: #f9f9f9; min-width: 160px; z-index: 1;">
+            <a href="#current-roster">Current roster</a>
+            <a href="#new-faces">New Faces</a>
+            <a href="#team-legends">Team Legends</a>
+            <a href="#scoreboard">Scoreboard</a>
+        </div>
+    </div>
+</header>
+<style>
+.dropdown-content.show { display: block; }
+</style>
