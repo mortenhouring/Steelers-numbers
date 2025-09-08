@@ -3,20 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title style="font-size: 2em;">Steelers' jersey numbers</title>
+    <title>Steelers' Jersey Numbers</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <header>
-        <div class="menu">
-            <button class="hamburger-menu">
+    <header style="display: flex; justify-content: space-between; align-items: center; padding: 10px; background-color: #333; color: white;">
+        <h1 style="font-size: 2em;">Steelers' Jersey Numbers</h1>
+        <div>
+            <button class="hamburger-menu" style="font-size: 2em; background: none; border: none; color: white; cursor: pointer;" onclick="document.getElementById('dropdownMenu').classList.toggle('show')">
                 &#9776; <!-- Hamburger menu icon -->
             </button>
+            <div id="dropdownMenu" class="dropdown-content" style="display: none; position: absolute; right: 10px; top: 50px; background-color: #f9f9f9; min-width: 160px; z-index: 1; border: 1px solid #ccc; box-shadow: 0px 8px 16px rgba(0,0,0,0.2);">
+                <a href="#current-roster" style="padding: 10px; display: block; text-decoration: none; color: black;">Current roster</a>
+                <a href="#new-faces" style="padding: 10px; display: block; text-decoration: none; color: black;">New Faces</a>
+                <a href="#team-legends" style="padding: 10px; display: block; text-decoration: none; color: black;">Team Legends</a>
+                <a href="#scoreboard" style="padding: 10px; display: block; text-decoration: none; color: black;">Scoreboard</a>
+            </div>
         </div>
     </header>
     <main>
         <!-- Rest of the content -->
     </main>
-    <script src="script.js"></script>
+    <script>
+        // JavaScript to toggle the dropdown menu
+        document.querySelector('.hamburger-menu').addEventListener('click', function() {
+            const dropdownMenu = document.getElementById('dropdownMenu');
+            dropdownMenu.classList.toggle('show');
+        });
+    </script>
+    <style>
+        .dropdown-content.show { display: block; }
+    </style>
 </body>
 </html>
