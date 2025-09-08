@@ -3,18 +3,20 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Quiz Finished</title>
+  <title>Quiz Complete</title>
   <link rel="stylesheet" href="styles.css">
+  <style>
+    main { display: flex; flex-direction: column; align-items: center; text-align: center; padding: 20px; }
+    button { font-size: 1.5em; padding: 10px; margin: 10px; cursor: pointer; }
+  </style>
 </head>
-<body class="quizEnd">
+<body>
   <main>
-    <p>All done! Your final score:</p>
-    <p id="final-score">[CORRECT_ANSWERS]/[TOTAL]</p>
-    <p id="personal-best-message"></p>
-
-    <p>Try again?</p>
-    <button id="retry-button">Yes</button>
-    <button id="menu-button">Back to menu</button>
+    <h2>All done! Your final score:</h2>
+    <p id="final-score">0</p>
+    <p id="personal-best"></p>
+    <button onclick="window.location.href='quiz1.html'">Try Again?</button>
+    <button onclick="window.location.href='index.html'">Back to Menu</button>
   </main>
   <script src="script.js"></script>
 </body>
