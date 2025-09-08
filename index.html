@@ -1,44 +1,54 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Steelers' Jersey Numbers</title>
-    <link rel="stylesheet" href="styles.css">
-    <style>
-        .dropdown-content {
-            border: 1px solid black;
-        }
-    </style>
-</head>
-<body>
-    <header style="display: flex; justify-content: space-between; align-items: center; padding: 10px; background-color: #333; color: white;">
-        <h1 style="font-size: 1.5em;">Steelers' Jersey Numbers</h1>
-        <div>
-            <button class="hamburger-menu" style="font-size: 2em; background: none; border: none; color: white; cursor: pointer;" onclick="document.getElementById('dropdownMenu').classList.toggle('show');">
-                &#9776;
-            </button>
-            <div id="dropdownMenu" class="dropdown-content" style="display: none; position: absolute; right: 10px; top: 50px; background-color: #f9f9f9; min-width: 160px; z-index: 1;">
-                <a href="#current-roster" style="padding: 10px; display: block; text-decoration: none; color: black;">Current roster</a>
-                <a href="#new-faces" style="padding: 10px; display: block; text-decoration: none; color: black;">New Faces</a>
-                <a href="#team-legends" style="padding: 10px; display: block; text-decoration: none; color: black;">Team Legends</a>
-                <a href="#scoreboard" style="padding: 10px; display: block; text-decoration: none; color: black;">Scoreboard</a>
-            </div>
+<header style="display: flex; justify-content: space-between; align-items: center; padding: 10px; background-color: #333; color: white; position: relative;">
+    <h1 style="font-size: 1.5em;">Steelers' Jersey Numbers</h1>
+    <div>
+        <button class="hamburger-menu" style="font-size: 2em; background: none; border: none; color: white; cursor: pointer;">
+            &#9776;
+        </button>
+        <div id="dropdownMenu" class="dropdown-content">
+            <a href="#current-roster">Current roster</a>
+            <a href="#new-faces">New Faces</a>
+            <a href="#team-legends">Team Legends</a>
+            <a href="#scoreboard">Scoreboard</a>
         </div>
-    </header>
-    <main>
-        <!-- Rest of the content -->
-    </main>
-    <script>
-        document.querySelector('.hamburger-menu').addEventListener('click', function() {
-            const dropdownMenu = document.getElementById('dropdownMenu');
-            dropdownMenu.classList.toggle('show');
-        });
-    </script>
-    <style>
-        .dropdown-content.show {
-            display: block;
+    </div>
+</header>
+
+<style>
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        right: 0;
+        top: 100%;
+        background-color: #f9f9f9;
+        min-width: 160px;
+        border: 1px solid black;
+        z-index: 1;
+    }
+
+    .dropdown-content a {
+        padding: 10px;
+        display: block;
+        text-decoration: none;
+        color: black;
+    }
+
+    .dropdown-content.show {
+        display: block;
+    }
+</style>
+
+<script>
+    const menuButton = document.querySelector('.hamburger-menu');
+    const dropdownMenu = document.getElementById('dropdownMenu');
+
+    menuButton.addEventListener('click', () => {
+        dropdownMenu.classList.toggle('show');
+    });
+
+    // Optional: close dropdown if click outside
+    window.addEventListener('click', (e) => {
+        if (!menuButton.contains(e.target) && !dropdownMenu.contains(e.target)) {
+            dropdownMenu.classList.remove('show');
         }
-    </style>
-</body>
-</html>
+    });
+</script>
