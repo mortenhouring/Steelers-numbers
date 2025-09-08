@@ -1,106 +1,127 @@
-// script.js
+const QUIZ_JSON_URL = 'https://raw.githubusercontent.com/mortenhouring/Steelers-numbers/refs/heads/main/currentroster.json';
 
-// Global variables
 let roster = [];
-let currentPlayerIndex = 0;
+let currentQuestionIndex = 0;
+let userAnswer = null;
+let score = 0;
 
-// ----------------- Quiz1 -----------------
-function setupQuiz1() {
-  const questionEl = document.getElementById("question");
-  const answerDisplay = document.getElementById("answer-display");
-  const numButtons = document.querySelectorAll(".num");
-  const goButton = document.getElementById("go-button");
+// --- Utility ---
+function getBodyClass() {
+  return document.body.className;
+}
 
-  // Fetch the roster JSON
-  fetch("currentroster.json")
-    .then((response) => {
-      if (!response.ok) throw new Error("Failed to load roster JSON");
-      return response.json();
-    })
-    .then((data) => {
-      roster = data;
-      // pick a random player for quiz1
-      currentPlayerIndex = Math.floor(Math.random() * roster.length);
-      const player = roster[currentPlayerIndex];
-      questionEl.textContent = `What is ${player.player_name}'s number?`;
-    })
-    .catch((err) => {
-      console.error(err);
-      questionEl.textContent = "Error loading player data.";
+// --- Quiz 1 ---
+async function initQuiz1() {
+  try {
+    const response = await fetch(QUIZ_JSON_URL);
+    if (!response.ok) throw new Error('Network response was not ok');
+    roster = await response.json();
+
+    showQuestion();
+    setupKeypad();
+    setupGoButton();
+  } catch (err) {
+    console.error('Failed to load roster JSON:', err);
+    document.getElementById('question').textContent = 'Failed to load questions.';
+  }
+}
+
+function showQuestion() {
+  const questionEl = document.getElementById('question');
+  if (roster.length === 0) return;
+  questionEl.textContent = `Enter the jersey number for: ${roster[currentQuestionIndex].player_name}`;
+}
+
+function setupKeypad() {
+  const buttons = document.querySelectorAll('.num');
+  const display = document.getElementById('answer-display');
+
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      display.textContent += btn.textContent;
     });
-
-  // Numeric buttons
-  numButtons.forEach((btn) => {
-    btn.addEventListener("click", () => {
-      if (answerDisplay.textContent.length < 2) {
-        answerDisplay.textContent += btn.textContent;
-      }
-    });
-  });
-
-  // Go button
-  goButton.addEventListener("click", () => {
-    const answer = answerDisplay.textContent;
-    if (answer === "") return;
-    // store selected answer and player index
-    localStorage.setItem("quiz1Answer", answer);
-    localStorage.setItem("quiz1PlayerIndex", currentPlayerIndex);
-    // redirect to quiz2
-    window.location.href = "quiz2.html";
   });
 }
 
-// ----------------- Quiz2 -----------------
-function setupQuiz2() {
-  const answerDisplay = document.getElementById("answer-display");
-  const playerNameEl = document.getElementById("player-name");
-  const correctNumberEl = document.getElementById("correct-number");
-  const playerImageEl = document.getElementById("player-image");
-  const triviaEl = document.getElementById("player-trivia");
-  const feedbackEl = document.getElementById("feedback");
-  const nextButton = document.getElementById("next-button");
+function setupGoButton() {
+  const goBtn = document.getElementById('go-button');
+  goBtn.addEventListener('click', () => {
+    const display = document.getElementById('answer-display');
+    userAnswer = display.textContent.trim();
 
-  const selectedAnswer = localStorage.getItem("quiz1Answer");
-  const playerIndex = parseInt(localStorage.getItem("quiz1PlayerIndex"), 10);
+    if (!userAnswer) return alert('Please enter a number.');
 
-  fetch("currentroster.json")
-    .then((res) => {
-      if (!res.ok) throw new Error("Failed to load roster JSON");
-      return res.json();
-    })
-    .then((data) => {
-      roster = data;
-      const player = roster[playerIndex];
+    // Store selected answer and current question index in localStorage
+    localStorage.setItem('quiz1_answer', userAnswer);
+    localStorage.setItem('quiz1_questionIndex', currentQuestionIndex);
 
-      playerNameEl.textContent = player.player_name;
-      correctNumberEl.textContent = player.number;
-      playerImageEl.src = player.player_image;
-      triviaEl.textContent = player.trivia;
-
-      if (selectedAnswer === player.number.toString()) {
-        feedbackEl.textContent = "Correct!";
-        feedbackEl.style.color = "green";
-      } else {
-        feedbackEl.textContent = "Incorrect.";
-        feedbackEl.style.color = "red";
-      }
-    })
-    .catch((err) => {
-      console.error(err);
-      feedbackEl.textContent = "Error loading quiz data.";
-    });
-
-  nextButton.addEventListener("click", () => {
-    // for now, just reload quiz1 for another question
-    window.location.href = "quiz1.html";
+    // Navigate to quiz2
+    window.location.href = 'quiz2.html';
   });
 }
 
-// ----------------- Initialize -----------------
-document.addEventListener("DOMContentLoaded", () => {
-  if (document.body.classList.contains("quiz1")) {
-    setupQuiz1();
-  } else if (document.body.classList.contains("quiz2")) {
-    setupQuiz2();
+// --- Quiz 2 ---
+function initQuiz2() {
+  if (!roster.length) {
+    fetch(QUIZ_JSON_URL)
+      .then(res => res.json())
+      .then(data => {
+        roster = data;
+        displayQuiz2();
+      })
+      .catch(err => {
+        console.error('Failed to load roster JSON:', err);
+        document.getElementById('player-name').textContent = 'Failed to load player info.';
+      });
+  } else {
+    displayQuiz2();
+  }
+}
+
+function displayQuiz2() {
+  const questionIndex = parseInt(localStorage.getItem('quiz1_questionIndex'));
+  const answer = localStorage.getItem('quiz1_answer');
+  const player = roster[questionIndex];
+
+  document.getElementById('player-name').textContent = player.player_name;
+  document.getElementById('player-info').textContent = `${player.position} - Jersey: ${player.number}`;
+  document.getElementById('player-trivia').textContent = player.trivia;
+  document.getElementById('player-image').src = player.player_image;
+
+  // Feedback
+  const feedbackEl = document.getElementById('feedback');
+  if (answer === player.number.toString()) {
+    feedbackEl.textContent = 'Correct!';
+    score = 1;
+  } else {
+    feedbackEl.textContent = `Incorrect. You entered ${answer}.`;
+    score = 0;
+  }
+
+  document.getElementById('score').textContent = `Score: ${score}`;
+  document.getElementById('remaining').textContent = `Remaining Questions: ${roster.length - questionIndex - 1}`;
+
+  // Next button
+  const nextBtn = document.getElementById('next-button');
+  nextBtn.addEventListener('click', () => {
+    const nextIndex = questionIndex + 1;
+    if (nextIndex < roster.length) {
+      localStorage.setItem('quiz1_questionIndex', nextIndex);
+      window.location.href = 'quiz1.html';
+    } else {
+      alert('Quiz complete!');
+      localStorage.clear();
+      window.location.href = 'quiz1.html';
+    }
+  });
+}
+
+// --- Init ---
+window.addEventListener('DOMContentLoaded', () => {
+  const bodyClass = getBodyClass();
+  if (bodyClass === 'quiz1') {
+    initQuiz1();
+  } else if (bodyClass === 'quiz2') {
+    initQuiz2();
   }
 });
