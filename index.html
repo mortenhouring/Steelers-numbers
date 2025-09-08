@@ -20,18 +20,18 @@
         right: 0;
         top: 100%;
         background-color: #f9f9f9;
-        min-width: 240px;
-        border: 1px solid black;
+        min-width: 400px; /* almost double previous width */
+        border: 2px solid white; /* white border */
         z-index: 1;
         box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     }
 
     .dropdown-content a {
-        padding: 18px 20px;  /* bigger touch target */
+        padding: 36px 40px;  /* doubled vertical and horizontal padding */
         display: block;
         text-decoration: none;
         color: black;
-        font-size: 1.4em;    /* easier to read */
+        font-size: 2em;       /* larger font for readability */
     }
 
     .dropdown-content a:hover {
@@ -48,6 +48,10 @@
             left: 0;
             right: 0;
             min-width: 100%;
+        }
+
+        .dropdown-content a {
+            padding: 36px 20px; /* keep large vertical padding, horizontal fits screen */
         }
     }
 </style>
