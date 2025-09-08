@@ -1,6 +1,3 @@
-/* ============================
-   General Body & Fonts
-============================ */
 body {
     margin: 0;
     padding: 0;
@@ -9,55 +6,49 @@ body {
     color: black;
 }
 
-/* ============================
-   Header & Hamburger
-============================ */
 header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 28px;
+    padding: 32px;
     background-color: #333;
     color: white;
     position: relative;
-    height: 100px;
+    height: 120px;
 }
 
 header h1 {
-    font-size: 2.8em;
+    font-size: 3em;
     margin: 0;
 }
 
 .hamburger-menu {
-    font-size: 3.8em;
+    font-size: 4.5em;
     background: none;
-    border: 3px solid white;   /* white outline */
-    border-radius: 10px;
+    border: 4px solid white;
+    border-radius: 12px;
     color: white;
     cursor: pointer;
-    padding: 14px;
+    padding: 18px;
 }
 
-/* ============================
-   Dropdown Menu
-============================ */
 .dropdown-content {
     display: none;
     position: absolute;
     right: 0;
     top: 100%;
     background-color: #f9f9f9;
-    min-width: 400px;
+    min-width: 450px;
     z-index: 1;
-    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    box-shadow: 0 0 12px rgba(0,0,0,0.3);
 }
 
 .dropdown-content a {
-    padding: 36px 40px;
+    padding: 40px 50px;
     display: block;
     text-decoration: none;
     color: black;
-    font-size: 2em;
+    font-size: 2.2em;
 }
 
 .dropdown-content a:hover {
@@ -68,76 +59,13 @@ header h1 {
     display: block;
 }
 
-/* ============================
-   Home Page Button Grid
-============================ */
 .home-button-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
+    gap: 25px;
     width: 100%;
     max-width: 500px;
 }
 
 .home-button-grid button {
-    font-size: 1.8em;
-    padding: 25px 0;
-    border: 2px solid black;
-    border-radius: 12px;
-    cursor: pointer;
-}
-
-/* ============================
-   Numeric Grid for Quiz
-============================ */
-.numeric-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 15px;
-    max-width: 300px;
-    width: 100%;
-    margin-bottom: 20px;
-}
-
-.numeric-grid button,
-.go-button {
-    font-size: 2em;
-    padding: 20px;
-    border: 2px solid black;
-    border-radius: 10px;
-    cursor: pointer;
-}
-
-/* ============================
-   Quiz End Buttons
-============================ */
-.quiz-end-buttons {
-    display: flex;
-    gap: 20px;
-}
-
-/* ============================
-   Mobile Adjustments
-============================ */
-@media (max-width: 430px) {
-    .dropdown-content {
-        left: 0;
-        right: 0;
-        min-width: 100%;
-    }
-
-    .dropdown-content a {
-        padding: 36px 20px;
-    }
-
-    .home-button-grid button {
-        font-size: 2em;
-        padding: 30px 0;
-    }
-
-    .numeric-grid button,
-    .go-button {
-        padding: 25px;
-        font-size: 2em;
-    }
-}
+    font-size: 
