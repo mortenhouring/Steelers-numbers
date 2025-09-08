@@ -3,28 +3,63 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Steelers Number Quiz 1</title>
+  <title>Steelers Numbers Quiz 1</title>
   <link rel="stylesheet" href="styles.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 20px;
+    }
+    #question {
+      font-size: 1.5em;
+      margin-bottom: 20px;
+    }
+    #answer-display {
+      font-size: 1.5em;
+      width: 120px;
+      text-align: center;
+      margin-bottom: 20px;
+      padding: 5px;
+    }
+    .keypad {
+      display: grid;
+      grid-template-columns: repeat(3, 60px);
+      grid-gap: 10px;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+    .keypad button {
+      font-size: 1.2em;
+      padding: 10px;
+      cursor: pointer;
+    }
+    #go-button {
+      font-size: 1.2em;
+      padding: 10px 20px;
+      cursor: pointer;
+    }
+  </style>
 </head>
-<body class="quiz1">
-  <main>
-    <h1>Who wears this number?</h1>
-    <p id="question">Loading question...</p>
-    <div id="answer-display" class="answer-display">_</div>
-    <div class="number-grid">
-      <button class="num">1</button>
-      <button class="num">2</button>
-      <button class="num">3</button>
-      <button class="num">4</button>
-      <button class="num">5</button>
-      <button class="num">6</button>
-      <button class="num">7</button>
-      <button class="num">8</button>
-      <button class="num">9</button>
-      <button class="num">0</button>
-      <button id="go-button">Go</button>
-    </div>
-  </main>
+<body>
+  <h1>Steelers Numbers Quiz</h1>
+  <div id="question">Loading question...</div>
+  <input type="text" id="answer-display" readonly>
+
+  <div class="keypad">
+    <button class="num">1</button>
+    <button class="num">2</button>
+    <button class="num">3</button>
+    <button class="num">4</button>
+    <button class="num">5</button>
+    <button class="num">6</button>
+    <button class="num">7</button>
+    <button class="num">8</button>
+    <button class="num">9</button>
+    <button class="num">0</button>
+    <button id="go-button" style="grid-column: span 2;">Go</button>
+  </div>
+
   <script src="script.js"></script>
 </body>
 </html>
