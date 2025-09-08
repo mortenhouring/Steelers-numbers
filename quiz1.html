@@ -1,25 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Quiz 1</title>
-  <link rel="stylesheet" href="styles.css">
-  <style>
-    main { display: flex; flex-direction: column; align-items: center; padding: 20px; }
-    #answer-display { font-size: 2em; margin: 20px; min-width: 80px; text-align: center; border: 1px solid black; padding: 10px; }
-    .grid { display: grid; gap: 10px; }
-    .grid-3 { grid-template-columns: repeat(3, 60px); }
-    button { font-size: 1.5em; padding: 10px; cursor: pointer; }
-    #go-button { grid-column: span 3; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Steelers Quiz 1</title>
+<link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <main>
-    <p id="question">Loading question...</p>
-    <div id="answer-display">--</div>
+  <header>
+    <h1>Steelers Quiz</h1>
+  </header>
 
-    <div class="grid grid-3">
+  <main>
+    <!-- Question Display -->
+    <div id="question" class="question">Loading question...</div>
+
+    <!-- Answer Display -->
+    <div id="answer-display" class="answer-display"></div>
+
+    <!-- Numeric Keypad -->
+    <div class="keypad">
       <button class="num">1</button>
       <button class="num">2</button>
       <button class="num">3</button>
@@ -30,7 +30,7 @@
       <button class="num">8</button>
       <button class="num">9</button>
       <button class="num">0</button>
-      <button id="go-button">Go</button>
+      <button class="go-button">Go</button>
     </div>
   </main>
 
