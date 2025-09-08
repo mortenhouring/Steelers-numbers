@@ -1,7 +1,16 @@
 <header style="display: flex; justify-content: space-between; align-items: center; padding: 28px; background-color: #333; color: white; position: relative; height: 100px;">
     <h1 style="font-size: 2.8em; margin: 0;">Steelers' Jersey Numbers</h1>
     <div>
-        <button class="hamburger-menu" style="font-size: 3.8em; background: none; border: none; color: white; cursor: pointer; padding: 14px;">
+        <button class="hamburger-menu"
+                style="
+                    font-size: 3.8em;
+                    background: none;
+                    border: 3px solid white;   /* white outline */
+                    border-radius: 10px;       /* optional rounded corners */
+                    color: white;
+                    cursor: pointer;
+                    padding: 14px;
+                ">
             &#9776;
         </button>
         <div id="dropdownMenu" class="dropdown-content">
@@ -20,10 +29,9 @@
         right: 0;
         top: 100%;
         background-color: #f9f9f9;           /* white background */
-        border: 3px solid white;             /* visible white border */
-        box-shadow: 0 0 0 2px black inset;   /* subtle inner contrast for visibility */
         min-width: 400px;                     /* double-size */
         z-index: 1;
+        box-shadow: 0 0 10px rgba(0,0,0,0.3); /* subtle shadow for contrast */
     }
 
     .dropdown-content a {
