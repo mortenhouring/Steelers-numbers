@@ -1,19 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Quiz 2</title>
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <title>Steelers Quiz 2</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body class="quiz2">
-  <h1>Player Info</h1>
-  <div id="player-container">
-    <img id="player-image" src="" alt="Player Image">
-    <div id="player-name">Loading...</div>
-    <div id="player-info"></div>
-    <div id="player-trivia"></div>
-  </div>
-  <button id="next-button">Next</button>
-  <script src="script.js"></script>
+    <h1>Steelers Number Quiz</h1>
+
+    <div id="player-info-container">
+        <img id="player-image" src="" alt="Player image">
+        <div id="player-info"></div>
+        <div id="player-trivia"></div>
+    </div>
+
+    <div id="answer-container">
+        <div id="answer-display" readonly></div>
+        <button id="next-button">Next</button>
+    </div>
+
+    <div id="score-container">
+        <div id="score">Score: 0</div>
+        <div id="remaining">Remaining: 0</div>
+        <div id="feedback"></div>
+    </div>
+
+    <script src="script.js"></script>
 </body>
 </html>
