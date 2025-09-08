@@ -1,37 +1,22 @@
-<header style="display: flex; justify-content: space-between; align-items: center; padding: 24px; background-color: #333; color: white; position: relative; height: 90px;">
-    <h1 style="font-size: 2.5em; margin: 0;">Steelers' Jersey Numbers</h1>
-    <div>
-        <button class="hamburger-menu" style="font-size: 3.5em; background: none; border: none; color: white; cursor: pointer; padding: 12px;">
-            &#9776;
-        </button>
-        <div id="dropdownMenu" class="dropdown-content">
-            <a href="#current-roster">Current roster</a>
-            <a href="#new-faces">New Faces</a>
-            <a href="#team-legends">Team Legends</a>
-            <a href="#scoreboard">Scoreboard</a>
-        </div>
-    </div>
-</header>
-
 <style>
     .dropdown-content {
         display: none;
         position: absolute;
         right: 0;
         top: 100%;
-        background-color: #f9f9f9;
-        min-width: 400px; /* almost double previous width */
-        border: 2px solid white; /* white border */
+        background-color: #f9f9f9;   /* keep white background */
+        border: 3px solid white;     /* visible white border */
+        box-shadow: 0 0 0 2px black inset; /* optional: adds contrast so border shows */
+        min-width: 400px;             /* almost double previous width */
         z-index: 1;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     }
 
     .dropdown-content a {
-        padding: 36px 40px;  /* doubled vertical and horizontal padding */
+        padding: 36px 40px;  /* large touch target */
         display: block;
         text-decoration: none;
         color: black;
-        font-size: 2em;       /* larger font for readability */
+        font-size: 2em;       /* readable font */
     }
 
     .dropdown-content a:hover {
@@ -51,22 +36,7 @@
         }
 
         .dropdown-content a {
-            padding: 36px 20px; /* keep large vertical padding, horizontal fits screen */
+            padding: 36px 20px; /* large vertical, horizontal fits screen */
         }
     }
 </style>
-
-<script>
-    const menuButton = document.querySelector('.hamburger-menu');
-    const dropdownMenu = document.getElementById('dropdownMenu');
-
-    menuButton.addEventListener('click', () => {
-        dropdownMenu.classList.toggle('show');
-    });
-
-    window.addEventListener('click', (e) => {
-        if (!menuButton.contains(e.target) && !dropdownMenu.contains(e.target)) {
-            dropdownMenu.classList.remove('show');
-        }
-    });
-</script>
