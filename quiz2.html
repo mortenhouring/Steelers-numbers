@@ -5,22 +5,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Quiz Feedback</title>
   <link rel="stylesheet" href="styles.css">
+  <style>
+    main { display: flex; flex-direction: column; align-items: center; padding: 20px; text-align: center; }
+    img { max-width: 150px; margin: 10px 0; }
+    button { font-size: 1.5em; padding: 10px; cursor: pointer; margin-top: 10px; }
+  </style>
 </head>
-<body class="quiz2">
+<body>
   <main>
-    <p>
-      <span id="score">[SCORE]/[TOTAL]</span>
-      <span id="remaining">Remaining: [REMAINING]/[TOTAL_QUESTIONS]</span>
-    </p>
-
-    <p id="feedback">[FEEDBACK_PHRASE]</p>
-
-    <img id="player-image" src="[PLAYER_IMAGE]" alt="[PLAYER_NAME]">
-    <p id="player-name">[PLAYER_NAME]</p>
-    <p id="player-position">[POSITION]</p>
-    <p id="player-trivia">[TRIVIA_TEXT]</p>
-
-    <button class="go-button">Next question</button>
+    <p id="score-display"></p>
+    <p id="remaining-display"></p>
+    <p id="feedback"></p>
+    <img id="player-image" src="" alt="Player Image">
+    <p id="player-info"></p>
+    <p id="player-trivia"></p>
+    <button id="next-button">Next Question</button>
   </main>
   <script src="script.js"></script>
 </body>
