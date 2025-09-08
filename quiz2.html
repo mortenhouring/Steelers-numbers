@@ -3,24 +3,79 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Quiz Feedback</title>
+  <title>Quiz 2 - Results</title>
   <link rel="stylesheet" href="styles.css">
-  <style>
-    main { display: flex; flex-direction: column; align-items: center; padding: 20px; text-align: center; }
-    img { max-width: 150px; margin: 10px 0; }
-    button { font-size: 1.5em; padding: 10px; cursor: pointer; margin-top: 10px; }
-  </style>
 </head>
-<body>
+<body class="quiz2">
   <main>
-    <p id="score-display"></p>
-    <p id="remaining-display"></p>
-    <p id="feedback"></p>
-    <img id="player-image" src="" alt="Player Image">
-    <p id="player-info"></p>
-    <p id="player-trivia"></p>
-    <button id="next-button">Next Question</button>
+    <h1>Quiz 2: Player Info</h1>
+
+    <div id="feedback" class="feedback"></div>
+
+    <div class="player-info-section">
+      <img id="player-image" src="" alt="Player Image">
+      <div id="player-info">
+        <p id="player-name"></p>
+        <p id="player-position"></p>
+        <p id="player-number"></p>
+      </div>
+      <p id="player-trivia" class="player-trivia"></p>
+    </div>
+
+    <div class="scoreboard">
+      <p>Score: <span id="score">0</span></p>
+      <p>Remaining Questions: <span id="remaining">0</span></p>
+    </div>
+
+    <button id="next-button">Next</button>
   </main>
-  <script src="script.js"></script>
+
+  <script>
+    // Load quiz1 answer
+    const userAnswer = sessionStorage.getItem("quiz1Answer");
+    const playerName = sessionStorage.getItem("quiz1PlayerName");
+
+    fetch('currentroster.json')
+      .then(response => response.json())
+      .then(roster => {
+        const currentPlayer = roster.find(p => p.player_name === playerName);
+        if (!currentPlayer) {
+          document.getElementById("feedback").textContent = "Player not found.";
+          return;
+        }
+
+        // Feedback
+        const feedbackEl = document.getElementById("feedback");
+        if (userAnswer == currentPlayer.number) {
+          feedbackEl.textContent = "Correct!";
+          feedbackEl.classList.add("correct");
+        } else {
+          feedbackEl.textContent = `Incorrect! Correct number is ${currentPlayer.number}.`;
+          feedbackEl.classList.add("incorrect");
+        }
+
+        // Player Info
+        document.getElementById("player-image").src = currentPlayer.player_image;
+        document.getElementById("player-image").alt = currentPlayer.player_name;
+        document.getElementById("player-name").textContent = currentPlayer.player_name;
+        document.getElementById("player-position").textContent = currentPlayer.position;
+        document.getElementById("player-number").textContent = `#${currentPlayer.number}`;
+        document.getElementById("player-trivia").textContent = currentPlayer.trivia;
+
+        // Score & Remaining (for now, simple)
+        document.getElementById("score").textContent = (userAnswer == currentPlayer.number) ? 1 : 0;
+        document.getElementById("remaining").textContent = roster.length - 1;
+      })
+      .catch(err => {
+        console.error("Error loading roster:", err);
+        document.getElementById("feedback").textContent = "Failed to load player info.";
+      });
+
+    // Next button
+    document.getElementById("next-button").addEventListener("click", () => {
+      // For simplicity, go back to quiz1 for next question
+      window.location.href = "quiz1.html";
+    });
+  </script>
 </body>
 </html>
