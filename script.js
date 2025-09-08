@@ -1,19 +1,12 @@
 // ======== script.js ========
 
 // Global state
-let currentQuestionIndex = 0;
-let score = 0;
+let currentQuestionIndex = parseInt(localStorage.getItem('currentQuestionIndex'), 10) || 0;
+let score = parseInt(localStorage.getItem('score'), 10) || 0;
 let totalQuestions = 0;
 let roster = [];
 
-// Load the JSON roster
-async function loadRoster() {
-  const response = await fetch('currentroster.json');
-  roster = await response.json();
-  totalQuestions = roster.length;
-}
-
-// Helper: pick random feedback phrase
+// Feedback phrases
 const correctPhrases = [
   "That's right!", "Correct!", "Well done!", "Nice!", "Exactly!", "You got it!", 
   "Spot on!", "Bullseye!", "Perfect!", "Good job!", "Right on!", "Yes!", 
@@ -26,6 +19,7 @@ const incorrectPhrases = [
   "Wrong answer.", "Keep trying!", "No."
 ];
 
+// Helper: pick random feedback phrase
 function getRandomFeedback(correct) {
   if (correct) {
     return correctPhrases[Math.floor(Math.random() * correctPhrases.length)];
@@ -34,17 +28,20 @@ function getRandomFeedback(correct) {
   }
 }
 
-// Initialize quiz1.html
+// Load JSON roster
+async function loadRoster() {
+  const response = await fetch('currentroster.json');
+  roster = await response.json();
+  totalQuestions = roster.length;
+}
+
+// ===== Quiz1 =====
 function initQuiz1() {
-  const questionEl = document.getElementById('question');
-  const answerBox = document.getElementById('answer-box');
+  const answerDisplay = document.getElementById('answer-display');
   const numberButtons = document.querySelectorAll('.num');
   const goButton = document.querySelector('.go-button');
 
-  if (!roster.length) {
-    console.error("Roster not loaded yet!");
-    return;
-  }
+  if (!roster.length) return;
 
   const player = roster[currentQuestionIndex];
   const questionPhrases = [
@@ -54,46 +51,50 @@ function initQuiz1() {
     `Enter ${player.player_name}'s jersey number`,
     `${player.player_name}'s number is?`
   ];
-  questionEl.textContent = questionPhrases[Math.floor(Math.random() * questionPhrases.length)];
+  document.getElementById('question').textContent =
+    questionPhrases[Math.floor(Math.random() * questionPhrases.length)];
 
-  // Numeric grid buttons
+  let currentAnswer = '';
+
+  // Numeric button logic
   numberButtons.forEach(button => {
     button.addEventListener('click', () => {
-      answerBox.value += button.textContent;
-      if (answerBox.value.length > 2) answerBox.value = answerBox.value.slice(0, 2);
+      if (currentAnswer.length < 2) {
+        currentAnswer += button.textContent;
+        answerDisplay.textContent = currentAnswer;
+      }
     });
   });
 
   // Go button
   goButton.addEventListener('click', () => {
-    const answer = parseInt(answerBox.value, 10);
+    const answer = parseInt(currentAnswer, 10);
+    localStorage.setItem('lastAnswer', answer);
+
     if (answer === player.number) score++;
-    // Save answer correctness and move to quiz2.html
-    localStorage.setItem('currentQuestionIndex', currentQuestionIndex);
     localStorage.setItem('score', score);
+
+    // Move to quiz2.html
     window.location.href = 'quiz2.html';
   });
 }
 
-// Initialize quiz2.html
+// ===== Quiz2 =====
 function initQuiz2() {
-  currentQuestionIndex = parseInt(localStorage.getItem('currentQuestionIndex'), 10) || 0;
-  score = parseInt(localStorage.getItem('score'), 10) || 0;
-
   const player = roster[currentQuestionIndex];
   const feedbackEl = document.getElementById('feedback');
   const scoreEl = document.getElementById('score');
   const remainingEl = document.getElementById('remaining');
   const nextButton = document.querySelector('.go-button');
 
-  // Show score and remaining
+  // Show score and remaining questions
   scoreEl.textContent = `${score}/${totalQuestions}`;
   remainingEl.textContent = `Remaining: ${totalQuestions - currentQuestionIndex - 1}/${totalQuestions}`;
 
   // Feedback phrase
-  // Simple check: was previous answer correct?
-  const lastAnswerCorrect = parseInt(localStorage.getItem('lastAnswer'), 10) === player.number;
-  feedbackEl.textContent = getRandomFeedback(lastAnswerCorrect);
+  const lastAnswer = parseInt(localStorage.getItem('lastAnswer'), 10);
+  const lastCorrect = lastAnswer === player.number;
+  feedbackEl.textContent = getRandomFeedback(lastCorrect);
 
   // Populate player info
   document.getElementById('player-image').src = player.player_image;
@@ -104,8 +105,8 @@ function initQuiz2() {
   // Next question button
   nextButton.addEventListener('click', () => {
     currentQuestionIndex++;
-    if (currentQuestionIndex >= roster.length) {
-      // Quiz finished
+    if (currentQuestionIndex >= totalQuestions) {
+      // End quiz
       localStorage.setItem('finalScore', score);
       window.location.href = 'quizEnd.html';
     } else {
@@ -115,7 +116,7 @@ function initQuiz2() {
   });
 }
 
-// Initialize quizEnd.html
+// ===== QuizEnd =====
 function initQuizEnd() {
   const finalScoreEl = document.getElementById('final-score');
   const personalBestEl = document.getElementById('personal-best-message');
@@ -145,13 +146,10 @@ function initQuizEnd() {
   });
 }
 
-// Load roster first, then init
+// ===== Init based on body class =====
 loadRoster().then(() => {
-  if (document.body.classList.contains('quiz1')) {
-    initQuiz1();
-  } else if (document.body.classList.contains('quiz2')) {
-    initQuiz2();
-  } else if (document.body.classList.contains('quizEnd')) {
-    initQuizEnd();
-  }
+  const bodyClass = document.body.className;
+  if (bodyClass.includes('quiz1')) initQuiz1();
+  else if (bodyClass.includes('quiz2')) initQuiz2();
+  else if (bodyClass.includes('quizEnd')) initQuizEnd();
 });
