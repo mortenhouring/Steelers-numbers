@@ -1,29 +1,47 @@
 body {
-  font-family: Arial, sans-serif;
-  text-align: center;
-  margin: 20px;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 0;
+    padding: 20px;
+}
+
+h1 {
+    margin-bottom: 20px;
+}
+
+#player-name {
+    font-size: 1.5em;
+    margin-bottom: 15px;
 }
 
 #answer-display {
-  font-size: 2em;
-  margin: 10px 0;
-  min-height: 2em;
-  border: 1px solid #ccc;
-  padding: 5px;
+    font-size: 1.5em;
+    width: 100px;
+    text-align: center;
+    margin-bottom: 10px;
 }
 
-#keypad button {
-  font-size: 1.5em;
-  width: 60px;
-  height: 60px;
-  margin: 3px;
+#keypad button,
+#go-button,
+#next-button {
+    font-size: 1.2em;
+    padding: 10px 15px;
+    margin: 5px;
 }
 
-#player-container img {
-  max-width: 150px;
-  margin: 10px 0;
+#player-info-container {
+    margin-bottom: 15px;
 }
 
-#player-container div {
-  margin: 5px 0;
+#player-image {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    margin-bottom: 10px;
+}
+
+#feedback {
+    margin-top: 10px;
+    font-weight: bold;
+    min-height: 1.2em;
 }
