@@ -1,213 +1,86 @@
-/* General resets */
+/* General page styles */
 body {
+  font-family: Arial, sans-serif;
+  background-color: #f8f8f8;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+header {
   background-color: #000;
-  color: #fff;
+  color: #ffb612;
+  width: 100%;
   text-align: center;
+  padding: 1rem 0;
+  font-size: 1.5rem;
+  font-weight: bold;
 }
 
 main {
-  padding: 20px;
-}
-
-/* Headings */
-h1 {
-  font-size: 2.2rem;
-  margin: 20px 0;
-}
-
-/* Intro text */
-.intro-text {
-  font-size: 1.3rem;
-  margin-bottom: 25px;
-}
-
-/* Menu button grid */
-.button-grid {
+  margin-top: 2rem;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  align-items: center;
 }
 
-.menu-button {
-  background: #ffb612;
-  border: none;
-  border-radius: 8px;
-  padding: 18px;
-  font-size: 1.3rem;
-  font-weight: bold;
-  color: #000;
-  text-decoration: none;
-  transition: transform 0.1s;
-}
-
-.menu-button:hover {
-  transform: scale(1.05);
-}
-
-/* Hamburger menu */
-.menu-container {
-  position: absolute;
-  top: 15px;
-  right: 15px;
-}
-
-.hamburger-menu {
-  font-size: 2.5rem; /* Bigger icon */
-  background: transparent;
-  border: 2px solid #fff; /* White outline */
-  border-radius: 6px;
-  padding: 6px 14px;
-  color: #fff;
-  cursor: pointer;
-}
-
-.dropdown-content {
-  display: none;
-  position: absolute;
-  right: 0;
-  background: #222;
-  border: 2px solid #fff;
-  border-radius: 6px;
-  min-width: 200px;
-  margin-top: 10px;
-  z-index: 1;
-}
-
-.dropdown-content a {
-  display: block;
-  padding: 14px;
+/* Question display */
+.question {
   font-size: 1.2rem;
-  color: #fff;
-  text-decoration: none;
-  border-bottom: 1px solid #444;
-}
-
-.dropdown-content a:last-child {
-  border-bottom: none;
-}
-
-.dropdown-content a:hover {
-  background: #333;
-}
-
-/* Question page */
-#question {
-  font-size: 1.5rem;
-  margin-bottom: 20px;
-}
-
-#answer-box {
-  font-size: 1.5rem;
-  padding: 12px;
-  border: 2px solid #fff;
-  border-radius: 6px;
+  margin-bottom: 1rem;
+  min-height: 2rem;
   text-align: center;
-  margin-bottom: 20px;
-  width: 80px;
 }
 
-/* Number keypad */
-.number-grid {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 12px;
-  justify-content: center;
-  margin-bottom: 25px;
-}
-
-.number-grid .num {
-  background: #444;
-  border: 2px solid #fff;
-  border-radius: 8px;
-  font-size: 1.6rem;
-  padding: 20px;
-  color: #fff;
-  cursor: pointer;
-}
-
-.number-grid .num:active {
-  background: #666;
-}
-
-/* Go button */
-.go-button {
-  background: #ffb612;
-  border: none;
-  border-radius: 8px;
-  padding: 16px 30px;
+/* Answer display */
+.answer-display {
   font-size: 1.5rem;
   font-weight: bold;
-  color: #000;
-  cursor: pointer;
+  margin-bottom: 1rem;
+  min-width: 5rem;
+  min-height: 2rem;
+  border: 2px solid #000;
+  border-radius: 5px;
+  text-align: center;
+  line-height: 2rem;
+  background-color: #fff;
 }
 
-.go-button:hover {
-  transform: scale(1.05);
+/* Keypad layout */
+.keypad {
+  display: grid;
+  grid-template-columns: repeat(3, 60px);
+  grid-gap: 10px;
+  justify-content: center;
 }
 
-/* Quiz feedback page */
-#score, #remaining {
-  display: block;
-  font-size: 1.4rem;
-  margin: 10px 0;
-}
-
-#feedback {
-  font-size: 1.4rem;
-  margin: 15px 0;
-}
-
-#player-image {
-  width: 180px;
-  height: 180px;
-  border-radius: 50%;
-  border: 3px solid #fff;
-  margin: 15px 0;
-}
-
-#player-name {
-  font-size: 1.6rem;
+/* Go button spans two columns */
+.go-button {
+  grid-column: 2 / 4;
+  background-color: #000;
+  color: #ffb612;
   font-weight: bold;
-}
-
-#player-position {
-  font-size: 1.2rem;
-  color: #bbb;
-}
-
-#player-trivia {
-  font-size: 1rem;
-  margin-top: 12px;
-  padding: 0 15px;
-  line-height: 1.4;
-}
-
-/* End screen */
-#final-score {
-  font-size: 2rem;
-  font-weight: bold;
-  margin: 20px 0;
-}
-
-#personal-best-message {
-  font-size: 1.2rem;
-  margin: 15px 0;
-}
-
-#retry-button, #menu-button {
-  background: #ffb612;
   border: none;
-  border-radius: 8px;
-  padding: 14px 28px;
-  font-size: 1.3rem;
-  font-weight: bold;
-  margin: 10px;
+  border-radius: 5px;
   cursor: pointer;
-  color: #000;
+  height: 60px;
+  font-size: 1.2rem;
 }
 
-#retry-button:hover, #menu-button:hover {
-  transform: scale(1.05);
+/* Numeric buttons */
+.num {
+  background-color: #fff;
+  border: 2px solid #000;
+  border-radius: 5px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  height: 60px;
+}
+
+/* Button hover effects */
+.num:hover, .go-button:hover {
+  opacity: 0.8;
 }
