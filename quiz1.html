@@ -1,45 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quiz 1 - Question</title>
-    <link rel="stylesheet" href="styles.css">
-    <script src="script.js" defer></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quiz 1 - Question</title>
+<link rel="stylesheet" href="styles.css">
+<script src="script.js" defer></script>
 </head>
 <body>
 
-    <header>
-        <!-- Header here -->
-    </header>
+<header>
+    <h1>Steelers' Jersey Numbers</h1>
+    <button class="hamburger-menu">&#9776;</button>
+    <div class="dropdown-content">
+        <a href="index.html">Home</a>
+        <a href="quiz1.html#current-roster">Current roster</a>
+        <a href="quiz1.html#new-faces">New Faces</a>
+        <a href="quiz1.html#team-legends">Team Legends</a>
+        <a href="quizEnd.html#scoreboard">Scoreboard</a>
+    </div>
+</header>
 
-    <main style="display: flex; flex-direction: column; align-items: center; padding: 20px;">
-        <p style="text-align: center; font-size: 1.8em;">
-            [SCORE]/[TOTAL] 
-            <span style="float: right;">Remaining: [REMAINING]/[TOTAL_QUESTIONS]</span>
-        </p>
+<main style="display: flex; flex-direction: column; align-items: center; padding: 20px;">
+    <p style="font-size: 2em; margin-bottom: 20px;">
+        <span id="score">[SCORE]/[TOTAL]</span>
+        <span style="float: right;" id="remaining">Remaining: [REMAINING]/[TOTAL_QUESTIONS]</span>
+    </p>
 
-        <p style="text-align: center; font-size: 2em; margin: 20px 0;">
-            What is the jersey number of [PLAYER_NAME]?
-        </p>
+    <p id="question" style="text-align: center; font-size: 2.2em; margin: 20px 0;">
+        [QUESTION_PHRASE]
+    </p>
 
-        <input type="text" placeholder="[PLAYER_INPUT]" style="font-size: 1.8em; padding: 12px; width: 60%; margin-bottom: 20px; text-align: center;">
+    <input type="text" placeholder="Enter number" style="font-size: 2em; padding: 15px; width: 60%; margin-bottom: 20px; text-align: center;">
 
-        <div class="numeric-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; max-width: 300px; width: 100%; margin-bottom: 20px;">
-            <button>0</button>
-            <button>1</button>
-            <button>2</button>
-            <button>3</button>
-            <button>4</button>
-            <button>5</button>
-            <button>6</button>
-            <button>7</button>
-            <button>8</button>
-            <button>9</button>
-        </div>
+    <div class="numeric-grid">
+        <button>0</button><button>1</button><button>2</button>
+        <button>3</button><button>4</button><button>5</button>
+        <button>6</button><button>7</button><button>8</button>
+        <button>9</button>
+    </div>
 
-        <button style="font-size: 2em; padding: 18px 50px;">Go</button>
-    </main>
+    <button class="go-button">Go</button>
+</main>
 
 </body>
 </html>
