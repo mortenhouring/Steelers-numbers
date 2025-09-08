@@ -1,54 +1,130 @@
+/* --- General --- */
 body {
   font-family: Arial, sans-serif;
-  text-align: center;
+  margin: 0;
   padding: 20px;
+  background-color: #f8f8f8;
+  color: #222;
 }
 
-#question, #player-name {
+h1, h2, h3 {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+/* --- Quiz 1 --- */
+#question {
   font-size: 1.5em;
+  text-align: center;
   margin-bottom: 20px;
 }
 
 #answer-display {
   font-size: 2em;
-  margin: 10px 0;
-  min-height: 40px;
+  text-align: center;
+  margin-bottom: 20px;
+  padding: 10px;
+  background-color: #fff;
+  border: 2px solid #333;
+  border-radius: 5px;
+  min-height: 50px;
 }
 
 .keypad {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(3, 80px);
+  grid-gap: 10px;
   justify-content: center;
-  max-width: 200px;
-  margin: 0 auto 20px;
+  margin-bottom: 20px;
 }
 
 .keypad button {
-  width: 60px;
-  height: 60px;
-  margin: 5px;
   font-size: 1.5em;
+  padding: 15px;
+  border: none;
+  border-radius: 5px;
   cursor: pointer;
+  background-color: #444;
+  color: #fff;
+  transition: background-color 0.2s;
 }
 
-#go-button, #next-button {
-  padding: 10px 20px;
+.keypad button:hover {
+  background-color: #666;
+}
+
+#go-button {
+  display: block;
+  margin: 0 auto 20px;
   font-size: 1.2em;
+  padding: 10px 20px;
   cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  background-color: #0077cc;
+  color: #fff;
+  transition: background-color 0.2s;
 }
 
-#player-image {
-  max-width: 200px;
-  margin: 10px 0;
+#go-button:hover {
+  background-color: #005fa3;
+}
+
+/* --- Quiz 2 --- */
+#player-name {
+  font-size: 2em;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+#player-info {
+  text-align: center;
+  margin-bottom: 10px;
+  font-size: 1.2em;
 }
 
 #player-trivia {
-  font-size: 1em;
-  margin: 10px 0;
+  text-align: center;
+  font-style: italic;
+  margin-bottom: 20px;
+  padding: 0 20px;
+}
+
+#player-image {
+  display: block;
+  margin: 0 auto 20px;
+  max-width: 200px;
+  border-radius: 10px;
+  border: 2px solid #333;
 }
 
 #feedback {
   font-weight: bold;
+  text-align: center;
+  margin-bottom: 10px;
   font-size: 1.3em;
-  margin: 10px 0;
+}
+
+#score, #remaining {
+  text-align: center;
+  margin-bottom: 10px;
+  font-size: 1.1em;
+}
+
+#next-button, #retry-button, #menu-button {
+  display: block;
+  margin: 10px auto;
+  padding: 10px 20px;
+  font-size: 1.1em;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: #0077cc;
+  color: #fff;
+  transition: background-color 0.2s;
+}
+
+#next-button:hover, #retry-button:hover, #menu-button:hover {
+  background-color: #005fa3;
 }
