@@ -1,45 +1,48 @@
-// ===== script.js for quiz1 =====
+document.addEventListener('DOMContentLoaded', () => {
+  // ===== quiz1 script =====
+  let roster = [];
+  let currentQuestionIndex = parseInt(localStorage.getItem('currentQuestionIndex'), 10) || 0;
+  let score = parseInt(localStorage.getItem('score'), 10) || 0;
+  let currentAnswer = '';
+  let currentPlayer = null;
 
-// Global state
-let currentQuestionIndex = parseInt(localStorage.getItem('currentQuestionIndex'), 10) || 0;
-let score = parseInt(localStorage.getItem('score'), 10) || 0;
-let roster = [];
-
-// Load JSON roster and initialize quiz1
-async function initQuiz1() {
   // Elements
   const questionEl = document.getElementById('question');
   const answerDisplay = document.getElementById('answer-display');
   const numberButtons = document.querySelectorAll('.num');
-  const goButton = document.querySelector('.go-button');
+  const goButton = document.getElementById('go-button');
 
-  // Fetch JSON
-  const res = await fetch('currentroster.json');
-  roster = await res.json();
+  // Load JSON and start quiz
+  async function loadRoster() {
+    const res = await fetch('currentroster.json');
+    roster = await res.json();
 
-  if (currentQuestionIndex >= roster.length) {
-    // End of roster
-    localStorage.setItem('score', score);
-    window.location.href = 'quizEnd.html';
-    return;
+    if (currentQuestionIndex >= roster.length) {
+      // No more questions, go to end
+      localStorage.setItem('score', score);
+      window.location.href = 'quizEnd.html';
+      return;
+    }
+
+    currentPlayer = roster[currentQuestionIndex];
+    showQuestion();
   }
 
-  const player = roster[currentQuestionIndex];
+  // Show question
+  function showQuestion() {
+    const questionPhrases = [
+      `What jersey number does ${currentPlayer.player_name} wear?`,
+      `Guess the number for ${currentPlayer.player_name}`,
+      `Which number is ${currentPlayer.player_name}'s jersey?`,
+      `Enter ${currentPlayer.player_name}'s jersey number`,
+      `${currentPlayer.player_name}'s number is?`
+    ];
+    questionEl.textContent = questionPhrases[Math.floor(Math.random() * questionPhrases.length)];
+    answerDisplay.textContent = '--';
+    currentAnswer = '';
+  }
 
-  // Random question phrasing
-  const questionPhrases = [
-    `What jersey number does ${player.player_name} wear?`,
-    `Guess the number for ${player.player_name}`,
-    `Which number is ${player.player_name}'s jersey?`,
-    `Enter ${player.player_name}'s jersey number`,
-    `${player.player_name}'s number is?`
-  ];
-  questionEl.textContent = questionPhrases[Math.floor(Math.random() * questionPhrases.length)];
-
-  // Numeric input logic
-  let currentAnswer = '';
-  answerDisplay.textContent = '--';
-
+  // Numeric button clicks
   numberButtons.forEach(btn => {
     btn.addEventListener('click', () => {
       if (currentAnswer.length < 2) {
@@ -49,25 +52,22 @@ async function initQuiz1() {
     });
   });
 
-  // Go button logic
+  // Go button click
   goButton.addEventListener('click', () => {
-    if (currentAnswer === '') return; // Ignore empty
+    if (currentAnswer === '') return; // ignore empty
 
     const answer = parseInt(currentAnswer, 10);
-    localStorage.setItem('lastAnswer', answer);
-
-    if (answer === player.number) score++;
-    localStorage.setItem('score', score);
+    if (answer === currentPlayer.number) score++;
 
     currentQuestionIndex++;
+    localStorage.setItem('score', score);
     localStorage.setItem('currentQuestionIndex', currentQuestionIndex);
+    localStorage.setItem('lastAnswer', answer);
 
-    // Go to quiz2 page
+    // Move to quiz2
     window.location.href = 'quiz2.html';
   });
-}
 
-// Initialize based on body class
-if (document.body.className.includes('quiz1')) {
-  initQuiz1();
-}
+  // Initialize
+  loadRoster();
+});
