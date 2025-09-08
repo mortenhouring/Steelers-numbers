@@ -1,7 +1,7 @@
-<header style="display: flex; justify-content: space-between; align-items: center; padding:25px; background-color: #333; color: white; position: relative;">
-    <h1 style="font-size: 1.8em; margin: 0;">Steelers' Jersey Numbers</h1>
+<header style="display: flex; justify-content: space-between; align-items: center; padding: 24px; background-color: #333; color: white; position: relative; height: 90px;">
+    <h1 style="font-size: 2.5em; margin: 0;">Steelers' Jersey Numbers</h1>
     <div>
-        <button class="hamburger-menu" style="font-size: 2.5em; background: none; border: none; color: white; cursor: pointer; padding: 8px;">
+        <button class="hamburger-menu" style="font-size: 3.5em; background: none; border: none; color: white; cursor: pointer; padding: 12px;">
             &#9776;
         </button>
         <div id="dropdownMenu" class="dropdown-content">
@@ -20,18 +20,18 @@
         right: 0;
         top: 100%;
         background-color: #f9f9f9;
-        min-width: 200px;
+        min-width: 240px;
         border: 1px solid black;
         z-index: 1;
         box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     }
 
     .dropdown-content a {
-        padding: 14px 16px; /* bigger tap targets for mobile */
+        padding: 18px 20px;  /* bigger touch target */
         display: block;
         text-decoration: none;
         color: black;
-        font-size: 1.1em; /* larger font for readability */
+        font-size: 1.4em;    /* easier to read */
     }
 
     .dropdown-content a:hover {
@@ -40,6 +40,15 @@
 
     .dropdown-content.show {
         display: block;
+    }
+
+    /* Full-width dropdown for iPhone screens */
+    @media (max-width: 430px) {
+        .dropdown-content {
+            left: 0;
+            right: 0;
+            min-width: 100%;
+        }
     }
 </style>
 
