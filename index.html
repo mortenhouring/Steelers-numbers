@@ -1,22 +1,37 @@
+<header style="display: flex; justify-content: space-between; align-items: center; padding: 28px; background-color: #333; color: white; position: relative; height: 100px;">
+    <h1 style="font-size: 2.8em; margin: 0;">Steelers' Jersey Numbers</h1>
+    <div>
+        <button class="hamburger-menu" style="font-size: 3.8em; background: none; border: none; color: white; cursor: pointer; padding: 14px;">
+            &#9776;
+        </button>
+        <div id="dropdownMenu" class="dropdown-content">
+            <a href="#current-roster">Current roster</a>
+            <a href="#new-faces">New Faces</a>
+            <a href="#team-legends">Team Legends</a>
+            <a href="#scoreboard">Scoreboard</a>
+        </div>
+    </div>
+</header>
+
 <style>
     .dropdown-content {
         display: none;
         position: absolute;
         right: 0;
         top: 100%;
-        background-color: #f9f9f9;   /* keep white background */
-        border: 3px solid white;     /* visible white border */
-        box-shadow: 0 0 0 2px black inset; /* optional: adds contrast so border shows */
-        min-width: 400px;             /* almost double previous width */
+        background-color: #f9f9f9;           /* white background */
+        border: 3px solid white;             /* visible white border */
+        box-shadow: 0 0 0 2px black inset;   /* subtle inner contrast for visibility */
+        min-width: 400px;                     /* double-size */
         z-index: 1;
     }
 
     .dropdown-content a {
-        padding: 36px 40px;  /* large touch target */
+        padding: 36px 40px;   /* large touch target */
         display: block;
         text-decoration: none;
         color: black;
-        font-size: 2em;       /* readable font */
+        font-size: 2em;       /* very readable */
     }
 
     .dropdown-content a:hover {
@@ -27,7 +42,7 @@
         display: block;
     }
 
-    /* Full-width dropdown for iPhone screens */
+    /* Full-width dropdown for mobile screens */
     @media (max-width: 430px) {
         .dropdown-content {
             left: 0;
@@ -36,7 +51,22 @@
         }
 
         .dropdown-content a {
-            padding: 36px 20px; /* large vertical, horizontal fits screen */
+            padding: 36px 20px;  /* vertical stays large, horizontal fits screen */
         }
     }
 </style>
+
+<script>
+    const menuButton = document.querySelector('.hamburger-menu');
+    const dropdownMenu = document.getElementById('dropdownMenu');
+
+    menuButton.addEventListener('click', () => {
+        dropdownMenu.classList.toggle('show');
+    });
+
+    window.addEventListener('click', (e) => {
+        if (!menuButton.contains(e.target) && !dropdownMenu.contains(e.target)) {
+            dropdownMenu.classList.remove('show');
+        }
+    });
+</script>
