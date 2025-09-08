@@ -1,86 +1,54 @@
-/* General page styles */
 body {
   font-family: Arial, sans-serif;
-  background-color: #f8f8f8;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-header {
-  background-color: #000;
-  color: #ffb612;
-  width: 100%;
   text-align: center;
-  padding: 1rem 0;
-  font-size: 1.5rem;
-  font-weight: bold;
+  padding: 20px;
 }
 
-main {
-  margin-top: 2rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+#question, #player-name {
+  font-size: 1.5em;
+  margin-bottom: 20px;
 }
 
-/* Question display */
-.question {
-  font-size: 1.2rem;
-  margin-bottom: 1rem;
-  min-height: 2rem;
-  text-align: center;
+#answer-display {
+  font-size: 2em;
+  margin: 10px 0;
+  min-height: 40px;
 }
 
-/* Answer display */
-.answer-display {
-  font-size: 1.5rem;
-  font-weight: bold;
-  margin-bottom: 1rem;
-  min-width: 5rem;
-  min-height: 2rem;
-  border: 2px solid #000;
-  border-radius: 5px;
-  text-align: center;
-  line-height: 2rem;
-  background-color: #fff;
-}
-
-/* Keypad layout */
 .keypad {
-  display: grid;
-  grid-template-columns: repeat(3, 60px);
-  grid-gap: 10px;
+  display: flex;
+  flex-wrap: wrap;
   justify-content: center;
+  max-width: 200px;
+  margin: 0 auto 20px;
 }
 
-/* Go button spans two columns */
-.go-button {
-  grid-column: 2 / 4;
-  background-color: #000;
-  color: #ffb612;
-  font-weight: bold;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
+.keypad button {
+  width: 60px;
   height: 60px;
-  font-size: 1.2rem;
-}
-
-/* Numeric buttons */
-.num {
-  background-color: #fff;
-  border: 2px solid #000;
-  border-radius: 5px;
-  font-size: 1.2rem;
-  font-weight: bold;
+  margin: 5px;
+  font-size: 1.5em;
   cursor: pointer;
-  height: 60px;
 }
 
-/* Button hover effects */
-.num:hover, .go-button:hover {
-  opacity: 0.8;
+#go-button, #next-button {
+  padding: 10px 20px;
+  font-size: 1.2em;
+  cursor: pointer;
+}
+
+#player-image {
+  max-width: 200px;
+  margin: 10px 0;
+}
+
+#player-trivia {
+  font-size: 1em;
+  margin: 10px 0;
+}
+
+#feedback {
+  font-weight: bold;
+  font-size: 1.3em;
+  margin: 10px 0;
 }
