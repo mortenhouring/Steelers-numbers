@@ -44,7 +44,6 @@ function shuffleArray(array) {
 async function loadRoster() {
   try {
     console.log('Fetching roster...');
-    const response = await fetch('/currentroster.json');
     const response = await fetch('currentroster.json');
     console.log('Fetch response:', response);
 
