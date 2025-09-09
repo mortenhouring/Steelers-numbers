@@ -101,13 +101,26 @@ function setupQuiz1() {
 }
 
 function pickNextPlayer() {
+  // Load usedPlayers from localStorage, or initialize if not present
+  usedPlayers = JSON.parse(localStorage.getItem('usedPlayers') || '[]');
+
+  // If all players have been used, prompt user to play again
   if (usedPlayers.length === roster.length) {
-    usedPlayers = [];
+    if (confirm("All players have been used! Would you like to play again?")) {
+      usedPlayers = [];
+    } else {
+      questionDisplay.textContent = "Quiz complete! Refresh to play again.";
+      answerDisplay.value = '';
+      return;
+    }
   }
 
   let availablePlayers = roster.filter(p => !usedPlayers.includes(p.player_id));
   currentPlayer = availablePlayers[Math.floor(Math.random() * availablePlayers.length)];
   usedPlayers.push(currentPlayer.player_id);
+
+  // Save usedPlayers to localStorage
+  localStorage.setItem('usedPlayers', JSON.stringify(usedPlayers));
 
   const phrase = questionPhrases[Math.floor(Math.random() * questionPhrases.length)];
   questionDisplay.textContent = phrase.replace('{player}', currentPlayer.player_name);
