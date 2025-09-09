@@ -43,7 +43,7 @@ function shuffleArray(array) {
 
 async function loadRoster() {
   try {
-    const response = await fetch('/currentroster.json?cacheBust=' + Date.now());
+    const response = await fetch('/currentroster.json');
     if (!response.ok) throw new Error("Could not load roster");
     roster = await response.json();
     shuffleArray(roster);
