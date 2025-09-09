@@ -6,6 +6,7 @@ let currentPlayer = null;
 let questionDisplay; 
 let answerDisplay; 
 let goButton;
+let quiz1Initialized = false;
 
 const correctResponses = [
   "Nice job!",
@@ -64,6 +65,8 @@ async function loadRoster() {
 
 function setupQuiz1() {
   if (!document.body.classList.contains('quiz1')) return;
+  if (quiz1Initialized) return; // Prevent double-init
+  quiz1Initialized = true;
 
   questionDisplay = document.getElementById('player-name');
   answerDisplay = document.getElementById('answer-display');
@@ -161,7 +164,6 @@ function setupQuiz2() {
 
 // Auto-detect which quiz page
 document.addEventListener('DOMContentLoaded', async () => {
-  await loadRoster();
-  setupQuiz1();
-  setupQuiz2();
+  await loadRoster();   // This will call setupQuiz1() if on quiz1 page
+  setupQuiz2();         // Only needed if on quiz2 page
 });
