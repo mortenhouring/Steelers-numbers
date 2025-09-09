@@ -49,9 +49,8 @@ async function loadRoster() {
     shuffleArray(roster);
     setupQuiz1();
   } catch (err) {
-    console.error(err);
-    document.getElementById('player-name').textContent = "Error loading roster.";
-  }
+  console.error(err);
+  document.getElementById('player-name').textContent = `Error: ${err.message}`
 }
 
 function setupQuiz1() {
