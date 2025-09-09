@@ -1,7 +1,7 @@
 // script.js
 
 let roster = []; 
-let usedPlayers = []; 
+let usedPlayers = JSON.parse(localStorage.getItem('usedPlayers') || '[]'); 
 let currentPlayer = null; 
 let questionDisplay; 
 let answerDisplay; 
@@ -103,11 +103,13 @@ function setupQuiz1() {
 function pickNextPlayer() {
   if (usedPlayers.length === roster.length) {
     usedPlayers = [];
+    localStorage.setItem('usedPlayers', JSON.stringify(usedPlayers));
   }
 
   let availablePlayers = roster.filter(p => !usedPlayers.includes(p.player_id));
   currentPlayer = availablePlayers[Math.floor(Math.random() * availablePlayers.length)];
   usedPlayers.push(currentPlayer.player_id);
+  localStorage.setItem('usedPlayers', JSON.stringify(usedPlayers));
 
   const phrase = questionPhrases[Math.floor(Math.random() * questionPhrases.length)];
   questionDisplay.textContent = phrase.replace('{player}', currentPlayer.player_name);
