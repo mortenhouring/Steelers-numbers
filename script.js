@@ -165,4 +165,3 @@ document.addEventListener('DOMContentLoaded', async () => {
   setupQuiz1();
   setupQuiz2();
 });
-});
