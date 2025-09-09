@@ -1,10 +1,10 @@
 // script.js
 
-let roster = [];
-let usedPlayers = [];
-let currentPlayer = null;
-let questionDisplay;
-let answerDisplay;
+let roster = []; 
+let usedPlayers = []; 
+let currentPlayer = null; 
+let questionDisplay; 
+let answerDisplay; 
 let goButton;
 
 const correctResponses = [
@@ -43,14 +43,23 @@ function shuffleArray(array) {
 
 async function loadRoster() {
   try {
+    console.log('Fetching roster...');
     const response = await fetch('/currentroster.json');
+    console.log('Fetch response:', response);
+
     if (!response.ok) throw new Error("Could not load roster");
     roster = await response.json();
+    console.log('Roster loaded:', roster);
+
     shuffleArray(roster);
+    console.log('Roster shuffled:', roster);
+
     setupQuiz1();
+    console.log('Quiz setup completed');
   } catch (err) {
-  console.error(err);
-  document.getElementById('player-name').textContent = `Error: ${err.message}`
+    console.error('Error during roster loading:', err);
+    document.getElementById('player-name').textContent = `Error: ${err.message}`;
+  }
 }
 
 function setupQuiz1() {
