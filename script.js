@@ -62,14 +62,22 @@ async function loadRoster() {
   }
 }
 
+
+function pickNextPlayer() {
+  if (usedPlayers.length === roster.length) {
+    usedPlayers = [];
+  }
 function setupQuiz1() {
+  if (quiz1SetupDone) return;   // If already run, exit immediately
+  quiz1SetupDone = true;        // Mark as run
+
   if (!document.body.classList.contains('quiz1')) return;
 
   questionDisplay = document.getElementById('player-name');
   answerDisplay = document.getElementById('answer-display');
   goButton = document.getElementById('go-button');
 
-  pickNextPlayer();
+  pickNextPlayer(); // This should be inside the function, here!
 
   // Numeric keypad buttons
   document.querySelectorAll('.num').forEach(btn => {
@@ -95,13 +103,9 @@ function setupQuiz1() {
     localStorage.setItem('lastPlayerId', currentPlayer.player_id);
     window.location.href = 'quiz2.html';
   });
+
+  console.log('Quiz setup completed');
 }
-
-function pickNextPlayer() {
-  if (usedPlayers.length === roster.length) {
-    usedPlayers = [];
-  }
-
   let availablePlayers = roster.filter(p => !usedPlayers.includes(p.player_id));
   currentPlayer = availablePlayers[Math.floor(Math.random() * availablePlayers.length)];
   usedPlayers.push(currentPlayer.player_id);
@@ -164,4 +168,3 @@ document.addEventListener('DOMContentLoaded', async () => {
   await loadRoster();
   setupQuiz1();
   setupQuiz2();
-});
