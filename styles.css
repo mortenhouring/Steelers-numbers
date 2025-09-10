@@ -42,10 +42,11 @@ h1 {
     color: black; /* Black text on hover */
 }
 
-/* Style for the special buttons (Clear and Go) */
-#clear-button, #go-button {
-    font-weight: bold; /* Bold font for emphasis */
-
+/* Prevent color change when pressed */
+#keypad button:active {
+    background-color: black; /* Keep background black when pressed */
+    color: white; /* Keep text white when pressed */
+    box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.5); /* Add pressed-in effect */
 }
 
 #player-info-container {
