@@ -34,8 +34,4 @@ document.addEventListener("DOMContentLoaded", async () => {
     } catch (error) {
         console.error("Error loading header:", error);
     }
-    document.addEventListener("DOMContentLoaded", () => {
-    const header = document.querySelector(".mobile-header");
-    const headerHeight = header.offsetHeight; // Get the height of the header
-    document.body.style.paddingTop = `${headerHeight}px`; // Add padding to the body
 });
