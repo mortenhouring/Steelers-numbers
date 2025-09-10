@@ -8,8 +8,6 @@ body {
 h1 {
     margin-bottom: 20px;
 }
-
-/* --- Quiz1 specific layout --- */
 body.quiz1 {
     margin: 0;
     padding: 0;
@@ -21,7 +19,6 @@ body.quiz1 {
 .quiz-container {
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
     align-items: center;
     min-height: 100vh;
     padding: 1rem;
@@ -29,10 +26,9 @@ body.quiz1 {
 }
 
 #player-name {
-    font-size: 2rem;
+    font-size: 2.5rem;  /* bigger for iPhone */
     text-align: center;
     margin-top: 1rem;
-    flex-shrink: 0;
 }
 
 #answer-display {
@@ -41,9 +37,10 @@ body.quiz1 {
     width: 80%;
     max-width: 300px;
     padding: 0.5rem;
-    margin: 1rem 0;
+    margin-bottom: 1rem;
 }
 
+/* Keypad: 3-column grid */
 .keypad {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -54,31 +51,25 @@ body.quiz1 {
 }
 
 .keypad button {
-    font-size: 1.8rem;
-    padding: 1rem;
+    font-size: 2rem;
+    padding: 1.2rem;
     border-radius: 8px;
     border: 1px solid #ccc;
     background: #fff;
+    width: 100%;  /* fill grid cell */
+    box-sizing: border-box;
 }
 
-.controls {
-    display: flex;
-    justify-content: space-between;
-    width: 90%;
-    max-width: 400px;
-    margin-bottom: 1rem;
-}
-
-#clear-button,
-#go-button {
-    flex: 1;
-    font-size: 1.6rem;
+/* Clear button spans full width below keypad */
+#clear-button {
+    font-size: 1.8rem;
     padding: 1rem;
-    margin: 0 0.5rem;
     border-radius: 8px;
     border: none;
-    background: #007bff;
+    background: #ff4d4f;
     color: white;
+    width: 90%;
+    max-width: 400px;
 }
 #next-button {
     font-size: 1.2em;
