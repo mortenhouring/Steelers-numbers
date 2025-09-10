@@ -2,36 +2,29 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Quiz 1</title>
+  <title>Steelers Quiz 1</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body class="quiz1">
-  <div class="quiz-container">
+  <h1 id="player-name">Loading...</h1>
 
-    <!-- Question -->
-    <div id="player-name"></div>
+  <input type="text" id="answer-display" readonly>
 
-    <!-- Answer input -->
-    <input id="answer-display" readonly />
-
-    <!-- Keypad grid -->
-    <div class="keypad">
-      <button class="num">1</button>
-      <button class="num">2</button>
-      <button class="num">3</button>
-      <button class="num">4</button>
-      <button class="num">5</button>
-      <button class="num">6</button>
-      <button class="num">7</button>
-      <button class="num">8</button>
-      <button class="num">9</button>
-      <button class="num">0</button>
-      <button id="clear-button">Clear</button>
-      <button id="go-button">Go</button>
-    </div>
-
+  <div id="keypad">
+    <button class="num">1</button>
+    <button class="num">2</button>
+    <button class="num">3</button><br>
+    <button class="num">4</button>
+    <button class="num">5</button>
+    <button class="num">6</button><br>
+    <button class="num">7</button>
+    <button class="num">8</button>
+    <button class="num">9</button><br>
+    <button id="clear-button">C</button>
+    <button class="num">0</button>
+    <button id="go-button">Go</button>
   </div>
+
   <script src="script.js"></script>
 </body>
 </html>
