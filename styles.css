@@ -14,10 +14,10 @@ h1 {
 body.quiz1 {
     background: #f9f9f9;
     display: flex;
-    flex-direction: column;
-    align-items: center;
     justify-content: center;
-    height: 100vh;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
 }
 
 .quiz-container {
@@ -30,14 +30,12 @@ body.quiz1 {
     padding: 1rem;
 }
 
-/* Question text */
 #player-name {
     font-size: 2.5rem;
     text-align: center;
     min-height: 3rem;
 }
 
-/* Answer input */
 #answer-display {
     font-size: 2rem;
     text-align: center;
@@ -46,13 +44,11 @@ body.quiz1 {
     padding: 0.5rem;
 }
 
-/* Keypad grid for quiz1, including Clear and Go */
 .keypad {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 0.5rem;
     width: 90%;
-    max-width: 400px;
 }
 
 .keypad button {
