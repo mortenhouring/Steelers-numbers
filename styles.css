@@ -11,13 +11,21 @@ h1 {
 
 /* --- Quiz1 specific layout --- */
 body.quiz1 {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background: #f9f9f9;
+    text-align: center;
+}
+
+.quiz-container {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
-    height: 100vh;  /* fill the viewport height */
-    margin: 0;
-    padding: 10px;
+    min-height: 100vh;
+    padding: 1rem;
+    gap: 1rem;
 }
 
 #player-name {
