@@ -1,7 +1,6 @@
 // script.js
 
-let roster = []; 
-let usedPlayers = []; 
+let roster = [];
 let currentPlayer = null; 
 let questionDisplay; 
 let answerDisplay; 
@@ -99,15 +98,17 @@ function setupQuiz1() {
     window.location.href = 'quiz2.html';
   });
 }
+let currentIndex = 0;
 
 function pickNextPlayer() {
-  if (usedPlayers.length === roster.length) {
-    usedPlayers = [];
+  if (currentIndex >= roster.length) {
+    // all players used -> go to end page
+    window.location.href = 'quiz_end.html';
+    return;
   }
 
-  let availablePlayers = roster.filter(p => !usedPlayers.includes(p.player_id));
-  currentPlayer = availablePlayers[Math.floor(Math.random() * availablePlayers.length)];
-  usedPlayers.push(currentPlayer.player_id);
+  currentPlayer = roster[currentIndex];
+  currentIndex++;
 
   const phrase = questionPhrases[Math.floor(Math.random() * questionPhrases.length)];
   questionDisplay.textContent = phrase.replace('{player}', currentPlayer.player_name);
