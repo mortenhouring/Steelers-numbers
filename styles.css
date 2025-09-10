@@ -56,7 +56,7 @@ body.quiz1 {
     border-radius: 8px;
     border: 1px solid #ccc;
     background: #fff;
-    width: 100%;  /* fill grid cell */
+    width: 100%;
     box-sizing: border-box;
 }
 
