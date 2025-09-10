@@ -27,11 +27,21 @@ const incorrectResponses = [
 ];
 
 const questionPhrases = [
-  "What number does {player} wear?",
-  "Enter {player}'s jersey number.",
-  "Which number is {player} wearing?",
-  "Guess the number for {player}.",
-  "Can you tell {player}'s jersey number?"
+"What number is {player} in black and gold?",  
+"Which digits are on {player}'s jersey?",  
+"What number does {player} wear at Acrisure?",  
+"Which number’s on {player}'s back?",  
+"What’s {player}'s Steel Curtain number?",  
+"What jersey number is {player}?",  
+"What digits does {player} rep for Steelers Nation?",  
+"What’s on {player}'s chest in Pittsburgh?",  
+"What number do Terrible Towel fans wave for {player}?",  
+"What number’s on {player}'s helmet stripe?",  
+"Which jersey does {player} wear for the Burgh?",  
+"What digits mark {player} in the Steel City?",  
+"What number’s stitched on {player}'s uniform?",  
+"When the announcer calls {player}, what number goes with it?",  
+"What’s {player}'s lineup number in black and gold?"  
 ];
 
 function shuffleArray(array) {
