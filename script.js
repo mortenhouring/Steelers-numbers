@@ -40,7 +40,6 @@ function shuffleArray(array) {
     [array[i], array[j]] = [array[j], array[i]];
   }
 }
-
 async function loadRoster() {
   try {
     console.log('Fetching roster...');
@@ -53,6 +52,10 @@ async function loadRoster() {
 
     shuffleArray(roster);
     console.log('Roster shuffled:', roster);
+
+    // Reset score and remaining at the start of a new game
+    localStorage.setItem('score', 0);
+    localStorage.setItem('remaining', roster.length);
 
     setupQuiz1();
     console.log('Quiz setup completed');
