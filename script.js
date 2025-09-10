@@ -1,12 +1,11 @@
 // script.js
-// Replace your existing top declarations with this block
+
 let roster = [];
-let currentPlayer = null;
-let questionDisplay;
-let answerDisplay;
+let currentPlayer = null; 
+let questionDisplay; 
+let answerDisplay; 
 let goButton;
 let quiz1Initialized = false;
-let currentIndex = 0; // persisted to localStorage
 
 const correctResponses = [
   "Nice job!",
@@ -48,49 +47,21 @@ async function loadRoster() {
     console.log('Fetch response:', response);
 
     if (!response.ok) throw new Error("Could not load roster");
-    const data = await response.json();
-    roster = data; // raw roster from JSON
+    roster = await response.json();
     console.log('Roster loaded:', roster);
 
-    const storedOrder = localStorage.getItem('rosterOrder');
-    const gameStarted = localStorage.getItem('gameStarted') === 'true';
+    shuffleArray(roster);
+    console.log('Roster shuffled:', roster);
 
-    if (gameStarted && storedOrder) {
-      // Resume: reorder roster according to saved order (safe if roster changed)
-      const order = JSON.parse(storedOrder);
-      const byId = {};
-      roster.forEach(p => { byId[p.player_id] = p; });
-
-      // Build ordered roster from saved ids (skip missing)
-      const ordered = order.map(id => byId[id]).filter(Boolean);
-
-      // Append any new/missing players found in the fresh roster
-      const missing = roster.filter(p => !order.includes(p.player_id));
-      roster = ordered.concat(missing);
-
-      // Restore index (index points to the NEXT player to pick)
-      currentIndex = parseInt(localStorage.getItem('currentIndex') || '0', 10);
-      console.log('Resuming game — currentIndex:', currentIndex);
-    } else {
-      // New game: shuffle, save order, reset counters
-      shuffleArray(roster);
-      const order = roster.map(p => p.player_id);
-      localStorage.setItem('rosterOrder', JSON.stringify(order));
-      currentIndex = 0;
-      localStorage.setItem('currentIndex', String(currentIndex));
-      localStorage.setItem('score', '0');
-      localStorage.setItem('remaining', String(roster.length));
-      localStorage.setItem('rosterLength', String(roster.length));
-      localStorage.setItem('gameStarted', 'true');
-      console.log('New game started — rosterLength:', roster.length);
-    }
+    // Reset score and remaining at the start of a new game
+    localStorage.setItem('score', 0);
+    localStorage.setItem('remaining', roster.length);
 
     setupQuiz1();
     console.log('Quiz setup completed');
   } catch (err) {
     console.error('Error during roster loading:', err);
-    const nameEl = document.getElementById('player-name');
-    if (nameEl) nameEl.textContent = `Error: ${err.message}`;
+    document.getElementById('player-name').textContent = `Error: ${err.message}`;
   }
 }
 
@@ -130,27 +101,14 @@ function setupQuiz1() {
     window.location.href = 'quiz2.html';
   });
 }
+let currentIndex = 0;
 
 function pickNextPlayer() {
   if (currentIndex >= roster.length) {
-    // all players used -> finish game
-    localStorage.setItem('gameStarted', 'false'); // mark game ended
+    // all players used -> go to end page
     window.location.href = 'quiz_end.html';
     return;
   }
-
-  currentPlayer = roster[currentIndex];
-  currentIndex++;
-
-  // persist currentIndex (so switching pages retains progress)
-  localStorage.setItem('currentIndex', String(currentIndex));
-
-  const phrase = questionPhrases[Math.floor(Math.random() * questionPhrases.length)];
-  if (questionDisplay) {
-    questionDisplay.textContent = phrase.replace('{player}', currentPlayer.player_name);
-  }
-  if (answerDisplay) answerDisplay.value = '';
-}
 
   currentPlayer = roster[currentIndex];
   currentIndex++;
