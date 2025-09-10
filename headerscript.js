@@ -31,11 +31,14 @@ document.addEventListener("DOMContentLoaded", async () => {
         // Add event listeners
         hamburgerButton.addEventListener('click', toggleDropdown);
         dropdownOverlay.addEventListener('click', closeDropdown);
+
+        // Adjust padding below the header
+        const header = document.querySelector(".mobile-header");
+        if (header) {
+            const headerHeight = header.offsetHeight; // Get the height of the header
+            document.body.style.paddingTop = `${headerHeight}px`; // Add padding to the body
+        }
     } catch (error) {
         console.error("Error loading header:", error);
     }
-document.addEventListener("DOMContentLoaded", () => {
-    const header = document.querySelector(".mobile-header");
-    const headerHeight = header.offsetHeight; // Get the height of the header
-    document.body.style.paddingTop = `${headerHeight}px`; // Add padding to the body
 });
