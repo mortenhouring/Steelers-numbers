@@ -6,6 +6,7 @@ let questionDisplay;
 let answerDisplay; 
 let goButton;
 let quiz1Initialized = false;
+let currentIndex = parseInt(localStorage.getItem('currentIndex') || '0', 10);
 
 const correctResponses = [
   "Nice job!",
@@ -114,17 +115,16 @@ function setupQuiz1() {
     window.location.href = 'quiz2.html';
   });
 }
-let currentIndex = 0;
 
 function pickNextPlayer() {
   if (currentIndex >= roster.length) {
-    // all players used -> go to end page
     window.location.href = 'quiz_end.html';
     return;
   }
 
   currentPlayer = roster[currentIndex];
   currentIndex++;
+  localStorage.setItem('currentIndex', currentIndex); // save progress
 
   const phrase = questionPhrases[Math.floor(Math.random() * questionPhrases.length)];
   questionDisplay.textContent = phrase.replace('{player}', currentPlayer.player_name);
