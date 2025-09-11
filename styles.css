@@ -4,7 +4,7 @@ body {
     margin: 0;
     padding: 20px;
 min-height: 100vh; /* ensures the body is at least the height of the viewport */
-    background-image: url('background1.PNG');
+    background-image: url('background.WEBP');
     background-size: cover;      /* fills the screen */
     background-position: center; /* centers the image */
     background-repeat: no-repeat;
