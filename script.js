@@ -176,7 +176,8 @@ localStorage.setItem('questionsAsked', questionsAsked);
 
 // Display counters in desired format
 scoreDisplay.textContent = `Score: ${score} / ${questionsAsked}`;
-remainingDisplay.textContent = `Remaining: ${questionsAsked} / ${totalQuestions}`;
+const remaining = totalQuestions - questionsAsked;
+remainingDisplay.textContent = `Remaining: ${remaining} / ${totalQuestions}`;
   nextButton.addEventListener('click', () => {
     window.location.href = 'quiz1.html';
   });
