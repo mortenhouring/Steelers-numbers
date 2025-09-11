@@ -63,9 +63,12 @@ async function loadRoster() {
     shuffleArray(roster);
     console.log('Roster shuffled:', roster);
 
-    // Reset score and remaining at the start of a new game
+// Initialize counters only if they don't exist
+if (!localStorage.getItem('totalQuestions')) {
+    localStorage.setItem('totalQuestions', roster.length);
     localStorage.setItem('score', 0);
-    localStorage.setItem('remaining', roster.length);
+    localStorage.setItem('questionsAsked', 0);
+}
 
     setupQuiz1();
     console.log('Quiz setup completed');
@@ -158,19 +161,22 @@ function setupQuiz2() {
     feedback.textContent = incorrectResponses[Math.floor(Math.random() * incorrectResponses.length)];
   }
 
-  // Score / remaining (simplified)
-  let score = parseInt(localStorage.getItem('score') || '0', 10);
-  let remaining = parseInt(localStorage.getItem('remaining') || roster.length, 10);
+let score = parseInt(localStorage.getItem('score') || '0', 10);
+let questionsAsked = parseInt(localStorage.getItem('questionsAsked') || '0', 10);
+const totalQuestions = parseInt(localStorage.getItem('totalQuestions') || roster.length, 10);
 
-  if (lastAnswer === player.number) score++;
-  remaining--;
+questionsAsked++;  // increment per answered question
 
-  localStorage.setItem('score', score);
-  localStorage.setItem('remaining', remaining);
+if (lastAnswer === player.number) {
+    score++;  // increment only on correct answer
+}
 
-  scoreDisplay.textContent = `Score: ${score}`;
-  remainingDisplay.textContent = `Remaining: ${remaining}`;
+localStorage.setItem('score', score);
+localStorage.setItem('questionsAsked', questionsAsked);
 
+// Display counters in desired format
+scoreDisplay.textContent = `Score: ${score} / ${questionsAsked}`;
+remainingDisplay.textContent = `Remaining: ${questionsAsked} / ${totalQuestions}`;
   nextButton.addEventListener('click', () => {
     window.location.href = 'quiz1.html';
   });
