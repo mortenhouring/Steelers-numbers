@@ -37,11 +37,7 @@ h1 {
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
-}
 
-#keypad button:hover {
-    background-color: white !important;
-    color: black !important;
 }
 
 #keypad button:active {
