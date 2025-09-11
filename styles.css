@@ -49,10 +49,6 @@ main > div {
 .frontpage-btn:focus {
     outline: none;
 }
-#player-name {
-    font-size: 1.5em;
-    margin-bottom: 15px;
-}
 
 #answer-display {
     font-size: 1.5em;
@@ -102,8 +98,10 @@ main > div {
     object-fit: cover;
     margin-bottom: 10px;
 }
-
+#player-name,
 #feedback {
-    font-size: 1.5em;
-    margin-bottom: 15px;
+    font-size: 8vw;
+    max-height: 20vh;  /* prevent taking too much vertical space */
+    overflow-wrap: break-word;
+    margin: 0 0 2vh 0;
 }
