@@ -104,8 +104,6 @@ main > div {
 }
 
 #feedback {
-    margin-top: 10px;
-    font-weight: bold;
-    min-height: 1.2em;
     font-size: 1.5em;
+    margin-bottom: 15px;
 }
