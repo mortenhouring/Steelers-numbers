@@ -93,7 +93,7 @@ main > div {
 }
 
 #player-image {
-    width: 96vw;              /* 96% of viewport width */
+    width: 80vw;              /* 96% of viewport width */
     max-width: none;          /* no upper limit */
     height: auto;             /* keeps the aspect ratio */
     object-fit: cover;        /* fills the width nicely */
