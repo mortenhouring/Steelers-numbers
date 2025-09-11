@@ -20,6 +20,7 @@ h1 {
     text-align: center;
     margin-bottom: 10px;
 }
+
 /* Keypad button styles */
 #keypad button {
     background-color: black; /* Black background */
@@ -56,14 +57,6 @@ h1 {
     outline: none; /* Remove focus outline */
     background-color: black; /* Keep background black */
     color: white; /* Keep text white */
-#keypad button:active {
-    background-color: black;
-    color: white;
-}
-#keypad button:focus {
-    outline: none;
-    background-color: black;
-    color: white;
 }
 
 #player-info-container {
