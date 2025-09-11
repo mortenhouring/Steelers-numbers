@@ -12,6 +12,18 @@ min-height: 100vh; /* ensures the body is at least the height of the viewport */
 h1 {
     margin-bottom: 20px;
 }
+header h1 {
+    font-family: 'Arial', sans-serif;
+    font-size: 2em;
+    color: black;
+    margin: 0;
+}
+
+header hr {
+    border: 1px solid black;
+    width: 80%;
+    margin: 10px auto;
+}
 /* Front page buttons */
 .frontpage-btn {
     background-color: black;
