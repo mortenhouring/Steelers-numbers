@@ -8,7 +8,35 @@ body {
 h1 {
     margin-bottom: 20px;
 }
+/* Front page buttons */
+.frontpage-btn {
+    background-color: black;
+    color: white;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 20px;
+    width: 120px;       /* wider than keypad for readability */
+    height: 50px;
+    margin: 10px;
+    border: none;
+    cursor: pointer;
+    text-align: center;
+    border-radius: 0;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    transition: all 0.1s ease-in-out;
+}
 
+.frontpage-btn:active {
+    background-color: black;
+    color: white;
+    box-shadow: inset 2px 2px 5px rgba(0,0,0,0.5);
+    transform: translateY(1px);
+}
+
+.frontpage-btn:focus {
+    outline: none;
+}
 #player-name {
     font-size: 1.5em;
     margin-bottom: 15px;
