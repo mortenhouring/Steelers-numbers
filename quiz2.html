@@ -4,8 +4,34 @@
   <meta charset="UTF-8">
   <title>Steelers Quiz 2</title>
   <link rel="stylesheet" href="styles.css">
+  <style>
+    /* Next button styled like frontpage buttons */
+    #next-button {
+      background-color: black;
+      color: white;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 20px;
+      width: 80%;
+      max-width: 200px;
+      height: 50px;
+      margin: 10px;
+      border: none;
+      cursor: pointer;
+      text-align: center;
+      border-radius: 0;
+      transition: all 0.1s ease-in-out;
+    }
+
+    #next-button:active {
+      transform: scale(0.95);
+    }
+  </style>
 </head>
 <body class="quiz2">
+  <!-- Header placeholder and script -->
+  <div id="header-placeholder"></div>
+  <script src="headerscript.js"></script>
+
   <h1 id="feedback">Loading...</h1>
 
   <img id="player-image" src="" alt="Player Image">
