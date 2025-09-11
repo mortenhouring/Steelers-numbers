@@ -14,7 +14,8 @@ h1 {
     color: white;
     font-family: 'Courier New', Courier, monospace;
     font-size: 20px;
-    width: 120px;       /* wider than keypad for readability */
+    width: 80%;            /* responsive width */
+    max-width: 200px;       /* don’t get too wide on large phones/tablets */
     height: 50px;
     margin: 10px;
     border: none;
@@ -25,8 +26,15 @@ h1 {
     -moz-appearance: none;
     appearance: none;
     transition: all 0.1s ease-in-out;
+    
 }
-
+main > div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;  /* center horizontally */
+    gap: 15px;            /* space between buttons */
+    margin-top: 20px;
+}
 .frontpage-btn:active {
     background-color: black;
     color: white;
