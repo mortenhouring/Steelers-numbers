@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quiz Start</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 20px;
+  }
+
+  /* Mimic quiz1 text style */
+  #intro-text {
+    font-size: 1.5em;
+    width: 90%;
+    max-width: 400px;
+    margin: 0 auto 30px auto;
+    text-align: center;
+  }
+
+  /* Front page button style */
+  .frontpage-btn {
+    background-color: black;
+    color: white;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 20px;
+    width: 80%;
+    max-width: 200px;
+    height: 50px;
+    margin: 10px;
+    border: none;
+    cursor: pointer;
+    text-align: center;
+    border-radius: 0;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    transition: all 0.1s ease-in-out;
+  }
+
+  .frontpage-btn:active {
+    transform: scale(0.95);
+  }
+</style>
+</head>
+<body>
+
+<div id="intro-text">
+  Check your knowledge of every player on the roster. The big names, the new guys and the guys waiting for their shot.
+</div>
+
+<button id="new-game-btn" class="frontpage-btn">New Game</button>
+<br>
+<button id="continue-btn" class="frontpage-btn">Continue</button>
+
+<script>
+  // New Game: reset counters and currentIndex
+  document.getElementById('new-game-btn').addEventListener('click', () => {
+    localStorage.setItem('score', 0);
+    localStorage.setItem('questionsAsked', 0);
+    localStorage.setItem('currentIndex', 0);
+    // keep totalQuestions if you want
+    window.location.href = 'quiz1.html';
+  });
+
+  // Continue: just go to quiz1.html with current progress
+  document.getElementById('continue-btn').addEventListener('click', () => {
+    window.location.href = 'quiz1.html';
+  });
+</script>
+
+</body>
+</html>
