@@ -130,7 +130,6 @@ function pickNextPlayer() {
   questionDisplay.textContent = phrase.replace('{player}', currentPlayer.player_name);
   answerDisplay.value = '';
 }
-
 // --- Quiz2 setup ---
 function setupQuiz2() {
   if (!document.body.classList.contains('quiz2')) return;
@@ -161,23 +160,24 @@ function setupQuiz2() {
     feedback.textContent = incorrectResponses[Math.floor(Math.random() * incorrectResponses.length)];
   }
 
-let score = parseInt(localStorage.getItem('score') || '0', 10);
-let questionsAsked = parseInt(localStorage.getItem('questionsAsked') || '0', 10);
-const totalQuestions = parseInt(localStorage.getItem('totalQuestions') || roster.length, 10);
+  let score = parseInt(localStorage.getItem('score') || '0', 10);
+  let questionsAsked = parseInt(localStorage.getItem('questionsAsked') || '0', 10);
+  const totalQuestions = parseInt(localStorage.getItem('totalQuestions') || roster.length, 10);
 
-questionsAsked++;  // increment per answered question
+  questionsAsked++;  // increment per answered question
 
-if (lastAnswer === player.number) {
-    score++;  // increment only on correct answer
-}
+  if (lastAnswer === player.number) {
+      score++;  // increment only on correct answer
+  }
 
-localStorage.setItem('score', score);
-localStorage.setItem('questionsAsked', questionsAsked);
+  localStorage.setItem('score', score);
+  localStorage.setItem('questionsAsked', questionsAsked);
 
-// Display counters in desired format
-scoreDisplay.textContent = `Score: ${score} / ${questionsAsked}`;
-const remaining = totalQuestions - questionsAsked;
-remainingDisplay.textContent = `Remaining: ${remaining} / ${totalQuestions}`;
+  // Display counters in desired format
+  scoreDisplay.textContent = `Score: ${score} / ${questionsAsked}`;
+  const remaining = totalQuestions - questionsAsked;
+  remainingDisplay.textContent = `Remaining: ${remaining} / ${totalQuestions}`;
+
   nextButton.addEventListener('click', () => {
     window.location.href = 'quiz1.html';
   });
