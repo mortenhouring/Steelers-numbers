@@ -93,10 +93,12 @@ main > div {
 }
 
 #player-image {
-    width: 150px;
-    height: 150px;
-    object-fit: cover;
-    margin-bottom: 10px;
+    width: 94vw;              /* 100% of screen width minus 3% margin each side */
+    max-width: 300px;         /* optional: cap size on larger phones */
+    height: auto;             /* keeps aspect ratio */
+    object-fit: cover;        /* ensures image fills the width nicely */
+    margin: 0 3vw 3vw 3vw;   /* 3% of viewport width on left and right, bottom margin 3vw */
+    display: block;           /* centers properly if needed *
 }
 #player-name,
 #feedback {
