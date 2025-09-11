@@ -93,13 +93,14 @@ main > div {
 }
 
 #player-image {
-    width: 80vw;              /* 96% of viewport width */
+    width: 80vw;              /* 80% of viewport width */
     max-width: none;          /* no upper limit */
-    height: auto;             /* keeps the aspect ratio */
-    object-fit: cover;        /* fills the width nicely */
-    margin: 0 2vw 3vw 2vw;   /* top:0, left/right:2vw, bottom:3vw */
-    display: block;           /* ensures proper centering */
+    height: auto;             /* keeps aspect ratio */
+    object-fit: cover;        /* fills width nicely */
+    margin: 0 auto 3vw auto;  /* top:0, left/right:auto, bottom:3vw */
+    display: block;           /* required for margin:auto to work */
 }
+
 #player-name,
 #feedback {
     font-size: 8vw;
