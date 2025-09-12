@@ -1,0 +1,33 @@
+name: Update Steelers Roster
+
+on:
+  workflow_dispatch: # lets you trigger manually from GitHub UI
+
+jobs:
+  fetch-roster:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        working-directory: ./fetch
+        run: npm install
+
+      - name: Run fetch script
+        working-directory: ./fetch
+        run: node fetch-steelers.js
+
+      - name: Commit and push updated roster
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "GitHub Actions Bot"
+          git add fetch/rosterupdate.json
+          git commit -m "Update Steelers roster [skip ci]" || echo "No changes to commit"
+          git push
