@@ -7,77 +7,67 @@ const ROSTER_URL = 'https://www.espn.com/nfl/team/roster/_/name/pit/pittsburgh-s
 const OUTPUT_FILE = 'rosterupdate.json';
 
 async function fetchRoster() {
-  try {
-    const response = await axios.get(ROSTER_URL);
-    const $ = cheerio.load(response.data);
+    try {
+        const response = await axios.get(ROSTER_URL);
+        const $ = cheerio.load(response.data);
 
-    const roster = [];
+        const roster = [];
 
-    // Map ESPN section titles → short group codes
-    const groupMap = {
-      'Offense': 'OFF',
-      'Defense': 'DEF',
-      'Special Teams': 'ST',
-      'Injured Reserve': 'OUT',
-      'Out': 'OUT',
-      'Practice Squad': 'PS'
-    };
+        // Map table index → group
+        // 0: Offense, 1: Defense, 2: Special Teams, 3: Injured/Out, 4: Practice Squad
+        const tableGroups = ['OFF', 'DEF', 'ST', 'OUT', 'PS'];
 
-    let currentGroup = null;
+        // Loop through each roster table by order
+        $('table tbody').each((i, tbody) => {
+            const group = tableGroups[i] || null;
 
-    // Loop over top-level elements in order
-    $('body').children().each((i, el) => {
-      if ($(el).is('h2')) {
-        const sectionTitle = $(el).text().trim();
-        currentGroup = groupMap[sectionTitle] || null;
-      } else if ($(el).is('table') && currentGroup) {
-        $(el).find('tbody tr').each((j, row) => {
-          const columns = $(row).find('td');
-          if (columns.length >= 5) {
-            const nameCell = $(columns[1]);
-            const playerLink = nameCell.find('a').attr('href');
+            $(tbody).find('tr').each((j, row) => {
+                const columns = $(row).find('td');
 
-            // Clean name (remove trailing digits)
-            const player_name = nameCell.text().replace(/\d+$/, '').trim();
+                if (columns.length >= 5) {
+                    const nameCell = $(columns[1]);
+                    const playerLink = nameCell.find('a').attr('href');
 
-            // Jersey number = trailing digits
-            const numberMatch = nameCell.text().match(/(\d+)$/);
-            const number = numberMatch ? parseInt(numberMatch[1], 10) : null;
+                    // Clean player name (remove trailing digits)
+                    const player_name = nameCell.text().replace(/\d+$/, '').trim();
 
-            // Player ID
-            const idMatch = playerLink ? playerLink.match(/\/id\/(\d+)\//) : null;
-            const playerId = idMatch ? idMatch[1] : null;
+                    // Jersey number = trailing digits
+                    const numberMatch = nameCell.text().match(/(\d+)$/);
+                    const number = numberMatch ? parseInt(numberMatch[1], 10) : null;
 
-            // Position
-            const position = $(columns[2]).text().trim();
+                    // Player ID
+                    const idMatch = playerLink ? playerLink.match(/\/id\/(\d+)\//) : null;
+                    const playerId = idMatch ? idMatch[1] : null;
 
-            // ESPN image
-            const playerImage = playerId
-              ? `https://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/${playerId}.png`
-              : '';
+                    // Position
+                    const position = $(columns[2]).text().trim();
 
-            if (player_name && playerId) {
-              roster.push({
-                player_name,
-                number,
-                position,
-                player_id: playerId,
-                player_image: playerImage,
-                group: currentGroup,  // group just above trivia
-                trivia: ""
-              });
-            }
-          }
+                    // ESPN image
+                    const playerImage = playerId
+                        ? `https://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/${playerId}.png`
+                        : '';
+
+                    if (player_name && playerId) {
+                        roster.push({
+                            player_name,
+                            number,
+                            position,
+                            player_id: playerId,
+                            player_image: playerImage,
+                            group,   // assigned by table order
+                            trivia: ""
+                        });
+                    }
+                }
+            });
         });
-      }
-    });
 
-    fs.writeFileSync(OUTPUT_FILE, JSON.stringify(roster, null, 2));
-    console.log(`Roster saved to ${OUTPUT_FILE} (${roster.length} players)`);
+        fs.writeFileSync(OUTPUT_FILE, JSON.stringify(roster, null, 2));
+        console.log(`Roster saved to ${OUTPUT_FILE} (${roster.length} players)`);
 
-  } catch (error) {
-    console.error('Error fetching roster:', error.message);
-  }
+    } catch (error) {
+        console.error('Error fetching roster:', error.message);
+    }
 }
 
 fetchRoster();
