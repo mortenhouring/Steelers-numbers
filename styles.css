@@ -92,14 +92,45 @@ main > div {
 #player-info-container {
     margin-bottom: 15px;
 }
+/* Image/number quiz2 combo */
+/* Container for number + image */
+#number-container {
+  position: relative;
+  width: 90vw;
+  max-width: 300px;
+  margin: 20px auto;
+  height: 0;
+  padding-bottom: 100%; /* keeps square aspect ratio */
+}
 
+/* Giant number in the background */
+#giant-number {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 20vw;          /* scales with screen width */
+  color: rgba(200,200,200,0.3);
+  font-weight: bold;
+  text-align: center;
+  width: 100%;
+  pointer-events: none;
+}
+
+/* Player image in front of the number */
 #player-image {
-    width: 80vw;              /* 80% of viewport width */
-    max-width: none;          /* no upper limit */
-    height: auto;             /* keeps aspect ratio */
-    object-fit: cover;        /* fills width nicely */
-    margin: 0 auto 3vw auto;  /* top:0, left/right:auto, bottom:3vw */
-    display: block;           /* required for margin:auto to work */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 40%;             /* for number overlay */
+  max-width: 80vw;        /* responsive for mobile */
+  height: auto;
+  object-fit: cover;
+  border-radius: 10px;
+  z-index: 2;
+  display: block;
+  margin: 0 auto 3vw auto;
 }
 
 #player-name,
