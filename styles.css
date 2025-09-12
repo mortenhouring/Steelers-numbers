@@ -95,7 +95,7 @@ main > div {
 
 :root {
   --container-bottom: 0px;      /* optional extra offset for #page-content */
-  --number-image-bottom: -120px;   /* vertical offset of number+image inside container */
+  --number-image-bottom: 60px;   /* vertical offset of number+image inside container */
   --number-size: 45vw;          /* size of the giant number */
   --image-width: 30vw;          /* width of player image */
 }
