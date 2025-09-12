@@ -1,434 +1,480 @@
+
 [
-  {
-    "player_name": "Will Howard",
-    "number": 18,
-    "position": "QB",
-    "trivia": "Will Howard was a highly-touted high school quarterback, but he was also a standout basketball player who received scholarship offers to play college basketball.",
-    "player_id": "12511",
-    "player_image": "https://static.clubs.nfl.com/image/upload/t_person_squared_mobile_2x/f_png/v1749650074/steelers/vgsqx5el0iinquytagme.png"
-  },
   {
     "player_name": "Aaron Rodgers",
     "number": 8,
     "position": "QB",
-    "trivia": "Aaron Rodgers holds the NFL record for the highest touchdown-to-interception ratio in league history. He also famously tapes potato chips to the bottom of his heels during footwork drills to force himself to stay on his toes.",
-    "player_id": "96",
-    "player_image": "https://static.clubs.nfl.com/image/upload/t_person_squared_mobile_2x/f_png/v1749151513/steelers/wykfnzrjfjkfcqolskcv.png"
+    "player_id": "8439",
+    "player_image": "https://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/8439.png",
+    "group": "OFF",
+    "trivia": ""
   },
   {
     "player_name": "Mason Rudolph",
     "number": 2,
     "position": "QB",
-    "trivia": "Mason Rudolph was a record-setting quarterback at Oklahoma State, where he won the Johnny Unitas Golden Arm Award as a senior.",
-    "player_id": "4972",
-    "player_image": "https://static.clubs.nfl.com/image/private/t_person_squared_mobile_2x/f_auto/v1576338620/steelers/jftsqh3unbxwp7l8r9gc.jpg"
-  },
-  {
-    "player_name": "Skylar Thompson",
-    "number": 17,
-    "position": "QB",
-    "trivia": "Skylar Thompson was a three-sport athlete in high school, excelling in football, basketball, and baseball. He also earned a black belt in taekwondo at a young age.",
-    "player_id": "8206",
-    "player_image": "https://static.clubs.nfl.com/image/upload/t_person_squared_mobile_2x/f_png/v1755541814/steelers/ptsxmzcbrnafw3pm25od.png"
+    "player_id": "3116407",
+    "player_image": "https://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/3116407.png",
+    "group": "OFF",
+    "trivia": ""
   },
   {
     "player_name": "Kenneth Gainwell",
     "number": 14,
     "position": "RB",
-    "trivia": "Kenneth Gainwell and his new Steelers teammate, wide receiver Calvin Austin III, were college teammates at Memphis.",
-    "player_id": "7567",
-    "player_image": "https://static.clubs.nfl.com/image/upload/t_person_squared_mobile_2x/f_png/steelers/v0lsvegrovkir7jwa5lw.png"
+    "player_id": "4371733",
+    "player_image": "https://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/4371733.png",
+    "group": "OFF",
+    "trivia": ""
   },
   {
     "player_name": "Kaleb Johnson",
     "number": 20,
     "position": "RB",
-    "trivia": "Kaleb Johnson is one of only five players in Iowa's history to have two 200-plus yard rushing games in his career.",
-    "player_id": "12504",
-    "player_image": "https://static.clubs.nfl.com/image/upload/t_person_squared_mobile_2x/f_png/v1755542896/steelers/zcdyadeujhedsfjetoqp.png"
+    "player_id": "4819231",
+    "player_image": "https://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/4819231.png",
+    "group": "OFF",
+    "trivia": ""
   },
   {
     "player_name": "Jaylen Warren",
     "number": 30,
     "position": "RB",
-    "trivia": "Jaylen Warren earned a scholarship to Oklahoma State after spending time at Snow College, a junior college in Utah. He was an undrafted free agent who worked his way onto the Steelers' roster.",
-    "player_id": "8228",
-    "player_image": "https://static.clubs.nfl.com/image/private/t_person_squared_mobile_2x/f_auto/steelers/j2rss9ws5btlzcpui34n.jpg"
-  },
-  {
-    "player_name": "Calvin Anderson",
-    "number": 67,
-    "position": "OT",
-    "trivia": "Calvin Anderson was a highly-recruited offensive lineman, but his path to the NFL was a unique one. While a student at Rice University, he wrote a book called 'The New Kid,' a children's story about a young boy who moves to a new town and learns to fit in. He also had to overcome a severe case of malaria that he contracted while on a philanthropic trip to Nigeria.",
-    "player_id": "6457",
-    "player_image": "https://static.clubs.nfl.com/image/upload/t_person_squared_mobile_2x/f_png/v1729173223/steelers/x9wpjlsr6zxzy4tx9zo4.png"
-  },
-  {
-    "player_name": "Spencer Anderson",
-    "number": 74,
-    "position": "OL",
-    "trivia": "Spencer Anderson played multiple positions on the offensive line during his college career at Maryland, showcasing his versatility.",
-    "player_id": "11028",
-    "player_image": "https://static.clubs.nfl.com/image/private/t_person_squared_mobile_2x/f_auto/steelers/jjjiivyhp8glotu8hpzg.jpg"
-  },
-  {
-    "player_name": "Troy Fautanu",
-    "number": 76,
-    "position": "OT",
-    "trivia": "Troy Fautanu, an offensive tackle, is of Samoan descent and his family has a strong tradition of producing football players.",
-    "player_id": "11664",
-    "player_image": "https://static.clubs.nfl.com/image/upload/t_person_squared_mobile_2x/f_png/v1715622608/steelers/b3s6qhebnl1kkjv6364a.png"
-  },
-  {
-    "player_name": "Zach Frazier",
-    "number": 54,
-    "position": "C",
-    "trivia": "Zach Frazier was a four-time state champion wrestler in high school and set a school record with 159 career wins. His wrestling background is often credited with his success on the football field.",
-    "player_id": "11690",
-    "player_image": "https://static.clubs.nfl.com/image/upload/t_person_squared_mobile_2x/f_png/v1725993579/steelers/uuurzqum3v7kkfnrdiic.png"
-  },
-  {
-    "player_name": "Broderick Jones",
-    "number": 77,
-    "position": "OT",
-    "trivia": "Broderick Jones, a first-round draft pick, won two national championships as a starting offensive lineman at the University of Georgia.",
-    "player_id": "10884",
-    "player_image": "https://static.clubs.nfl.com/image/private/t_person_squared_mobile_2x/f_auto/steelers/sqb4xdkf1fim7si9scxb.jpg"
-  },
-  {
-    "player_name": "Ryan McCollum",
-    "number": 62,
-    "position": "C",
-    "trivia": "Ryan McCollum, a center, was a team captain at Texas A&M and was a finalist for the Rimington Trophy, which is awarded to the nation's best college center.",
-    "player_id": "8014",
-    "player_image": "https://static.clubs.nfl.com/image/private/t_person_squared_mobile_2x/f_auto/v1710776418/steelers/tx451eglyc6wqhl5gru9.jpg"
-  },
-  {
-    "player_name": "Mason McCormick",
-    "number": 66,
-    "position": "G",
-    "trivia": "Mason McCormick was a two-time FCS national champion at South Dakota State and finished his collegiate career with 57 consecutive starts.",
-    "player_id": "11733",
-    "player_image": "https://static.clubs.nfl.com/image/upload/t_person_squared_mobile_2x/f_png/v1723555372/steelers/g89uynf6ihnn8ttdybw1.png"
-  },
-  {
-    "player_name": "Andrus Peat",
-    "number": 71,
-    "position": "G",
-    "trivia": "Andrus Peat was a three-time Pro Bowl selection and was a first-round draft pick in the 2015 NFL Draft. His father, Todd Peat, also played in the NFL.",
-    "player_id": "2318",
-    "player_image": "https://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/2978278.png"
-  },
-  {
-    "player_name": "Isaac Seumalo",
-    "number": 73,
-    "position": "G",
-    "trivia": "Isaac Seumalo is of Samoan descent, and his father, Joe Seumalo, is a long-time college football coach.",
-    "player_id": "3248",
-    "player_image": "https://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/2978247.png"
-  },
-  {
-    "player_name": "Pat Freiermuth",
-    "number": 88,
-    "position": "TE",
-    "trivia": "Pat Freiermuth was nicknamed 'Baby Gronk' by his teammates due to his physical playing style and resemblance to tight end Rob Gronkowski.",
-    "player_id": "7600",
-    "player_image": "https://static.clubs.nfl.com/image/upload/t_person_squared_mobile_2x/f_png/v1738595790/steelers/ikadabvnlzhtshy8vzh2.png"
-  },
-  {
-    "player_name": "Jonnu Smith",
-    "number": 81,
-    "position": "TE",
-    "trivia": "Jonnu Smith was raised in North Philadelphia but moved to Ocala, Florida, to live with his aunt and uncle for his safety and to pursue his football dreams.",
-    "player_id": "4144",
-    "player_image": "https://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/3054212.png"
-  },
-  {
-    "player_name": "Darnell Washington",
-    "number": 80,
-    "position": "TE",
-    "trivia": "Darnell Washington was a five-star recruit coming out of high school and committed to Georgia at the Under Armour All-America Game.",
-    "player_id": "9479",
-    "player_image": "https://static.clubs.nfl.com/image/private/t_person_squared_mobile_2x/f_auto/steelers/u5lc8sphp2u9udxlnwak.jpg"
-  },
-  {
-    "player_name": "Connor Heyward",
-    "number": 83,
-    "position": "TE",
-    "trivia": "Connor Heyward is the younger brother of Steelers defensive tackle Cameron Heyward. Their father, Craig 'Ironhead' Heyward, was also a Pro Bowl running back in the NFL.",
-    "player_id": "8181",
-    "player_image": "https://static.clubs.nfl.com/image/upload/t_person_squared_mobile_2x/f_png/v1710775996/steelers/rbse3zl8k4blklo7ttee.png"
+    "player_id": "4569987",
+    "player_image": "https://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/4569987.png",
+    "group": "OFF",
+    "trivia": ""
   },
   {
     "player_name": "Calvin Austin III",
     "number": 19,
     "position": "WR",
-    "trivia": "Calvin Austin III was a star track and field athlete at Memphis, where he set school records in the 60-meter and 200-meter indoor dashes.",
-    "player_id": "8125",
-    "player_image": "https://static.clubs.nfl.com/image/private/t_person_squared_mobile_2x/f_auto/steelers/rnwvkq20c60acfskqasp.jpg"
+    "player_id": "4243389",
+    "player_image": "https://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/4243389.png",
+    "group": "OFF",
+    "trivia": ""
   },
   {
     "player_name": "DK Metcalf",
     "number": 4,
     "position": "WR",
-    "trivia": "DK Metcalf is one of only two players in NFL history, along with Randy Moss, with 50 receptions, 900 yards and five touchdowns in each of their first six seasons.",
-    "player_id": "5846",
-    "player_image": "https://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/4047650.png"
+    "player_id": "4047650",
+    "player_image": "https://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/4047650.png",
+    "group": "OFF",
+    "trivia": ""
   },
   {
     "player_name": "Scotty Miller",
     "number": 13,
     "position": "WR",
-    "trivia": "Scotty Miller won a Super Bowl with the Tampa Bay Buccaneers in Super Bowl LV. He was a walk-on at Bowling Green and finished his college career with 21 touchdowns.",
-    "player_id": "6290",
-    "player_image": "https://static.clubs.nfl.com/image/upload/t_person_squared_mobile_2x/f_png/v1724073584/steelers/ujsriyc56x4a0f90mhfw.png"
+    "player_id": "3914397",
+    "player_image": "https://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/3914397.png",
+    "group": "OFF",
+    "trivia": ""
   },
   {
     "player_name": "Ben Skowronek",
     "number": 15,
     "position": "WR",
-    "trivia": "Ben Skowronek won Super Bowl LVI with the Los Angeles Rams. He is a distant cousin of the 1947 Heisman Trophy winner Johnny Lujack.",
-    "player_id": "7757",
-    "player_image": "https://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/4035656.png"
+    "player_id": "4035656",
+    "player_image": "https://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/4035656.png",
+    "group": "OFF",
+    "trivia": ""
   },
   {
     "player_name": "Roman Wilson",
     "number": 10,
     "position": "WR",
-    "trivia": "Roman Wilson, a wide receiver, was a key player on the Michigan Wolverines' 2023 national championship team.",
-    "player_id": "11630",
-    "player_image": "https://static.clubs.nfl.com/image/upload/t_person_squared_mobile_2x/f_png/v1728913671/steelers/inrlkjjiklnruanzl22s.png"
+    "player_id": "4431492",
+    "player_image": "https://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/4431492.png",
+    "group": "OFF",
+    "trivia": ""
   },
   {
-    "player_name": "Keeanu Benton",
-    "number": 95,
-    "position": "DT",
-    "trivia": "Keeanu Benton, a defensive tackle, was a two-time state champion wrestler in high school in Wisconsin, compiling a record of 90-1.",
-    "player_id": "10901",
-    "player_image": "https://static.clubs.nfl.com/image/private/t_person_squared_mobile_2x/f_auto/steelers/fhwbkgngwylnu41sqcgf.jpg"
+    "player_name": "Pat Freiermuth",
+    "number": 88,
+    "position": "TE",
+    "player_id": "4361411",
+    "player_image": "https://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/4361411.png",
+    "group": "OFF",
+    "trivia": ""
+  },
+  {
+    "player_name": "Connor Heyward",
+    "number": 83,
+    "position": "TE",
+    "player_id": "4241961",
+    "player_image": "https://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/4241961.png",
+    "group": "OFF",
+    "trivia": ""
+  },
+  {
+    "player_name": "Jonnu Smith",
+    "number": 81,
+    "position": "TE",
+    "player_id": "3054212",
+    "player_image": "https://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/3054212.png",
+    "group": "OFF",
+    "trivia": ""
+  },
+  {
+    "player_name": "Darnell Washington",
+    "number": 80,
+    "position": "TE",
+    "player_id": "4430802",
+    "player_image": "https://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/4430802.png",
+    "group": "OFF",
+    "trivia": ""
+  },
+  {
+    "player_name": "Zach Frazier",
+    "number": 54,
+    "position": "C",
+    "player_id": "4429775",
+    "player_image": "https://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/4429775.png",
+    "group": "OFF",
+    "trivia": ""
+  },
+  {
+    "player_name": "Ryan McCollum",
+    "number": 62,
+    "position": "C",
+    "player_id": "4035253",
+    "player_image": "https://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/4035253.png",
+    "group": "OFF",
+    "trivia": ""
+  },
+  {
+    "player_name": "Spencer Anderson",
+    "number": 74,
+    "position": "G",
+    "player_id": "4372056",
+    "player_image": "https://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/4372056.png",
+    "group": "OFF",
+    "trivia": ""
+  },
+  {
+    "player_name": "Mason McCormick",
+    "number": 66,
+    "position": "G",
+    "player_id": "4368304",
+    "player_image": "https://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/4368304.png",
+    "group": "OFF",
+    "trivia": ""
+  },
+  {
+    "player_name": "Andrus Peat",
+    "number": 68,
+    "position": "G",
+    "player_id": "2978278",
+    "player_image": "https://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/2978278.png",
+    "group": "OFF",
+    "trivia": ""
+  },
+  {
+    "player_name": "Max Scharping",
+    "number": 64,
+    "position": "G",
+    "player_id": "3126035",
+    "player_image": "https://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/3126035.png",
+    "group": "OFF",
+    "trivia": ""
+  },
+  {
+    "player_name": "Isaac Seumalo",
+    "number": 73,
+    "position": "G",
+    "player_id": "2978247",
+    "player_image": "https://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/2978247.png",
+    "group": "OFF",
+    "trivia": ""
+  },
+  {
+    "player_name": "Calvin Anderson",
+    "number": 67,
+    "position": "OT",
+    "player_id": "3123867",
+    "player_image": "https://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/3123867.png",
+    "group": "OFF",
+    "trivia": ""
+  },
+  {
+    "player_name": "Troy Fautanu",
+    "number": 76,
+    "position": "OT",
+    "player_id": "4427170",
+    "player_image": "https://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/4427170.png",
+    "group": "OFF",
+    "trivia": ""
+  },
+  {
+    "player_name": "Broderick Jones",
+    "number": 77,
+    "position": "OT",
+    "player_id": "4428990",
+    "player_image": "https://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/4428990.png",
+    "group": "OFF",
+    "trivia": ""
   },
   {
     "player_name": "Yahya Black",
     "number": 78,
     "position": "DE",
-    "trivia": "Yahya Black was a standout at Iowa, where he was named to the All-Big Ten Freshman team in 2021.",
-    "player_id": "12665",
-    "player_image": "https://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/4430947.png"
+    "player_id": "4430947",
+    "player_image": "https://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/4430947.png",
+    "group": "DEF",
+    "trivia": ""
+  },
+  {
+    "player_name": "Esezi Otomewo",
+    "number": 72,
+    "position": "DE",
+    "player_id": "4240759",
+    "player_image": "https://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/4240759.png",
+    "group": "DEF",
+    "trivia": ""
+  },
+  {
+    "player_name": "Keeanu Benton",
+    "number": 95,
+    "position": "DT",
+    "player_id": "4426694",
+    "player_image": "https://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/4426694.png",
+    "group": "DEF",
+    "trivia": ""
   },
   {
     "player_name": "Daniel Ekuale",
     "number": 96,
     "position": "DT",
-    "trivia": "Daniel Ekuale, a defensive tackle, is of Samoan descent and played college football at Washington State.",
-    "player_id": "5532",
-    "player_image": "https://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/3052059.png&w=350&h=254"
+    "player_id": "3052059",
+    "player_image": "https://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/3052059.png",
+    "group": "DEF",
+    "trivia": ""
   },
   {
     "player_name": "Derrick Harmon",
     "number": 99,
     "position": "DT",
-    "trivia": "Derrick Harmon, a defensive lineman, was a highly productive player at Michigan State where he earned All-Big Ten honors.",
-    "player_id": "12561",
-    "player_image": "https://static.clubs.nfl.com/image/upload/t_person_squared_mobile_2x/f_png/v1755542750/steelers/sq3zfsfp61zlvebkqoce.png"
+    "player_id": "4682980",
+    "player_image": "https://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/4682980.png",
+    "group": "DEF",
+    "trivia": ""
   },
   {
     "player_name": "Cameron Heyward",
     "number": 97,
     "position": "DT",
-    "trivia": "Cameron Heyward has been selected as a team captain for the Steelers for ten consecutive seasons, which is a franchise record. His father was former NFL running back Craig 'Ironhead' Heyward.",
-    "player_id": "843",
-    "player_image": "https://static.clubs.nfl.com/image/private/t_person_squared_mobile_2x/f_auto/steelers/hdy4exlfuei81aumbkrw.jpg"
+    "player_id": "13977",
+    "player_image": "https://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/13977.png",
+    "group": "DEF",
+    "trivia": ""
   },
   {
     "player_name": "Logan Lee",
     "number": 91,
     "position": "DT",
-    "trivia": "Logan Lee was an accomplished wrestler in high school and won a state championship. He was a walk-on at Iowa and earned a scholarship.",
-    "player_id": "11811",
-    "player_image": "https://static.clubs.nfl.com/image/upload/t_person_squared_mobile_2x/f_png/v1715623106/steelers/k4kttmga9cwkebiofvnf.png"
+    "player_id": "4569474",
+    "player_image": "https://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/4569474.png",
+    "group": "DEF",
+    "trivia": ""
   },
   {
     "player_name": "Isaiahh Loudermilk",
     "number": 92,
-    "position": "DE",
-    "trivia": "Isaiahh Loudermilk, a defensive end, played his college football at Wisconsin, where he was a key member of a stout defense.",
-    "player_id": "7833",
-    "player_image": "https://static.clubs.nfl.com/image/private/t_person_squared_mobile_2x/f_auto/steelers/wduujnnntjwx1qrzssah.jpg"
-  },
-  {
-    "player_name": "Esezi Otomewo",
-    "number": 93,
-    "position": "DE",
-    "trivia": "Esezi Otomewo, a defensive lineman, was born in Minnesota to Nigerian parents. He was an Academic All-Big Ten selection while at the University of Minnesota.",
-    "player_id": "8342",
-    "player_image": "https://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/4240759.png"
+    "position": "DT",
+    "player_id": "4035798",
+    "player_image": "https://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/4035798.png",
+    "group": "DEF",
+    "trivia": ""
   },
   {
     "player_name": "Carson Bruener",
     "number": 44,
     "position": "LB",
-    "trivia": "Carson Bruener, a linebacker, was a two-time captain at Washington and was a key part of their defense that made a run to the national championship game.",
-    "player_id": "12733",
-    "player_image": "https://static.clubs.nfl.com/image/upload/t_person_squared_mobile_2x/f_png/v1755529690/steelers/p8nrpb8hmnbzcomf4lk2.png"
-  },
-  {
-    "player_name": "Malik Harrison",
-    "number": 50,
-    "position": "LB",
-    "trivia": "Malik Harrison, a linebacker, was a multi-sport athlete in high school, playing basketball and running track in addition to football.",
-    "player_id": "6867",
-    "player_image": "https://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/4040615.png"
+    "player_id": "4429490",
+    "player_image": "https://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/4429490.png",
+    "group": "DEF",
+    "trivia": ""
   },
   {
     "player_name": "Nick Herbig",
     "number": 51,
     "position": "LB",
-    "trivia": "Nick Herbig, a linebacker, is the younger brother of former NFL offensive lineman Nate Herbig. He was a two-time first-team All-Big Ten selection at Wisconsin.",
-    "player_id": "10940",
-    "player_image": "https://static.clubs.nfl.com/image/private/t_person_squared_mobile_2x/f_auto/steelers/kkahcydpw2uotypy2dwy.jpg"
+    "player_id": "4429164",
+    "player_image": "https://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/4429164.png",
+    "group": "DEF",
+    "trivia": ""
   },
   {
     "player_name": "Alex Highsmith",
     "number": 56,
     "position": "LB",
-    "trivia": "Alex Highsmith was a walk-on at Charlotte before earning a scholarship and becoming one of the most productive pass rushers in college football.",
-    "player_id": "7113",
-    "player_image": "https://static.clubs.nfl.com/image/private/t_person_squared_mobile_2x/f_auto/steelers/w3dxvlc8xbqqdow2rsef.jpg"
+    "player_id": "4037333",
+    "player_image": "https://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/4037333.png",
+    "group": "DEF",
+    "trivia": ""
   },
   {
     "player_name": "Cole Holcomb",
     "number": 55,
     "position": "LB",
-    "trivia": "Cole Holcomb was a star linebacker at North Carolina, where he led the team in tackles for three consecutive seasons.",
-    "player_id": "6220",
-    "player_image": "https://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/3116689.png"
+    "player_id": "3116689",
+    "player_image": "https://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/3116689.png",
+    "group": "DEF",
+    "trivia": ""
   },
   {
     "player_name": "Patrick Queen",
     "number": 6,
     "position": "LB",
-    "trivia": "Patrick Queen was a key member of the LSU Tigers' national championship team in 2019. He was named the Defensive MVP of the College Football Playoff National Championship.",
-    "player_id": "6807",
-    "player_image": "https://static.clubs.nfl.com/image/upload/t_person_squared_mobile_2x/f_png/steelers/kpy2kp3njgeru4ldabj9.png"
-  },
-  {
-    "player_name": "T.J. Watt",
-    "number": 90,
-    "position": "LB",
-    "trivia": "T.J. Watt is the younger brother of former NFL defensive stars J.J. Watt and Derek Watt. He tied the NFL's single-season sack record with 22.5 sacks in 2021.",
-    "player_id": "4070",
-    "player_image": "https://static.clubs.nfl.com/image/private/t_person_squared_mobile_2x/f_auto/steelers/vwu1qi2cxnbqaksamrss.jpg"
+    "player_id": "4242207",
+    "player_image": "https://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/4242207.png",
+    "group": "DEF",
+    "trivia": ""
   },
   {
     "player_name": "Jack Sawyer",
     "number": 33,
     "position": "LB",
-    "trivia": "Jack Sawyer, a linebacker, was a five-star recruit coming out of high school and was a highly-touted prospect.",
-    "player_id": "12593",
-    "player_image": "https://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/4431590.png"
+    "player_id": "4431590",
+    "player_image": "https://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/4431590.png",
+    "group": "DEF",
+    "trivia": ""
+  },
+  {
+    "player_name": "T.J. Watt",
+    "number": 90,
+    "position": "LB",
+    "player_id": "3045282",
+    "player_image": "https://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/3045282.png",
+    "group": "DEF",
+    "trivia": ""
   },
   {
     "player_name": "Payton Wilson",
     "number": 41,
     "position": "LB",
-    "trivia": "Payton Wilson, a linebacker, was an All-American at North Carolina State and was the winner of the Chuck Bednarik Award as the nation's best defensive player in 2023.",
-    "player_id": "11727",
-    "player_image": "https://static.clubs.nfl.com/image/upload/t_person_squared_mobile_2x/f_png/v1724074449/steelers/adctngkx9snb4cadnno5.png"
+    "player_id": "4361652",
+    "player_image": "https://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/4361652.png",
+    "group": "DEF",
+    "trivia": ""
   },
   {
     "player_name": "Brandin Echols",
     "number": 26,
     "position": "CB",
-    "trivia": "Brandin Echols was a state champion in the long jump in high school and also played basketball.",
-    "player_id": "7796",
-    "player_image": "https://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/4567979.png"
+    "player_id": "4567979",
+    "player_image": "https://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/4567979.png",
+    "group": "DEF",
+    "trivia": ""
   },
   {
-    "player_name": "Chuck Clark",
-    "number": 21,
-    "position": "S",
-    "trivia": "Chuck Clark was originally drafted by the Baltimore Ravens, the Steelers' rival, and spent his first six seasons with the team before joining the Steelers.",
-    "player_id": "4224",
-    "player_image": "https://static.clubs.nfl.com/image/upload/t_person_squared_mobile_2x/f_png/v1754918472/steelers/aoe54nhg565pwncd1jgq.png"
-  },
-  {
-    "player_name": "DeShon Elliott",
-    "number": 25,
-    "position": "S",
-    "trivia": "DeShon Elliott, a safety, was an All-American at Texas and was a finalist for the Jim Thorpe Award, given to the nation's best defensive back.",
-    "player_id": "5071",
-    "player_image": "https://static.clubs.nfl.com/image/upload/t_person_squared_mobile_2x/f_png/v1724072405/steelers/h5ir8etdmlllrq7fdnjt.png"
-  },
-  {
-    "player_name": "Donte Kent",
-    "number": 34,
+    "player_name": "James Pierre",
+    "number": 42,
     "position": "CB",
-    "trivia": "Donte Kent was a three-time All-Mid-American Conference selection at Central Michigan. He was also a star track and field athlete in high school, where he competed in the long jump and triple jump.",
-    "player_id": "9998",
-    "player_image": "https://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/4608004.png"
-  },
-  {
-    "player_name": "Miles Killebrew",
-    "number": 28,
-    "position": "S",
-    "trivia": "Miles Killebrew, a safety and special teams ace, was named to the Pro Bowl as a special teams player in 2021 and 2023.",
-    "player_id": "3272",
-    "player_image": "https://static.clubs.nfl.com/image/private/t_person_squared_mobile_2x/f_auto/steelers/dhhd8tzktjezght8huzm.jpg"
+    "player_id": "4259252",
+    "player_image": "https://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/4259252.png",
+    "group": "DEF",
+    "trivia": ""
   },
   {
     "player_name": "Joey Porter Jr.",
     "number": 24,
     "position": "CB",
-    "trivia": "Joey Porter Jr. is the son of former Steelers linebacker and Super Bowl champion Joey Porter Sr. His father also coached for the Steelers.",
-    "player_id": "10913",
-    "player_image": "https://static.clubs.nfl.com/image/private/t_person_squared_mobile_2x/f_auto/v1710776679/steelers/iiitnglfyfzmjjvqnus6.jpg"
+    "player_id": "4426506",
+    "player_image": "https://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/4426506.png",
+    "group": "DEF",
+    "trivia": ""
   },
   {
     "player_name": "Jalen Ramsey",
     "number": 5,
     "position": "CB",
-    "trivia": "Jalen Ramsey is a three-time All-Pro and a six-time Pro Bowl selection. He was a two-sport athlete at Florida State, also competing in track and field where he won a national championship in the long jump.",
-    "player_id": "3160",
-    "player_image": "https://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/3045373.png"
+    "player_id": "3045373",
+    "player_image": "https://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/3045373.png",
+    "group": "DEF",
+    "trivia": ""
   },
   {
     "player_name": "Darius Slay",
     "number": 23,
     "position": "CB",
-    "trivia": "Darius Slay, a six-time Pro Bowl cornerback, is nicknamed 'Big Play Slay' for his ability to make game-changing plays.",
-    "player_id": "1518",
-    "player_image": "https://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/15863.png"
+    "player_id": "15863",
+    "player_image": "https://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/15863.png",
+    "group": "DEF",
+    "trivia": ""
+  },
+  {
+    "player_name": "Chuck Clark",
+    "number": 21,
+    "position": "S",
+    "player_id": "3045463",
+    "player_image": "https://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/3045463.png",
+    "group": "DEF",
+    "trivia": ""
+  },
+  {
+    "player_name": "DeShon Elliott",
+    "number": 25,
+    "position": "S",
+    "player_id": "3929846",
+    "player_image": "https://a.espncdn.cocombiner/i?img=/i/headshots/nfl/players/full/3929846.png",
+    "group": "DEF",
+    "trivia": ""
+  },
+  {
+    "player_name": "Miles Killebrew",
+    "number": 28,
+    "position": "S",
+    "player_id": "2575164",
+    "player_image": "https://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/2575164.png",
+    "group": "DEF",
+    "trivia": ""
+  },
+  {
+    "player_name": "Jabrill Peppers",
+    "number": 40,
+    "position": "S",
+    "player_id": "3115962",
+    "player_image": "https://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/3115962.png",
+    "group": "DEF",
+    "trivia": ""
   },
   {
     "player_name": "Juan Thornhill",
     "number": 22,
     "position": "S",
-    "trivia": "Juan Thornhill won two Super Bowls with the Kansas City Chiefs before signing with the Cleveland Browns and then the Steelers.",
-    "player_id": "6145",
-    "player_image": "https://static.clubs.nfl.com/image/upload/t_person_squared_mobile_2x/f_png/v1754055630/steelers/ke3kosj01bwfejaowtf2.png"
+    "player_id": "3917909",
+    "player_image": "https://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/3917909.png",
+    "group": "DEF",
+    "trivia": ""
   },
   {
     "player_name": "Chris Boswell",
     "number": 9,
-    "position": "K",
-    "trivia": "Chris Boswell's 59-yard field goal in 2022 is the longest in Steelers franchise history.",
-    "player_id": "1945",
-    "player_image": "https://static.clubs.nfl.com/image/private/t_person_squared_mobile_2x/f_auto/steelers/ryateifr0hgb4wsy5dmh.jpg"
+    "position": "PK",
+    "player_id": "17372",
+    "player_image": "https://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/17372.png",
+    "group": "ST",
+    "trivia": ""
   },
   {
     "player_name": "Corliss Waitman",
     "number": 3,
     "position": "P",
-    "trivia": "Corliss Waitman was born in Ghent, Belgium, and is one of the few NFL players to be born in that country.",
-    "player_id": "7215",
-    "player_image": "https://static.clubs.nfl.com/image/upload/t_person_squared_mobile_2x/f_png/v1727098297/steelers/fiax7qmj5171lkovl6d8.png"
+    "player_id": "3125280",
+    "player_image": "https://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/3125280.png",
+    "group": "ST",
+    "trivia": ""
   },
   {
     "player_name": "Christian Kuntz",
     "number": 46,
     "position": "LS",
-    "trivia": "Christian Kuntz was a dominant college linebacker at Duquesne, where he set a school record with 30.5 sacks. He later transitioned to long snapper in order to have a better chance at making an NFL roster.",
-    "player_id": "4848",
-    "player_image": "https://static.clubs.nfl.com/image/private/t_person_squared_mobile_2x/f_auto/v1710776150/steelers/epj1nxcu2zrkgybjmnav.jpg"
+    "player_id": "2978524",
+    "player_image": "https://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/2978524.png",
+    "group": "ST",
+    "trivia": ""
   }
-]
+ ]
