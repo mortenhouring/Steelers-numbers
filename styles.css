@@ -92,6 +92,14 @@ main > div {
 #player-info-container {
     margin-bottom: 15px;
 }
+
+#player-name,
+#feedback {
+    font-size: 8vw;
+    max-height: 20vh;  /* prevent taking too much vertical space */
+    overflow-wrap: break-word;
+    margin: 0 0 2vh 0;
+}
 /* Image/number quiz2 combo */
 #number-container {
   position: relative;
@@ -127,12 +135,4 @@ main > div {
   height: auto;
   border-radius: 10px;
   z-index: 2;
-}
-
-#player-name,
-#feedback {
-    font-size: 8vw;
-    max-height: 20vh;  /* prevent taking too much vertical space */
-    overflow-wrap: break-word;
-    margin: 0 0 2vh 0;
 }
