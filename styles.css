@@ -12,14 +12,7 @@ body {
 h1 {
     margin-bottom: 20px;
 }
-/* Header alignment */
-#page-content {
-    margin-top: 80px;   /* push everything below header */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;          /* space between feedback, number, and other content */
-}
+
 /* Front page buttons */
 .frontpage-btn {
     background-color: black;
@@ -101,19 +94,24 @@ main > div {
 }
 
 :root {
-  --number-bottom: 0px;   /* adjust vertical position of number */
-  --image-bottom: 0px;    /* adjust vertical position of image */
-  --number-size: 45vw;    /* adjust size of the number */
-  --image-width: 30vw;    /* adjust width of the player image */
+  /* Vertical offset of the number+image container relative to top of page-content */
+  --container-bottom: 0px;  
+
+  /* Bottom alignment of number and image (both are always the same) */
+  --number-image-bottom: 0px;  
+
+  /* Sizes */
+  --number-size: 45vw;       /* font size of the giant number */
+  --image-width: 30vw;       /* width of the player image */
 }
 
 /* --- Feedback fixed size --- */
 #feedback {
-  height: 60px;            /* fixed vertical space for feedback */
-  line-height: 1.2;        /* allows 2 lines if needed */
-  font-size: 1.5em;        /* base font size */
+  height: 60px;           /* vertical space for feedback */
+  line-height: 1.2;       /* allows 2 lines if needed */
+  font-size: 1.5em;
   text-align: center;
-  margin: 0 0 10px 0;      /* spacing below feedback */
+  margin: 0 0 10px 0;     /* spacing below feedback */
   overflow-wrap: break-word;
 }
 
@@ -123,34 +121,43 @@ main > div {
   width: 90vw;
   max-width: 300px;
   margin: 0 auto;
-  height: auto;            /* container height can be dynamic */
+  height: 0;               /* height controlled by absolute children */
 }
 
-/* --- Giant number, bottom-aligned --- */
+/* --- Giant number --- */
 #giant-number {
   position: absolute;
-  bottom: var(--number-bottom, 0);  /* adjustable bottom offset */
+  bottom: 0;               /* bottom of container */
   left: 50%;
   transform: translateX(-50%);
-  font-size: var(--number-size, 45vw);  /* adjustable size */
-  color: #F0EAD6;       /* eggshell */
+  font-size: var(--number-size, 45vw);
+  color: #F0EAD6;          /* eggshell */
   font-weight: 900;
-  font-family: 'Impact', sans-serif;  /* or jersey font */
+  font-family: 'Impact', sans-serif;
   text-align: center;
   pointer-events: none;
   z-index: 1;
 }
 
-/* --- Player image, bottom-aligned --- */
+/* --- Player image --- */
 #player-image {
   position: absolute;
-  bottom: var(--image-bottom, 0);    /* adjustable bottom offset */
+  bottom: 0;               /* match number’s bottom */
   left: 50%;
   transform: translateX(-50%);
-  width: var(--image-width, 30vw);   /* adjustable width */
+  width: var(--image-width, 30vw);
   height: auto;
   border-radius: 10px;
   z-index: 2;
   display: block;
   object-fit: cover;
+}
+
+/* --- Move number+image block relative to bottom of feedback --- */
+#page-content {
+  margin-top: calc(80px + var(--container-bottom, 0px));  /* header + optional offset */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;             /* space between feedback and number+image */
 }
