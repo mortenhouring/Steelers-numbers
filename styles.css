@@ -93,23 +93,23 @@ main > div {
     margin-bottom: 15px;
 }
 /* Image/number quiz2 combo */
-/* Container for number + image */
 #number-container {
   position: relative;
   width: 90vw;
   max-width: 300px;
-  margin: 5vh auto;      /* gives some top margin so it's not at the very top */
-  height: auto;
+  margin: 20px auto;
+  height: 0;
+  padding-bottom: 100%; /* keeps square aspect ratio */
 }
 
-/* Giant number in the background */
+/* Giant number in the background, bottom-aligned */
 #giant-number {
   position: absolute;
-  bottom: 0;              /* anchor bottom */
+  bottom: 0;             /* bottom anchored */
   left: 50%;
-  transform: translateX(-50%) translateY(-15%); /* move number up slightly */
-  font-size: 35vw;         /* adjust number size */
-  color: #F0EAD6;          /* eggshell */
+  transform: translateX(-50%); /* center horizontally */
+  font-size: 45vw;       /* scale independently */
+  color: #F0EAD6;        /* eggshell */
   font-weight: 900;
   font-family: 'Impact', sans-serif;
   text-align: center;
@@ -117,15 +117,14 @@ main > div {
   z-index: 1;
 }
 
-/* Player image in front of the number */
+/* Player image in front of the number, bottom-aligned */
 #player-image {
   position: absolute;
-  bottom: 0;               /* align bottom with number */
+  bottom: 0;             /* bottom anchored same as number */
   left: 50%;
-  transform: translateX(-50%);
-  width: 40%;
+  transform: translateX(-50%); /* center horizontally */
+  width: 30vw;           /* scale independently */
   height: auto;
-  object-fit: cover;
   border-radius: 10px;
   z-index: 2;
 }
