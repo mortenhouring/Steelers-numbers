@@ -14,7 +14,11 @@ h1 {
 }
 /* Header alignment */
 #page-content {
-    margin-top: 80px; /* pushes content below fixed header */
+    margin-top: 80px;   /* push everything below header */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;          /* space between feedback, number, and other content */
 }
 /* Front page buttons */
 .frontpage-btn {
