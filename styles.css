@@ -106,7 +106,7 @@ main > div {
   flex-direction: column;
   align-items: center;
   gap: 20px;  /* space between feedback and number/image */
-  margin-top: 80px; /* space for header */
+  margin-top: 0px; /* space for header */
 }
 
 /* --- Feedback fixed size --- */
