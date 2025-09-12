@@ -103,15 +103,16 @@ main > div {
   padding-bottom: 100%; /* keeps square aspect ratio */
 }
 
+/* Giant number in the background */
 #giant-number {
   position: absolute;
-  top: 50%;
+  bottom: 0;              /* align bottom with container */
   left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 70vw;             /* adjust size here */
-  color: #F0EAD6;              /* eggshell */
-  font-weight: 900;             /* make it bold/thick */
-  font-family: 'Impact', sans-serif; /* or a jersey-style font if you add one */
+  transform: translateX(-50%); /* only horizontal centering */
+  font-size: 35vw;         /* adjust size to your liking */
+  color: #F0EAD6;          /* eggshell */
+  font-weight: 900;
+  font-family: 'Impact', sans-serif; /* or jersey-style font */
   text-align: center;
   width: 100%;
   pointer-events: none;
@@ -120,16 +121,16 @@ main > div {
 /* Player image in front of the number */
 #player-image {
   position: absolute;
-  top: 50%;
+  bottom: 0;              /* align bottom with number */
   left: 50%;
-  transform: translate(-50%, -50%);
-  width: 60%;             /* for number overlay */
+  transform: translateX(-50%); /* horizontal centering only */
+  width: 40%;             /* adjust size relative to number */
   height: auto;
   object-fit: cover;
   border-radius: 10px;
   z-index: 2;
   display: block;
-  margin: 0 auto 3vw auto;
+  margin: 0 auto;
 }
 
 #player-name,
