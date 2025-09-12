@@ -108,7 +108,7 @@ main > div {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-size: 35vw;             /* adjust size here */
+  font-size: 70vw;             /* adjust size here */
   color: #F0EAD6;              /* eggshell */
   font-weight: 900;             /* make it bold/thick */
   font-family: 'Impact', sans-serif; /* or a jersey-style font if you add one */
@@ -123,7 +123,7 @@ main > div {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 50%;             /* for number overlay */
+  width: 60%;             /* for number overlay */
   height: auto;
   object-fit: cover;
   border-radius: 10px;
