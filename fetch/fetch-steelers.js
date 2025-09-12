@@ -13,34 +13,37 @@ async function fetchRoster() {
 
         const roster = [];
 
-        // ESPN roster table rows
         $('table tbody tr').each((i, row) => {
             const columns = $(row).find('td');
 
             if (columns.length >= 5) {
                 const nameCell = $(columns[1]);
                 const playerLink = nameCell.find('a').attr('href');
+
+                // Clean name (remove trailing digits)
                 const player_name = nameCell.text().replace(/\d+$/, '').trim();
 
-                // Extract player_id from link like "/nfl/player/_/id/8439/aaron-rodgers"
+                // Jersey number = trailing digits
+                const numberMatch = nameCell.text().match(/(\d+)$/);
+                const number = numberMatch ? parseInt(numberMatch[1], 10) : null;
+
+                // Player ID
                 const idMatch = playerLink ? playerLink.match(/\/id\/(\d+)\//) : null;
                 const playerId = idMatch ? idMatch[1] : null;
 
+                // Position
                 const position = $(columns[2]).text().trim();
-                // Extract trailing digits from the name as jersey number
-                const numberMatch = playerName.match(/(\d+)$/);
-                const number = numberMatch ? parseInt(numberMatch[1], 10) : null;
 
-                // Build ESPN image URL
+                // ESPN image
                 const playerImage = playerId
                     ? `https://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/${playerId}.png`
                     : '';
 
-                if (playerName && playerId) {
+                if (player_name && playerId) {
                     roster.push({
-                        player_name: playerName,
-                        number: number,
-                        position: position,
+                        player_name,
+                        number,
+                        position,
                         player_id: playerId,
                         player_image: playerImage,
                         trivia: ""
@@ -49,7 +52,6 @@ async function fetchRoster() {
             }
         });
 
-        // Write to JSON
         fs.writeFileSync(OUTPUT_FILE, JSON.stringify(roster, null, 2));
         console.log(`Roster saved to ${OUTPUT_FILE} (${roster.length} players)`);
 
