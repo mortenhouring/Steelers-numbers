@@ -1,39 +1,39 @@
 name: Update Steelers Roster
 
 on:
-  workflow_dispatch:  # Manual trigger from GitHub UI
+  workflow_dispatch:  # allows manual triggering from GitHub UI
 
 jobs:
   fetch-roster:
     runs-on: ubuntu-latest
 
     steps:
-      # 1️⃣ Checkout the repository
+      # 1️⃣ Checkout your repo
       - name: Checkout repo
         uses: actions/checkout@v3
 
-      # 2️⃣ Setup Node.js environment
+      # 2️⃣ Setup Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 20
 
-      # 3️⃣ Install dependencies
+      # 3️⃣ Install dependencies in fetch folder
       - name: Install dependencies
         working-directory: ./fetch
         run: npm install
 
-      # 4️⃣ Run the fetch script
+      # 4️⃣ Run fetch script
       - name: Run fetch-steelers.js
         working-directory: ./fetch
         run: node fetch-steelers.js
 
-      # 5️⃣ Commit and push the updated JSON
+      # 5️⃣ Commit & push updated roster
       - name: Commit & Push rosterupdate.json
-        uses: ad-m/github-push-action@v0.6.0
-        with:
-          branch: main              # Target branch
-          github_token: ${{ secrets.GITHUB_TOKEN }}  # Built-in token
-          directory: ./fetch        # Only commit this folder
-          commit_message: "Update Steelers roster [skip ci]"
-          force: true
+        working-directory: ./fetch
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "GitHub Actions Bot"
+          git add rosterupdate.json
+          git commit -m "Update Steelers roster [skip ci]" || echo "No changes to commit"
+          git push "https://${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" HEAD:main
