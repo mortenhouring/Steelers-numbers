@@ -95,10 +95,18 @@ main > div {
 
 #player-name,
 #feedback {
-    font-size: 8vw;
-    max-height: 20vh;  /* prevent taking too much vertical space */
-    overflow-wrap: break-word;
-    margin: 0 0 2vh 0;
+  font-size: clamp(4vw, 6vw, 8vw); /* scales, but stays readable */
+  line-height: 1.2;
+  min-height: 12vw;                /* reserve space for 1 line */
+  max-height: 24vw;                /* cap at ~2 lines */
+  display: flex;
+  align-items: center;             /* vertical centering */
+  justify-content: center;         /* horizontal centering */
+  margin: 0 0 2vh 0;
+  text-align: center;
+  white-space: normal;             /* allow wrapping */
+  word-wrap: break-word;           /* break long words if needed */
+  overflow: hidden;                /* hide overflow beyond 2 lines */
 }
 /* Image/number quiz2 combo */
 #number-container {
