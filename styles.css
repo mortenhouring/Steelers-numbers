@@ -95,7 +95,7 @@ main > div {
 
 :root {
   /* Vertical offset of the number+image container relative to top of page-content */
-  --container-bottom: 0px;  
+  --container-bottom: 80px;  
 
   /* Bottom alignment of number and image (both are always the same) */
   --number-image-bottom: 0px;  
