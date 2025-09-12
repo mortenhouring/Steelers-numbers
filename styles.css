@@ -93,54 +93,57 @@ main > div {
     margin-bottom: 15px;
 }
 
-#player-name,
-#feedback {
-  font-size: clamp(4vw, 6vw, 8vw); /* scales, but stays readable */
-  line-height: 1.2;
-  min-height: 12vw;                /* reserve space for 1 line */
-  max-height: 24vw;                /* cap at ~2 lines */
-  display: flex;
-  align-items: center;             /* vertical centering */
-  justify-content: center;         /* horizontal centering */
-  margin: 0 0 2vh 0;
-  text-align: center;
-  white-space: normal;             /* allow wrapping */
-  word-wrap: break-word;           /* break long words if needed */
-  overflow: hidden;                /* hide overflow beyond 2 lines */
+:root {
+  --number-bottom: 0px;   /* adjust vertical position of number */
+  --image-bottom: 0px;    /* adjust vertical position of image */
+  --number-size: 45vw;    /* adjust size of the number */
+  --image-width: 30vw;    /* adjust width of the player image */
 }
-/* Image/number quiz2 combo */
+
+/* --- Feedback fixed size --- */
+#feedback {
+  height: 60px;            /* fixed vertical space for feedback */
+  line-height: 1.2;        /* allows 2 lines if needed */
+  font-size: 1.5em;        /* base font size */
+  text-align: center;
+  margin: 0 0 10px 0;      /* spacing below feedback */
+  overflow-wrap: break-word;
+}
+
+/* --- Container for number + image --- */
 #number-container {
   position: relative;
   width: 90vw;
   max-width: 300px;
-  margin: 20px auto;
-  height: 0;
-  padding-bottom: 100%; /* keeps square aspect ratio */
+  margin: 0 auto;
+  height: auto;            /* container height can be dynamic */
 }
 
-/* Giant number in the background, bottom-aligned */
+/* --- Giant number, bottom-aligned --- */
 #giant-number {
   position: absolute;
-  bottom: 0;             /* bottom anchored */
+  bottom: var(--number-bottom, 0);  /* adjustable bottom offset */
   left: 50%;
-  transform: translateX(-50%); /* center horizontally */
-  font-size: 45vw;       /* scale independently */
-  color: #F0EAD6;        /* eggshell */
+  transform: translateX(-50%);
+  font-size: var(--number-size, 45vw);  /* adjustable size */
+  color: #F0EAD6;       /* eggshell */
   font-weight: 900;
-  font-family: 'Impact', sans-serif;
+  font-family: 'Impact', sans-serif;  /* or jersey font */
   text-align: center;
   pointer-events: none;
   z-index: 1;
 }
 
-/* Player image in front of the number, bottom-aligned */
+/* --- Player image, bottom-aligned --- */
 #player-image {
   position: absolute;
-  bottom: 0;             /* bottom anchored same as number */
+  bottom: var(--image-bottom, 0);    /* adjustable bottom offset */
   left: 50%;
-  transform: translateX(-50%); /* center horizontally */
-  width: 30vw;           /* scale independently */
+  transform: translateX(-50%);
+  width: var(--image-width, 30vw);   /* adjustable width */
   height: auto;
   border-radius: 10px;
   z-index: 2;
+  display: block;
+  object-fit: cover;
 }
