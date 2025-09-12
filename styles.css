@@ -2,7 +2,7 @@ body {
     font-family: Arial, sans-serif;
     text-align: center;
     margin: 0;
-    padding: 80px 20px 20px 20px; /* top padding accounts for header (60px) + some spacing */
+    padding: 20px;
     min-height: 100vh; /* ensures the body is at least the height of the viewport */
     background-image: url('background2.PNG');
     background-size: cover;      /* fills the screen */
