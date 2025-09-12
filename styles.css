@@ -94,24 +94,28 @@ main > div {
 }
 
 :root {
-  /* Vertical offset of the number+image container relative to top of page-content */
-  --container-bottom: 80px;  
+  --container-bottom: 0px;      /* optional extra offset for #page-content */
+  --number-image-bottom: 0px;   /* vertical offset of number+image inside container */
+  --number-size: 45vw;          /* size of the giant number */
+  --image-width: 30vw;          /* width of player image */
+}
 
-  /* Bottom alignment of number and image (both are always the same) */
-  --number-image-bottom: 0px;  
-
-  /* Sizes */
-  --number-size: 45vw;       /* font size of the giant number */
-  --image-width: 30vw;       /* width of the player image */
+/* --- #page-content: everything below header --- */
+#page-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;  /* space between feedback and number/image */
+  margin-top: 80px; /* space for header */
 }
 
 /* --- Feedback fixed size --- */
 #feedback {
-  height: 60px;           /* vertical space for feedback */
-  line-height: 1.2;       /* allows 2 lines if needed */
+  height: 60px;
+  line-height: 1.2;
   font-size: 1.5em;
   text-align: center;
-  margin: 0 0 10px 0;     /* spacing below feedback */
+  margin: 0;  /* no extra spacing */
   overflow-wrap: break-word;
 }
 
@@ -120,44 +124,34 @@ main > div {
   position: relative;
   width: 90vw;
   max-width: 300px;
-  margin: 0 auto;
-  height: 0;               /* height controlled by absolute children */
+  height: 0; /* controlled by absolute children */
 }
 
-/* --- Giant number --- */
-#giant-number {
+/* --- Bottom-aligned number and image --- */
+#giant-number,
+#player-image {
   position: absolute;
-  bottom: 0;               /* bottom of container */
+  bottom: var(--number-image-bottom, 0); /* same variable for both */
   left: 50%;
   transform: translateX(-50%);
+}
+
+/* Sizes */
+#giant-number {
   font-size: var(--number-size, 45vw);
-  color: #F0EAD6;          /* eggshell */
   font-weight: 900;
   font-family: 'Impact', sans-serif;
+  color: #F0EAD6;
   text-align: center;
   pointer-events: none;
   z-index: 1;
 }
 
-/* --- Player image --- */
 #player-image {
-  position: absolute;
-  bottom: 0;               /* match number’s bottom */
-  left: 50%;
-  transform: translateX(-50%);
   width: var(--image-width, 30vw);
   height: auto;
   border-radius: 10px;
   z-index: 2;
-  display: block;
   object-fit: cover;
-}
-
-/* --- Move number+image block relative to bottom of feedback --- */
-#page-content {
-  margin-top: calc(80px + var(--container-bottom, 0px));  /* header + optional offset */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 20px;             /* space between feedback and number+image */
+  display: block;
 }
