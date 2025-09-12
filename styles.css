@@ -12,7 +12,10 @@ body {
 h1 {
     margin-bottom: 20px;
 }
-
+/* Header alignment */
+#page-content {
+    margin-top: 80px; /* pushes content below fixed header */
+}
 /* Front page buttons */
 .frontpage-btn {
     background-color: black;
