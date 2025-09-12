@@ -1,6 +1,6 @@
 [
   {
-    "player_name": "Aaron Rodgers8",
+    "player_name": "Aaron Rodgers",
     "number": 8,
     "position": "QB",
     "player_id": "8439",
@@ -8,7 +8,7 @@
     "trivia": ""
   },
   {
-    "player_name": "Mason Rudolph2",
+    "player_name": "Mason Rudolph",
     "number": 2,
     "position": "QB",
     "player_id": "3116407",
@@ -16,7 +16,7 @@
     "trivia": ""
   },
   {
-    "player_name": "Kenneth Gainwell14",
+    "player_name": "Kenneth Gainwell",
     "number": 14,
     "position": "RB",
     "player_id": "4371733",
@@ -24,7 +24,7 @@
     "trivia": ""
   },
   {
-    "player_name": "Kaleb Johnson20",
+    "player_name": "Kaleb Johnson",
     "number": 20,
     "position": "RB",
     "player_id": "4819231",
@@ -32,7 +32,7 @@
     "trivia": ""
   },
   {
-    "player_name": "Jaylen Warren30",
+    "player_name": "Jaylen Warren",
     "number": 30,
     "position": "RB",
     "player_id": "4569987",
@@ -40,7 +40,7 @@
     "trivia": ""
   },
   {
-    "player_name": "Calvin Austin III19",
+    "player_name": "Calvin Austin III",
     "number": 19,
     "position": "WR",
     "player_id": "4243389",
@@ -48,7 +48,7 @@
     "trivia": ""
   },
   {
-    "player_name": "DK Metcalf4",
+    "player_name": "DK Metcalf",
     "number": 4,
     "position": "WR",
     "player_id": "4047650",
@@ -56,7 +56,7 @@
     "trivia": ""
   },
   {
-    "player_name": "Scotty Miller13",
+    "player_name": "Scotty Miller",
     "number": 13,
     "position": "WR",
     "player_id": "3914397",
@@ -64,7 +64,7 @@
     "trivia": ""
   },
   {
-    "player_name": "Ben Skowronek15",
+    "player_name": "Ben Skowronek",
     "number": 15,
     "position": "WR",
     "player_id": "4035656",
@@ -72,7 +72,7 @@
     "trivia": ""
   },
   {
-    "player_name": "Roman Wilson10",
+    "player_name": "Roman Wilson",
     "number": 10,
     "position": "WR",
     "player_id": "4431492",
@@ -80,7 +80,7 @@
     "trivia": ""
   },
   {
-    "player_name": "Pat Freiermuth88",
+    "player_name": "Pat Freiermuth",
     "number": 88,
     "position": "TE",
     "player_id": "4361411",
@@ -88,7 +88,7 @@
     "trivia": ""
   },
   {
-    "player_name": "Connor Heyward83",
+    "player_name": "Connor Heyward",
     "number": 83,
     "position": "TE",
     "player_id": "4241961",
@@ -96,7 +96,7 @@
     "trivia": ""
   },
   {
-    "player_name": "Jonnu Smith81",
+    "player_name": "Jonnu Smith",
     "number": 81,
     "position": "TE",
     "player_id": "3054212",
@@ -104,7 +104,7 @@
     "trivia": ""
   },
   {
-    "player_name": "Darnell Washington80",
+    "player_name": "Darnell Washington",
     "number": 80,
     "position": "TE",
     "player_id": "4430802",
@@ -112,7 +112,7 @@
     "trivia": ""
   },
   {
-    "player_name": "Zach Frazier54",
+    "player_name": "Zach Frazier",
     "number": 54,
     "position": "C",
     "player_id": "4429775",
@@ -120,7 +120,7 @@
     "trivia": ""
   },
   {
-    "player_name": "Ryan McCollum62",
+    "player_name": "Ryan McCollum",
     "number": 62,
     "position": "C",
     "player_id": "4035253",
@@ -128,7 +128,7 @@
     "trivia": ""
   },
   {
-    "player_name": "Spencer Anderson74",
+    "player_name": "Spencer Anderson",
     "number": 74,
     "position": "G",
     "player_id": "4372056",
@@ -136,7 +136,7 @@
     "trivia": ""
   },
   {
-    "player_name": "Mason McCormick66",
+    "player_name": "Mason McCormick",
     "number": 66,
     "position": "G",
     "player_id": "4368304",
@@ -144,7 +144,7 @@
     "trivia": ""
   },
   {
-    "player_name": "Andrus Peat68",
+    "player_name": "Andrus Peat",
     "number": 68,
     "position": "G",
     "player_id": "2978278",
@@ -152,7 +152,7 @@
     "trivia": ""
   },
   {
-    "player_name": "Max Scharping64",
+    "player_name": "Max Scharping",
     "number": 64,
     "position": "G",
     "player_id": "3126035",
@@ -160,7 +160,7 @@
     "trivia": ""
   },
   {
-    "player_name": "Isaac Seumalo73",
+    "player_name": "Isaac Seumalo",
     "number": 73,
     "position": "G",
     "player_id": "2978247",
@@ -168,7 +168,7 @@
     "trivia": ""
   },
   {
-    "player_name": "Calvin Anderson67",
+    "player_name": "Calvin Anderson",
     "number": 67,
     "position": "OT",
     "player_id": "3123867",
@@ -176,7 +176,7 @@
     "trivia": ""
   },
   {
-    "player_name": "Troy Fautanu76",
+    "player_name": "Troy Fautanu",
     "number": 76,
     "position": "OT",
     "player_id": "4427170",
@@ -184,7 +184,7 @@
     "trivia": ""
   },
   {
-    "player_name": "Broderick Jones77",
+    "player_name": "Broderick Jones",
     "number": 77,
     "position": "OT",
     "player_id": "4428990",
@@ -192,7 +192,7 @@
     "trivia": ""
   },
   {
-    "player_name": "Yahya Black78",
+    "player_name": "Yahya Black",
     "number": 78,
     "position": "DE",
     "player_id": "4430947",
@@ -200,7 +200,7 @@
     "trivia": ""
   },
   {
-    "player_name": "Esezi Otomewo72",
+    "player_name": "Esezi Otomewo",
     "number": 72,
     "position": "DE",
     "player_id": "4240759",
@@ -208,7 +208,7 @@
     "trivia": ""
   },
   {
-    "player_name": "Keeanu Benton95",
+    "player_name": "Keeanu Benton",
     "number": 95,
     "position": "DT",
     "player_id": "4426694",
@@ -216,7 +216,7 @@
     "trivia": ""
   },
   {
-    "player_name": "Daniel Ekuale96",
+    "player_name": "Daniel Ekuale",
     "number": 96,
     "position": "DT",
     "player_id": "3052059",
@@ -224,7 +224,7 @@
     "trivia": ""
   },
   {
-    "player_name": "Derrick Harmon99",
+    "player_name": "Derrick Harmon",
     "number": 99,
     "position": "DT",
     "player_id": "4682980",
@@ -232,7 +232,7 @@
     "trivia": ""
   },
   {
-    "player_name": "Cameron Heyward97",
+    "player_name": "Cameron Heyward",
     "number": 97,
     "position": "DT",
     "player_id": "13977",
@@ -240,7 +240,7 @@
     "trivia": ""
   },
   {
-    "player_name": "Logan Lee91",
+    "player_name": "Logan Lee",
     "number": 91,
     "position": "DT",
     "player_id": "4569474",
@@ -248,7 +248,7 @@
     "trivia": ""
   },
   {
-    "player_name": "Isaiahh Loudermilk92",
+    "player_name": "Isaiahh Loudermilk",
     "number": 92,
     "position": "DT",
     "player_id": "4035798",
@@ -256,7 +256,7 @@
     "trivia": ""
   },
   {
-    "player_name": "Carson Bruener44",
+    "player_name": "Carson Bruener",
     "number": 44,
     "position": "LB",
     "player_id": "4429490",
@@ -264,7 +264,7 @@
     "trivia": ""
   },
   {
-    "player_name": "Nick Herbig51",
+    "player_name": "Nick Herbig",
     "number": 51,
     "position": "LB",
     "player_id": "4429164",
@@ -272,7 +272,7 @@
     "trivia": ""
   },
   {
-    "player_name": "Alex Highsmith56",
+    "player_name": "Alex Highsmith",
     "number": 56,
     "position": "LB",
     "player_id": "4037333",
@@ -280,7 +280,7 @@
     "trivia": ""
   },
   {
-    "player_name": "Cole Holcomb55",
+    "player_name": "Cole Holcomb",
     "number": 55,
     "position": "LB",
     "player_id": "3116689",
@@ -288,7 +288,7 @@
     "trivia": ""
   },
   {
-    "player_name": "Patrick Queen6",
+    "player_name": "Patrick Queen",
     "number": 6,
     "position": "LB",
     "player_id": "4242207",
@@ -296,7 +296,7 @@
     "trivia": ""
   },
   {
-    "player_name": "Jack Sawyer33",
+    "player_name": "Jack Sawyer",
     "number": 33,
     "position": "LB",
     "player_id": "4431590",
@@ -304,7 +304,7 @@
     "trivia": ""
   },
   {
-    "player_name": "T.J. Watt90",
+    "player_name": "T.J. Watt",
     "number": 90,
     "position": "LB",
     "player_id": "3045282",
@@ -312,7 +312,7 @@
     "trivia": ""
   },
   {
-    "player_name": "Payton Wilson41",
+    "player_name": "Payton Wilson",
     "number": 41,
     "position": "LB",
     "player_id": "4361652",
@@ -320,7 +320,7 @@
     "trivia": ""
   },
   {
-    "player_name": "Brandin Echols26",
+    "player_name": "Brandin Echols",
     "number": 26,
     "position": "CB",
     "player_id": "4567979",
@@ -328,7 +328,7 @@
     "trivia": ""
   },
   {
-    "player_name": "James Pierre42",
+    "player_name": "James Pierre",
     "number": 42,
     "position": "CB",
     "player_id": "4259252",
@@ -336,7 +336,7 @@
     "trivia": ""
   },
   {
-    "player_name": "Joey Porter Jr.24",
+    "player_name": "Joey Porter Jr.",
     "number": 24,
     "position": "CB",
     "player_id": "4426506",
@@ -344,7 +344,7 @@
     "trivia": ""
   },
   {
-    "player_name": "Jalen Ramsey5",
+    "player_name": "Jalen Ramsey",
     "number": 5,
     "position": "CB",
     "player_id": "3045373",
@@ -352,7 +352,7 @@
     "trivia": ""
   },
   {
-    "player_name": "Darius Slay23",
+    "player_name": "Darius Slay",
     "number": 23,
     "position": "CB",
     "player_id": "15863",
@@ -360,7 +360,7 @@
     "trivia": ""
   },
   {
-    "player_name": "Chuck Clark21",
+    "player_name": "Chuck Clark",
     "number": 21,
     "position": "S",
     "player_id": "3045463",
@@ -368,7 +368,7 @@
     "trivia": ""
   },
   {
-    "player_name": "DeShon Elliott25",
+    "player_name": "DeShon Elliott",
     "number": 25,
     "position": "S",
     "player_id": "3929846",
@@ -376,7 +376,7 @@
     "trivia": ""
   },
   {
-    "player_name": "Miles Killebrew28",
+    "player_name": "Miles Killebrew",
     "number": 28,
     "position": "S",
     "player_id": "2575164",
@@ -384,7 +384,7 @@
     "trivia": ""
   },
   {
-    "player_name": "Jabrill Peppers40",
+    "player_name": "Jabrill Peppers",
     "number": 40,
     "position": "S",
     "player_id": "3115962",
@@ -392,7 +392,7 @@
     "trivia": ""
   },
   {
-    "player_name": "Juan Thornhill22",
+    "player_name": "Juan Thornhill",
     "number": 22,
     "position": "S",
     "player_id": "3917909",
@@ -400,7 +400,7 @@
     "trivia": ""
   },
   {
-    "player_name": "Chris Boswell9",
+    "player_name": "Chris Boswell",
     "number": 9,
     "position": "PK",
     "player_id": "17372",
@@ -408,7 +408,7 @@
     "trivia": ""
   },
   {
-    "player_name": "Corliss Waitman3",
+    "player_name": "Corliss Waitman",
     "number": 3,
     "position": "P",
     "player_id": "3125280",
@@ -416,7 +416,7 @@
     "trivia": ""
   },
   {
-    "player_name": "Christian Kuntz46",
+    "player_name": "Christian Kuntz",
     "number": 46,
     "position": "LS",
     "player_id": "2978524",
@@ -424,7 +424,7 @@
     "trivia": ""
   },
   {
-    "player_name": "Will Howard18",
+    "player_name": "Will Howard",
     "number": 18,
     "position": "QB",
     "player_id": "4429955",
@@ -432,7 +432,7 @@
     "trivia": ""
   },
   {
-    "player_name": "Skylar Thompson17",
+    "player_name": "Skylar Thompson",
     "number": 17,
     "position": "QB",
     "player_id": "4036419",
@@ -440,7 +440,7 @@
     "trivia": ""
   },
   {
-    "player_name": "Donald Parham Jr.89",
+    "player_name": "Donald Parham Jr.",
     "number": 89,
     "position": "TE",
     "player_id": "3912092",
@@ -448,7 +448,7 @@
     "trivia": ""
   },
   {
-    "player_name": "Gareth Warren78",
+    "player_name": "Gareth Warren",
     "number": 78,
     "position": "OT",
     "player_id": "4885455",
@@ -456,7 +456,7 @@
     "trivia": ""
   },
   {
-    "player_name": "Domenique Davis69",
+    "player_name": "Domenique Davis",
     "number": 69,
     "position": "DT",
     "player_id": "4590720",
@@ -464,7 +464,7 @@
     "trivia": ""
   },
   {
-    "player_name": "Dean Lowry94",
+    "player_name": "Dean Lowry",
     "number": 94,
     "position": "DT",
     "player_id": "2974348",
@@ -472,7 +472,7 @@
     "trivia": ""
   },
   {
-    "player_name": "Jacob Slade79",
+    "player_name": "Jacob Slade",
     "number": 79,
     "position": "DT",
     "player_id": "4382475",
@@ -480,7 +480,7 @@
     "trivia": ""
   },
   {
-    "player_name": "Malik Harrison50",
+    "player_name": "Malik Harrison",
     "number": 50,
     "position": "LB",
     "player_id": "4040615",
@@ -488,7 +488,7 @@
     "trivia": ""
   },
   {
-    "player_name": "Donte Kent34",
+    "player_name": "Donte Kent",
     "number": 34,
     "position": "CB",
     "player_id": "4608004",
@@ -496,7 +496,7 @@
     "trivia": ""
   },
   {
-    "player_name": "Cory Trice Jr.27",
+    "player_name": "Cory Trice Jr.",
     "number": 27,
     "position": "CB",
     "player_id": "4372492",
@@ -504,7 +504,7 @@
     "trivia": ""
   },
   {
-    "player_name": "Logan Woodside6",
+    "player_name": "Logan Woodside",
     "number": 6,
     "position": "QB",
     "player_id": "3042749",
@@ -512,7 +512,7 @@
     "trivia": ""
   },
   {
-    "player_name": "Max Hurleman34",
+    "player_name": "Max Hurleman",
     "number": 34,
     "position": "RB",
     "player_id": "4694237",
@@ -520,7 +520,7 @@
     "trivia": ""
   },
   {
-    "player_name": "Lew Nichols35",
+    "player_name": "Lew Nichols",
     "number": 35,
     "position": "RB",
     "player_id": "4428119",
@@ -528,7 +528,7 @@
     "trivia": ""
   },
   {
-    "player_name": "Trey Sermon27",
+    "player_name": "Trey Sermon",
     "number": 27,
     "position": "RB",
     "player_id": "4241401",
@@ -544,7 +544,7 @@
     "trivia": ""
   },
   {
-    "player_name": "Ke'Shawn Williams85",
+    "player_name": "Ke'Shawn Williams",
     "number": 85,
     "position": "WR",
     "player_id": "4570738",
@@ -552,7 +552,7 @@
     "trivia": ""
   },
   {
-    "player_name": "JJ Galbreath87",
+    "player_name": "JJ Galbreath",
     "number": 87,
     "position": "TE",
     "player_id": "4695800",
@@ -560,7 +560,7 @@
     "trivia": ""
   },
   {
-    "player_name": "Steven Jones79",
+    "player_name": "Steven Jones",
     "number": 79,
     "position": "G",
     "player_id": "4373830",
@@ -568,7 +568,7 @@
     "trivia": ""
   },
   {
-    "player_name": "Dylan Cook60",
+    "player_name": "Dylan Cook",
     "number": 60,
     "position": "OT",
     "player_id": "4570898",
@@ -576,7 +576,7 @@
     "trivia": ""
   },
   {
-    "player_name": "DeMarvin Leal98",
+    "player_name": "DeMarvin Leal",
     "number": 98,
     "position": "DE",
     "player_id": "4426359",
@@ -584,7 +584,7 @@
     "trivia": ""
   },
   {
-    "player_name": "Kyler Baugh65",
+    "player_name": "Kyler Baugh",
     "number": 65,
     "position": "DT",
     "player_id": "4573443",
@@ -600,7 +600,7 @@
     "trivia": ""
   },
   {
-    "player_name": "Julius Welschof45",
+    "player_name": "Julius Welschof",
     "number": 45,
     "position": "LB",
     "player_id": "4372098",
@@ -608,7 +608,7 @@
     "trivia": ""
   },
   {
-    "player_name": "Beanie Bishop Jr.31",
+    "player_name": "Beanie Bishop Jr.",
     "number": 31,
     "position": "CB",
     "player_id": "4363052",
@@ -616,7 +616,7 @@
     "trivia": ""
   },
   {
-    "player_name": "D'Shawn Jamison17",
+    "player_name": "D'Shawn Jamison",
     "number": 17,
     "position": "CB",
     "player_id": "4362082",
@@ -624,7 +624,7 @@
     "trivia": ""
   },
   {
-    "player_name": "Daryl Porter Jr.39",
+    "player_name": "Daryl Porter Jr.",
     "number": 39,
     "position": "CB",
     "player_id": "4691005",
@@ -632,7 +632,7 @@
     "trivia": ""
   },
   {
-    "player_name": "Sebastian Castro29",
+    "player_name": "Sebastian Castro",
     "number": 29,
     "position": "S",
     "player_id": "4426882",
