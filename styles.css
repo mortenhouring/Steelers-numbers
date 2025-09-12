@@ -98,39 +98,36 @@ main > div {
   position: relative;
   width: 90vw;
   max-width: 300px;
-  margin: 20px auto;
-  height: 0;
-  padding-bottom: 100%; /* keeps square aspect ratio */
+  margin: 5vh auto;      /* gives some top margin so it's not at the very top */
+  height: auto;
 }
 
 /* Giant number in the background */
 #giant-number {
   position: absolute;
-  bottom: 0;              /* align bottom with container */
+  bottom: 0;              /* anchor bottom */
   left: 50%;
-  transform: translateX(-50%); /* only horizontal centering */
-  font-size: 35vw;         /* adjust size to your liking */
+  transform: translateX(-50%) translateY(-15%); /* move number up slightly */
+  font-size: 35vw;         /* adjust number size */
   color: #F0EAD6;          /* eggshell */
   font-weight: 900;
-  font-family: 'Impact', sans-serif; /* or jersey-style font */
+  font-family: 'Impact', sans-serif;
   text-align: center;
-  width: 100%;
   pointer-events: none;
+  z-index: 1;
 }
 
 /* Player image in front of the number */
 #player-image {
   position: absolute;
-  bottom: 0;              /* align bottom with number */
+  bottom: 0;               /* align bottom with number */
   left: 50%;
-  transform: translateX(-50%); /* horizontal centering only */
-  width: 40%;             /* adjust size relative to number */
+  transform: translateX(-50%);
+  width: 40%;
   height: auto;
   object-fit: cover;
   border-radius: 10px;
   z-index: 2;
-  display: block;
-  margin: 0 auto;
 }
 
 #player-name,
