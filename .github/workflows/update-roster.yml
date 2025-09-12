@@ -23,11 +23,10 @@ jobs:
       - name: Run fetch script
         working-directory: ./fetch
         run: node fetch-steelers.js
-
       - name: Commit and push updated roster
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "GitHub Actions Bot"
           git add fetch/rosterupdate.json
           git commit -m "Update Steelers roster [skip ci]" || echo "No changes to commit"
-          git push
+          git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
