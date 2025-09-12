@@ -20,7 +20,7 @@ async function fetchRoster() {
             if (columns.length >= 5) {
                 const nameCell = $(columns[1]);
                 const playerLink = nameCell.find('a').attr('href');
-                const playerName = nameCell.text().trim();
+                const player_name = nameCell.text().replace(/\d+$/, '').trim();
 
                 // Extract player_id from link like "/nfl/player/_/id/8439/aaron-rodgers"
                 const idMatch = playerLink ? playerLink.match(/\/id\/(\d+)\//) : null;
