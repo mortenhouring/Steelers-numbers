@@ -1,0 +1,13 @@
+- name: Install dependencies
+  working-directory: ./fetch
+  run: npm install
+
+- name: Run fetch script
+  working-directory: ./fetch
+  run: node fetch-steelers.js
+
+- name: Commit and push updated roster
+  run: |
+    git add fetch/rosterupdate.json
+    git commit -m "Update Steelers roster [skip ci]" || echo "No changes to commit"
+    git push
