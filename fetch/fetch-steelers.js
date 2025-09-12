@@ -1,6 +1,6 @@
 // fetch-steelers.js
 import axios from 'axios';
-import cheerio from 'cheerio';
+import * as cheerio from 'cheerio';
 import fs from 'fs';
 
 const ROSTER_URL = 'https://www.espn.com/nfl/team/roster/_/name/pit/pittsburgh-steelers';
