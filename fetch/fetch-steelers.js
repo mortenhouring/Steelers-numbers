@@ -27,7 +27,9 @@ async function fetchRoster() {
                 const playerId = idMatch ? idMatch[1] : null;
 
                 const position = $(columns[2]).text().trim();
-                const number = parseInt($(columns[0]).text().trim(), 10) || null;
+                // Extract trailing digits from the name as jersey number
+                const numberMatch = playerName.match(/(\d+)$/);
+                const number = numberMatch ? parseInt(numberMatch[1], 10) : null;
 
                 // Build ESPN image URL
                 const playerImage = playerId
