@@ -1,36 +1,36 @@
 name: Update Steelers Roster
 
 on:
-  workflow_dispatch:
+  workflow_dispatch: # lets you trigger manually from GitHub UI
 
 jobs:
   fetch-roster:
     runs-on: ubuntu-latest
 
     steps:
-      # Checkout the repository
+      # Checkout the repo without persisting credentials (so we can push with token)
       - name: Checkout repo
         uses: actions/checkout@v3
         with:
-          persist-credentials: false  # Important for push using token
+          persist-credentials: false
 
-      # Setup Node.js
+      # Setup Node.js environment
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 20
 
-      # Install dependencies in /fetch
+      # Install dependencies in the fetch folder
       - name: Install dependencies
         working-directory: ./fetch
         run: npm install
 
-      # Run the fetch-steelers.js script
+      # Run the fetch script to generate rosterupdate.json
       - name: Run fetch script
         working-directory: ./fetch
         run: node fetch-steelers.js
 
-      # Commit and push the updated roster
+      # Commit and push updated roster using the GitHub token
       - name: Commit and push updated roster
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
