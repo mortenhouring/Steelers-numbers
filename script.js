@@ -151,6 +151,10 @@ function setupQuiz2() {
   }
 
   playerImage.src = player.player_image;
+  // Show giant number behind player image
+  const giantNumber = document.getElementById('giant-number');
+  giantNumber.textContent = player.number;
+
   playerInfo.textContent = `${player.player_name} - ${player.position}`;
   playerTrivia.textContent = player.trivia;
 
