@@ -121,6 +121,8 @@ function pickNextPlayer() {
   }
 
   currentPlayer = roster[currentIndex];
+  localStorage.setItem('lastPlayer', JSON.stringify(currentPlayer));
+  
   currentIndex++;
   localStorage.setItem('currentIndex', currentIndex); // save progress
 
