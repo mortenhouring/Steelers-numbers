@@ -3,14 +3,37 @@
 <head>
   <meta charset="UTF-8">
   <title>NFL Penalties Quiz</title>
-  <!-- Link to root styles.css -->
-  <link rel="stylesheet" href="../styles.css">
   <style>
-    /* Additional styles specific to penalties.html */
+    /* --- Body & Page --- */
+    body {
+      font-family: 'Arial Narrow', Verdana, Tahoma, sans-serif;
+      color: white;
+      text-align: center;
+      margin: 0;
+      padding: 20px;
+      min-height: 100vh;
+      background-image: url('clean_background.PNG');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
 
-    /* Question text scales like other quiz pages */
+    #page-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
+      padding-top: 20px;
+      box-sizing: border-box;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+    }
+
+    /* --- Question --- */
     #question {
-      font-size: 6vw;        /* responsive to viewport width */
+      font-size: 6vw;
       text-align: center;
       line-height: 1.2;
       margin: 5vh 0 2vh 0;
@@ -18,37 +41,81 @@
       max-width: 600px;
     }
 
-    /* Options container */
+    /* --- Feedback --- */
+    #feedback {
+      font-size: 4.5vw;
+      text-align: center;
+      line-height: 1.2;
+      margin: 1vh auto 2vh auto;
+      width: 90%;
+      max-width: 600px;
+      overflow-wrap: break-word;
+    }
+
+    /* --- Options & Buttons --- */
     #options {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 2vh;             /* space between buttons */
+      gap: 2vh;
       width: 100%;
     }
 
-    /* Feedback text scaling */
-    #feedback {
-      font-size: 4.5vw;      /* scales on mobile */
+    .frontpage-btn {
+      background-color: black;
+      color: white;
+      font-family: 'Arial Narrow', Verdana, Tahoma, sans-serif;
+      font-size: 20px;
+      width: 80%;
+      max-width: 200px;
+      height: 50px;
+      margin: 10px 0;
+      border: none;
+      cursor: pointer;
       text-align: center;
-      line-height: 1.2;
-      margin: 2vh 0;
-      width: 90%;
-      max-width: 400px;
-      overflow-wrap: break-word;
+      border-radius: 0;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      transition: all 0.1s ease-in-out;
+      line-height: 50px; /* vertically center text */
     }
 
-    /* Score text */
+    .frontpage-btn:active {
+      box-shadow: inset 2px 2px 5px rgba(0,0,0,0.5);
+      transform: translateY(1px);
+    }
+
+    .frontpage-btn:focus {
+      outline: none;
+    }
+
+    /* --- Next Question Button --- */
+    #next-btn {
+      margin: 15px 0;
+    }
+
+    /* --- Score --- */
     #score {
       font-size: 3.5vw;
       margin-top: 2vh;
     }
 
-    /* Make Next Question button slightly bigger on mobile */
-    #next-btn.frontpage-btn {
-      font-size: 5vw;
-      max-width: 300px;
-      padding: 10px 0;
+    /* --- Responsive adjustments --- */
+    @media (max-width: 400px) {
+      #question {
+        font-size: 7vw;
+      }
+
+      #feedback {
+        font-size: 5vw;
+      }
+
+      .frontpage-btn {
+        font-size: 6vw;
+        height: auto;
+        padding: 12px 0;
+      }
     }
   </style>
 </head>
