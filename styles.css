@@ -99,7 +99,7 @@ main > div {
   --feedback-gap: 0vh;          /* space between header and feedback */
   --element-gap: 3vh;           /* space between quiz elements below feedback */
   --number-size: 61vw;          /* size of giant number */
-  --image-width: 48vw;          /* width of player image */
+  --image-width: 46vw;          /* width of player image */
 }
 
 /* --- Main quiz content --- */
