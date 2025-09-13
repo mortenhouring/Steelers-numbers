@@ -123,22 +123,30 @@ main > div {
 }
 
 #number-container {
-  display: flex;            /* side-by-side by default */
-  flex-direction: column;   /* stack vertically if you want column */
-  align-items: center;      /* center horizontally */
-  justify-content: flex-end;/* push all children to bottom of container */
-  height: 50vh;             /* flexible height based on viewport */
-  width: 90vw;
-  max-width: 300px;
-  margin: 0 auto;
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end; /* bottom align */
 }
 
-/* Number and image scale independently */
 #giant-number {
-  font-size: 20vw;  /* scales with screen width */
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: Impact, sans-serif !important;
+    font-size: var(--number-size) !important;
+    color: #f0f0e0 !important;
+    opacity: 1 !important;
+    text-shadow: none !important;
+    z-index: 0;
+    pointer-events: none;
 }
 
 #player-image {
-  width: 40vw;      /* scales with screen width */
-  height: auto;
+    position: relative;
+    max-width: var(--image-width);
+    height: auto;
+    z-index: 1;
 }
