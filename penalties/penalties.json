@@ -1,0 +1,152 @@
+[
+  {
+    "question": "The quarterback drops back and throws the ball into the ground to avoid a sack. There is no eligible receiver in the area.",
+    "options": ["Incomplete pass", "Intentional grounding", "Roughing the passer", "Illegal formation"],
+    "answer": 1,
+    "info": "10-yard penalty or loss of down at the spot of the foul, plus loss of down."
+  },
+  {
+    "question": "The left tackle moves before the ball is snapped, drawing the defense offsides.",
+    "options": ["False start on the offense", "Offside on the defense", "Encroachment on the defense", "No foul"],
+    "answer": 0,
+    "info": "5-yard penalty, replay the down."
+  },
+  {
+    "question": "The defensive end jumps across the line of scrimmage and makes contact with the right guard before the snap.",
+    "options": ["Offside", "False start", "Encroachment", "Illegal contact"],
+    "answer": 2,
+    "info": "5-yard penalty, automatic first down if against the defense."
+  },
+  {
+    "question": "The cornerback grabs the receiver’s jersey before the ball is thrown, restricting his route.",
+    "options": ["Pass interference", "Defensive holding", "Illegal contact", "None — legal play"],
+    "answer": 1,
+    "info": "5-yard penalty and automatic first down."
+  },
+  {
+    "question": "The offense lines up with only six players on the line of scrimmage.",
+    "options": ["False start", "Illegal formation", "Delay of game", "Illegal motion"],
+    "answer": 1,
+    "info": "5-yard penalty, replay the down."
+  },
+  {
+    "question": "The defensive back hits the receiver before the ball arrives, preventing the catch.",
+    "options": ["Holding", "Pass interference (defense)", "Illegal use of hands", "Roughing"],
+    "answer": 1,
+    "info": "Spot foul and automatic first down."
+  },
+  {
+    "question": "The quarterback is hit hard after he has clearly released the ball.",
+    "options": ["Roughing the passer", "Holding", "Offside", "Personal foul — unnecessary roughness"],
+    "answer": 0,
+    "info": "15-yard penalty and automatic first down."
+  },
+  {
+    "question": "The running back lowers his head and leads with the crown of the helmet into a defender.",
+    "options": ["Legal run", "Unnecessary roughness", "Helmet-to-helmet contact", "Chop block"],
+    "answer": 2,
+    "info": "15-yard penalty, automatic first down if against defense."
+  },
+  {
+    "question": "The play clock runs out before the offense snaps the ball.",
+    "options": ["Delay of game", "False start", "Encroachment", "Illegal shift"],
+    "answer": 0,
+    "info": "5-yard penalty, replay the down."
+  },
+  {
+    "question": "On a kickoff, the ball does not travel 10 yards before the kicking team touches it.",
+    "options": ["Illegal kick", "Delay of game", "Illegal touching", "Offside"],
+    "answer": 2,
+    "info": "Receiving team awarded possession at the spot of touching."
+  },
+  {
+    "question": "A receiver shoves the cornerback out of the way to make room for the catch.",
+    "options": ["Offensive holding", "Offensive pass interference", "Legal contact", "Personal foul"],
+    "answer": 1,
+    "info": "10-yard penalty from the previous spot and loss of down."
+  },
+  {
+    "question": "The center hikes the ball before the quarterback is ready, causing confusion.",
+    "options": ["Illegal snap", "False start", "Delay of game", "Encroachment"],
+    "answer": 0,
+    "info": "5-yard penalty, replay the down."
+  },
+  {
+    "question": "A defender grabs the quarterback’s facemask while making a sack.",
+    "options": ["Holding", "Facemask penalty", "Roughing the passer", "Personal foul — clipping"],
+    "answer": 1,
+    "info": "15-yard penalty and automatic first down."
+  },
+  {
+    "question": "Two players on offense are moving at the same time when the ball is snapped.",
+    "options": ["Illegal shift", "Illegal motion", "False start", "Illegal formation"],
+    "answer": 0,
+    "info": "5-yard penalty, replay the down."
+  },
+  {
+    "question": "A defensive player jumps early and is lined up in the neutral zone at the snap.",
+    "options": ["Offside", "Encroachment", "Neutral zone infraction", "Delay of game"],
+    "answer": 2,
+    "info": "5-yard penalty, automatic first down if against defense."
+  },
+  {
+    "question": "The punter is kicked into by a defender while his leg is still extended.",
+    "options": ["Roughing the kicker", "Running into the kicker", "Unnecessary roughness", "No foul"],
+    "answer": 1,
+    "info": "5-yard penalty, replay the down. If severe, 15 yards and automatic first down (Roughing)."
+  },
+  {
+    "question": "An offensive lineman grabs the outside of a defender’s shoulder pads to stop him.",
+    "options": ["Holding (offense)", "Clipping", "Chop block", "Illegal formation"],
+    "answer": 0,
+    "info": "10-yard penalty, replay the down."
+  },
+  {
+    "question": "The quarterback throws the ball away outside the pocket, but it lands beyond the line of scrimmage.",
+    "options": ["Intentional grounding", "Incomplete pass (legal)", "Illegal forward pass", "Delay of game"],
+    "answer": 1,
+    "info": "No penalty — legal as long as the ball reaches the line of scrimmage."
+  },
+  {
+    "question": "A player spikes the football in front of an opponent after scoring a touchdown.",
+    "options": ["Legal celebration", "Unsportsmanlike conduct", "Taunting", "Personal foul — unnecessary roughness"],
+    "answer": 1,
+    "info": "15-yard penalty enforced on kickoff or extra point."
+  },
+  {
+    "question": "A defensive lineman tackles a blocker below the knees on a field goal attempt.",
+    "options": ["Clipping", "Chop block", "Roughing the kicker", "Illegal block"],
+    "answer": 1,
+    "info": "15-yard penalty, automatic first down if on defense."
+  },
+  {
+    "question": "A wide receiver runs out of bounds on his own during a passing play and then comes back in to catch the ball.",
+    "options": ["Legal catch", "Ineligible receiver", "Illegal touching", "Offensive pass interference"],
+    "answer": 2,
+    "info": "Loss of down at the previous spot."
+  },
+  {
+    "question": "The defense commits holding on a wide receiver 7 yards downfield before the pass is thrown.",
+    "options": ["Pass interference", "Defensive holding", "Illegal contact", "Personal foul"],
+    "answer": 1,
+    "info": "5-yard penalty and automatic first down."
+  },
+  {
+    "question": "The offense doesn’t get the snap off in time and takes too long in the huddle.",
+    "options": ["Delay of game", "Illegal motion", "False start", "Encroachment"],
+    "answer": 0,
+    "info": "5-yard penalty, replay the down."
+  },
+  {
+    "question": "A quarterback crosses the line of scrimmage and then throws the ball.",
+    "options": ["Illegal forward pass", "Intentional grounding", "False start", "Holding"],
+    "answer": 0,
+    "info": "5-yard penalty from the spot of the foul and loss of down."
+  },
+  {
+    "question": "After a play, a player removes his helmet to yell at the referee.",
+    "options": ["Unsportsmanlike conduct", "Personal foul — unnecessary roughness", "Delay of game", "No penalty"],
+    "answer": 0,
+    "info": "15-yard penalty, automatic first down if against defense."
+  }
+]
