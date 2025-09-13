@@ -97,7 +97,7 @@ main > div {
   --header-height: 0px;        /* height of fixed header */
   --feedback-gap: 0vh;          /* space between header and feedback */
   --element-gap: 3vh;           /* space between quiz elements below feedback */
-  --number-size: 65vw;          /* size of giant number */
+  --number-size: 61vw;          /* size of giant number */
   --image-width: 45vw;          /* width of player image */
 }
 
