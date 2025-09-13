@@ -97,7 +97,7 @@ main > div {
   --header-height: 0px;        /* height of fixed header */
   --feedback-gap: 0vh;          /* space between header and feedback */
   --element-gap: 3vh;           /* space between quiz elements below feedback */
-  --number-size: 90vw;          /* size of giant number */
+  --number-size: 80vw;          /* size of giant number */
   --image-width: 43vw;          /* width of player image */
 }
 
@@ -146,6 +146,6 @@ main > div {
   height: auto;
   grid-area: 1 / 1;
   z-index: 1;
-  transform: translateY(-18%); /* adjust until bottoms align */
+  transform: translateY(-19%); /* adjust until bottoms align */
   outline: 2px solid green;  /* debug: image box */
 }
