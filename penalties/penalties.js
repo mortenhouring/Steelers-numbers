@@ -33,7 +33,7 @@ function displayQuestion() {
 
   let optionsDiv = document.getElementById("options");
   optionsDiv.innerHTML = "";
-  document.getElementById("result").textContent = "";
+  document.getElementById("feedback").textContent = "";
   document.getElementById("next-btn").style.display = "none";
 
   // Add frontpage-btn class to all multiple-choice buttons
@@ -50,14 +50,14 @@ function displayQuestion() {
 
 // Check the answer
 function checkAnswer(selected) {
-  let resultDiv = document.getElementById("result");
+  let feedbackDiv = document.getElementById("feedback");
   totalAnswered++;
 
   if (selected === currentQuestion.options[currentQuestion.answer]) {
     correctCount++;
-    resultDiv.textContent = "Correct! " + currentQuestion.info;
+    feedbackDiv.textContent = "Correct! " + currentQuestion.info;
   } else {
-    resultDiv.textContent = "Wrong. Correct answer: " +
+    feedbackDiv.textContent = "Wrong. Correct answer: " +
       currentQuestion.options[currentQuestion.answer] + ". " + currentQuestion.info;
   }
 
