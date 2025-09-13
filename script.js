@@ -53,29 +53,27 @@ function shuffleArray(array) {
 }
 async function loadRoster() {
   try {
-    console.log('Fetching roster...');
     const response = await fetch('currentroster.json');
-    console.log('Fetch response:', response);
-
     if (!response.ok) throw new Error("Could not load roster");
-    roster = await response.json();
-    console.log('Roster loaded:', roster);
+    const loadedRoster = await response.json();
 
-    shuffleArray(roster);
-    console.log('Roster shuffled:', roster);
+    const saved = localStorage.getItem('currentRoster');
+    if (saved) {
+      roster = JSON.parse(saved);
+    } else {
+      roster = loadedRoster;
+      shuffleArray(roster);
+      localStorage.setItem('currentRoster', JSON.stringify(roster));
+    }
 
-// Initialize counters only if they don't exist
-if (!localStorage.getItem('totalQuestions')) {
-    localStorage.setItem('totalQuestions', roster.length);
-    localStorage.setItem('score', 0);
-    localStorage.setItem('questionsAsked', 0);
-}
-
+    // init totalQuestions etc if needed...
     setupQuiz1();
     console.log('Quiz setup completed');
+
   } catch (err) {
     console.error('Error during roster loading:', err);
-    document.getElementById('player-name').textContent = `Error: ${err.message}`;
+    const el = document.getElementById('player-name');
+    if (el) el.textContent = `Error: ${err.message}`;
   }
 }
 
