@@ -121,30 +121,31 @@ main > div {
   max-width: 300px;
   overflow-wrap: break-word;
 }
+
 #number-container {
-    position: relative;
-    width: 100%;
-    height: auto; /* container grows if needed */
+  display: grid;
+  place-items: end center; /* align both to bottom + center */
+  position: relative;
+  width: 100%;
+  outline: 2px dashed red;   /* debug: container box */
 }
 
 #giant-number {
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    font-family: Impact, sans-serif !important;
-    font-size: var(--number-size) !important;
-    color: #f0f0e0 !important;
-    z-index: 0;
-    pointer-events: none;
+  font-family: Impact, sans-serif !important;
+  font-size: var(--number-size) !important;
+  color: #f0f0e0 !important;
+  line-height: 1;
+  grid-area: 1 / 1;
+  z-index: 0;
+  pointer-events: none;
+  outline: 2px solid blue;   /* debug: text box */
 }
 
 #player-image {
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    max-width: var(--image-width);
-    height: auto;
-    z-index: 1;
+  max-width: var(--image-width);
+  height: auto;
+  grid-area: 1 / 1;
+  z-index: 1;
+  transform: translateY(5%); /* adjust until bottoms align */
+  outline: 2px solid green;  /* debug: image box */
 }
