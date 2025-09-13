@@ -92,66 +92,60 @@ main > div {
 #player-info-container {
     margin-bottom: 15px;
 }
-
+/* --- Root variables for mobile scaling --- */
 :root {
-  --container-bottom: 0px;      /* optional extra offset for #page-content */
-  --number-image-bottom: 0px;   /* vertical offset of number+image inside container */
-  --number-size: 45vw;          /* size of the giant number */
+  --header-height: 60px;        /* height of fixed header */
+  --feedback-gap: 5vh;          /* space between header and feedback */
+  --element-gap: 3vh;           /* space between quiz elements below feedback */
+  --number-size: 45vw;          /* size of giant number */
   --image-width: 30vw;          /* width of player image */
 }
 
-/* --- #page-content: everything below header --- */
+/* --- Main quiz content --- */
 #page-content {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 20px;  /* space between feedback and number/image */
-  margin-top: 0px; /* space for header */
+  gap: var(--element-gap);
+  padding-top: calc(var(--header-height) + var(--feedback-gap));
+  box-sizing: border-box;
 }
 
-/* --- Feedback fixed size --- */
+/* --- Feedback --- */
 #feedback {
-  height: 60px;
-  line-height: 1.2;
   font-size: 1.5em;
   text-align: center;
-  margin: 0;  /* no extra spacing */
+  line-height: 1.2;
+  margin: 0;
+  width: 90%;
+  max-width: 300px;
   overflow-wrap: break-word;
 }
 
-/* --- Container for number + image --- */
+/* --- Container for number + player image --- */
 #number-container {
   position: relative;
-  width: 90vw;
+  width: 90%;
   max-width: 300px;
-  height: 0; /* controlled by absolute children */
+  height: auto; /* let children define height */
 }
 
-/* --- Bottom-aligned number and image --- */
-#giant-number,
-#player-image {
-  position: absolute;
-  bottom: var(--number-image-bottom, 0); /* same variable for both */
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-/* Sizes */
+/* --- Giant number --- */
 #giant-number {
-  font-size: var(--number-size, 45vw);
+  font-size: var(--number-size);
   font-weight: 900;
   font-family: 'Impact', sans-serif;
   color: #F0EAD6;
   text-align: center;
-  pointer-events: none;
-  z-index: 1;
+  margin-bottom: 2vh; /* small spacing if you want number slightly above image */
 }
 
+/* --- Player image --- */
 #player-image {
-  width: var(--image-width, 30vw);
+  width: var(--image-width);
   height: auto;
   border-radius: 10px;
-  z-index: 2;
-  object-fit: cover;
   display: block;
+  object-fit: cover;
+  margin: 0 auto;
 }
