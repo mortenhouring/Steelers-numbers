@@ -4,8 +4,8 @@ let currentQuestion;
 let correctCount = 0;
 let totalAnswered = 0;
 
-// fetch JSON from same folder
-fetch("Penalties.json")
+// Fetch questions from penalties.json (same folder)
+fetch("penalties.json")
   .then(response => response.json())
   .then(data => {
     quiz = data;
@@ -14,18 +14,18 @@ fetch("Penalties.json")
   })
   .catch(err => console.error("Failed to load questions:", err));
 
-// pick random unused question
+// Pick a random unused question
 function getRandomQuestion() {
   if (unusedQuestions.length === 0) {
     unusedQuestions = [...quiz]; // reset when all used
   }
   let index = Math.floor(Math.random() * unusedQuestions.length);
   let q = unusedQuestions[index];
-  unusedQuestions.splice(index, 1);
+  unusedQuestions.splice(index, 1); // remove from pool
   return q;
 }
 
-// display question
+// Display a question
 function displayQuestion() {
   currentQuestion = getRandomQuestion();
 
@@ -46,7 +46,7 @@ function displayQuestion() {
   updateScore();
 }
 
-// check answer
+// Check the answer
 function checkAnswer(selected) {
   let resultDiv = document.getElementById("result");
   totalAnswered++;
@@ -63,11 +63,11 @@ function checkAnswer(selected) {
   updateScore();
 }
 
-// update score display
+// Update score display
 function updateScore() {
   document.getElementById("score").textContent =
     `Score: ${correctCount}/${totalAnswered}`;
 }
 
-// next question button
+// Next question button
 document.getElementById("next-btn").onclick = displayQuestion;
