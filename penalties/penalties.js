@@ -36,9 +36,11 @@ function displayQuestion() {
   document.getElementById("result").textContent = "";
   document.getElementById("next-btn").style.display = "none";
 
+  // Add frontpage-btn class to all multiple-choice buttons
   currentQuestion.options.forEach(option => {
     let btn = document.createElement("button");
     btn.textContent = option;
+    btn.classList.add("frontpage-btn"); // ✅ apply CSS
     btn.onclick = () => checkAnswer(option);
     optionsDiv.appendChild(btn);
   });
