@@ -1,5 +1,5 @@
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Arial Narrow', Verdana, Tahoma, sans-serif;
     text-align: center;
     margin: 0;
     padding: 20px;
@@ -17,7 +17,7 @@ h1 {
 .frontpage-btn {
     background-color: black;
     color: white;
-    font-family: 'Courier New', Courier, monospace;
+    font-family: 'Arial Narrow', Verdana, Tahoma, sans-serif;
     font-size: 20px;
     width: 80%;            /* responsive width */
     max-width: 200px;       /* don’t get too wide on large phones/tablets */
