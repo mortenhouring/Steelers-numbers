@@ -134,7 +134,9 @@ main > div {
 #giant-number {
   font-family: Impact, sans-serif !important;
   font-size: var(--number-size) !important;
-  color: #f0f0e0 !important;
+transform: translateX(-50%) translateY(10%) scaleX(0.7); 
+    /* scaleX <1 → narrower, >1 → wider */
+color: #f0f0e0 !important;
   line-height: 1;
   grid-area: 1 / 1;
   z-index: 0;
