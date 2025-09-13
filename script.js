@@ -131,15 +131,14 @@ function pickNextPlayer() {
   questionDisplay.textContent = phrase.replace('{player}', currentPlayer.player_name);
   answerDisplay.value = '';
 }
+// --- Quiz2 setup ---
 function setupQuiz2() {
   if (!document.body.classList.contains('quiz2')) return;
 
-  const quizContent = document.getElementById('quiz2-content'); // wrap all quiz2 elements
   const playerImage = document.getElementById('player-image');
   const playerInfo = document.getElementById('player-info');
   const playerTrivia = document.getElementById('player-trivia');
   const feedback = document.getElementById('feedback');
-  const giantNumber = document.getElementById('giant-number');
   const scoreDisplay = document.getElementById('score');
   const remainingDisplay = document.getElementById('remaining');
   const nextButton = document.getElementById('next-button');
@@ -147,57 +146,54 @@ function setupQuiz2() {
   const lastAnswer = parseInt(localStorage.getItem('lastAnswer'), 10);
   const lastPlayerId = localStorage.getItem('lastPlayerId');
   const saved = localStorage.getItem('lastPlayer');
-  const player = saved ? JSON.parse(saved) : roster.find(p => p.player_id === lastPlayerId);
-
+const player = saved ? JSON.parse(saved) : roster.find(p => p.player_id === lastPlayerId);
   if (!player) {
     feedback.textContent = "Player not found.";
     return;
   }
 
-  // Hide content initially
-  if (quizContent) quizContent.classList.remove('visible');
-
-  // Set giant number and image once loaded
-  const showContent = () => {
-    giantNumber.textContent = player.number;
-    playerInfo.textContent = `${player.player_name} - ${player.position}`;
-    playerTrivia.textContent = player.trivia;
-
-    if (lastAnswer === player.number) {
-      feedback.textContent = correctResponses[Math.floor(Math.random() * correctResponses.length)];
-    } else {
-      feedback.textContent = incorrectResponses[Math.floor(Math.random() * incorrectResponses.length)];
-    }
-
-    let score = parseInt(localStorage.getItem('score') || '0', 10);
-    let questionsAsked = parseInt(localStorage.getItem('questionsAsked') || '0', 10);
-    const totalQuestions = parseInt(localStorage.getItem('totalQuestions') || roster.length, 10);
-
-    questionsAsked++;
-    if (lastAnswer === player.number) score++;
-
-    localStorage.setItem('score', score);
-    localStorage.setItem('questionsAsked', questionsAsked);
-    localStorage.removeItem('lastPlayer');
-
-    scoreDisplay.textContent = `Score: ${score} / ${questionsAsked}`;
-    remainingDisplay.textContent = `Remaining: ${totalQuestions - questionsAsked} / ${totalQuestions}`;
-
-    // Show content with fade-in
-    if (quizContent) quizContent.classList.add('visible');
-  };
-
-  // Set image with onload/onerror
-  playerImage.onload = () => {
-    showContent();
-  };
-  playerImage.onerror = () => {
-    playerImage.src = 'placeholder.png'; // fallback image
-    showContent();
-  };
   playerImage.src = player.player_image;
+  // Show giant number behind player image
+  const giantNumber = document.getElementById('giant-number');
+  giantNumber.textContent = player.number;
+
+  playerInfo.textContent = `${player.player_name} - ${player.position}`;
+  playerTrivia.textContent = player.trivia;
+
+  if (lastAnswer === player.number) {
+    feedback.textContent = correctResponses[Math.floor(Math.random() * correctResponses.length)];
+  } else {
+    feedback.textContent = incorrectResponses[Math.floor(Math.random() * incorrectResponses.length)];
+  }
+
+  let score = parseInt(localStorage.getItem('score') || '0', 10);
+  let questionsAsked = parseInt(localStorage.getItem('questionsAsked') || '0', 10);
+  const totalQuestions = parseInt(localStorage.getItem('totalQuestions') || roster.length, 10);
+
+  questionsAsked++;  // increment per answered question
+
+  if (lastAnswer === player.number) {
+      score++;  // increment only on correct answer
+  }
+
+  localStorage.setItem('score', score);
+  localStorage.setItem('questionsAsked', questionsAsked);
+  
+  // After processing the player answer in Quiz2
+  localStorage.removeItem('lastPlayer');
+
+  // Display counters in desired format
+  scoreDisplay.textContent = `Score: ${score} / ${questionsAsked}`;
+  const remaining = totalQuestions - questionsAsked;
+  remainingDisplay.textContent = `Remaining: ${remaining} / ${totalQuestions}`;
 
   nextButton.addEventListener('click', () => {
     window.location.href = 'quiz1.html';
   });
 }
+
+// Auto-detect which quiz page
+document.addEventListener('DOMContentLoaded', async () => {
+  await loadRoster();   // This will call setupQuiz1() if on quiz1 page
+  setupQuiz2();         // Only needed if on quiz2 page
+});
