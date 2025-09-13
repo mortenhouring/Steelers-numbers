@@ -125,7 +125,8 @@ function pickNextPlayer() {
   
   currentIndex++;
   localStorage.setItem('currentIndex', currentIndex); // save progress
-
+  localStorage.setItem('currentRoster', JSON.stringify(roster));
+  
   const phrase = questionPhrases[Math.floor(Math.random() * questionPhrases.length)];
   questionDisplay.textContent = phrase.replace('{player}', currentPlayer.player_name);
   answerDisplay.value = '';
@@ -144,7 +145,8 @@ function setupQuiz2() {
 
   const lastAnswer = parseInt(localStorage.getItem('lastAnswer'), 10);
   const lastPlayerId = localStorage.getItem('lastPlayerId');
-  const player = roster.find(p => p.player_id === lastPlayerId);
+  const saved = localStorage.getItem('lastPlayer');
+const player = saved ? JSON.parse(saved) : roster.find(p => p.player_id === lastPlayerId);
   if (!player) {
     feedback.textContent = "Player not found.";
     return;
@@ -176,6 +178,9 @@ function setupQuiz2() {
 
   localStorage.setItem('score', score);
   localStorage.setItem('questionsAsked', questionsAsked);
+  
+  // After processing the player answer in Quiz2
+  localStorage.removeItem('lastPlayer');
 
   // Display counters in desired format
   scoreDisplay.textContent = `Score: ${score} / ${questionsAsked}`;
