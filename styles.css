@@ -126,13 +126,14 @@ main > div {
     position: relative;
     width: 100%;
     display: flex;
-    justify-content: center;
-    align-items: flex-end; /* bottom align */
+    justify-content: center;   /* centers child (the image) */
+    align-items: flex-end;     /* aligns items at the bottom */
+    margin-top: var(--element-gap); /* pushes it below feedback */
 }
 
 #giant-number {
     position: absolute;
-    bottom: 0;
+    bottom: 0;                 /* lock to bottom of container */
     left: 50%;
     transform: translateX(-50%);
     font-family: Impact, sans-serif !important;
@@ -140,13 +141,16 @@ main > div {
     color: #f0f0e0 !important;
     opacity: 1 !important;
     text-shadow: none !important;
-    z-index: 0;
+    z-index: 0;                 /* behind image */
     pointer-events: none;
 }
 
 #player-image {
     position: relative;
+    display: block;
     max-width: var(--image-width);
     height: auto;
-    z-index: 1;
+    margin: 0 auto;             /* centers horizontally */
+    z-index: 1;                 /* above number */
+    align-self: flex-end;       /* bottom-align with number */
 }
