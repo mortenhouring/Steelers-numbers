@@ -152,3 +152,12 @@ color: #f0f0e0 !important;
   transform: translateY(-17%); /* adjust until bottoms align */
   outline: 2px solid green;  /* debug: image box */
 }
+
+/* fading in on quiz2 */
+#quiz2-content {
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out; /* fade-in duration */
+}
+#quiz2-content.visible {
+  opacity: 1;
+}
