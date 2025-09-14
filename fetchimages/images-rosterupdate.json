@@ -181,7 +181,7 @@
   },
   {
     "player_name": "Andrus Peat",
-    "number": 68,
+    "number": 71,
     "position": "G",
     "player_id": "2978278",
     "player_image": "fetchimages/images/2978278.png",
@@ -241,7 +241,7 @@
   },
   {
     "player_name": "Yahya Black",
-    "number": 78,
+    "number": 94,
     "position": "DE",
     "player_id": "4430947",
     "player_image": "fetchimages/images/4430947.png",
@@ -251,7 +251,7 @@
   },
   {
     "player_name": "Esezi Otomewo",
-    "number": 72,
+    "number": 93,
     "position": "DE",
     "player_id": "4240759",
     "player_image": "fetchimages/images/4240759.png",
@@ -371,7 +371,7 @@
   },
   {
     "player_name": "Jon Rhattigan",
-    "number": null,
+    "number": 26,
     "position": "LB",
     "player_id": "4258485",
     "player_image": "fetchimages/images/4258485.png",
