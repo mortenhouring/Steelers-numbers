@@ -72,8 +72,7 @@ async function fetchRoster() {
 
     // Wait for all images to finish downloading
     await Promise.all(downloadTasks);
-    
-    // Fetch trivia and stats for each player
+    // Fetch trivia and stats for each player from Steelers.com
     await fetchTriviaForRoster(roster);
     // Save roster JSON after all downloads complete
     fs.writeFileSync(OUTPUT_FILE, JSON.stringify(roster, null, 2));
