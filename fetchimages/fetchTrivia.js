@@ -94,5 +94,6 @@ export async function fetchTriviaForRoster(roster) {
     player.trivia = trivia;
     player.stats = stats;
   }
+  
   return roster;
 }
