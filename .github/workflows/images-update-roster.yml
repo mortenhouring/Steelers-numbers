@@ -1,0 +1,36 @@
+name: Update Steelers Roster (Images)
+
+on:
+  workflow_dispatch:
+
+jobs:
+  fetch-roster:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+        with:
+          persist-credentials: true
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        working-directory: ./fetchimages
+        run: npm install
+
+      - name: Run images-fetch-steelers.js
+        working-directory: ./fetchimages
+        run: node images-fetch-steelers.js
+
+      - name: Commit & Push roster and images
+        working-directory: ./fetchimages
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "GitHub Actions Bot"
+          git add images-rosterupdate.json images/
+          git commit -m "Update Steelers roster [skip ci]" || echo "No changes to commit"
+          git push
