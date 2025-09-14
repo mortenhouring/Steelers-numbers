@@ -29,14 +29,14 @@ async function fetchRoster() {
     const $ = cheerio.load(response.data);
 
     const roster = [];
+    const downloadTasks = [];
     const tableGroups = ['OFF', 'DEF', 'ST', 'OUT', 'PS'];
 
     $('table tbody').each((i, tbody) => {
       const group = tableGroups[i] || null;
 
-      $(tbody).find('tr').each(async (j, row) => {
+      $(tbody).find('tr').each((j, row) => {
         const columns = $(row).find('td');
-
         if (columns.length >= 5) {
           const nameCell = $(columns[1]);
           const playerLink = nameCell.find('a').attr('href');
@@ -52,7 +52,8 @@ async function fetchRoster() {
             const imageUrl = `https://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/${playerId}.png`;
             const localImagePath = path.join(IMAGES_DIR, `${playerId}.png`);
 
-            await downloadImage(imageUrl, localImagePath);
+            // Queue the download task
+            downloadTasks.push(downloadImage(imageUrl, localImagePath));
 
             roster.push({
               player_name,
@@ -68,10 +69,12 @@ async function fetchRoster() {
       });
     });
 
-    await new Promise(resolve => setTimeout(resolve, 5000));
+    // Wait for all images to finish downloading
+    await Promise.all(downloadTasks);
+
+    // Save roster JSON after all downloads complete
     fs.writeFileSync(OUTPUT_FILE, JSON.stringify(roster, null, 2));
     console.log(`Roster saved to ${OUTPUT_FILE} (${roster.length} players)`);
-
   } catch (error) {
     console.error('Error fetching roster:', error.message);
   }
