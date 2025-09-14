@@ -7,13 +7,15 @@ import * as cheerio from 'cheerio';
  * Handles special cases: periods, apostrophes, III/IV, hyphens, etc.
  */
 function nameToSlug(name) {
-  return name
-    .toLowerCase()
-    .replace(/\./g, '')           // remove periods
-    .replace(/['’]/g, '')         // remove apostrophes
-    .replace(/\s+/g, '-')         // spaces to hyphens
-    .replace(/[^a-z0-9-]/g, '')   // remove any other invalid chars
-    .replace(/-+/g, '-');         // collapse multiple hyphens
+  // Remove periods unless at end of name (like "Jr.")
+  let cleanName = name.replace(/\.(?=\S)/g, '-'); // replace internal periods with -
+  cleanName = cleanName.replace(/\.$/, '');       // remove trailing period
+  cleanName = cleanName.replace(/['’]/g, '-');    // replace apostrophes with -
+  cleanName = cleanName.replace(/\s+/g, '-');     // spaces → hyphens
+  cleanName = cleanName.toLowerCase();
+  cleanName = cleanName.replace(/[^a-z0-9-]/g, ''); // remove other invalid chars
+  cleanName = cleanName.replace(/-+/g, '-');     // collapse multiple hyphens
+  return cleanName;
 }
 
 /**
@@ -37,8 +39,10 @@ export async function fetchSteelersTrivia(playerName) {
   const MAX_RETRIES = 3;
 
   let response = null;
+
   for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
     try {
+      console.log(`Fetching trivia for ${playerName}, attempt ${attempt}...`);
       response = await axios.get(url);
       break; // success
     } catch (err) {
@@ -47,7 +51,6 @@ export async function fetchSteelersTrivia(playerName) {
         console.error(`Trivia fetch failed for ${playerName} after ${MAX_RETRIES} attempts`);
         return '';
       }
-      // Wait 1s before retry
       await new Promise(res => setTimeout(res, 1000));
     }
   }
@@ -56,8 +59,21 @@ export async function fetchSteelersTrivia(playerName) {
   const triviaLines = [];
 
   $('.player-bio-section').each((i, section) => {
-    const header = $(section).find('h3').text().trim().toUpperCase();
-    if (allowedSections.includes(header)) {
+    const header = $(section).find('h3').first().text().trim().toUpperCase();
+
+    if (header === 'BIOGRAPHY') {
+      // iterate sub-sections
+      $(section).find('.player-bio-subsection').each((j, sub) => {
+        const subHeader = $(sub).find('h4').text().trim().toUpperCase();
+        if (allowedSections.includes(subHeader)) {
+          $(sub).find('li, p').each((k, el) => {
+            const text = $(el).text().trim();
+            if (text.length > 0) triviaLines.push(text);
+          });
+        }
+      });
+    } else if (allowedSections.includes(header)) {
+      // top-level sections like "2025 SEASON"
       $(section).find('li, p').each((j, el) => {
         const text = $(el).text().trim();
         if (text.length > 0) triviaLines.push(text);
@@ -65,7 +81,10 @@ export async function fetchSteelersTrivia(playerName) {
     }
   });
 
-  if (triviaLines.length === 0) return '';
+  if (triviaLines.length === 0) {
+    console.log(`No trivia found for ${playerName}`);
+    return '';
+  }
 
   // Pick one random line
   let selected = triviaLines[Math.floor(Math.random() * triviaLines.length)];
@@ -77,5 +96,6 @@ export async function fetchSteelersTrivia(playerName) {
     if (lastSpace > 0) selected = selected.slice(0, lastSpace);
   }
 
+  console.log(`Trivia for ${playerName}: ${selected}`);
   return selected;
 }
