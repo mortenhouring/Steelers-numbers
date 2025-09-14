@@ -60,7 +60,7 @@ async function fetchRoster() {
               number,
               position,
               player_id: playerId,
-              player_image: `Steelers-numbers/fetchimages/images/${playerId}.png`,
+              player_image: `fetchimages/images/${playerId}.png`,
               group,
               trivia: ""
             });
