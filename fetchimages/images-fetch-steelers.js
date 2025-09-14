@@ -3,7 +3,7 @@ import axios from 'axios';
 import * as cheerio from 'cheerio';
 import fs from 'fs';
 import path from 'path';
-import { fetchSteelersTrivia } from './fetchTrivia.js';
+import { fetchTriviaForRoster } from './fetchTrivia.js';
 
 const ROSTER_URL = 'https://www.espn.com/nfl/team/roster/_/name/pit/pittsburgh-steelers';
 const OUTPUT_FILE = 'images-rosterupdate.json';
@@ -72,9 +72,9 @@ async function fetchRoster() {
 
     // Wait for all images to finish downloading
     await Promise.all(downloadTasks);
-    for (let player of roster) {
-    player.trivia = await fetchSteelersTrivia(player.player_name);
-    }
+    
+    // Fetch trivia and stats for each player
+    await fetchTriviaForRoster(roster);
     // Save roster JSON after all downloads complete
     fs.writeFileSync(OUTPUT_FILE, JSON.stringify(roster, null, 2));
     console.log(`Roster saved to ${OUTPUT_FILE} (${roster.length} players)`);
