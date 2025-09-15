@@ -29,9 +29,9 @@ if (fs.existsSync(triviaFile)) {
   const roster = JSON.parse(fs.readFileSync(rosterFile, 'utf-8'));
 
   const browser = await puppeteer.launch({
-  headless: true,
-  args: ['--no-sandbox', '--disable-setuid-sandbox']
-});
+    headless: true,
+    args: ['--no-sandbox', '--disable-setuid-sandbox']
+  });
   const page = await browser.newPage();
 
   for (const player of roster) {
@@ -53,17 +53,17 @@ if (fs.existsSync(triviaFile)) {
           'PRO CAREER',
           '2024',
           'PERSONAL',
-          'CAREER HIGHLIGHTS (REGULAR SEASON)',
-          'CAREER HIGHLIGHTS (POSTSEASON)'
+          'CAREER HIGHLIGHTS',
+          'AWARDS'
         ];
 
         const sectioned = {};
 
-        document.querySelectorAll('h3, h4').forEach(header => {
+        document.querySelectorAll('p strong').forEach(header => {
           const headingText = header.textContent.toUpperCase().trim();
           if (allowedSubsections.some(sub => headingText.includes(sub))) {
             const bullets = [];
-            let next = header.nextElementSibling;
+            let next = header.parentElement.nextElementSibling;
             while (next && next.tagName === 'UL') {
               next.querySelectorAll('li').forEach(li => bullets.push(li.textContent.trim()));
               next = next.nextElementSibling;
