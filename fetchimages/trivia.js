@@ -3,7 +3,20 @@ import fs from 'fs';
 import path from 'path';
 import puppeteer from 'puppeteer';
 
-const rosterFile = path.join('.', 'images-rosterupdate.json');
+const rosterUrl = "https://raw.githubusercontent.com/mortenhouring/Steelers-numbers/main/fetchimages/images-rosterupdate.json";
+
+let rosterData;
+try {
+  const response = await fetch(rosterUrl);
+  if (!response.ok) {
+    throw new Error(`Failed to fetch roster JSON. Status: ${response.status}`);
+  }
+  rosterData = await response.json();
+  console.log("✅ Successfully fetched roster JSON");
+  console.log("Sample keys from JSON:", Object.keys(rosterData[0] || {}));
+} catch (error) {
+  console.error("❌ Error fetching or parsing roster JSON:", error);
+}
 const triviaFile = path.join('.', 'trivia.json');
 
 // Converts player names to Steelers.com URL slug
@@ -26,7 +39,7 @@ if (fs.existsSync(triviaFile)) {
 
 // Main function
 (async () => {
-  const roster = JSON.parse(fs.readFileSync(rosterFile, 'utf-8'));
+  const roster = rosterData; // ✅ use fetched JSON
 
   const browser = await puppeteer.launch({
     headless: true,
@@ -42,7 +55,7 @@ if (fs.existsSync(triviaFile)) {
 
     const slug = nameToSlug(player.player_name);
     const url = `https://www.steelers.com/team/players-roster/${slug}`;
-
+    
     try {
       console.log(`Fetching trivia for ${player.player_name}`);
       await page.goto(url, { waitUntil: 'domcontentloaded' });
