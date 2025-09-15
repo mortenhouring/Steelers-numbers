@@ -78,48 +78,25 @@ if (fs.existsSync(triviaFile)) {
 
   const sectioned = {};
   const bioSection = document.querySelector('.nfl-c-biography');
-  if (!bioSection) {
-    console.log('❌ No biography section found');
-    return sectioned;
-  }
-  console.log('✅ Biography section found');
+  if (!bioSection) return sectioned;
 
-  const children = Array.from(bioSection.children);
-  console.log(`ℹ️ Found ${children.length} children in biography`);
+  const divs = Array.from(bioSection.querySelectorAll('div.nfl-c-body-part--text'));
+  
+  for (let i = 0; i < divs.length; i++) {
+    const div = divs[i];
+    const strong = div.querySelector('p > strong');
+    if (!strong) continue;
 
-  for (let i = 0; i < children.length; i++) {
-    const el = children[i];
-    const text = el.textContent.trim();
-
-    // Skip elements with empty text
-    if (!text) continue;
-
-    // Only proceed if the text matches an allowed subsection
-    let headingText = allowedSubsections.find(sub => text.toUpperCase().includes(sub));
+    let headingText = allowedSubsections.find(sub => strong.textContent.toUpperCase().includes(sub));
     if (!headingText) continue;
 
-    console.log(`🔹 Found subsection heading: "${headingText}"`);
-
-    // Normalize all Career Highlights variants
     if (headingText.includes('CAREER HIGHLIGHTS')) headingText = 'CAREER HIGHLIGHTS';
 
-    // Collect following <ul> list items or paragraph lines until the next heading
     const bullets = [];
-    let next = el.nextElementSibling;
-    while (next) {
-      const nextText = next.textContent.trim();
-      // Stop if we hit the next heading
-      if (allowedSubsections.some(sub => nextText.toUpperCase().includes(sub))) break;
-
-      // Grab <li> items if it's a <ul>
-      if (next.tagName === 'UL') {
-        next.querySelectorAll('li').forEach(li => bullets.push(li.textContent.trim()));
-      } else if (next.tagName === 'P') {
-        // If it's a <p>, split by line breaks if needed
-        if (nextText) bullets.push(nextText);
-      }
-
-      next = next.nextElementSibling;
+    // look in next sibling div for <ul>
+    const nextDiv = div.nextElementSibling;
+    if (nextDiv && nextDiv.querySelector('ul')) {
+      nextDiv.querySelectorAll('li').forEach(li => bullets.push(li.textContent.trim()));
     }
 
     sectioned[headingText] = bullets;
@@ -127,7 +104,6 @@ if (fs.existsSync(triviaFile)) {
 
   return sectioned;
 });
-
       triviaData[player.player_id] = {
         player_name: player.player_name,
         player_url: url,
