@@ -17,9 +17,11 @@ jobs:
 
       - name: Install dependencies
         run: npm install
+        working-directory: fetchimages
 
       - name: Run trivia scraper
-        run: node fetchimages/trivia.js
+        run: node trivia.js
+        working-directory: fetchimages
 
       - name: Show trivia file info
         run: |
