@@ -34,7 +34,12 @@ function nameToSlug(name) {
 // Load existing trivia.json or start empty
 let triviaData = {};
 if (fs.existsSync(triviaFile)) {
-  triviaData = JSON.parse(fs.readFileSync(triviaFile, 'utf-8'));
+  const content = fs.readFileSync(triviaFile, 'utf-8').trim();
+  if (content) {
+    triviaData = JSON.parse(content);
+  } else {
+    triviaData = {};
+  }
 }
 
 // Main function
