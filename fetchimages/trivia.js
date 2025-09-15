@@ -65,7 +65,17 @@ if (fs.existsSync(triviaFile)) {
     try {
       console.log(`Fetching trivia for ${player.player_name}`);
       await page.goto(url, { waitUntil: 'domcontentloaded' });
-
+    try {
+  const readMoreSelector = '.nfl-c-biography__read-more'; // adjust if class differs
+  const readMoreButton = await page.$(readMoreSelector);
+  if (readMoreButton) {
+    console.log('ℹ️ Clicking READ MORE button...');
+    await readMoreButton.click();
+    await page.waitForTimeout(1000); // small pause to allow content to expand
+  }
+} catch (err) {
+  console.log('⚠️ No READ MORE button found, continuing...');
+}
       const playerTrivia = await page.evaluate(() => {
   const allowedSubsections = [
     'PRO CAREER',
@@ -80,26 +90,37 @@ if (fs.existsSync(triviaFile)) {
   const bioSection = document.querySelector('.nfl-c-biography');
   if (!bioSection) return sectioned;
 
-  const divs = Array.from(bioSection.querySelectorAll('div.nfl-c-body-part--text'));
-  
-  for (let i = 0; i < divs.length; i++) {
-    const div = divs[i];
-    const strong = div.querySelector('p > strong');
-    if (!strong) continue;
+  const children = Array.from(bioSection.children);
 
-    let headingText = allowedSubsections.find(sub => strong.textContent.toUpperCase().includes(sub));
+  for (let i = 0; i < children.length; i++) {
+    const el = children[i];
+    const text = el.textContent.trim();
+    if (!text) continue;
+
+    let headingText = allowedSubsections.find(sub => text.toUpperCase().includes(sub));
     if (!headingText) continue;
 
     if (headingText.includes('CAREER HIGHLIGHTS')) headingText = 'CAREER HIGHLIGHTS';
 
     const bullets = [];
-    // look in next sibling div for <ul>
-    const nextDiv = div.nextElementSibling;
-    if (nextDiv && nextDiv.querySelector('ul')) {
-      nextDiv.querySelectorAll('li').forEach(li => bullets.push(li.textContent.trim()));
+    let next = el.nextElementSibling;
+
+    while (next) {
+      const nextText = next.textContent.trim();
+      if (allowedSubsections.some(sub => nextText.toUpperCase().includes(sub))) break;
+
+      if (next.tagName === 'UL') {
+        next.querySelectorAll('li').forEach(li => bullets.push(li.textContent.trim()));
+      } else if (next.tagName === 'P' && nextText) {
+        bullets.push(nextText);
+      }
+
+      next = next.nextElementSibling;
     }
 
-    sectioned[headingText] = bullets;
+    // Merge bullets if section exists
+    if (sectioned[headingText]) sectioned[headingText] = sectioned[headingText].concat(bullets);
+    else sectioned[headingText] = bullets;
   }
 
   return sectioned;
