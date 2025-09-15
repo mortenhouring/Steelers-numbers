@@ -1,0 +1,27 @@
+name: Fetch Steelers Trivia
+
+on:
+  workflow_dispatch:
+
+jobs:
+  fetch-trivia:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run trivia scraper
+        run: node fetchimages/trivia.js
+
+      - name: Upload trivia.json
+        uses: actions/upload-artifact@v3
+        with:
+          name: trivia-json
+          path: fetchimages/trivia.json
