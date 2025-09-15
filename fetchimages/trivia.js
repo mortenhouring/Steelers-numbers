@@ -3,8 +3,8 @@ import fs from 'fs';
 import path from 'path';
 import puppeteer from 'puppeteer';
 
-const rosterFile = path.join('./fetchimages', 'images-rosterupdate.json');
-const triviaFile = path.join('./fetchimages', 'trivia.json');
+const rosterFile = path.join('.', 'images-rosterupdate.json');
+const triviaFile = path.join('.', 'trivia.json');
 
 // Converts player names to Steelers.com URL slug
 function nameToSlug(name) {
