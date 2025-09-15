@@ -1,10 +1,10 @@
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs';
+import path from 'path';
 
 /**
  * Load trivia JSON
  */
-const triviaFile = path.join(__dirname, 'fetchimages', 'trivia.json');
+const triviaFile = path.join(process.cwd(), 'fetchimages', 'trivia.json');
 let triviaData = {};
 try {
     triviaData = JSON.parse(fs.readFileSync(triviaFile, 'utf-8'));
@@ -91,10 +91,13 @@ function generateTriviaParagraph(playerId, maxChars = 450) {
     return { paragraph: selected.map(s => s.text).join(' '), selectedStrings: selected.map(s => s.text) };
 }
 
-// Example usage:
-const playerId = '13977';
-const result = generateTriviaParagraph(playerId);
-console.log('\nGenerated Trivia Paragraph:\n', result.paragraph);
-console.log('\nUsed Trivia Strings:\n', result.selectedStrings);
+// Export function using ES module syntax
+export { generateTriviaParagraph };
 
-module.exports = { generateTriviaParagraph };
+// Example usage when running directly
+if (process.argv[1].endsWith('trivia-shuffle.js')) {
+    const testPlayerId = '13977';
+    const result = generateTriviaParagraph(testPlayerId);
+    console.log('\nGenerated Trivia Paragraph:\n', result.paragraph);
+    console.log('\nUsed Trivia Strings:\n', result.selectedStrings);
+}
