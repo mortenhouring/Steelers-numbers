@@ -17,6 +17,7 @@ try {
 } catch (error) {
   console.error("❌ Error fetching or parsing roster JSON:", error);
 }
+
 const triviaFile = path.join('.', 'trivia.json');
 
 // Converts player names to Steelers.com URL slug
@@ -60,60 +61,60 @@ if (fs.existsSync(triviaFile)) {
 
     const slug = nameToSlug(player.player_name);
     const url = `https://www.steelers.com/team/players-roster/${slug}`;
-    
+
     try {
       console.log(`Fetching trivia for ${player.player_name}`);
       await page.goto(url, { waitUntil: 'domcontentloaded' });
-      // Collect subsectioned trivia scoped to Biography, normalize Career Highlights
-    const playerTrivia = await page.evaluate(() => {
-  const allowedSubsections = [
-    'PRO CAREER',
-    'PERSONAL',
-    'CAREER HIGHLIGHTS',
-    'CAREER HIGHLIGHTS (REGULAR SEASON)',
-    'CAREER HIGHLIGHTS (POSTSEASON)',
-    'AWARDS'
-  ];
 
-  const sectioned = {};
-  const bioSection = document.querySelector('.nfl-c-biography');
-  if (!bioSection) {
-    console.log('❌ No biography section found');
-    return sectioned;
-  }
-  console.log('✅ Biography section found');
+      const playerTrivia = await page.evaluate(() => {
+        const allowedSubsections = [
+          'PRO CAREER',
+          'PERSONAL',
+          'CAREER HIGHLIGHTS',
+          'CAREER HIGHLIGHTS (REGULAR SEASON)',
+          'CAREER HIGHLIGHTS (POSTSEASON)',
+          'AWARDS'
+        ];
 
-  const children = Array.from(bioSection.children);
-  console.log(`ℹ️ Found ${children.length} children in biography`);
+        const sectioned = {};
+        const bioSection = document.querySelector('.nfl-c-biography');
+        if (!bioSection) {
+          console.log('❌ No biography section found');
+          return sectioned;
+        }
+        console.log('✅ Biography section found');
 
-  for (let i = 0; i < children.length; i++) {
-    const el = children[i];
-    let headingText = el.textContent.toUpperCase().trim();
+        const children = Array.from(bioSection.children);
+        console.log(`ℹ️ Found ${children.length} children in biography`);
 
-    if (!allowedSubsections.some(sub => headingText.includes(sub))) continue;
-    console.log(`🔹 Found subsection heading: "${headingText}"`);
+        for (let i = 0; i < children.length; i++) {
+          const el = children[i];
+          let headingText = el.textContent.toUpperCase().trim();
 
-    if (headingText.includes('CAREER HIGHLIGHTS')) headingText = 'CAREER HIGHLIGHTS';
+          // Only use allowed subsections as headings
+          if (!allowedSubsections.some(sub => headingText.includes(sub))) continue;
+          console.log(`🔹 Found subsection heading: "${headingText}"`);
 
-    const bullets = [];
-    let next = el.nextElementSibling;
-    while (next && next.tagName === 'UL') {
-      next.querySelectorAll('li').forEach(li => bullets.push(li.textContent.trim()));
-      next = next.nextElementSibling;
-    }
+          // Normalize Career Highlights
+          if (headingText.includes('CAREER HIGHLIGHTS')) headingText = 'CAREER HIGHLIGHTS';
 
-    if (sectioned[headingText]) {
-      sectioned[headingText] = sectioned[headingText].concat(bullets);
-    } else {
-      sectioned[headingText] = bullets;
-    }
-  }
+          // Collect text until next allowed heading
+          const bullets = [];
+          let next = el.nextElementSibling;
+          while (
+            next &&
+            !allowedSubsections.some(sub => next.textContent.toUpperCase().includes(sub))
+          ) {
+            const text = next.textContent.trim();
+            if (text) bullets.push(text);
+            next = next.nextElementSibling;
+          }
 
-  return sectioned;
-});
-      
+          sectioned[headingText] = bullets;
+        }
 
-      
+        return sectioned;
+      });
 
       triviaData[player.player_id] = {
         player_name: player.player_name,
