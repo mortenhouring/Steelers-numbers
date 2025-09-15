@@ -67,54 +67,66 @@ if (fs.existsSync(triviaFile)) {
       await page.goto(url, { waitUntil: 'domcontentloaded' });
 
       const playerTrivia = await page.evaluate(() => {
-        const allowedSubsections = [
-          'PRO CAREER',
-          'PERSONAL',
-          'CAREER HIGHLIGHTS',
-          'CAREER HIGHLIGHTS (REGULAR SEASON)',
-          'CAREER HIGHLIGHTS (POSTSEASON)',
-          'AWARDS'
-        ];
+  const allowedSubsections = [
+    'PRO CAREER',
+    'PERSONAL',
+    'CAREER HIGHLIGHTS',
+    'CAREER HIGHLIGHTS (REGULAR SEASON)',
+    'CAREER HIGHLIGHTS (POSTSEASON)',
+    'AWARDS'
+  ];
 
-        const sectioned = {};
-        const bioSection = document.querySelector('.nfl-c-biography');
-        if (!bioSection) {
-          console.log('❌ No biography section found');
-          return sectioned;
-        }
-        console.log('✅ Biography section found');
+  const sectioned = {};
+  const bioSection = document.querySelector('.nfl-c-biography');
+  if (!bioSection) {
+    console.log('❌ No biography section found');
+    return sectioned;
+  }
+  console.log('✅ Biography section found');
 
-        const children = Array.from(bioSection.children);
-        console.log(`ℹ️ Found ${children.length} children in biography`);
+  const children = Array.from(bioSection.children);
+  console.log(`ℹ️ Found ${children.length} children in biography`);
 
-        for (let i = 0; i < children.length; i++) {
-          const el = children[i];
-          let headingText = el.textContent.toUpperCase().trim();
+  for (let i = 0; i < children.length; i++) {
+    const el = children[i];
+    const text = el.textContent.trim();
 
-          // Only use allowed subsections as headings
-          if (!allowedSubsections.some(sub => headingText.includes(sub))) continue;
-          console.log(`🔹 Found subsection heading: "${headingText}"`);
+    // Skip elements with empty text
+    if (!text) continue;
 
-          // Normalize Career Highlights
-          if (headingText.includes('CAREER HIGHLIGHTS')) headingText = 'CAREER HIGHLIGHTS';
+    // Only proceed if the text matches an allowed subsection
+    let headingText = allowedSubsections.find(sub => text.toUpperCase().includes(sub));
+    if (!headingText) continue;
 
-          // Collect text until next allowed heading
-          const bullets = [];
-          let next = el.nextElementSibling;
-          while (
-            next &&
-            !allowedSubsections.some(sub => next.textContent.toUpperCase().includes(sub))
-          ) {
-            const text = next.textContent.trim();
-            if (text) bullets.push(text);
-            next = next.nextElementSibling;
-          }
+    console.log(`🔹 Found subsection heading: "${headingText}"`);
 
-          sectioned[headingText] = bullets;
-        }
+    // Normalize all Career Highlights variants
+    if (headingText.includes('CAREER HIGHLIGHTS')) headingText = 'CAREER HIGHLIGHTS';
 
-        return sectioned;
-      });
+    // Collect following <ul> list items or paragraph lines until the next heading
+    const bullets = [];
+    let next = el.nextElementSibling;
+    while (next) {
+      const nextText = next.textContent.trim();
+      // Stop if we hit the next heading
+      if (allowedSubsections.some(sub => nextText.toUpperCase().includes(sub))) break;
+
+      // Grab <li> items if it's a <ul>
+      if (next.tagName === 'UL') {
+        next.querySelectorAll('li').forEach(li => bullets.push(li.textContent.trim()));
+      } else if (next.tagName === 'P') {
+        // If it's a <p>, split by line breaks if needed
+        if (nextText) bullets.push(nextText);
+      }
+
+      next = next.nextElementSibling;
+    }
+
+    sectioned[headingText] = bullets;
+  }
+
+  return sectioned;
+});
 
       triviaData[player.player_id] = {
         player_name: player.player_name,
