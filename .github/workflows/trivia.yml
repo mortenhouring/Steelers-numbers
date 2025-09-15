@@ -1,34 +1,35 @@
-name: Fetch Steelers Trivia
+name: Fetch Trivia
 
 on:
-  workflow_dispatch:
+  workflow_dispatch:  # allows manual run
 
 jobs:
   fetch-trivia:
     runs-on: ubuntu-latest
     steps:
-      # Checkout code
-      - uses: actions/checkout@v4
+      - name: Checkout repo
+        uses: actions/checkout@v3
 
-      # Setup Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 20
 
-      # Install dependencies in /fetchimages
       - name: Install dependencies
-        run: npm install
-        working-directory: ./fetchimages
+        run: npm ci  # or npm install if you don’t have package-lock.json
 
-      # Run the trivia scraper
       - name: Run trivia scraper
-        run: node trivia.js
-        working-directory: ./fetchimages
+        run: node fetchimages/trivia.js
 
-      # Upload the resulting trivia.json
-      - name: Upload trivia.json
-        uses: actions/upload-artifact@v4
-        with:
-          name: trivia-json
-          path: fetchimages/trivia.json
+      - name: Show trivia file info
+        run: |
+          ls -l fetchimages/trivia.json
+          head -n 20 fetchimages/trivia.json
+
+      - name: Commit trivia.json
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add fetchimages/trivia.json
+          git commit -m "Update trivia.json [skip ci]" || echo "No changes to commit"
+          git push
