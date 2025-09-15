@@ -1,0 +1,61 @@
+name: Trivia Shuffle Test
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:  # allows manual run
+
+jobs:
+  run-trivia-shuffle:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout repo
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Setup Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      # Install dependencies from package.json
+      - name: Install dependencies
+        run: npm install
+        working-directory: fetchimages
+
+      # Run trivia-shuffle.js
+      - name: Run trivia shuffle script
+        run: |
+          cd fetchimages
+          node -e "
+          import fs from 'fs';
+          import { generateTriviaParagraph } from './trivia-shuffle.js';
+          
+          const inputFile = 'temp.json';
+          const outputFile = 'tempoutput.json';
+          
+          if (!fs.existsSync(inputFile)) {
+            console.error('temp.json not found');
+            process.exit(1);
+          }
+          
+          const inputIds = JSON.parse(fs.readFileSync(inputFile, 'utf-8'));
+          const output = {};
+          
+          for (const pid of inputIds) {
+            output[pid] = generateTriviaParagraph(pid);
+          }
+          
+          fs.writeFileSync(outputFile, JSON.stringify(output, null, 2));
+          console.log('Output written to', outputFile);
+          "
+
+      # Upload tempoutput.json as artifact
+      - name: Upload output
+        uses: actions/upload-artifact@v4
+        with:
+          name: trivia-shuffle-output
+          path: fetchimages/tempoutput.json
