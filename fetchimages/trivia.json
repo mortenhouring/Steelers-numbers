@@ -1,0 +1,624 @@
+{
+  "8439": {
+    "player_name": "Aaron Rodgers",
+    "player_url": "https://www.steelers.com/team/players-roster/aaron-rodgers",
+    "player_id": "8439",
+    "trivia": {
+      "PRO CAREER": []
+    }
+  },
+  "13977": {
+    "player_name": "Cameron Heyward",
+    "player_url": "https://www.steelers.com/team/players-roster/cameron-heyward",
+    "player_id": "13977",
+    "trivia": {
+      "PRO CAREER": []
+    }
+  },
+  "15863": {
+    "player_name": "Darius Slay",
+    "player_url": "https://www.steelers.com/team/players-roster/darius-slay",
+    "player_id": "15863",
+    "trivia": {
+      "PRO CAREER": []
+    }
+  },
+  "17372": {
+    "player_name": "Chris Boswell",
+    "player_url": "https://www.steelers.com/team/players-roster/chris-boswell",
+    "player_id": "17372",
+    "trivia": {
+      "PRO CAREER": []
+    }
+  },
+  "2575164": {
+    "player_name": "Miles Killebrew",
+    "player_url": "https://www.steelers.com/team/players-roster/miles-killebrew",
+    "player_id": "2575164",
+    "trivia": {
+      "PRO CAREER": []
+    }
+  },
+  "2974348": {
+    "player_name": "Dean Lowry",
+    "player_url": "https://www.steelers.com/team/players-roster/dean-lowry",
+    "player_id": "2974348",
+    "trivia": {
+      "PRO CAREER": []
+    }
+  },
+  "2978247": {
+    "player_name": "Isaac Seumalo",
+    "player_url": "https://www.steelers.com/team/players-roster/isaac-seumalo",
+    "player_id": "2978247",
+    "trivia": {
+      "PRO CAREER": []
+    }
+  },
+  "2978278": {
+    "player_name": "Andrus Peat",
+    "player_url": "https://www.steelers.com/team/players-roster/andrus-peat",
+    "player_id": "2978278",
+    "trivia": {
+      "PRO CAREER": []
+    }
+  },
+  "2978524": {
+    "player_name": "Christian Kuntz",
+    "player_url": "https://www.steelers.com/team/players-roster/christian-kuntz",
+    "player_id": "2978524",
+    "trivia": {
+      "PRO CAREER": []
+    }
+  },
+  "3042749": {
+    "player_name": "Logan Woodside",
+    "player_url": "https://www.steelers.com/team/players-roster/logan-woodside",
+    "player_id": "3042749",
+    "trivia": {
+      "PRO CAREER": []
+    }
+  },
+  "3045282": {
+    "player_name": "T.J. Watt",
+    "player_url": "https://www.steelers.com/team/players-roster/t-j-watt",
+    "player_id": "3045282",
+    "trivia": {
+      "PRO CAREER": []
+    }
+  },
+  "3045373": {
+    "player_name": "Jalen Ramsey",
+    "player_url": "https://www.steelers.com/team/players-roster/jalen-ramsey",
+    "player_id": "3045373",
+    "trivia": {
+      "PRO CAREER": []
+    }
+  },
+  "3045463": {
+    "player_name": "Chuck Clark",
+    "player_url": "https://www.steelers.com/team/players-roster/chuck-clark",
+    "player_id": "3045463",
+    "trivia": {}
+  },
+  "3052059": {
+    "player_name": "Daniel Ekuale",
+    "player_url": "https://www.steelers.com/team/players-roster/daniel-ekuale",
+    "player_id": "3052059",
+    "trivia": {
+      "PRO CAREER": []
+    }
+  },
+  "3054212": {
+    "player_name": "Jonnu Smith",
+    "player_url": "https://www.steelers.com/team/players-roster/jonnu-smith",
+    "player_id": "3054212",
+    "trivia": {
+      "PRO CAREER": []
+    }
+  },
+  "3115962": {
+    "player_name": "Jabrill Peppers",
+    "player_url": "https://www.steelers.com/team/players-roster/jabrill-peppers",
+    "player_id": "3115962",
+    "trivia": {}
+  },
+  "3116407": {
+    "player_name": "Mason Rudolph",
+    "player_url": "https://www.steelers.com/team/players-roster/mason-rudolph",
+    "player_id": "3116407",
+    "trivia": {
+      "PRO CAREER": []
+    }
+  },
+  "3116689": {
+    "player_name": "Cole Holcomb",
+    "player_url": "https://www.steelers.com/team/players-roster/cole-holcomb",
+    "player_id": "3116689",
+    "trivia": {
+      "PRO CAREER": []
+    }
+  },
+  "3123867": {
+    "player_name": "Calvin Anderson",
+    "player_url": "https://www.steelers.com/team/players-roster/calvin-anderson",
+    "player_id": "3123867",
+    "trivia": {
+      "PRO CAREER": []
+    }
+  },
+  "3125280": {
+    "player_name": "Corliss Waitman",
+    "player_url": "https://www.steelers.com/team/players-roster/corliss-waitman",
+    "player_id": "3125280",
+    "trivia": {
+      "PRO CAREER": []
+    }
+  },
+  "3126035": {
+    "player_name": "Max Scharping",
+    "player_url": "https://www.steelers.com/team/players-roster/max-scharping",
+    "player_id": "3126035",
+    "trivia": {
+      "PRO CAREER": []
+    }
+  },
+  "3912092": {
+    "player_name": "Donald Parham Jr.",
+    "player_url": "https://www.steelers.com/team/players-roster/donald-parham-jr",
+    "player_id": "3912092",
+    "trivia": {
+      "PRO CAREER": []
+    }
+  },
+  "3914397": {
+    "player_name": "Scotty Miller",
+    "player_url": "https://www.steelers.com/team/players-roster/scotty-miller",
+    "player_id": "3914397",
+    "trivia": {}
+  },
+  "3917909": {
+    "player_name": "Juan Thornhill",
+    "player_url": "https://www.steelers.com/team/players-roster/juan-thornhill",
+    "player_id": "3917909",
+    "trivia": {
+      "PRO CAREER": []
+    }
+  },
+  "3929846": {
+    "player_name": "DeShon Elliott",
+    "player_url": "https://www.steelers.com/team/players-roster/deshon-elliott",
+    "player_id": "3929846",
+    "trivia": {
+      "PRO CAREER": []
+    }
+  },
+  "4035253": {
+    "player_name": "Ryan McCollum",
+    "player_url": "https://www.steelers.com/team/players-roster/ryan-mccollum",
+    "player_id": "4035253",
+    "trivia": {
+      "PRO CAREER": []
+    }
+  },
+  "4035656": {
+    "player_name": "Ben Skowronek",
+    "player_url": "https://www.steelers.com/team/players-roster/ben-skowronek",
+    "player_id": "4035656",
+    "trivia": {
+      "PRO CAREER": []
+    }
+  },
+  "4035798": {
+    "player_name": "Isaiahh Loudermilk",
+    "player_url": "https://www.steelers.com/team/players-roster/isaiahh-loudermilk",
+    "player_id": "4035798",
+    "trivia": {
+      "PRO CAREER": []
+    }
+  },
+  "4036419": {
+    "player_name": "Skylar Thompson",
+    "player_url": "https://www.steelers.com/team/players-roster/skylar-thompson",
+    "player_id": "4036419",
+    "trivia": {}
+  },
+  "4037333": {
+    "player_name": "Alex Highsmith",
+    "player_url": "https://www.steelers.com/team/players-roster/alex-highsmith",
+    "player_id": "4037333",
+    "trivia": {
+      "PRO CAREER": []
+    }
+  },
+  "4040615": {
+    "player_name": "Malik Harrison",
+    "player_url": "https://www.steelers.com/team/players-roster/malik-harrison",
+    "player_id": "4040615",
+    "trivia": {
+      "PRO CAREER": []
+    }
+  },
+  "4047650": {
+    "player_name": "DK Metcalf",
+    "player_url": "https://www.steelers.com/team/players-roster/dk-metcalf",
+    "player_id": "4047650",
+    "trivia": {
+      "PRO CAREER": []
+    }
+  },
+  "4240759": {
+    "player_name": "Esezi Otomewo",
+    "player_url": "https://www.steelers.com/team/players-roster/esezi-otomewo",
+    "player_id": "4240759",
+    "trivia": {
+      "PRO CAREER": []
+    }
+  },
+  "4241401": {
+    "player_name": "Trey Sermon",
+    "player_url": "https://www.steelers.com/team/players-roster/trey-sermon",
+    "player_id": "4241401",
+    "trivia": {
+      "PRO CAREER": []
+    }
+  },
+  "4241961": {
+    "player_name": "Connor Heyward",
+    "player_url": "https://www.steelers.com/team/players-roster/connor-heyward",
+    "player_id": "4241961",
+    "trivia": {
+      "PRO CAREER": []
+    }
+  },
+  "4242207": {
+    "player_name": "Patrick Queen",
+    "player_url": "https://www.steelers.com/team/players-roster/patrick-queen",
+    "player_id": "4242207",
+    "trivia": {
+      "PRO CAREER": []
+    }
+  },
+  "4243389": {
+    "player_name": "Calvin Austin III",
+    "player_url": "https://www.steelers.com/team/players-roster/calvin-austin-iii",
+    "player_id": "4243389",
+    "trivia": {
+      "PRO CAREER": []
+    }
+  },
+  "4258485": {
+    "player_name": "Jon Rhattigan",
+    "player_url": "https://www.steelers.com/team/players-roster/jon-rhattigan",
+    "player_id": "4258485",
+    "trivia": {
+      "PRO CAREER": []
+    }
+  },
+  "4259252": {
+    "player_name": "James Pierre",
+    "player_url": "https://www.steelers.com/team/players-roster/james-pierre",
+    "player_id": "4259252",
+    "trivia": {
+      "PRO CAREER": []
+    }
+  },
+  "4361411": {
+    "player_name": "Pat Freiermuth",
+    "player_url": "https://www.steelers.com/team/players-roster/pat-freiermuth",
+    "player_id": "4361411",
+    "trivia": {
+      "PRO CAREER": []
+    }
+  },
+  "4361652": {
+    "player_name": "Payton Wilson",
+    "player_url": "https://www.steelers.com/team/players-roster/payton-wilson",
+    "player_id": "4361652",
+    "trivia": {
+      "PRO CAREER": []
+    }
+  },
+  "4362082": {
+    "player_name": "D'Shawn Jamison",
+    "player_url": "https://www.steelers.com/team/players-roster/d-shawn-jamison",
+    "player_id": "4362082",
+    "trivia": {
+      "PRO CAREER": []
+    }
+  },
+  "4363052": {
+    "player_name": "Beanie Bishop Jr.",
+    "player_url": "https://www.steelers.com/team/players-roster/beanie-bishop-jr",
+    "player_id": "4363052",
+    "trivia": {
+      "PRO CAREER": []
+    }
+  },
+  "4368304": {
+    "player_name": "Mason McCormick",
+    "player_url": "https://www.steelers.com/team/players-roster/mason-mccormick",
+    "player_id": "4368304",
+    "trivia": {
+      "PRO CAREER": []
+    }
+  },
+  "4371733": {
+    "player_name": "Kenneth Gainwell",
+    "player_url": "https://www.steelers.com/team/players-roster/kenneth-gainwell",
+    "player_id": "4371733",
+    "trivia": {
+      "PRO CAREER": []
+    }
+  },
+  "4372056": {
+    "player_name": "Spencer Anderson",
+    "player_url": "https://www.steelers.com/team/players-roster/spencer-anderson",
+    "player_id": "4372056",
+    "trivia": {
+      "PRO CAREER": []
+    }
+  },
+  "4372098": {
+    "player_name": "Julius Welschof",
+    "player_url": "https://www.steelers.com/team/players-roster/julius-welschof",
+    "player_id": "4372098",
+    "trivia": {
+      "PRO CAREER": []
+    }
+  },
+  "4372492": {
+    "player_name": "Cory Trice Jr.",
+    "player_url": "https://www.steelers.com/team/players-roster/cory-trice-jr",
+    "player_id": "4372492",
+    "trivia": {
+      "PRO CAREER": []
+    }
+  },
+  "4373830": {
+    "player_name": "Steven Jones",
+    "player_url": "https://www.steelers.com/team/players-roster/steven-jones",
+    "player_id": "4373830",
+    "trivia": {
+      "PRO CAREER": []
+    }
+  },
+  "4382475": {
+    "player_name": "Jacob Slade",
+    "player_url": "https://www.steelers.com/team/players-roster/jacob-slade",
+    "player_id": "4382475",
+    "trivia": {}
+  },
+  "4426359": {
+    "player_name": "DeMarvin Leal",
+    "player_url": "https://www.steelers.com/team/players-roster/demarvin-leal",
+    "player_id": "4426359",
+    "trivia": {
+      "PRO CAREER": []
+    }
+  },
+  "4426506": {
+    "player_name": "Joey Porter Jr.",
+    "player_url": "https://www.steelers.com/team/players-roster/joey-porter-jr",
+    "player_id": "4426506",
+    "trivia": {
+      "PRO CAREER": []
+    }
+  },
+  "4426694": {
+    "player_name": "Keeanu Benton",
+    "player_url": "https://www.steelers.com/team/players-roster/keeanu-benton",
+    "player_id": "4426694",
+    "trivia": {
+      "PRO CAREER": []
+    }
+  },
+  "4426882": {
+    "player_name": "Sebastian Castro",
+    "player_url": "https://www.steelers.com/team/players-roster/sebastian-castro",
+    "player_id": "4426882",
+    "trivia": {
+      "PRO CAREER": []
+    }
+  },
+  "4427170": {
+    "player_name": "Troy Fautanu",
+    "player_url": "https://www.steelers.com/team/players-roster/troy-fautanu",
+    "player_id": "4427170",
+    "trivia": {
+      "PRO CAREER": []
+    }
+  },
+  "4428119": {
+    "player_name": "Lew Nichols",
+    "player_url": "https://www.steelers.com/team/players-roster/lew-nichols",
+    "player_id": "4428119",
+    "trivia": {
+      "PRO CAREER": []
+    }
+  },
+  "4428990": {
+    "player_name": "Broderick Jones",
+    "player_url": "https://www.steelers.com/team/players-roster/broderick-jones",
+    "player_id": "4428990",
+    "trivia": {
+      "PRO CAREER": []
+    }
+  },
+  "4429006": {
+    "player_name": "Rakim Jarrett",
+    "player_url": "https://www.steelers.com/team/players-roster/rakim-jarrett",
+    "player_id": "4429006",
+    "trivia": {}
+  },
+  "4429164": {
+    "player_name": "Nick Herbig",
+    "player_url": "https://www.steelers.com/team/players-roster/nick-herbig",
+    "player_id": "4429164",
+    "trivia": {
+      "PRO CAREER": []
+    }
+  },
+  "4429490": {
+    "player_name": "Carson Bruener",
+    "player_url": "https://www.steelers.com/team/players-roster/carson-bruener",
+    "player_id": "4429490",
+    "trivia": {
+      "PRO CAREER": []
+    }
+  },
+  "4429775": {
+    "player_name": "Zach Frazier",
+    "player_url": "https://www.steelers.com/team/players-roster/zach-frazier",
+    "player_id": "4429775",
+    "trivia": {
+      "PRO CAREER": []
+    }
+  },
+  "4429955": {
+    "player_name": "Will Howard",
+    "player_url": "https://www.steelers.com/team/players-roster/will-howard",
+    "player_id": "4429955",
+    "trivia": {
+      "PRO CAREER": []
+    }
+  },
+  "4430802": {
+    "player_name": "Darnell Washington",
+    "player_url": "https://www.steelers.com/team/players-roster/darnell-washington",
+    "player_id": "4430802",
+    "trivia": {
+      "PRO CAREER": []
+    }
+  },
+  "4430947": {
+    "player_name": "Yahya Black",
+    "player_url": "https://www.steelers.com/team/players-roster/yahya-black",
+    "player_id": "4430947",
+    "trivia": {
+      "PRO CAREER": []
+    }
+  },
+  "4431492": {
+    "player_name": "Roman Wilson",
+    "player_url": "https://www.steelers.com/team/players-roster/roman-wilson",
+    "player_id": "4431492",
+    "trivia": {
+      "PRO CAREER": []
+    }
+  },
+  "4431590": {
+    "player_name": "Jack Sawyer",
+    "player_url": "https://www.steelers.com/team/players-roster/jack-sawyer",
+    "player_id": "4431590",
+    "trivia": {
+      "PRO CAREER": []
+    }
+  },
+  "4567979": {
+    "player_name": "Brandin Echols",
+    "player_url": "https://www.steelers.com/team/players-roster/brandin-echols",
+    "player_id": "4567979",
+    "trivia": {
+      "PRO CAREER": []
+    }
+  },
+  "4569474": {
+    "player_name": "Logan Lee",
+    "player_url": "https://www.steelers.com/team/players-roster/logan-lee",
+    "player_id": "4569474",
+    "trivia": {
+      "PRO CAREER": []
+    }
+  },
+  "4569987": {
+    "player_name": "Jaylen Warren",
+    "player_url": "https://www.steelers.com/team/players-roster/jaylen-warren",
+    "player_id": "4569987",
+    "trivia": {
+      "PRO CAREER": []
+    }
+  },
+  "4570738": {
+    "player_name": "Ke'Shawn Williams",
+    "player_url": "https://www.steelers.com/team/players-roster/ke-shawn-williams",
+    "player_id": "4570738",
+    "trivia": {
+      "PRO CAREER": []
+    }
+  },
+  "4570898": {
+    "player_name": "Dylan Cook",
+    "player_url": "https://www.steelers.com/team/players-roster/dylan-cook",
+    "player_id": "4570898",
+    "trivia": {
+      "PRO CAREER": []
+    }
+  },
+  "4573443": {
+    "player_name": "Kyler Baugh",
+    "player_url": "https://www.steelers.com/team/players-roster/kyler-baugh",
+    "player_id": "4573443",
+    "trivia": {
+      "PRO CAREER": []
+    }
+  },
+  "4590720": {
+    "player_name": "Domenique Davis",
+    "player_url": "https://www.steelers.com/team/players-roster/domenique-davis",
+    "player_id": "4590720",
+    "trivia": {}
+  },
+  "4608004": {
+    "player_name": "Donte Kent",
+    "player_url": "https://www.steelers.com/team/players-roster/donte-kent",
+    "player_id": "4608004",
+    "trivia": {
+      "PRO CAREER": []
+    }
+  },
+  "4682980": {
+    "player_name": "Derrick Harmon",
+    "player_url": "https://www.steelers.com/team/players-roster/derrick-harmon",
+    "player_id": "4682980",
+    "trivia": {
+      "PRO CAREER": []
+    }
+  },
+  "4691005": {
+    "player_name": "Daryl Porter Jr.",
+    "player_url": "https://www.steelers.com/team/players-roster/daryl-porter-jr",
+    "player_id": "4691005",
+    "trivia": {}
+  },
+  "4694237": {
+    "player_name": "Max Hurleman",
+    "player_url": "https://www.steelers.com/team/players-roster/max-hurleman",
+    "player_id": "4694237",
+    "trivia": {
+      "PRO CAREER": []
+    }
+  },
+  "4695800": {
+    "player_name": "JJ Galbreath",
+    "player_url": "https://www.steelers.com/team/players-roster/jj-galbreath",
+    "player_id": "4695800",
+    "trivia": {
+      "PRO CAREER": []
+    }
+  },
+  "4819231": {
+    "player_name": "Kaleb Johnson",
+    "player_url": "https://www.steelers.com/team/players-roster/kaleb-johnson",
+    "player_id": "4819231",
+    "trivia": {
+      "PRO CAREER": []
+    }
+  },
+  "4885455": {
+    "player_name": "Gareth Warren",
+    "player_url": "https://www.steelers.com/team/players-roster/gareth-warren",
+    "player_id": "4885455",
+    "trivia": {}
+  }
+}
