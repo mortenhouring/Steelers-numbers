@@ -46,34 +46,55 @@ if (fs.existsSync(triviaFile)) {
     try {
       console.log(`Fetching trivia for ${player.player_name}`);
       await page.goto(url, { waitUntil: 'domcontentloaded' });
+      // Collect subsectioned trivia scoped to Biography, normalize Career Highlights
+    const playerTrivia = await page.evaluate(() => {
+    const allowedSubsections = [
+    'PRO CAREER',
+    'PERSONAL',
+    'CAREER HIGHLIGHTS',
+    'CAREER HIGHLIGHTS (REGULAR SEASON)',
+    'CAREER HIGHLIGHTS (POSTSEASON)',
+    'AWARDS'
+  ];
 
-      // Collect subsectioned trivia
-      const playerTrivia = await page.evaluate(() => {
-        const allowedSubsections = [
-          'PRO CAREER',
-          '2024',
-          'PERSONAL',
-          'CAREER HIGHLIGHTS',
-          'AWARDS'
-        ];
+  const sectioned = {};
 
-        const sectioned = {};
+  // Find the main Biography container
+  const bioSection = document.querySelector('.nfl-c-biography');
+  if (!bioSection) return sectioned;
 
-        document.querySelectorAll('p strong').forEach(header => {
-          const headingText = header.textContent.toUpperCase().trim();
-          if (allowedSubsections.some(sub => headingText.includes(sub))) {
-            const bullets = [];
-            let next = header.parentElement.nextElementSibling;
-            while (next && next.tagName === 'UL') {
-              next.querySelectorAll('li').forEach(li => bullets.push(li.textContent.trim()));
-              next = next.nextElementSibling;
-            }
-            sectioned[headingText] = bullets;
-          }
-        });
+  // Only look for headings inside Biography
+  bioSection.querySelectorAll('p strong').forEach(header => {
+    let headingText = header.textContent.toUpperCase().trim();
 
-        return sectioned;
-      });
+    // Skip anything not allowed
+    if (!allowedSubsections.some(sub => headingText.includes(sub))) return;
+
+    // Normalize all Career Highlights variants to "CAREER HIGHLIGHTS"
+    if (headingText.includes('CAREER HIGHLIGHTS')) {
+      headingText = 'CAREER HIGHLIGHTS';
+    }
+
+    const bullets = [];
+    let next = header.parentElement.nextElementSibling;
+    while (next && next.tagName === 'UL') {
+      next.querySelectorAll('li').forEach(li => bullets.push(li.textContent.trim()));
+      next = next.nextElementSibling;
+    }
+
+    // Merge bullets if key already exists
+    if (sectioned[headingText]) {
+      sectioned[headingText] = sectioned[headingText].concat(bullets);
+    } else {
+      sectioned[headingText] = bullets;
+    }
+  });
+
+  return sectioned;
+});
+      
+
+      
 
       triviaData[player.player_id] = {
         player_name: player.player_name,
