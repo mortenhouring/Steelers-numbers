@@ -5,27 +5,28 @@ on:
 
 jobs:
   fetch-trivia:
-    runs-on: ubuntu-24.04
-
+    runs-on: ubuntu-latest
     steps:
-      # 1. Check out repository
+      # Checkout code
       - uses: actions/checkout@v4
 
-      # 2. Setup Node
+      # Setup Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 20
 
-      # 3. Install dependencies from package.json
+      # Install dependencies in /fetchimages
       - name: Install dependencies
         run: npm install
+        working-directory: ./fetchimages
 
-      # 4. Run the trivia scraper
+      # Run the trivia scraper
       - name: Run trivia scraper
-        run: node fetchimages/trivia.js
+        run: node trivia.js
+        working-directory: ./fetchimages
 
-      # 5. Upload trivia.json as an artifact
+      # Upload the resulting trivia.json
       - name: Upload trivia.json
         uses: actions/upload-artifact@v4
         with:
