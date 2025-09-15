@@ -66,7 +66,7 @@ if (fs.existsSync(triviaFile)) {
       await page.goto(url, { waitUntil: 'domcontentloaded' });
       // Collect subsectioned trivia scoped to Biography, normalize Career Highlights
     const playerTrivia = await page.evaluate(() => {
-    const allowedSubsections = [
+  const allowedSubsections = [
     'PRO CAREER',
     'PERSONAL',
     'CAREER HIGHLIGHTS',
@@ -76,37 +76,38 @@ if (fs.existsSync(triviaFile)) {
   ];
 
   const sectioned = {};
-
-  // Find the main Biography container
   const bioSection = document.querySelector('.nfl-c-biography');
-  if (!bioSection) return sectioned;
+  if (!bioSection) {
+    console.log('❌ No biography section found');
+    return sectioned;
+  }
+  console.log('✅ Biography section found');
 
-  // Only look for headings inside Biography
-  bioSection.querySelectorAll('p strong').forEach(header => {
-    let headingText = header.textContent.toUpperCase().trim();
+  const children = Array.from(bioSection.children);
+  console.log(`ℹ️ Found ${children.length} children in biography`);
 
-    // Skip anything not allowed
-    if (!allowedSubsections.some(sub => headingText.includes(sub))) return;
+  for (let i = 0; i < children.length; i++) {
+    const el = children[i];
+    let headingText = el.textContent.toUpperCase().trim();
 
-    // Normalize all Career Highlights variants to "CAREER HIGHLIGHTS"
-    if (headingText.includes('CAREER HIGHLIGHTS')) {
-      headingText = 'CAREER HIGHLIGHTS';
-    }
+    if (!allowedSubsections.some(sub => headingText.includes(sub))) continue;
+    console.log(`🔹 Found subsection heading: "${headingText}"`);
+
+    if (headingText.includes('CAREER HIGHLIGHTS')) headingText = 'CAREER HIGHLIGHTS';
 
     const bullets = [];
-    let next = header.parentElement.nextElementSibling;
+    let next = el.nextElementSibling;
     while (next && next.tagName === 'UL') {
       next.querySelectorAll('li').forEach(li => bullets.push(li.textContent.trim()));
       next = next.nextElementSibling;
     }
 
-    // Merge bullets if key already exists
     if (sectioned[headingText]) {
       sectioned[headingText] = sectioned[headingText].concat(bullets);
     } else {
       sectioned[headingText] = bullets;
     }
-  });
+  }
 
   return sectioned;
 });
