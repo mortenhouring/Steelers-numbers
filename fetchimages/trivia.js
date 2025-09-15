@@ -28,7 +28,10 @@ if (fs.existsSync(triviaFile)) {
 (async () => {
   const roster = JSON.parse(fs.readFileSync(rosterFile, 'utf-8'));
 
-  const browser = await puppeteer.launch({ headless: true });
+  const browser = await puppeteer.launch({
+  headless: true,
+  args: ['--no-sandbox', '--disable-setuid-sandbox']
+});
   const page = await browser.newPage();
 
   for (const player of roster) {
