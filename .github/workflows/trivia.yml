@@ -16,7 +16,7 @@ jobs:
           node-version: 20
 
       - name: Install dependencies
-        run: npm ci  # or npm install if you don’t have package-lock.json
+        run: npm install
 
       - name: Run trivia scraper
         run: node fetchimages/trivia.js
