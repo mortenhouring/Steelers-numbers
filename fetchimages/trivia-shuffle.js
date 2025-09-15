@@ -3,17 +3,19 @@ import path from 'path';
 
 /**
  * Load trivia JSON
+ * Use relative path from current folder (works in GitHub Actions and locally)
  */
-const triviaFile = path.join(process.cwd(), 'fetchimages', 'trivia.json');
+const triviaFile = path.join(process.cwd(), 'trivia.json');
 let triviaData = {};
 try {
     triviaData = JSON.parse(fs.readFileSync(triviaFile, 'utf-8'));
 } catch (err) {
     console.error('Error loading trivia.json:', err);
+    triviaData = {}; // continue gracefully
 }
 
 /**
- * Utility: shuffle array
+ * Utility: shuffle array in-place
  */
 function shuffle(array) {
     for (let i = array.length - 1; i > 0; i--) {
@@ -65,9 +67,9 @@ function generateTriviaParagraph(playerId, maxChars = 450) {
         allTrivia = allTrivia.concat(strings);
     }
 
-    // Weighted shuffle
-    allTrivia = allTrivia.flatMap(item => Array(item.weight).fill(item)); // replicate by weight
-    allTrivia = shuffle(allTrivia); // final shuffle after weighting
+    // Weighted shuffle: replicate each string by its weight
+    allTrivia = allTrivia.flatMap(item => Array(item.weight).fill(item));
+    allTrivia = shuffle(allTrivia);
 
     const selected = [];
     let totalChars = 0;
@@ -76,7 +78,7 @@ function generateTriviaParagraph(playerId, maxChars = 450) {
         const text = item.text;
         if (totalChars + text.length > maxChars) continue;
 
-        // Check similarity against already selected
+        // Avoid very similar strings
         if (selected.some(s => isSimilar(s, text))) continue;
 
         selected.push(text);
@@ -94,8 +96,11 @@ function generateTriviaParagraph(playerId, maxChars = 450) {
 // Export function using ES module syntax
 export { generateTriviaParagraph };
 
-// Example usage when running directly
-if (process.argv[1].endsWith('trivia-shuffle.js')) {
+/**
+ * Standalone test block using import.meta.url
+ * Only runs if the script is executed directly: `node trivia-shuffle.js`
+ */
+if (import.meta.url === `file://${process.cwd()}/trivia-shuffle.js`) {
     const testPlayerId = '13977';
     const result = generateTriviaParagraph(testPlayerId);
     console.log('\nGenerated Trivia Paragraph:\n', result.paragraph);
