@@ -95,6 +95,7 @@ export function generateTriviaParagraph(playerId, options = {}) {
   // Deduplicate exact strings across categories & assign weights
   const itemsByText = new Map();
   for (const cat of categories) {
+    if (cat.trim().toUpperCase() === '2024') continue; // skip 2024 entirely
     const arr = player.trivia[cat];
     if (!Array.isArray(arr)) continue;
     const filteredArr = filterStatHeavyTrivia(arr);
