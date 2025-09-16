@@ -1,57 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Quiz Start</title>
-<script src="headerscript.js" defer></script>
-<style>
-  body {
-    font-family: Arial, sans-serif;
-    text-align: center;
-    margin: 20px;
-  }
+  <script src="headerscript.js" defer></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz Start</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 20px;
+    }
 
-  /* Mimic quiz1 text style */
-  #intro-text {
-    font-size: 1.5em;
-    width: 90%;
-    max-width: 400px;
-    margin: 0 auto 30px auto;
-    text-align: center;
-  }
+    #intro-text {
+      font-size: 1.5em;
+      width: 90%;
+      max-width: 400px;
+      margin: 0 auto 30px auto;
+      text-align: center;
+    }
 
-  /* Front page button style */
-  .frontpage-btn {
-    background-color: black;
-    color: white;
-    font-family: 'Courier New', Courier, monospace;
-    font-size: 20px;
-    width: 80%;
-    max-width: 200px;
-    height: 50px;
-    margin: 10px;
-    border: none;
-    cursor: pointer;
-    text-align: center;
-    border-radius: 0;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    transition: all 0.1s ease-in-out;
-  }
+    .frontpage-btn {
+      background-color: black;
+      color: white;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 20px;
+      width: 80%;
+      max-width: 200px;
+      height: 50px;
+      margin: 10px;
+      border: none;
+      cursor: pointer;
+      text-align: center;
+      border-radius: 0;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      transition: all 0.1s ease-in-out;
+    }
 
-  .frontpage-btn:active {
-    transform: scale(0.95);
-  }
-</style>
+    .frontpage-btn:active {
+      transform: scale(0.95);
+    }
+  </style>
 </head>
 <body>
-<!-- Header placeholder -->
 <div id="header-placeholder"></div>
 
 <div id="intro-text">
-  Check your knowledge of every player on the roster. The big names, the new guys, and the guys waiting for their shot.
+  Check your knowledge of every player on the roster. The big names, the new guys and the guys waiting for their shot.
 </div>
 
 <button id="new-game-btn" class="frontpage-btn">New Game</button>
@@ -59,22 +56,47 @@
 <button id="continue-btn" class="frontpage-btn">Continue</button>
 
 <script>
-  const QUIZ_PAGE = 'currentquiz.html';
+  // Utility to shuffle an array
+  function shuffleArray(arr) {
+    const a = arr.slice();
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
 
-  // New Game: reset counters and currentIndex
-  document.getElementById('new-game-btn').addEventListener('click', () => {
+  // Load current roster JSON
+  async function loadRoster() {
+    const resp = await fetch('currentroster.json');
+    const roster = await resp.json();
+    return roster;
+  }
+
+  // New Game: reset everything and shuffle roster
+  document.getElementById('new-game-btn').addEventListener('click', async () => {
+    const roster = await loadRoster();
+    const playerIds = roster.map(p => p.id);
+    const shuffledRoster = shuffleArray(playerIds);
+
     localStorage.setItem('score', 0);
     localStorage.setItem('questionsAsked', 0);
     localStorage.setItem('currentIndex', 0);
-    // Optional: store totalQuestions if your one-page script uses it
-    window.location.href = QUIZ_PAGE;
+    localStorage.setItem('shuffledRoster', JSON.stringify(shuffledRoster));
+
+    window.location.href = 'currentquiz.html';
   });
 
-  // Continue: go to quiz page with current progress
+  // Continue: only go to quiz page if a game exists
   document.getElementById('continue-btn').addEventListener('click', () => {
-    window.location.href = QUIZ_PAGE;
+    const shuffledRoster = localStorage.getItem('shuffledRoster');
+    if (!shuffledRoster) {
+      alert('No saved game found. Starting a new game instead.');
+      document.getElementById('new-game-btn').click();
+      return;
+    }
+    window.location.href = 'currentquiz.html';
   });
 </script>
-
 </body>
 </html>
