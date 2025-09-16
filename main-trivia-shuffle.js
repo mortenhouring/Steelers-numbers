@@ -31,6 +31,22 @@ function shuffleArray(arr) {
   }
   return a;
 }
+function filterStatHeavyTrivia(triviaList) {
+  return triviaList.filter(line => {
+    // Too many numbers (e.g. tackles, sacks, field goals, etc.)
+    const numberCount = (line.match(/\d+/g) || []).length;
+    if (numberCount >= 5) return false;
+
+    // Looks like a pure stat list (lots of commas, short phrases)
+    const commaCount = (line.match(/,/g) || []).length;
+    if (commaCount >= 5) return false;
+
+    // Reject lines that start with "Registered", "Has registered", "Converted", "Has made"
+    if (/^(Registered|Has registered|Converted|Has made)/i.test(line.trim())) return false;
+
+    return true; // keep everything else
+  });
+}
 
 function wordsFromText(text) {
   if (!text || typeof text !== 'string') return [];
@@ -81,8 +97,9 @@ export function generateTriviaParagraph(playerId, options = {}) {
   for (const cat of categories) {
     const arr = player.trivia[cat];
     if (!Array.isArray(arr)) continue;
+    const filteredArr = filterStatHeavyTrivia(arr);
     const weight = getCategoryWeight(cat);
-    for (const raw of arr) {
+    for (const raw of filteredArr) {
       if (typeof raw !== 'string') continue;
       const text = raw.trim();
       if (!text) continue;
