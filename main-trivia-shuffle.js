@@ -3,7 +3,7 @@
 // Usage: import { loadTrivia, generateTriviaParagraph } from './main-trivia-shuffle.js';
 
 let triviaData = {};
-const MAX_CHAR_DEFAULT = 350;
+const MAX_CHAR_DEFAULT = 270;
 const STOPWORDS = new Set([
   'the','a','an','and','or','in','on','of','for','to','has','have','had','is','are','with','at','by','from','over',
   'as','his','her','he','she','they','them','their','that','this','which','was','were','it','its','but','be','been',
