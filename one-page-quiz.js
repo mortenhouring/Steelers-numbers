@@ -175,21 +175,17 @@ function pickNextPlayer() {
 
   // Update UI for question (quiz1)
   const questionPhrases = [
-    "What number is {player} in black and gold?",
+    "What number is {player}?",
     "Which digits are on {player}'s jersey?",
-    "What number does {player} wear at Acrisure?",
     "Which number’s on {player}'s back?",
     "What’s {player}'s Steel Curtain number?",
     "What jersey number is {player}?",
     "What digits does {player} rep for Steelers Nation?",
-    "What’s on {player}'s chest in Pittsburgh?",
-    "What number do Terrible Towel fans wave for {player}?",
+    "What’s {player}'s jersey number?",
     "What number’s on {player}'s helmet stripe?",
-    "Which jersey does {player} wear for the Burgh?",
-    "What digits mark {player} in the Steel City?",
+    "Which jersey number does {player} wear?",
     "What number’s stitched on {player}'s uniform?",
-    "When the announcer calls {player}, what number goes with it?",
-    "What’s {player}'s lineup number in black and gold?"
+  
   ];
 
   const phrase = questionPhrases[Math.floor(Math.random() * questionPhrases.length)];
