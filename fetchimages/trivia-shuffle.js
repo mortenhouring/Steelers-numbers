@@ -267,8 +267,15 @@ export function generateTriviaParagraph(playerId, options = {}) {
 
   console.log(`[trivia-shuffle] player=${key} name="${player.player_name ?? ''}" categories=${categories.length} uniqueFacts=${debug.totalUniqueFacts} selected=${debug.selectedCount} chars=${debug.selectedChars} threshold=${String(debug.thresholdUsed)}`);
 
+  // ------------------- ONLY CHANGE: paragraph join -------------------
+  const paragraph = selected
+    .map(s => s.trim().replace(/\.+$/, '')) // trim and remove trailing dots
+    .filter(Boolean)
+    .join('. ') + (selected.length > 0 ? '.' : '');
+  // -------------------------------------------------------------------
+
   return {
-    paragraph: selected.join(' '),
+    paragraph,
     selectedStrings: selected,
     debug
   };
