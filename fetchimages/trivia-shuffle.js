@@ -1,108 +1,84 @@
+// trivia-shuffle.js
 import fs from 'fs';
 import path from 'path';
 
-/**
- * Load trivia JSON
- * Use relative path from current folder (works in GitHub Actions and locally)
- */
-const triviaFile = path.join(process.cwd(), 'trivia.json');
+// Load trivia.json once at startup
+const triviaPath = path.resolve('./fetchimages/trivia.json');
 let triviaData = {};
 try {
-    triviaData = JSON.parse(fs.readFileSync(triviaFile, 'utf-8'));
+  triviaData = JSON.parse(fs.readFileSync(triviaPath, 'utf-8'));
 } catch (err) {
-    console.error('Error loading trivia.json:', err);
-    triviaData = {}; // continue gracefully
+  console.error('Error loading trivia.json:', err.message);
 }
 
-/**
- * Utility: shuffle array in-place
- */
+// Helper: shuffle array
 function shuffle(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
-    }
-    return array;
+  const arr = [...array];
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
 }
 
 /**
- * Utility: check similarity based on shared words
+ * Build one paragraph of trivia for a player_id
  */
-function isSimilar(existing, candidate, threshold = 0.7) {
-    const existingWords = new Set(existing.toLowerCase().split(/\W+/));
-    const candidateWords = new Set(candidate.toLowerCase().split(/\W+/));
-    const common = [...candidateWords].filter(w => existingWords.has(w));
-    return common.length / candidateWords.size >= threshold;
+export function generateTriviaParagraph(playerId) {
+  const player = triviaData[playerId];
+  if (!player || !player.trivia) {
+    return {
+      paragraph: '',
+      selectedStrings: []
+    };
+  }
+
+  const categories = Object.keys(player.trivia);
+  let selectedStrings = [];
+
+  // Try to pick 1–2 random facts from up to 3 categories
+  for (const cat of shuffle(categories).slice(0, 3)) {
+    const facts = player.trivia[cat];
+    if (Array.isArray(facts) && facts.length > 0) {
+      const picked = shuffle(facts).slice(0, 2);
+      selectedStrings.push(...picked);
+    }
+  }
+
+  // Fallback if no facts selected
+  if (selectedStrings.length === 0) {
+    return {
+      paragraph: '',
+      selectedStrings: []
+    };
+  }
+
+  // Make a readable paragraph
+  const paragraph = selectedStrings.join(' ');
+
+  return {
+    paragraph,
+    selectedStrings
+  };
 }
 
-/**
- * Assign weight based on category
- */
-function getCategoryWeight(category) {
-    const highest = ["CAREER HIGHLIGHTS", "AWARDS"];
-    const lowest = ["2024"];
-    if (highest.includes(category)) return 3;
-    if (lowest.includes(category)) return 1;
-    return 2; // medium for all others
-}
+// Run standalone
+if (import.meta.url === `file://${process.argv[1]}`) {
+  const inputFile = path.resolve('./fetchimages/temp.json');
+  const outputFile = path.resolve('./fetchimages/tempoutput.json');
 
-/**
- * Generate trivia paragraph with weighted categories
- * @param {string} playerId
- * @param {number} maxChars
- * @returns {Object} { paragraph: string, selectedStrings: string[] }
- */
-function generateTriviaParagraph(playerId, maxChars = 450) {
-    const player = triviaData[playerId];
-    if (!player) {
-        console.warn(`Player ID ${playerId} not found`);
-        return { paragraph: '', selectedStrings: [] };
-    }
+  if (!fs.existsSync(inputFile)) {
+    console.error('temp.json not found');
+    process.exit(1);
+  }
 
-    // Flatten trivia with category info and weight
-    let allTrivia = [];
-    for (const category in player.trivia) {
-        const weight = getCategoryWeight(category);
-        const strings = player.trivia[category].map(text => ({ text, category, weight }));
-        allTrivia = allTrivia.concat(strings);
-    }
+  const inputIds = JSON.parse(fs.readFileSync(inputFile, 'utf-8'));
+  const output = {};
 
-    // Weighted shuffle: replicate each string by its weight
-    allTrivia = allTrivia.flatMap(item => Array(item.weight).fill(item));
-    allTrivia = shuffle(allTrivia);
+  for (const pid of inputIds) {
+    output[pid] = generateTriviaParagraph(pid);
+  }
 
-    const selected = [];
-    let totalChars = 0;
-
-    for (const item of allTrivia) {
-        const text = item.text;
-        if (totalChars + text.length > maxChars) continue;
-
-        // Avoid very similar strings
-        if (selected.some(s => isSimilar(s, text))) continue;
-
-        selected.push(text);
-        totalChars += text.length;
-
-        if (totalChars >= maxChars) break;
-    }
-
-    console.log(`Player ${player.player_name} - total trivia strings available: ${allTrivia.length}`);
-    console.log(`Selected ${selected.length} strings, total characters: ${totalChars}`);
-
-    return { paragraph: selected.map(s => s.text).join(' '), selectedStrings: selected.map(s => s.text) };
-}
-
-// Export function using ES module syntax
-export { generateTriviaParagraph };
-
-/**
- * Standalone test block using import.meta.url
- * Only runs if the script is executed directly: `node trivia-shuffle.js`
- */
-if (import.meta.url === `file://${process.cwd()}/trivia-shuffle.js`) {
-    const testPlayerId = '13977';
-    const result = generateTriviaParagraph(testPlayerId);
-    console.log('\nGenerated Trivia Paragraph:\n', result.paragraph);
-    console.log('\nUsed Trivia Strings:\n', result.selectedStrings);
+  fs.writeFileSync(outputFile, JSON.stringify(output, null, 2));
+  console.log('Output written to', outputFile);
 }
