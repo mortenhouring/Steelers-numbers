@@ -8,17 +8,21 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # Step 1: Checkout repository
       - name: Checkout repo
         uses: actions/checkout@v4
 
+      # Step 2: Setup Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
 
+      # Step 3: Run the roster update script
       - name: Run roster update script
-        run: node fetchimages/write-to-root-current.js
+        run: node fetchimages/write-to-root-current.cjs
 
+      # Step 4: Commit and push updated currentroster.json
       - name: Commit changes
         run: |
           git config --global user.name "github-actions[bot]"
