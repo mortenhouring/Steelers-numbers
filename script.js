@@ -1,12 +1,13 @@
 // script.js
-
+import { loadTrivia, generateTriviaParagraph } from './main-trivia-shuffle.js';
 let roster = [];
 let currentPlayer = null; 
 let questionDisplay; 
 let answerDisplay; 
 let goButton;
 let quiz1Initialized = false;
-let currentIndex = parseInt(localStorage.getItem('currentIndex') || '0', 10);
+let currentIndex = parseInt(localStorage.getItem('currentIndex'), 10);
+if (isNaN(currentIndex)) currentIndex = 0;
 
 const correctResponses = [
   "Nice job!",
@@ -105,7 +106,7 @@ function setupQuiz1() {
 
   // Go button
   goButton.addEventListener('click', () => {
-    const userAnswer = parseInt(answerDisplay.value, 10);
+      const userAnswer = parseInt(answerDisplay.value, 10);
     if (isNaN(userAnswer)) return;
 
     localStorage.setItem('lastAnswer', userAnswer);
@@ -151,14 +152,16 @@ const player = saved ? JSON.parse(saved) : roster.find(p => p.player_id === last
     feedback.textContent = "Player not found.";
     return;
   }
+  const trivia = generateTriviaParagraph(player.player_id);
+  playerTrivia.textContent = trivia.paragraph;
 
   playerImage.src = player.player_image;
+  
   // Show giant number behind player image
   const giantNumber = document.getElementById('giant-number');
   giantNumber.textContent = player.number;
 
   playerInfo.textContent = `${player.player_name} - ${player.position}`;
-  playerTrivia.textContent = player.trivia;
 
   if (lastAnswer === player.number) {
     feedback.textContent = correctResponses[Math.floor(Math.random() * correctResponses.length)];
@@ -195,5 +198,6 @@ const player = saved ? JSON.parse(saved) : roster.find(p => p.player_id === last
 // Auto-detect which quiz page
 document.addEventListener('DOMContentLoaded', async () => {
   await loadRoster();   // This will call setupQuiz1() if on quiz1 page
+  await loadTrivia();
   setupQuiz2();         // Only needed if on quiz2 page
 });
