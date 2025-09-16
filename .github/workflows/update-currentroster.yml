@@ -1,0 +1,31 @@
+name: Update Current Roster
+
+on:
+  workflow_dispatch:  # only runs when manually triggered
+
+jobs:
+  update-roster:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Run roster update script
+        run: node fetchimages/write-to-root-current.js
+
+      - name: Commit changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add currentroster.json
+          if ! git diff --cached --quiet; then
+            git commit -m "Update currentroster.json"
+            git push
+          else
+            echo "No changes to commit"
