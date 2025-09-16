@@ -1,18 +1,92 @@
 {
   "8439": {
-    "paragraph": "",
-    "selectedStrings": []
+    "paragraph": "Has completed 1,256 passes on 1,979 attempts (63.5 pct.) for 15,161 yards and 121 TDs with 36 interceptions (99.7 passer rating) Three-time FedEx Air Players of the Year (2010, 2014, 2020) Named Super Bowl XLV MVP after throwing for 304 yards and three TDs Named 2015 finalist for the Walter Payton Man of the Year, an award that recognizes a player's off-the-field community service as well as his playing excellence Given name Aaron Charles Rodgers",
+    "selectedStrings": [
+      "Has completed 1,256 passes on 1,979 attempts (63.5 pct.) for 15,161 yards and 121 TDs with 36 interceptions (99.7 passer rating)",
+      "Three-time FedEx Air Players of the Year (2010, 2014, 2020)",
+      "Named Super Bowl XLV MVP after throwing for 304 yards and three TDs",
+      "Named 2015 finalist for the Walter Payton Man of the Year, an award that recognizes a player's off-the-field community service as well as his playing excellence",
+      "Given name Aaron Charles Rodgers"
+    ],
+    "debug": {
+      "playerId": "8439",
+      "playerName": "Aaron Rodgers",
+      "categoriesFound": [
+        "2024",
+        "PRO CAREER",
+        "PERSONAL"
+      ],
+      "totalUniqueFacts": 117,
+      "duplicatesRemoved": 7,
+      "blanksSkipped": 0,
+      "selectedCount": 5,
+      "selectedChars": 450,
+      "thresholdUsed": 0.6
+    }
   },
   "12345": {
     "paragraph": "",
-    "selectedStrings": []
+    "selectedStrings": [],
+    "debug": {
+      "playerId": "12345",
+      "playerName": null,
+      "categoriesFound": [],
+      "totalUniqueFacts": 0,
+      "duplicatesRemoved": 0,
+      "blanksSkipped": 0,
+      "selectedCount": 0,
+      "selectedChars": 0,
+      "thresholdUsed": null
+    }
   },
   "13977": {
-    "paragraph": "",
-    "selectedStrings": []
+    "paragraph": "His 211 regular-season games played for the Steelers ranks 12th in NFL history among defensive tackles His seven Pro Bowls rank second-most among active defensive linemen. Six-time Steelers' Walter Payton Man of the Year nominee (2015, 2017, 2018, 2021, 2022, 2023) Finished the season with 71 tackles (35 solo), 20 QB hits, 12 tackles for loss, 8.0 sacks, and led the team with a career-high 11 passes defensed Full name: Cameron Phillips Heyward",
+    "selectedStrings": [
+      "His 211 regular-season games played for the Steelers ranks 12th in NFL history among defensive tackles",
+      "His seven Pro Bowls rank second-most among active defensive linemen.",
+      "Six-time Steelers' Walter Payton Man of the Year nominee (2015, 2017, 2018, 2021, 2022, 2023)",
+      "Finished the season with 71 tackles (35 solo), 20 QB hits, 12 tackles for loss, 8.0 sacks, and led the team with a career-high 11 passes defensed",
+      "Full name: Cameron Phillips Heyward"
+    ],
+    "debug": {
+      "playerId": "13977",
+      "playerName": "Cameron Heyward",
+      "categoriesFound": [
+        "2024",
+        "PRO CAREER",
+        "PERSONAL"
+      ],
+      "totalUniqueFacts": 43,
+      "duplicatesRemoved": 27,
+      "blanksSkipped": 0,
+      "selectedCount": 5,
+      "selectedChars": 447,
+      "thresholdUsed": 0.6
+    }
   },
   "15863": {
-    "paragraph": "",
-    "selectedStrings": []
+    "paragraph": "Goes by \"Slay\" or \"'Big Play' Slay\" His oldest son, Darion, was born when Slay was 15 years old In 2018, opened the Big Play Slay Center of Excellence, which is an academic center in his hometown of Brunswick, Georgia Made NFL starting debut in Week 1 of 2013 (vs. Minnesota) Darion pushed Slay to become the best version of himself and also drove him toward the NFL Only his grandmother has permission to call him \"Darius\"",
+    "selectedStrings": [
+      "Goes by \"Slay\" or \"'Big Play' Slay\"",
+      "His oldest son, Darion, was born when Slay was 15 years old",
+      "In 2018, opened the Big Play Slay Center of Excellence, which is an academic center in his hometown of Brunswick, Georgia",
+      "Made NFL starting debut in Week 1 of 2013 (vs. Minnesota)",
+      "Darion pushed Slay to become the best version of himself and also drove him toward the NFL",
+      "Only his grandmother has permission to call him \"Darius\""
+    ],
+    "debug": {
+      "playerId": "15863",
+      "playerName": "Darius Slay",
+      "categoriesFound": [
+        "PRO CAREER",
+        "PERSONAL"
+      ],
+      "totalUniqueFacts": 22,
+      "duplicatesRemoved": 10,
+      "blanksSkipped": 0,
+      "selectedCount": 6,
+      "selectedChars": 423,
+      "thresholdUsed": 0.6
+    }
   }
 }
