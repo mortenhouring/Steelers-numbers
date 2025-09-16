@@ -58,16 +58,14 @@ async function loadRoster() {
     if (!response.ok) throw new Error("Could not load roster");
     const loadedRoster = await response.json();
 
-    const saved = localStorage.getItem('currentRoster');
-    if (saved) {
-      roster = JSON.parse(saved);
-    } else {
-      roster = loadedRoster;
-      shuffleArray(roster);
-      localStorage.setItem('currentRoster', JSON.stringify(roster));
+    let savedRoster = localStorage.getItem('currentRoster');
+    if (!savedRoster || JSON.parse(savedRoster).length === 0) {
+      // shuffle and save if first load or pool is empty
+      shuffleArray(loadedRoster);
+      localStorage.setItem('currentRoster', JSON.stringify(loadedRoster));
     }
 
-    // init totalQuestions etc if needed...
+    roster = JSON.parse(localStorage.getItem('currentRoster'));
     setupQuiz1();
     console.log('Quiz setup completed');
 
@@ -77,7 +75,6 @@ async function loadRoster() {
     if (el) el.textContent = `Error: ${err.message}`;
   }
 }
-
 function setupQuiz1() {
   if (!document.body.classList.contains('quiz1')) return;
   if (quiz1Initialized) return; // Prevent double-init
@@ -116,21 +113,20 @@ function setupQuiz1() {
 }
 
 function pickNextPlayer() {
-  if (currentIndex >= roster.length) {
-    window.location.href = 'quiz_end.html';
-    return;
-  }
+    let rosterData = localStorage.getItem('currentRoster');
+    let rosterPool = rosterData ? JSON.parse(rosterData) : [];
+    if (rosterPool.length === 0) {
+        window.location.href = 'quiz_end.html';
+        return;
+    }
 
-  currentPlayer = roster[currentIndex];
-  localStorage.setItem('lastPlayer', JSON.stringify(currentPlayer));
-  
-  currentIndex++;
-  localStorage.setItem('currentIndex', currentIndex); // save progress
-  localStorage.setItem('currentRoster', JSON.stringify(roster));
-  
-  const phrase = questionPhrases[Math.floor(Math.random() * questionPhrases.length)];
-  questionDisplay.textContent = phrase.replace('{player}', currentPlayer.player_name);
-  answerDisplay.value = '';
+    currentPlayer = rosterPool.shift(); // take first player
+    localStorage.setItem('lastPlayer', JSON.stringify(currentPlayer));
+    localStorage.setItem('currentRoster', JSON.stringify(rosterPool)); // save updated pool
+
+    const phrase = questionPhrases[Math.floor(Math.random() * questionPhrases.length)];
+    questionDisplay.textContent = phrase.replace('{player}', currentPlayer.player_name);
+    answerDisplay.value = '';
 }
 // --- Quiz2 setup ---
 function setupQuiz2() {
@@ -171,8 +167,11 @@ const player = saved ? JSON.parse(saved) : roster.find(p => p.player_id === last
 
   let score = parseInt(localStorage.getItem('score') || '0', 10);
   let questionsAsked = parseInt(localStorage.getItem('questionsAsked') || '0', 10);
-  const totalQuestions = parseInt(localStorage.getItem('totalQuestions') || roster.length, 10);
-
+  let totalQuestions = parseInt(localStorage.getItem('totalQuestions'), 10);
+if (isNaN(totalQuestions)) {
+    totalQuestions = roster.length;
+    localStorage.setItem('totalQuestions', totalQuestions);
+}
   questionsAsked++;  // increment per answered question
 
   if (lastAnswer === player.number) {
