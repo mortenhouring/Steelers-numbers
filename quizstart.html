@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <script src="headerscript.js" defer></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Quiz Start</title>
+<script src="headerscript.js" defer></script>
 <style>
   body {
     font-family: Arial, sans-serif;
@@ -47,12 +47,11 @@
 </style>
 </head>
 <body>
-<!-- Header placeholder and script for dynamic menu -->
+<!-- Header placeholder -->
 <div id="header-placeholder"></div>
-<script src="headerscript.js" defer></script>
- 
+
 <div id="intro-text">
-  Check your knowledge of every player on the roster. The big names, the new guys and the guys waiting for their shot.
+  Check your knowledge of every player on the roster. The big names, the new guys, and the guys waiting for their shot.
 </div>
 
 <button id="new-game-btn" class="frontpage-btn">New Game</button>
@@ -60,18 +59,20 @@
 <button id="continue-btn" class="frontpage-btn">Continue</button>
 
 <script>
+  const QUIZ_PAGE = 'currentquiz.html';
+
   // New Game: reset counters and currentIndex
   document.getElementById('new-game-btn').addEventListener('click', () => {
     localStorage.setItem('score', 0);
     localStorage.setItem('questionsAsked', 0);
     localStorage.setItem('currentIndex', 0);
-    // keep totalQuestions if you want
-    window.location.href = 'quiz1.html';
+    // Optional: store totalQuestions if your one-page script uses it
+    window.location.href = QUIZ_PAGE;
   });
 
-  // Continue: just go to quiz1.html with current progress
+  // Continue: go to quiz page with current progress
   document.getElementById('continue-btn').addEventListener('click', () => {
-    window.location.href = 'quiz1.html';
+    window.location.href = QUIZ_PAGE;
   });
 </script>
 
