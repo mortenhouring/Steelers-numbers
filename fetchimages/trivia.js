@@ -133,35 +133,49 @@ async function main() {
       await tryClickReadMore(page);
 
       // now extract subsectioned bullets robustly
-      const playerTrivia = await page.evaluate(() => {
-        // allowed subsections we care about (we normalize variants later)
-        const allowedSubsections = [
-          'PRO CAREER',
-          'PERSONAL',
-          'CAREER HIGHLIGHTS',
-          'AWARDS',
-          '2024' // match headings that include 2024
-        ];
+const playerTrivia = await page.evaluate(() => {
+  // allowed subsections we care about (we normalize variants later)
+  const allowedSubsections = [
+    'PRO CAREER',
+    'PERSONAL',
+    'CAREER HIGHLIGHTS',
+    'AWARDS',
+    '2024' // match headings that include 2024
+  ];
 
-        function headingAllowed(h) {
-          if (!h) return false;
-          const UH = h.toUpperCase();
-          for (const s of allowedSubsections) {
-            if (UH.includes(s)) return true;
-          }
-          return false;
-        }
+  // headings we explicitly want to skip
+  const ignoredSubsections = [
+    'COLLEGE',
+    'COLLEGE CAREER'
+  ];
 
-        // Find all potential heading nodes (p strong, h3, h4)
-        const headingNodes = Array.from(document.querySelectorAll('p strong, h3, h4'));
+  function headingAllowed(h) {
+    if (!h) return false;
+    const UH = h.toUpperCase();
 
-        const sections = {};
+    // ignore COLLEGE-related headings
+    for (const skip of ignoredSubsections) {
+      if (UH.includes(skip)) return false;
+    }
 
-        for (const hn of headingNodes) {
-          const rawHeading = (hn.textContent || '').trim();
-          if (!rawHeading) continue;
-          if (!headingAllowed(rawHeading)) continue;
+    // allow only headings in allowed list
+    for (const s of allowedSubsections) {
+      if (UH.includes(s)) return true;
+    }
+    return false;
+  }
 
+  // Find all potential heading nodes (p strong, h3, h4)
+  const headingNodes = Array.from(document.querySelectorAll('p strong, h3, h4'));
+
+  const sections = {};
+
+  for (const hn of headingNodes) {
+    const rawHeading = (hn.textContent || '').trim();
+    if (!rawHeading) continue;
+    if (!headingAllowed(rawHeading)) continue;
+
+    
           // Ensure the heading is inside the "Biography" area:
           let inBiography = false;
           for (let anc = hn.parentElement; anc; anc = anc.parentElement) {
