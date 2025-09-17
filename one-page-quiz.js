@@ -381,8 +381,19 @@ function setupHandlers() {
     handleNext();
   });
 }
+///// Small utility to choose a random string
+function chooseRandom(arr) {
+  return arr[Math.floor(Math.random() * arr.length)];
+}
+
 ///// DEBUG: simulate last-question scenario for testing the Next button
-function simulateLastQuestion(simulatedScore = 40, simulatedQuestions = 50) {
+function simulateLastQuestion(simulatedScore = 42, simulatedQuestions = 50) {
+  // Wait until init() has finished (localStorage populated and handlers attached)
+  if (!document.getElementById('next-button')) {
+    console.error('[DEBUG] UI not ready yet — call simulateLastQuestion after DOMContentLoaded and init.');
+    return;
+  }
+
   // Empty working pool so next click triggers end-of-quiz
   localStorage.setItem('currentRoster', JSON.stringify([]));
 
@@ -401,17 +412,20 @@ function simulateLastQuestion(simulatedScore = 40, simulatedQuestions = 50) {
   localStorage.setItem('lastPlayer', JSON.stringify(fakePlayer));
   localStorage.setItem('lastAnswer', "99");
 
-  // Display the last answer view as if user just submitted last answer
+  // Force the quiz2 view to render using the fake last player
   showAnswerView();
 
-  console.log("[DEBUG] Last question simulated. Click 'Next Player' to test redirect.");
+  console.log(`[DEBUG] Last question simulated. Score: ${simulatedScore}/${simulatedQuestions}`);
+  console.log('[DEBUG] Click "Next Player" to test redirect to currentquizend.html');
 }
-
-// Uncomment/comment this to unlock/lock simulate:
-simulateLastQuestion(42, 50);
-
 ///// Kick off
 document.addEventListener('DOMContentLoaded', async () => {
   setupHandlers();
   await init();
+  document.addEventListener('DOMContentLoaded', async () => {
+  setupHandlers();
+  await init();
+
+  // Safe: now the page is fully initialized, simulate last question
+  simulateLastQuestion(42, 50);  // <-- change these numbers to test different scores
 });
