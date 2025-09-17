@@ -381,7 +381,19 @@ function setupHandlers() {
     handleNext();
   });
 }
+// DEBUG ONLY: simulate last-question scenario
+function simulateEndGame(simulatedScore = 40, simulatedQuestions = 50) {
+  // Clear working pool to trigger end-of-quiz
+  localStorage.setItem('currentRoster', JSON.stringify([]));
+  localStorage.setItem('score', String(simulatedScore));
+  localStorage.setItem('questionsAsked', String(simulatedQuestions));
 
+  // Redirect to end page — currentquizend.html will compute role text itself
+  window.location.href = 'currentquizend.html';
+}
+
+// Uncomment for testing:
+simulateEndGame(42, 50)
 ///// Kick off
 document.addEventListener('DOMContentLoaded', async () => {
   setupHandlers();
