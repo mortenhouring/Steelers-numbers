@@ -43,7 +43,8 @@ function filterStatHeavyTrivia(triviaList) {
 
     // Reject lines that start with "Registered", "Has registered", "Converted", "Has made"
     if (/^(Registered|Has registered|Converted|Has made)/i.test(line.trim())) return false;
-
+    // Reject college-related terms
+    if (/(senior|prospect|freshman|all-american|pac-12|school|recruit|all-state|junior)/i.test(line.trim())) return false;
     return true; // keep everything else
   });
 }
