@@ -1,4 +1,4 @@
-loo// one-page-quiz.js
+// one-page-quiz.js
 // Single-page quiz controller.
 // - Uses currentroster.json as source of truth
 // - Maintains a working pool in localStorage: "currentRoster" (players left to ask)
@@ -317,33 +317,15 @@ function showAnswerView() {
 
   // Debug log
   log(`Displayed quiz2 for player ${currentPlayer.player_id}. score=${score}, asked=${questionsAsked}, remaining=${remaining}`);
-// At the end of showAnswerView()
-const nextBtn = document.getElementById('next-button');
-const pool = Array.isArray(safeParseJSON(localStorage.getItem('currentRoster')))
-  ? safeParseJSON(localStorage.getItem('currentRoster'))
-  : [];
-nextBtn.textContent = pool.length === 0 ? 'Finish' : 'Next';
 }
 
 ///// Next handler — called when user clicks "Next Player"
 function handleNext() {
-  // After user sees the feedback, we clear lastPlayer + lastAnswer
+  // After user sees the trivia & feedback, we clear lastPlayer + lastAnswer (we have recorded the result)
   localStorage.removeItem('lastPlayer');
   localStorage.removeItem('lastAnswer');
 
-  // Read remaining players
-  const pool = Array.isArray(safeParseJSON(localStorage.getItem('currentRoster')))
-    ? safeParseJSON(localStorage.getItem('currentRoster'))
-    : [];
-
-  if (pool.length === 0) {
-    log('No players left; redirecting to currentquizend.html');
-    // redirect after processing last answer
-    window.location.href = 'currentquizend.html';
-    return;
-  }
-
-  // Otherwise, move to next player
+  // Move to next player
   pickNextPlayer();
 }
 
@@ -381,12 +363,9 @@ function setupHandlers() {
     handleNext();
   });
 }
-///// Small utility to choose a random string
-function chooseRandom(arr) {
-  return arr[Math.floor(Math.random() * arr.length)];
-}
 
+///// Kick off
 document.addEventListener('DOMContentLoaded', async () => {
   setupHandlers();
-  await init(); // fully initialize quiz
+  await init();
 });
