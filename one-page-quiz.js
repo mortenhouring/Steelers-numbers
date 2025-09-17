@@ -381,6 +381,34 @@ function setupHandlers() {
     handleNext();
   });
 }
+///// DEBUG: simulate last-question scenario for testing the Next button
+function simulateLastQuestion(simulatedScore = 40, simulatedQuestions = 50) {
+  // Empty working pool so next click triggers end-of-quiz
+  localStorage.setItem('currentRoster', JSON.stringify([]));
+
+  // Set the score & questionsAsked as if user completed quiz
+  localStorage.setItem('score', String(simulatedScore));
+  localStorage.setItem('questionsAsked', String(simulatedQuestions));
+
+  // Set a fake lastPlayer so quiz2-view can show feedback normally
+  const fakePlayer = {
+    player_id: 999,
+    player_name: "Test Player",
+    number: 99,
+    player_image: "",
+    position: "QB"
+  };
+  localStorage.setItem('lastPlayer', JSON.stringify(fakePlayer));
+  localStorage.setItem('lastAnswer', "99");
+
+  // Display the last answer view as if user just submitted last answer
+  showAnswerView();
+
+  console.log("[DEBUG] Last question simulated. Click 'Next Player' to test redirect.");
+}
+
+// Uncomment/comment this to unlock/lock simulate:
+simulateLastQuestion(42, 50);
 
 ///// Kick off
 document.addEventListener('DOMContentLoaded', async () => {
