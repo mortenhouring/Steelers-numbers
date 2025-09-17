@@ -55,15 +55,23 @@
   </main>
 
   <script>
+  // TEMP DISABLED
     // Read score and questionsAsked from localStorage
-    const score = parseInt(localStorage.getItem('score') || '0', 10);
-    const questionsAsked = parseInt(localStorage.getItem('questionsAsked') || '0', 10);
-    const wrongAnswers = questionsAsked - score;
+    // const score = parseInt(localStorage.getItem('score') || '0', 10);
+    // const questionsAsked = parseInt(localStorage.getItem('questionsAsked') || '0', 10);
+    // const wrongAnswers = questionsAsked - score;
 
     // Display final score
-    document.getElementById('final-score').textContent = `${score} / ${questionsAsked}`;
+    // document.getElementById('final-score').textContent = `${score} / ${questionsAsked}`;
+ // TEMP DEBUG: simulate score — matches your existing code IDs & variables
+  const simulatedScore = 40;      // Change this to test correct answers
+  const simulatedQuestions = 50;  // Change this to test total questions
+  const wrongAnswers = simulatedQuestions - simulatedScore;
 
-    // Determine role text
+  // Display the final score
+  document.getElementById('final-score').textContent = `${simulatedScore} / ${simulatedQuestions}`;
+  
+      // Determine role text
     let roleText = '';
     if (wrongAnswers === 0) {
       roleText = "Is that you, Mike?";
