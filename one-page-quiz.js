@@ -385,11 +385,19 @@ function setupHandlers() {
 function chooseRandom(arr) {
   return arr[Math.floor(Math.random() * arr.length)];
 }
-///// DEBUG: simulate last-question scenario for testing the Next button
-function simulateLastQuestion(simulatedScore = 42, simulatedQuestions = 50) {
-  // Ensure everything is ready
-  if (!document.getElementById('next-button')) {
-    console.error('[DEBUG] UI not ready yet — call simulateLastQuestion after DOMContentLoaded and init().');
+///// DEBUG: simulate last-question scenario safely
+async function simulateLastQuestion(simulatedScore = 42, simulatedQuestions = 50) {
+  // Wait until localStorage has totalQuestions and currentRoster
+  let attempts = 0;
+  while (!localStorage.getItem('totalQuestions') && attempts < 10) {
+    await new Promise(res => setTimeout(res, 100)); // wait 100ms
+    attempts++;
+  }
+
+  // Safety check: ensure UI elements exist
+  const nextBtn = document.getElementById('next-button');
+  if (!nextBtn) {
+    console.error('[DEBUG] UI not ready — ensure DOM and init() completed successfully.');
     return;
   }
 
@@ -400,7 +408,7 @@ function simulateLastQuestion(simulatedScore = 42, simulatedQuestions = 50) {
   localStorage.setItem('score', String(simulatedScore));
   localStorage.setItem('questionsAsked', String(simulatedQuestions));
 
-  // === 3. Set a fake lastPlayer so quiz2-view can render normally ===
+  // === 3. Set a fake lastPlayer so quiz2-view can render ===
   const fakePlayer = {
     player_id: 999,
     player_name: "Test Player",
@@ -411,18 +419,18 @@ function simulateLastQuestion(simulatedScore = 42, simulatedQuestions = 50) {
   localStorage.setItem('lastPlayer', JSON.stringify(fakePlayer));
   localStorage.setItem('lastAnswer', "99");
 
-  // === 4. Show quiz2 (feedback / trivia) view as if last answer was submitted ===
+  // === 4. Show quiz2 (feedback / trivia) view as if last answer submitted ===
   showAnswerView();
 
   console.log(`[DEBUG] Last question simulated. Score: ${simulatedScore}/${simulatedQuestions}`);
   console.log('[DEBUG] Click "Next Player" to test redirect to currentquizend.html');
 }
-///// Kick off
+
+///// DOM ready
 document.addEventListener('DOMContentLoaded', async () => {
   setupHandlers();
-  await init(); // Ensure localStorage and roster are fully initialized
+  await init(); // fully initialize quiz
 
   // === DEBUG: simulate last question safely ===
-  // Uncomment the line below to test
-simulateLastQuestion(42, 50);
+  simulateLastQuestion(42, 50);
 });
