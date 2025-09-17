@@ -9,9 +9,6 @@
 // Notes:
 // - This script is written to be defensive: it validates localStorage, falls back to the JSON,
 //   initializes totalQuestions once, and logs detailed debug information.
-//
-// Author: (generated for you)
-// Date: (now)
 
 import { loadTrivia, generateTriviaParagraph } from './main-trivia-shuffle.js';
 
