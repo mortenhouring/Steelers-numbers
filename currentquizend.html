@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Steelers — Quiz End</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* Center content vertically */
+    #end-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      min-height: 70vh;
+      text-align: center;
+    }
+    #final-score {
+      font-size: 2em;
+      font-weight: bold;
+    }
+    #score-text {
+      font-size: 1.2em;
+    }
+    #role-text {
+      font-size: 1.5em;
+      margin-top: 10px;
+    }
+    .end-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 30px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header placeholder and menu script -->
+  <div id="header-placeholder"></div>
+  <script src="headerscript.js" defer></script>
+
+  <main id="end-content">
+    <h1>That's the end of the game!</h1>
+    <div id="score-text">Your final score:</div>
+    <div id="final-score">0</div>
+    <div id="role-text"></div>
+
+    <div class="end-buttons">
+      <a href="quizstart.html" class="frontpage-btn">Try again</a>
+      <a href="index.html" class="frontpage-btn">Back to menu</a>
+      <a href="scoreboard.html" class="frontpage-btn">Hall of Fame</a>
+    </div>
+  </main>
+
+  <script>
+    // Read score and questionsAsked from localStorage
+    const score = parseInt(localStorage.getItem('score') || '0', 10);
+    const questionsAsked = parseInt(localStorage.getItem('questionsAsked') || '0', 10);
+    const wrongAnswers = questionsAsked - score;
+
+    // Display final score
+    document.getElementById('final-score').textContent = `${score} / ${questionsAsked}`;
+
+    // Determine role text
+    let roleText = '';
+    if (wrongAnswers === 0) {
+      roleText = "Is that you, Mike?";
+    } else if (wrongAnswers <= 5) {
+      roleText = "Ring of Honor";
+    } else if (wrongAnswers <= 10) {
+      roleText = "General manager";
+    } else if (wrongAnswers <= 20) {
+      roleText = "Assistant manager";
+    } else if (wrongAnswers <= 30) {
+      roleText = "Intern";
+    } else if (wrongAnswers <= 45) {
+      roleText = "Towel boy";
+    } else {
+      roleText = "You've got work to do to crack the starting lineup";
+    }
+
+    document.getElementById('role-text').textContent = roleText;
+
+    // Optionally, clear localStorage to restart quiz fresh
+    localStorage.removeItem('currentRoster');
+    localStorage.removeItem('lastPlayer');
+    localStorage.removeItem('lastAnswer');
+    localStorage.removeItem('questionsAsked');
+    localStorage.removeItem('score');
+  </script>
+</body>
+</html>
