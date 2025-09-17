@@ -159,8 +159,8 @@ function pickNextPlayer() {
   log('pickNextPlayer: pool length before pick =', pool.length);
 
   if (pool.length === 0) {
-    log('No players left; redirecting to quiz_end.html');
-    window.location.href = 'quiz_end.html';
+    log('No players left; redirecting to currentquizend.html');
+    window.location.href = 'currentquizend.html';
     return;
   }
 
