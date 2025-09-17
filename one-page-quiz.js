@@ -385,23 +385,22 @@ function setupHandlers() {
 function chooseRandom(arr) {
   return arr[Math.floor(Math.random() * arr.length)];
 }
-
 ///// DEBUG: simulate last-question scenario for testing the Next button
 function simulateLastQuestion(simulatedScore = 42, simulatedQuestions = 50) {
-  // Wait until init() has finished (localStorage populated and handlers attached)
+  // Ensure everything is ready
   if (!document.getElementById('next-button')) {
-    console.error('[DEBUG] UI not ready yet — call simulateLastQuestion after DOMContentLoaded and init.');
+    console.error('[DEBUG] UI not ready yet — call simulateLastQuestion after DOMContentLoaded and init().');
     return;
   }
 
-  // Empty working pool so next click triggers end-of-quiz
+  // === 1. Empty working pool so next click triggers end-of-quiz ===
   localStorage.setItem('currentRoster', JSON.stringify([]));
 
-  // Set the score & questionsAsked as if user completed quiz
+  // === 2. Set score & questionsAsked as if quiz completed ===
   localStorage.setItem('score', String(simulatedScore));
   localStorage.setItem('questionsAsked', String(simulatedQuestions));
 
-  // Set a fake lastPlayer so quiz2-view can show feedback normally
+  // === 3. Set a fake lastPlayer so quiz2-view can render normally ===
   const fakePlayer = {
     player_id: 999,
     player_name: "Test Player",
@@ -412,7 +411,7 @@ function simulateLastQuestion(simulatedScore = 42, simulatedQuestions = 50) {
   localStorage.setItem('lastPlayer', JSON.stringify(fakePlayer));
   localStorage.setItem('lastAnswer', "99");
 
-  // Force the quiz2 view to render using the fake last player
+  // === 4. Show quiz2 (feedback / trivia) view as if last answer was submitted ===
   showAnswerView();
 
   console.log(`[DEBUG] Last question simulated. Score: ${simulatedScore}/${simulatedQuestions}`);
@@ -421,11 +420,9 @@ function simulateLastQuestion(simulatedScore = 42, simulatedQuestions = 50) {
 ///// Kick off
 document.addEventListener('DOMContentLoaded', async () => {
   setupHandlers();
-  await init();
-  document.addEventListener('DOMContentLoaded', async () => {
-  setupHandlers();
-  await init();
+  await init(); // Ensure localStorage and roster are fully initialized
 
-  // Safe: now the page is fully initialized, simulate last question
-  simulateLastQuestion(42, 50);  // <-- change these numbers to test different scores
+  // === DEBUG: simulate last question safely ===
+  // Uncomment the line below to test
+simulateLastQuestion(42, 50);
 });
