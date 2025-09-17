@@ -317,15 +317,33 @@ function showAnswerView() {
 
   // Debug log
   log(`Displayed quiz2 for player ${currentPlayer.player_id}. score=${score}, asked=${questionsAsked}, remaining=${remaining}`);
+// At the end of showAnswerView()
+const nextBtn = document.getElementById('next-button');
+const pool = Array.isArray(safeParseJSON(localStorage.getItem('currentRoster')))
+  ? safeParseJSON(localStorage.getItem('currentRoster'))
+  : [];
+nextBtn.textContent = pool.length === 0 ? 'Finish' : 'Next';
 }
 
 ///// Next handler — called when user clicks "Next Player"
 function handleNext() {
-  // After user sees the trivia & feedback, we clear lastPlayer + lastAnswer (we have recorded the result)
+  // After user sees the feedback, we clear lastPlayer + lastAnswer
   localStorage.removeItem('lastPlayer');
   localStorage.removeItem('lastAnswer');
 
-  // Move to next player
+  // Read remaining players
+  const pool = Array.isArray(safeParseJSON(localStorage.getItem('currentRoster')))
+    ? safeParseJSON(localStorage.getItem('currentRoster'))
+    : [];
+
+  if (pool.length === 0) {
+    log('No players left; redirecting to currentquizend.html');
+    // redirect after processing last answer
+    window.location.href = 'currentquizend.html';
+    return;
+  }
+
+  // Otherwise, move to next player
   pickNextPlayer();
 }
 
