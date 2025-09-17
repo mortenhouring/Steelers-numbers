@@ -1,4 +1,4 @@
-// one-page-quiz.js
+loo// one-page-quiz.js
 // Single-page quiz controller.
 // - Uses currentroster.json as source of truth
 // - Maintains a working pool in localStorage: "currentRoster" (players left to ask)
@@ -385,52 +385,8 @@ function setupHandlers() {
 function chooseRandom(arr) {
   return arr[Math.floor(Math.random() * arr.length)];
 }
-///// DEBUG: simulate last-question scenario safely
-async function simulateLastQuestion(simulatedScore = 42, simulatedQuestions = 50) {
-  // Wait until localStorage has totalQuestions and currentRoster
-  let attempts = 0;
-  while (!localStorage.getItem('totalQuestions') && attempts < 10) {
-    await new Promise(res => setTimeout(res, 100)); // wait 100ms
-    attempts++;
-  }
 
-  // Safety check: ensure UI elements exist
-  const nextBtn = document.getElementById('next-button');
-  if (!nextBtn) {
-    console.error('[DEBUG] UI not ready — ensure DOM and init() completed successfully.');
-    return;
-  }
-
-  // === 1. Empty working pool so next click triggers end-of-quiz ===
-  localStorage.setItem('currentRoster', JSON.stringify([]));
-
-  // === 2. Set score & questionsAsked as if quiz completed ===
-  localStorage.setItem('score', String(simulatedScore));
-  localStorage.setItem('questionsAsked', String(simulatedQuestions));
-
-  // === 3. Set a fake lastPlayer so quiz2-view can render ===
-  const fakePlayer = {
-    player_id: 999,
-    player_name: "Test Player",
-    number: 99,
-    player_image: "",
-    position: "QB"
-  };
-  localStorage.setItem('lastPlayer', JSON.stringify(fakePlayer));
-  localStorage.setItem('lastAnswer', "99");
-
-  // === 4. Show quiz2 (feedback / trivia) view as if last answer submitted ===
-  showAnswerView();
-
-  console.log(`[DEBUG] Last question simulated. Score: ${simulatedScore}/${simulatedQuestions}`);
-  console.log('[DEBUG] Click "Next Player" to test redirect to currentquizend.html');
-}
-
-///// DOM ready
 document.addEventListener('DOMContentLoaded', async () => {
   setupHandlers();
   await init(); // fully initialize quiz
-
-  // === DEBUG: simulate last question safely ===
-  simulateLastQuestion(42, 50);
 });
