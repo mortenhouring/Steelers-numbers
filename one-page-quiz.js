@@ -363,9 +363,60 @@ function setupHandlers() {
     handleNext();
   });
 }
+// Also support Enter key for accessibility
+answerDisplay.addEventListener('keydown', (ev) => {
+  if (ev.key === 'Enter') {
+    handleSubmit();
+  }
+});
 
-///// Kick off
+nextButton.addEventListener('click', () => {
+  handleNext();
+});
+
+// ===== DEBUG: simulate multiple quiz-end scenarios =====
+function setupFakeEndTester() {
+  const scoresToTest = [0, 5, 9, 13, 21, 29, 37, 45, 50]; 
+  let index = 0;
+
+  const btn = document.createElement('button');
+  btn.textContent = 'FAKE END QUIZ (Next Scenario)';
+  btn.style.position = 'fixed';
+  btn.style.bottom = '20px';
+  btn.style.left = '20px';
+  btn.style.zIndex = 9999;
+  btn.style.padding = '10px';
+  btn.style.backgroundColor = 'darkred';
+  btn.style.color = 'white';
+  btn.style.fontWeight = 'bold';
+  btn.style.border = 'none';
+  btn.style.cursor = 'pointer';
+  document.body.appendChild(btn);
+
+  btn.addEventListener('click', () => {
+    const score = scoresToTest[index % scoresToTest.length];
+    const questionsAsked = 54; // total number of quiz questions
+    index += 1;
+
+    // Set localStorage for fake end
+    localStorage.setItem('score', String(score));
+    localStorage.setItem('questionsAsked', String(questionsAsked));
+    localStorage.setItem('currentRoster', JSON.stringify([])); // empty pool → triggers redirect
+
+    alert(`Fake end quiz set: ${score} / ${questionsAsked} (Scenario ${index})`);
+  });
+}
+
+// ===== Kick off all setup after DOM loaded =====
 document.addEventListener('DOMContentLoaded', async () => {
   setupHandlers();
+  setupFakeEndTester();  // attach debug button first
   await init();
 });
+
+
+///// Kick off after debug, uncomment:
+//document.addEventListener('DOMContentLoaded', async () => {
+  //setupHandlers();
+  //await init();
+//});
