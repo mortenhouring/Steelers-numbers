@@ -55,23 +55,22 @@
   <div id="header-placeholder"></div>
   <script src="headerscript.js" defer></script>
 
-  <main id="end-content">
-    <h1>That's the end of the ballgame!</h1>
-    <div id="role-text"></div>
-     <!-- Combine score text and number in one line -->
-    <div id="final-score-text">
+<main id="end-content">
+  <h1>That's the end of the ballgame!</h1>
+  <div id="role-text"></div>
+
+  <!-- Combine score text and number in one line -->
+  <div id="final-score-text">
     <span>Your final score:</span>
     <span id="final-score">0</span>
-    </div>
-    
+  </div>
 
-    <div class="end-buttons">
-      <button class="frontpage-btn" onclick="window.location.href='quizstart.html'">Try again</button>
-      <button class="frontpage-btn" onclick="window.location.href='index.html'">Front Office</button>
-      <button class="frontpage-btn" onclick="window.location.href='scoreboard.html'">Hall of Fame</button>
-    </div>
-  </main>
-
+  <div class="end-buttons">
+    <button class="frontpage-btn" onclick="window.location.href='quizstart.html'">Try again</button>
+    <button class="frontpage-btn" onclick="window.location.href='index.html'">Front Office</button>
+    <button class="frontpage-btn" onclick="window.location.href='scoreboard.html'">Hall of Fame</button>
+  </div>
+</main>
   <script>
     // Read score and questionsAsked from localStorage
     const score = parseInt(localStorage.getItem('score') || '0', 10);
