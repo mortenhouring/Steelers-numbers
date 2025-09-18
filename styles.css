@@ -51,13 +51,13 @@ main > div {
 .frontpage-btn:focus {
     outline: none;
 }
-/* currentquizend.html end buttons*/
+/* Keep all your .end-buttons styling */
 .end-buttons {
   display: flex;
-  flex-direction: row;       /* horizontal layout */
-  justify-content: center;   /* center on page */
-  gap: 15px;                 /* space between buttons */
-  flex-wrap: nowrap;          /* prevent wrapping */
+  flex-direction: row;
+  justify-content: center;
+  gap: 15px;
+  flex-wrap: nowrap;
   margin-top: 20px;
 }
 #answer-display {
@@ -65,6 +65,16 @@ main > div {
     width: 100px;
     text-align: center;
     margin-bottom: 10px;
+}
+#final-score-text {
+  display: flex !important;       /* force row layout */
+  flex-direction: row !important; /* horizontal */
+  gap: 5px;                       /* space between text and number */
+  font-size: 1.2em;
+  font-weight: bold;
+  white-space: nowrap;
+  justify-content: center;         /* center horizontally */
+  align-items: center;             /* align baseline */
 }
 
 /* quiz1 Button Styles */
