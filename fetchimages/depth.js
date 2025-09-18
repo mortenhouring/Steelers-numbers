@@ -2,7 +2,6 @@ import fetch from 'node-fetch';
 import { JSDOM } from 'jsdom';
 import fs from 'fs';
 
-// Position mapping + limits
 const positions = {
   LT: { text: 'Left tackle', max: 1 },
   LG: { text: 'Left guard', max: 1 },
@@ -33,9 +32,26 @@ const positions = {
   PR: { text: 'Punt returner', max: 2 }
 };
 
+// Retry helper
+async function fetchWithRetry(url, retries = 3, delay = 3000) {
+  for (let i = 0; i < retries; i++) {
+    try {
+      const res = await fetch(url);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      return await res.text();
+    } catch (err) {
+      console.error(`Fetch attempt ${i+1} failed: ${err.message}`);
+      if (i < retries - 1) await new Promise(r => setTimeout(r, delay));
+      else throw err;
+    }
+  }
+}
+
 async function scrapeDepth() {
-  const res = await fetch('https://www.steelers.com/team/depth-chart/');
-  const html = await res.text();
+  const url = 'https://www.steelers.com/team/depth-chart/';
+  console.log(`Fetching depth chart from ${url}...`);
+
+  const html = await fetchWithRetry(url);
   const dom = new JSDOM(html);
   const document = dom.window.document;
 
@@ -44,14 +60,22 @@ async function scrapeDepth() {
 
   for (const tableId of depthTables) {
     const table = document.querySelector(`#${tableId} table`);
-    if (!table) continue;
+    if (!table) {
+      console.warn(`Table with ID ${tableId} not found!`);
+      continue;
+    }
 
+    console.log(`Parsing table: ${tableId}`);
     const rows = table.querySelectorAll('tbody tr');
+
     rows.forEach(row => {
       const tds = row.querySelectorAll('td');
       const posId = tds[0]?.textContent.trim();
       const mapping = positions[posId];
-      if (!mapping) return;
+      if (!mapping) {
+        if (posId) console.log(`Skipping position ${posId}`);
+        return;
+      }
 
       const maxPlayers = mapping.max;
       const posText = mapping.text;
@@ -66,14 +90,20 @@ async function scrapeDepth() {
           if (playerCount === 1) depthString = `2 2nd ${posText}`;
           if (playerCount === 2) depthString = `3 3rd ${posText}`;
           depthData.push({ depth_name: playerName, depth_pos: depthString });
+          console.log(`Added: ${playerName} - ${depthString}`);
           playerCount++;
         });
       }
+
+      if (playerCount === 0) console.log(`No players found for position ${posId}`);
     });
   }
 
   fs.writeFileSync('fetchimages/depth.json', JSON.stringify(depthData, null, 2));
-  console.log('Depth chart saved to fetchimages/depth.json');
+  console.log(`Depth chart saved to fetchimages/depth.json (${depthData.length} entries)`);
 }
 
-scrapeDepth();
+scrapeDepth().catch(err => {
+  console.error('Failed to scrape depth chart:', err);
+  process.exit(1);
+});
