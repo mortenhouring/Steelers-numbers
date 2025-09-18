@@ -1,8 +1,5 @@
 // short-quiz.js
 // Single-page quiz controller for SHORT QUIZ (10 random players)
-// Only differences from one-page-quiz.js:
-//   - Uses separate localStorage keys for independence
-//   - Picks exactly 10 random players
 
 import { loadTrivia, generateTriviaParagraph } from './main-trivia-shuffle.js';
 
@@ -54,16 +51,17 @@ function showView(viewId) {
     quiz2View.setAttribute('aria-hidden', 'false');
   }
 }
+function chooseRandom(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
 
 ///// Initialization
 async function init() {
   log('init() start');
 
-  // 1) Load trivia
+  // Load trivia
   try { await loadTrivia(); log('Trivia module loaded'); } 
   catch (err) { console.error('[short-quiz] loadTrivia() failed:', err); }
 
-  // 2) Load full roster
+  // Load full roster
   let loadedRoster = [];
   try {
     const resp = await fetch('currentroster.json', { cache: 'no-store' });
@@ -78,12 +76,12 @@ async function init() {
     return;
   }
 
-  // --- SHORT QUIZ: shuffle + take 10 players ---
+  // Shuffle and pick 10 players
   shuffleArray(loadedRoster);
   loadedRoster = loadedRoster.slice(0, 10);
   log('Short quiz: selected 10 random players');
 
-  // 3) Initialize working pool in localStorage
+  // Initialize working pool in localStorage
   try {
     const rawSaved = localStorage.getItem(SHORT_POOL_KEY);
     let saved = safeParseJSON(rawSaved);
@@ -93,6 +91,8 @@ async function init() {
       localStorage.setItem(SHORT_TOTAL_KEY, '10');
       localStorage.setItem(SHORT_ASKED_KEY, '0');
       localStorage.setItem(SHORT_SCORE_KEY, '0');
+      localStorage.removeItem(SHORT_LAST_PLAYER);
+      localStorage.removeItem(SHORT_LAST_ANSWER);
       log('Saved fresh short quiz pool to localStorage');
     } else {
       log(`Found existing short quiz pool — ${saved.length} players remain`);
@@ -105,9 +105,9 @@ async function init() {
     return;
   }
 
-  // 4) Resume if lastPlayer exists
-  const lastPlayerRaw = localStorage.getItem('lastPlayer');
-  const lastAnswerRaw = localStorage.getItem('lastAnswer');
+  // Resume last player if exists
+  const lastPlayerRaw = localStorage.getItem(SHORT_LAST_PLAYER);
+  const lastAnswerRaw = localStorage.getItem(SHORT_LAST_ANSWER);
 
   if (lastPlayerRaw && lastAnswerRaw !== null) {
     log('Resuming short quiz from storage');
@@ -125,11 +125,16 @@ function pickNextPlayer() {
 
   log('pickNextPlayer: pool length before pick =', pool.length);
 
-  if (pool.length === 0) { log('No players left; redirecting to short-quiz-end.html'); window.location.href = 'short-quiz-end.html'; return; }
+  if (pool.length === 0) { 
+    log('No players left; redirecting to short-quiz-end.html'); 
+    window.location.href = 'short-quiz-end.html'; 
+    return; 
+  }
 
   currentPlayer = pool.shift();
   localStorage.setItem(SHORT_POOL_KEY, JSON.stringify(pool));
-  localStorage.setItem('lastPlayer', JSON.stringify(currentPlayer));
+  localStorage.setItem(SHORT_LAST_PLAYER, JSON.stringify(currentPlayer));
+  answerDisplay.value = '';
 
   const questionPhrases = [
     "What number is {player}?",
@@ -143,9 +148,8 @@ function pickNextPlayer() {
     "Which jersey number does {player} wear?",
     "What number’s stitched on {player}'s uniform?",
   ];
-  const phrase = questionPhrases[Math.floor(Math.random() * questionPhrases.length)];
+  const phrase = chooseRandom(questionPhrases);
   questionDisplay.textContent = phrase.replace('{player}', currentPlayer.player_name);
-  answerDisplay.value = '';
 
   showView('quiz1');
   log(`Picked player ${currentPlayer.player_id} - ${currentPlayer.player_name}. Remaining in pool: ${pool.length}`);
@@ -158,7 +162,7 @@ function handleSubmit() {
   const userAnswer = parseInt(raw, 10);
   if (Number.isNaN(userAnswer)) return;
 
-  localStorage.setItem('lastAnswer', String(userAnswer));
+  localStorage.setItem(SHORT_LAST_ANSWER, String(userAnswer));
 
   let questionsAsked = parseInt(localStorage.getItem(SHORT_ASKED_KEY), 10) || 0;
   questionsAsked += 1;
@@ -176,7 +180,7 @@ function handleSubmit() {
 
 ///// Show answer/trivia
 function showAnswerView() {
-  const rawLast = localStorage.getItem('lastPlayer');
+  const rawLast = localStorage.getItem(SHORT_LAST_PLAYER);
   const last = safeParseJSON(rawLast) || currentPlayer;
   if (!last) { feedbackEl.textContent = 'Player not found.'; showView('quiz1'); return; }
   currentPlayer = last;
@@ -185,7 +189,7 @@ function showAnswerView() {
   giantNumberEl.textContent = currentPlayer.number ?? '';
   playerInfoEl.textContent = `${currentPlayer.player_name} - ${currentPlayer.position ?? ''}`;
 
-  const storedAnswer = parseInt(localStorage.getItem('lastAnswer'), 10);
+  const storedAnswer = parseInt(localStorage.getItem(SHORT_LAST_ANSWER), 10);
   const correctNumber = Number(currentPlayer?.number ?? NaN);
   feedbackEl.textContent = !Number.isNaN(correctNumber) && storedAnswer === correctNumber
     ? chooseRandom(["Nice job!","That's right!","You got it!","Exactly!","Spot on!","Great work!","Correct!"])
@@ -193,11 +197,23 @@ function showAnswerView() {
 
   let triviaRes = { paragraph: '', selectedStrings: [], debug: null };
   try {
-    const res = generateTriviaParagraph(currentPlayer.player_id);
-    triviaRes = res ?? triviaRes;
+    triviaRes = generateTriviaParagraph(currentPlayer.player_id) || triviaRes;
     playerTriviaEl.textContent = (triviaRes.paragraph || '').trim();
   } catch { playerTriviaEl.textContent = ''; }
 
   const score = parseInt(localStorage.getItem(SHORT_SCORE_KEY) || '0', 10);
   const questionsAsked = parseInt(localStorage.getItem(SHORT_ASKED_KEY) || '0', 10);
-  scoreEl.textContent =
+  scoreEl.textContent = score;
+  remainingEl.textContent = (initialRosterCount - questionsAsked);
+
+  showView('quiz2');
+}
+
+///// Event listeners
+goButton.addEventListener('click', handleSubmit);
+clearButton.addEventListener('click', () => { answerDisplay.value = ''; });
+keypadButtons.forEach(btn => btn.addEventListener('click', () => { answerDisplay.value += btn.textContent; }));
+nextButton.addEventListener('click', pickNextPlayer);
+
+///// Start quiz
+init();
