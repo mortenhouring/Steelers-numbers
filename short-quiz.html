@@ -1,1 +1,71 @@
+<!-- currentquiz.html-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Steelers — One Page Quiz</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- Header placeholder and script for dynamic menu -->
+  <div id="header-placeholder"></div>
+  <script src="headerscript.js" defer></script>
+
+  <!-- =======================
+       QUIZ 1 VIEW (Question)
+       Preserves your original quiz1 layout/IDs
+       ======================= -->
+  <main id="quiz1-view" class="quiz-view" aria-hidden="true">
+    <div class="quiz1">
+      <h2 id="player-name">loading</h2>
+
+      <input type="text" id="answer-display" readonly inputmode="numeric" aria-label="Answer" />
+
+      <div id="keypad">
+        <button class="num">1</button>
+        <button class="num">2</button>
+        <button class="num">3</button><br />
+        <button class="num">4</button>
+        <button class="num">5</button>
+        <button class="num">6</button><br />
+        <button class="num">7</button>
+        <button class="num">8</button>
+        <button class="num">9</button><br />
+        <button id="clear-button">&#9003;</button>
+        <button class="num">0</button>
+        <button id="go-button">Go</button>
+      </div>
+    </div>
+  </main>
+
+  <!-- =======================
+       QUIZ 2 VIEW (Answer / Trivia)
+       Preserves your original quiz2 layout/IDs
+       ======================= -->
+  <main id="quiz2-view" class="quiz-view" aria-hidden="true" style="display:none;">
+    <div class="quiz2">
+      <h1 id="feedback">Loading...</h1>
+
+      <!-- Container for giant number + player image -->
+      <div id="number-container">
+        <div id="giant-number"></div>
+        <img id="player-image" src="" alt="Player Image" />
+      </div>
+
+      <div id="player-info"></div>
+      <div id="player-trivia"></div>
+
+      <div id="score-remaining">
+        <span id="score"></span> | <span id="remaining"></span>
+      </div>
+
+      <button id="next-button" class="frontpage-btn">Next Player</button>
+    </div>
+  </main>
+
+  <!-- Module script: main single-page logic -->
+  <script type="module" src="short-quiz.js"></script>
+</body>
+</html>
 
