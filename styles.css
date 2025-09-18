@@ -54,10 +54,10 @@ main > div {
 /* currentquizend.html end buttons*/
 .end-buttons {
   display: flex;
-  flex-direction: row;   /* horizontal layout */
-  justify-content: center;
-  gap: 15px;            /* space between buttons */
-  flex-wrap: nowrap;     /* keep in one row */
+  flex-direction: row;       /* horizontal layout */
+  justify-content: center;   /* center on page */
+  gap: 15px;                 /* space between buttons */
+  flex-wrap: nowrap;          /* prevent wrapping */
   margin-top: 20px;
 }
 #answer-display {
