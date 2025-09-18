@@ -51,7 +51,15 @@ main > div {
 .frontpage-btn:focus {
     outline: none;
 }
-
+/* currentquizend.html end buttons*/
+.end-buttons {
+  display: flex;
+  flex-direction: row;   /* horizontal layout */
+  justify-content: center;
+  gap: 15px;            /* space between buttons */
+  flex-wrap: nowrap;     /* keep in one row */
+  margin-top: 20px;
+}
 #answer-display {
     font-size: 1.5em;
     width: 100px;
