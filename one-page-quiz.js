@@ -97,9 +97,19 @@ async function init() {
     showView('quiz1');
     return;
   }
+// --- SHORT QUIZ MODIFICATION ---
+// Shuffle the full roster (Fisher–Yates)
+for (let i = loadedRoster.length - 1; i > 0; i--) {
+  const j = Math.floor(Math.random() * (i + 1));
+  [loadedRoster[i], loadedRoster[j]] = [loadedRoster[j], loadedRoster[i]];
+}
 
+// Take only the first 10 players for the short quiz
+loadedRoster = loadedRoster.slice(0, 10);
+log('Short quiz: selected 10 random players');
   // 3) Initialize working pool in localStorage (currentRoster)
   // If there is a saved working pool, validate it; otherwise save a shuffled fresh pool.
+
   try {
     const rawSaved = localStorage.getItem('currentRoster');
     let saved = safeParseJSON(rawSaved);
