@@ -39,10 +39,12 @@
       display: block;
       margin: 0 auto;        /* center horizontally */
     }
-    #final-score-text {
-    font-size: 1.2em;
-    font-weight: bold;
-    white-space: nowrap;   /* prevent wrapping */
+      #final-score-text {
+      display: inline-flex;       /* keep children on the same line */
+      gap: 5px;                   /* small space between text and number */
+      font-size: 1.2em;
+      font-weight: bold;
+      white-space: nowrap;
     }
     /* end buttons in styles. css*/
 
@@ -57,7 +59,10 @@
     <h1>That's the end of the ballgame!</h1>
     <div id="role-text"></div>
      <!-- Combine score text and number in one line -->
-    <div id="final-score-text"> Your final score: <span id="final-score">0</span></div>
+    <div id="final-score-text">
+    <span>Your final score:</span>
+    <span id="final-score">0</span>
+    </div>
     
 
     <div class="end-buttons">
