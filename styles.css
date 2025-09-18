@@ -146,7 +146,7 @@ main > div {
   place-items: end center; /* align both to bottom + center */
   position: relative;
   width: 100%;
-  outline: 2px dashed red;   /* debug: container box */
+  /*outline: 2px dashed red;   /* debug: container box */
 }
 
 #giant-number {
@@ -159,7 +159,7 @@ color: #f0f0e0 !important;
   grid-area: 1 / 1;
   z-index: 0;
   pointer-events: none;
-  outline: 2px solid blue;   /* debug: text box */
+  /*outline: 2px solid blue;   /* debug: text box */
 }
 
 #player-image {
@@ -168,7 +168,7 @@ color: #f0f0e0 !important;
   grid-area: 1 / 1;
   z-index: 1;
   transform: translateY(-17%); /* adjust until bottoms align */
-  outline: 2px solid green;  /* debug: image box */
+  /*outline: 2px solid green;  /* debug: image box */
 }
 
 /* fading in on quiz2 */
