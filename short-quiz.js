@@ -30,10 +30,12 @@ let currentPlayer = null;
 let initialRosterCount = 0;
 
 ///// Short quiz storage keys
-const SHORT_POOL_KEY = 'shortCurrentRoster';
-const SHORT_TOTAL_KEY = 'shortTotalQuestions';
-const SHORT_SCORE_KEY = 'shortScore';
-const SHORT_ASKED_KEY = 'shortQuestionsAsked';
+const SHORT_POOL_KEY     = 'shortCurrentRoster';
+const SHORT_TOTAL_KEY    = 'shortTotalQuestions';
+const SHORT_SCORE_KEY    = 'shortScore';
+const SHORT_ASKED_KEY    = 'shortQuestionsAsked';
+const SHORT_LAST_PLAYER  = 'shortLastPlayer';
+const SHORT_LAST_ANSWER  = 'shortLastAnswer';
 
 ///// Utility helpers
 function log(...args) { console.log('[short-quiz]', ...args); }
