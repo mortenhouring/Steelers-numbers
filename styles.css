@@ -167,7 +167,7 @@ color: #f0f0e0 !important;
   height: auto;
   grid-area: 1 / 1;
   z-index: 1;
-  transform: translateY(-20%); /* adjust until bottoms align */
+  transform: translateY(-14.8%); /* adjust until bottoms align */
   /*outline: 2px solid green;  /* debug: image box */
 }
 
