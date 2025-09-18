@@ -374,46 +374,68 @@ nextButton.addEventListener('click', () => {
   handleNext();
 });
 
-// ===== DEBUG: simulate multiple quiz-end scenarios =====
+// ===== DEBUG: Fake end tester with wrong answers input =====
 function setupFakeEndTester() {
-  const scoresToTest = [0, 5, 9, 13, 21, 29, 37, 45, 50]; 
-  let index = 0;
+  const totalQuestions = 54; // total number of quiz questions
 
+  // Create container div
+  const container = document.createElement('div');
+  container.style.position = 'fixed';
+  container.style.bottom = '20px';
+  container.style.left = '20px';
+  container.style.zIndex = 9999;
+  container.style.display = 'flex';
+  container.style.alignItems = 'center';
+  container.style.gap = '10px';
+  document.body.appendChild(container);
+
+  // Input field for number of wrong answers
+  const wrongInput = document.createElement('input');
+  wrongInput.type = 'number';
+  wrongInput.min = '0';
+  wrongInput.max = String(totalQuestions);
+  wrongInput.value = '0';
+  wrongInput.style.width = '60px';
+  wrongInput.style.padding = '5px';
+  wrongInput.style.fontWeight = 'bold';
+  container.appendChild(wrongInput);
+
+  // Fake end quiz button
   const btn = document.createElement('button');
-  btn.textContent = 'FAKE END QUIZ (Next Scenario)';
-  btn.style.position = 'fixed';
-  btn.style.bottom = '20px';
-  btn.style.left = '20px';
-  btn.style.zIndex = 9999;
+  btn.textContent = 'FAKE END QUIZ';
   btn.style.padding = '10px';
   btn.style.backgroundColor = 'darkred';
   btn.style.color = 'white';
   btn.style.fontWeight = 'bold';
   btn.style.border = 'none';
   btn.style.cursor = 'pointer';
-  document.body.appendChild(btn);
+  container.appendChild(btn);
 
   btn.addEventListener('click', () => {
-    const score = scoresToTest[index % scoresToTest.length];
-    const questionsAsked = 54; // total number of quiz questions
-    index += 1;
+    let wrong = parseInt(wrongInput.value, 10);
+    if (isNaN(wrong) || wrong < 0) wrong = 0;
+    if (wrong > totalQuestions) wrong = totalQuestions;
+
+    const score = totalQuestions - wrong;
 
     // Set localStorage for fake end
     localStorage.setItem('score', String(score));
-    localStorage.setItem('questionsAsked', String(questionsAsked));
+    localStorage.setItem('questionsAsked', String(totalQuestions));
     localStorage.setItem('currentRoster', JSON.stringify([])); // empty pool → triggers redirect
 
-    alert(`Fake end quiz set: ${score} / ${questionsAsked} (Scenario ${index})`);
+    alert(`Fake end quiz set: ${score} / ${totalQuestions} (Wrong answers: ${wrong})`);
+
+    // Redirect to end page immediately
+    window.location.href = 'currentquizend.html';
   });
 }
 
-// ===== Kick off all setup after DOM loaded =====
+// ===== Kick off after DOM loaded =====
 document.addEventListener('DOMContentLoaded', async () => {
-  setupHandlers();
-  setupFakeEndTester();  // attach debug button first
-  await init();
+  setupHandlers();          // normal keypad & next button handlers
+  setupFakeEndTester();     // attach debug button + input
+  await init();             // start quiz
 });
-
 
 ///// Kick off after debug, uncomment:
 //document.addEventListener('DOMContentLoaded', async () => {
