@@ -51,15 +51,9 @@
     .frontpage-btn {
       padding: 10px 20px;
       text-decoration: none;
-      background-color: #ffcc00;
-      color: #000;
       font-weight: bold;
       border-radius: 5px;
       transition: background 0.2s;
-    }
-
-    .frontpage-btn:hover {
-      background-color: #ffdb4d;
     }
   </style>
 </head>
@@ -69,14 +63,15 @@
   <script src="headerscript.js" defer></script>
 
   <main id="end-content">
-    <h1>That's the end of the balgame!</h1>
-    <div id="score-text">Your final score:</div>
-    <div id="final-score">0</div>
+    <h1>That's the end of the ballgame!</h1>
+     <!-- Combine score text and number in one line -->
+    <div id="final-score-text">
+    Your final score: <span id="final-score">0</span></div>
     <div id="role-text"></div>
 
     <div class="end-buttons">
       <a href="quizstart.html" class="frontpage-btn">Try again</a>
-      <a href="index.html" class="frontpage-btn">Back to menu</a>
+      <a href="index.html" class="frontpage-btn">Front Office</a>
       <a href="scoreboard.html" class="frontpage-btn">Hall of Fame</a>
     </div>
   </main>
