@@ -1,78 +1,98 @@
-const fs = require('fs');
-const axios = require('axios');
-const cheerio = require('cheerio');
+import axios from 'axios';
+import cheerio from 'cheerio';
+import fs from 'fs';
+import path from 'path';
 
-const url = 'https://www.steelers.com/team/depth-chart/';
+const URL = 'https://www.steelers.com/team/depth-chart/';
+const OUTPUT_FILE = path.resolve('fetchimages/depth.json');
 
-const positionMap = {
+// Map of position IDs to text strings and max number of players (0 = all)
+const positions = {
   // Offense
-  LT: 'Left tackle',
-  LG: 'Left guard',
-  C: 'Center',
-  RG: 'Right guard',
-  RT: 'Right tackle',
-  TE: 'Tight end',
-  RB: 'Running Back',
-  QB: 'Quarterback',
-  WR: 'Wide receiver',
+  LT: ['Left Tackle', 0],
+  LG: ['Left Guard', 0],
+  C: ['Center', 0],
+  RG: ['Right Guard', 0],
+  RT: ['Right Tackle', 0],
+  TE: ['Tight End', 3],
+  RB: ['Running Back', 3],
+  FB: [null, 0], // don't fetch
+  QB: ['Quarterback', 0],
+  WR: ['Wide Receiver', 0], // fetch all from both WR sections
+
   // Defense
-  DT: 'Defensive tackle',
-  NT: 'Nose tackle',
-  DE: 'Defensive end',
-  LOLB: 'Left outside linebacker',
-  LILB: 'Left inside linebacker',
-  RILB: 'Right inside linebacker',
-  ROLB: 'Right outside linebacker',
-  LCB: 'Cornerback',
-  RCB: 'Cornerback',
-  FS: 'Free safety',
-  SS: 'Strong safety',
-  NB: 'Cornerback',
+  DT: ['Defensive Tackle', 0],
+  NT: ['Nose Tackle', 0],
+  DE: ['Defensive End', 2],
+  LOLB: ['Left Outside Linebacker', 2],
+  LILB: ['Left Inside Linebacker', 0],
+  RILB: ['Right Inside Linebacker', 0],
+  ROLB: ['Right Outside Linebacker', 2],
+  LCB: ['Cornerback', 0],
+  FS: ['Free Safety', 0],
+  SS: ['Strong Safety', 2],
+  RCB: ['Cornerback', 2],
+  NB: ['Cornerback', 0],
+
   // Special Teams
-  K: 'Kicker',
-  P: 'Punter',
-  KR: 'Kick returner',
-  PR: 'Punt returner'
+  K: ['Kicker', 0],
+  P: ['Punter', 0],
+  LS: [null, 0], // don't fetch
+  KR: ['Kick Returner', 2],
+  PR: ['Punt Returner', 0],
 };
 
-// Max number of players to fetch per position
-const maxPlayers = {
-  TE: 3, RB: 3, DE: 2, LOLB: 2, ROLB: 2, SS: 2, RCB: 2, KR: 2, PR: 2
-};
+// Helper to clean names
+function cleanName(str) {
+  return str.replace(/\s+/g, ' ').trim();
+}
 
-(async () => {
-  try {
-    const { data } = await axios.get(url);
-    const $ = cheerio.load(data);
+async function fetchDepthChart() {
+  console.log('Fetching depth chart...');
+  const { data } = await axios.get(URL);
+  const $ = cheerio.load(data);
 
-    const depth = [];
+  const playerMap = {}; // key: player name, value: array of positions
 
-    $('table.d3-o-depthchart tbody tr').each((i, row) => {
-      const posId = $(row).find('td:first').text().trim();
-      if (!positionMap[posId]) return;
+  $('table.d3-o-depthchart tbody tr').each((i, row) => {
+    const posID = cleanName($(row).find('td:first-child').text());
+    const [posText, maxPlayers] = positions[posID] || [null, 0];
 
-      const maxCount = maxPlayers[posId] || 1;
-      let count = 0;
+    if (!posText) return; // skip positions we don't want
 
-      $(row).find('td.d3-o-depthchart__tiers-5').each((j, cell) => {
-        const players = $(cell).find('a');
-        players.each((k, player) => {
-          if (count >= maxCount) return;
-          const name = $(player).text().trim();
-          let posText = positionMap[posId];
-          if (count === 1) posText = `2nd ${posText}`;
-          if (count === 2) posText = `3rd ${posText}`;
-          // Only 2nd/3rd get prefix, first player just plain
-          depth.push({ depth_name: name, depth_pos: posText });
-          count++;
-        });
+    const cells = $(row).find('td.d3-o-depthchart__tiers-5');
+
+    cells.each((idx, cell) => {
+      if (maxPlayers && idx >= maxPlayers) return; // respect max
+      const links = $(cell).find('a');
+
+      links.each((_, link) => {
+        const name = cleanName($(link).text());
+        if (!name) return;
+
+        if (!playerMap[name]) {
+          playerMap[name] = [];
+        }
+
+        // Avoid duplicate positions
+        if (!playerMap[name].includes(posText)) {
+          playerMap[name].push(posText);
+        }
       });
     });
+  });
 
-    fs.writeFileSync('fetchimages/depth.json', JSON.stringify(depth, null, 2));
-    console.log(`Fetched ${depth.length} players`);
-    console.log(depth);
-  } catch (err) {
-    console.error('Error fetching depth chart:', err);
-  }
-})();
+  // Convert map to array of objects
+  const depthArray = Object.entries(playerMap).map(([name, posList]) => ({
+    depth_name: name,
+    depth_pos: posList.join(' | '),
+  }));
+
+  // Overwrite existing file
+  fs.writeFileSync(OUTPUT_FILE, JSON.stringify(depthArray, null, 2));
+  console.log(`Saved ${depthArray.length} players to ${OUTPUT_FILE}`);
+}
+
+fetchDepthChart().catch((err) => {
+  console.error('Error fetching depth chart:', err);
+});
