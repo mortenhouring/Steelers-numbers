@@ -4,19 +4,13 @@ on:
   workflow_dispatch: # run manually
 
 jobs:
-  fetch-depth:name: Fetch Depth Chart
-
-on:
-  workflow_dispatch: # run manually
-
-jobs:
   fetch-depth:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install Node
-        uses: actions/setup-node@v3
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
           node-version: '20'
 
@@ -32,33 +26,8 @@ jobs:
 
       - name: Commit depth.json
         run: |
-          cd fetchimages
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add depth.json
-          git commit -m "Update depth.json"
-          git push
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Install Node
-        uses: actions/setup-node@v3
-        with:
-          node-version: '20'
-      - name: Install dependencies
-        run: |
-          cd fetchimages
-          npm install
-npm install
-      - name: Run depth fetch
-        run: |
-          cd fetchimages
-          node depth.js
-      - name: Commit depth.json
-        run: |
-          cd fetchimages
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add depth.json
-          git commit -m "Update depth.json"
+          git add fetchimages/depth.json
+          git commit -m "Update depth.json" || echo "No changes to commit"
           git push
