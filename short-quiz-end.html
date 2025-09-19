@@ -1,33 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Steelers — Short Quiz End</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* Center content vertically */
+    #end-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      min-height: 70vh;
+      text-align: center;
+      padding: 0 20px;
+    }
+
+    #final-score {
+      font-size: 1.2em;
+      font-weight: bold;
+    }
+
+    #score-text {
+      font-size: 1.2em;
+    }
+
+    #role-text {
+      margin-top: 10px;
+    }
+
+    #role-text img {
+      max-width: 90vw;       /* responsive for mobile */
+      max-height: 300px;     /* prevent too tall images on desktop */
+      height: auto;
+      border-radius: 8px;    /* optional rounded corners */
+      display: block;
+      margin: 0 auto;        /* center horizontally */
+    }
+      #final-score-text {
+      display: inline-flex;       /* keep children on the same line */
+      gap: 5px;                   /* small space between text and number */
+      font-size: 1.2em;
+      font-weight: bold;
+      white-space: nowrap;
+    }
+    /* end buttons in styles. css*/
+
+  </style>
+</head>
+<body>
+  <!-- Header placeholder and menu script -->
+  <div id="header-placeholder"></div>
+  <script src="headerscript.js" defer></script>
+
+<main id="end-content">
+  <h1>Drill over!</h1>
+  <div id="role-text"></div>
+
+  <!-- Combine score text and number in one line -->
+  <div id="final-score-text">
+    <span>Your final score:</span>
+    <span id="final-score">0</span>
+  </div>
+
+  <div class="end-buttons">
+    <button class="frontpage-btn" onclick="window.location.href='quizstart.html'">Try again</button>
+    <button class="frontpage-btn" onclick="window.location.href='index.html'">Front Office</button>
+    <button class="frontpage-btn" onclick="window.location.href='scoreboard.html'">Hall of Fame</button>
+  </div>
+</main>
 <script>
-  // Read score and questionsAsked from short quiz localStorage
-  const score = parseInt(localStorage.getItem('shortScore') || '0', 10);
-  const questionsAsked = parseInt(localStorage.getItem('shortQuestionsAsked') || '0', 10);
-  const wrongAnswers = questionsAsked - score;
+  (function() {
+    const score = parseInt(localStorage.getItem('shortScore') || '0', 10);
+    const questionsAsked = parseInt(localStorage.getItem('shortQuestionsAsked') || '0', 10);
+    const wrongAnswers = questionsAsked - score;
 
-  // Display final score: correct / questions asked
-  document.getElementById('final-score').textContent = `${score} / ${questionsAsked}`;
+    const finalScoreEl = document.getElementById('final-score');
+    if (finalScoreEl) finalScoreEl.textContent = `${score} / ${questionsAsked}`;
 
-  // === ROLE IMAGE LOGIC ===
-  const roleImages = [
-    { maxWrong: 0,  src: 'role-images/head_coach.PNG',            alt: '01 head coach' },
-    { maxWrong: 4,  src: 'role-images/ceo.PNG',                   alt: '02 CEO' },
-    { maxWrong: 8,  src: 'role-images/general_manager.PNG',       alt: '03 general manager' },
-    { maxWrong: 12, src: 'role-images/assistant_gm.PNG',          alt: '04 assistant GM' },
-    { maxWrong: 20, src: 'role-images/equipment_manager.PNG',     alt: '05 equipment manager' },
-    { maxWrong: 28, src: 'role-images/intern.PNG',                alt: '06 intern' },
-    { maxWrong: 36, src: 'role-images/ball_boy.PNG',              alt: '07 ball boy' },
-    { maxWrong: 44, src: 'role-images/season_ticket_holder.PNG',  alt: '08 season ticket holder' },
-    { maxWrong: Infinity, src: 'role-images/casual_fan.PNG',      alt: '09 casual fan' }
-  ];
+    const roleImages = [
+      { maxWrong: 0,  src: 'role-images/head_coach.PNG',            alt: '01 head coach' },
+      { maxWrong: 4,  src: 'role-images/ceo.PNG',                   alt: '02 CEO' },
+      { maxWrong: 8,  src: 'role-images/general_manager.PNG',       alt: '03 general manager' },
+      { maxWrong: 12, src: 'role-images/assistant_gm.PNG',          alt: '04 assistant GM' },
+      { maxWrong: 20, src: 'role-images/equipment_manager.PNG',     alt: '05 equipment manager' },
+      { maxWrong: 28, src: 'role-images/intern.PNG',                alt: '06 intern' },
+      { maxWrong: 36, src: 'role-images/ball_boy.PNG',              alt: '07 ball boy' },
+      { maxWrong: 44, src: 'role-images/season_ticket_holder.PNG',  alt: '08 season ticket holder' },
+      { maxWrong: Infinity, src: 'role-images/casual_fan.PNG',      alt: '09 casual fan' }
+    ];
 
-  // Pick role based on wrong answers
-  const roleData = roleImages.find(role => wrongAnswers <= role.maxWrong);
-  document.getElementById('role-text').innerHTML = `<img src="${roleData.src}" alt="${roleData.alt}">`;
+    const roleData = roleImages.find(role => wrongAnswers <= role.maxWrong) || roleImages[roleImages.length - 1];
+    const roleDiv = document.getElementById('role-text');
+    if (roleDiv) roleDiv.innerHTML = `<img src="${roleData.src}" alt="${roleData.alt}">`;
 
-  // Optional: clear only short quiz storage to restart fresh
-  localStorage.removeItem('shortCurrentRoster');
-  localStorage.removeItem('shortLastPlayer');
-  localStorage.removeItem('shortLastAnswer');
-  localStorage.removeItem('shortQuestionsAsked');
-  localStorage.removeItem('shortScore');
+    // clear short-quiz keys only
+    ['shortCurrentRoster','shortLastPlayer','shortLastAnswer','shortQuestionsAsked','shortScore']
+      .forEach(key => localStorage.removeItem(key));
+  })();
 </script>
