@@ -69,7 +69,7 @@ function updateCounters() {
   scoreEl.textContent = `${score} / ${questionsAsked} correct answers`;
 
   // Show "y / z remaining"
-  remainingEl.textContent = `${questionsAsked} / ${remaining} remaining`;
+  remainingEl.textContent = `${remaining} remaining`;
 }
 
 ///// Initialization
