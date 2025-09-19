@@ -1,12 +1,12 @@
-import axios from 'axios';
-import cheerio from 'cheerio';
-import fs from 'fs';
+import { writeFile } from 'fs/promises';
 import path from 'path';
+import axios from 'axios';
+import { load } from 'cheerio';
 
-const url = 'https://www.steelers.com/team/depth-chart/';
-const outputFile = path.join(process.cwd(), 'fetchimages', 'depth.json');
+const DEPTH_URL = 'https://www.steelers.com/team/depth-chart/';
+const OUTPUT_FILE = path.resolve('./fetchimages/depth.json');
 
-// Map of position IDs to text strings and max number of players to fetch (0 = all)
+// Map of position IDs to text strings and max number of players (0 = all)
 const positions = {
   // Offense
   LT: ['Left Tackle', 1],
@@ -16,7 +16,7 @@ const positions = {
   RT: ['Right Tackle', 1],
   TE: ['Tight End', 3],
   RB: ['Running Back', 3],
-  FB: [null, 0], // don't fetch
+  FB: [null, 0], // skip
   QB: ['Quarterback', 1],
   WR: ['Wide Receiver', 0], // all WRs
   // Defense
@@ -27,7 +27,7 @@ const positions = {
   LILB: ['Left Inside Linebacker', 1],
   RILB: ['Right Inside Linebacker', 1],
   ROLB: ['Right Outside Linebacker', 2],
-  LCB: ['Cornerback', 0], // all
+  LCB: ['Cornerback', 0],
   FS: ['Free Safety', 1],
   SS: ['Strong Safety', 2],
   RCB: ['Cornerback', 2],
@@ -35,58 +35,74 @@ const positions = {
   // Special Teams
   K: ['Kicker', 1],
   P: ['Punter', 1],
-  LS: [null, 0], // don't fetch
+  LS: [null, 0], // skip
   KR: ['Kick Returner', 2],
   PR: ['Punt Returner', 2],
 };
 
-// Helper to clean text
-function cleanText(text) {
-  return text.replace(/\s+/g, ' ').trim();
-}
+(async () => {
+  try {
+    console.log('Fetching depth chart...');
+    const { data: html } = await axios.get(DEPTH_URL);
+    const $ = load(html);
 
-async function fetchDepthChart() {
-  console.log('Fetching depth chart...');
-  const { data } = await axios.get(url);
-  const $ = cheerio.load(data);
+    const depthData = [];
+    const seenPlayers = {}; // track players with multiple positions
 
-  const depth = {};
-  const playerPositions = {}; // map player -> list of positions
+    // Tables: offense, defense, special teams
+    $('table.d3-o-depthchart').each((i, table) => {
+      $(table)
+        .find('tbody tr')
+        .each((_, row) => {
+          const posId = $(row).find('td').first().text().trim();
+          const posEntry = positions[posId];
+          if (!posEntry || !posEntry[0]) return; // skip positions marked null
 
-  $('table.d3-o-depthchart tbody tr').each((_, row) => {
-    const posId = cleanText($(row).find('td').first().text());
-    if (!positions[posId] || !positions[posId][0]) return; // skip unwanted
+          const posName = posEntry[0];
+          const maxPlayers = posEntry[1];
 
-    const [posText, maxPlayers] = positions[posId];
-    const cells = $(row).find('td.d3-o-depthchart__tiers-5');
+          // Process all columns
+          $(row)
+            .find('td.d3-o-depthchart__tiers-5')
+            .each((colIndex, col) => {
+              if (colIndex >= maxPlayers && maxPlayers !== 0) return;
 
-    cells.each((i, cell) => {
-      if (maxPlayers && i >= maxPlayers) return; // limit number of players
-      const links = $(cell).find('a');
-      links.each((_, link) => {
-        const playerName = cleanText($(link).text());
-        if (!playerName) return;
+              const anchors = $(col).find('a');
+              anchors.each((_, a) => {
+                const playerName = $(a).text().trim();
+                if (!playerName) return;
 
-        if (!playerPositions[playerName]) playerPositions[playerName] = [];
-        if (!playerPositions[playerName].includes(posText)) {
-          playerPositions[playerName].push(posText);
-        }
-      });
+                // Build depth string
+                let depthPos;
+                if (colIndex === 0) {
+                  depthPos = posName;
+                } else {
+                  depthPos = `${colIndex + 1} ${['2nd', '3rd', '4th', '5th'][colIndex - 1]} ${posName}`;
+                  depthPos = depthPos.replace(/^\d+\s/, ''); // remove leading number
+                }
+
+                if (seenPlayers[playerName]) {
+                  // Already exists, append
+                  seenPlayers[playerName].depth_pos += ` | ${posName}`;
+                } else {
+                  const entry = {
+                    depth_name: playerName,
+                    depth_pos: depthPos,
+                  };
+                  seenPlayers[playerName] = entry;
+                  depthData.push(entry);
+                }
+              });
+            });
+        });
     });
-  });
 
-  // Build depth array
-  const depthArray = Object.entries(playerPositions).map(([name, posArr]) => ({
-    depth_name: name,
-    depth_pos: posArr.join(' | '),
-  }));
+    console.log(`Found ${depthData.length} players. Writing to depth.json...`);
+    await writeFile(OUTPUT_FILE, JSON.stringify(depthData, null, 2));
+    console.log('Done!');
 
-  // Save to file
-  fs.writeFileSync(outputFile, JSON.stringify(depthArray, null, 2));
-  console.log(`Depth chart saved to ${outputFile}`);
-  console.log(`Total players fetched: ${depthArray.length}`);
-}
-
-fetchDepthChart().catch(err => {
-  console.error('Error fetching depth chart:', err);
-});
+  } catch (err) {
+    console.error('Error fetching depth chart:', err);
+    process.exit(1);
+  }
+})();
