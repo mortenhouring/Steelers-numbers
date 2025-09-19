@@ -4,7 +4,7 @@ import axios from 'axios';
 import { load } from 'cheerio';
 
 const DEPTH_URL = 'https://www.steelers.com/team/depth-chart/';
-const OUTPUT_FILE = path.resolve('./fetchimages/depth.json');
+const OUTPUT_FILE = path.resolve('depth.json'); // just depth.json, because workflow cd's into fetchimages
 
 // Map of position IDs to text strings and max number of players (0 = all)
 const positions = {
