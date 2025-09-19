@@ -1,37 +1,28 @@
-name: Fetch Steelers Depth Chart
+name: Fetch Depth Chart
 
-# Run manually only
 on:
-  workflow_dispatch:
+  workflow_dispatch: # run manually
 
 jobs:
   fetch-depth:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: Set up Node.js
+      - uses: actions/checkout@v3
+      - name: Install Node
         uses: actions/setup-node@v3
         with:
-          node-version: 20
-
+          node-version: '20'
       - name: Install dependencies
-        run: |
-          cd fetchimages
-          npm install
-
-      - name: Run depth chart fetch
+        run: npm install
+      - name: Run depth fetch
         run: |
           cd fetchimages
           node depth.js
-
-      - name: Commit and push depth.json
+      - name: Commit depth.json
         run: |
+          cd fetchimages
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add fetchimages/depth.json
-          git commit -m "Update depth chart"
+          git add depth.json
+          git commit -m "Update depth.json"
           git push
-        # Only commit if there are changes
-        continue-on-error: true
