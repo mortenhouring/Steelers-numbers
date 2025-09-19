@@ -1,9 +1,6 @@
 // short-quiz.js
 // Single-page quiz controller for SHORT QUIZ (10 random players)
-// Only differences from one-page-quiz.js:
-//   - Uses separate localStorage keys for independence
-//   - Picks exactly 10 random players
-//   - Correct counter display like currentquiz
+// Independent storage keys, exact-10 selection, counters with text, and final stats before redirect.
 
 import { loadTrivia, generateTriviaParagraph } from './main-trivia-shuffle.js';
 
@@ -28,7 +25,7 @@ const nextButton = document.getElementById('next-button');
 
 ///// State
 let currentPlayer = null;
-let initialRosterCount = 0;
+let initialRosterCount = 10; // short quiz always 10
 
 ///// Short quiz storage keys
 const SHORT_POOL_KEY     = 'shortCurrentRoster';
@@ -38,10 +35,15 @@ const SHORT_ASKED_KEY    = 'shortQuestionsAsked';
 const SHORT_LAST_PLAYER  = 'shortLastPlayer';
 const SHORT_LAST_ANSWER  = 'shortLastAnswer';
 
-///// Utility helpers
+///// Helpers
 function log(...args) { console.log('[short-quiz]', ...args); }
 function safeParseJSON(raw) { try { return JSON.parse(raw); } catch { return null; } }
-function shuffleArray(arr) { for (let i = arr.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [arr[i], arr[j]] = [arr[j], arr[i]]; } }
+function shuffleArray(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+}
 function showView(viewId) {
   if (viewId === 'quiz1') {
     quiz1View.style.display = 'block';
@@ -55,32 +57,34 @@ function showView(viewId) {
     quiz2View.setAttribute('aria-hidden', 'false');
   }
 }
+function chooseRandom(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
 
-///// Update counters (exactly like currentquiz)
+///// Update counters
 function updateCounters() {
   const score = parseInt(localStorage.getItem(SHORT_SCORE_KEY) || '0', 10);
   const questionsAsked = parseInt(localStorage.getItem(SHORT_ASKED_KEY) || '0', 10);
   const remaining = initialRosterCount - questionsAsked;
 
-  scoreSpan.textContent = `${correctCount}/${questionsAsked} correct`;
-remainingSpan.textContent = `${questionsAsked}/${currentRoster.length} asked`;
+  // Show "x / y correct answers"
+  scoreEl.textContent = `${score} / ${questionsAsked} correct answers`;
+
+  // Show "y / z remaining"
+  remainingEl.textContent = `${questionsAsked} / ${remaining} remaining`;
 }
 
 ///// Initialization
 async function init() {
   log('init() start');
 
-  // 1) Load trivia
-  try { await loadTrivia(); log('Trivia module loaded'); } 
+  try { await loadTrivia(); log('Trivia module loaded'); }
   catch (err) { console.error('[short-quiz] loadTrivia() failed:', err); }
 
-  // 2) Load full roster
   let loadedRoster = [];
   try {
     const resp = await fetch('currentroster.json', { cache: 'no-store' });
     if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
     loadedRoster = await resp.json();
-    if (!Array.isArray(loadedRoster) || loadedRoster.length === 0) throw new Error('currentroster.json is not a non-empty array');
+    if (!Array.isArray(loadedRoster) || loadedRoster.length === 0) throw new Error('currentroster.json invalid');
     log(`Fetched currentroster.json — ${loadedRoster.length} players`);
   } catch (err) {
     console.error('[short-quiz] Could not fetch currentroster.json:', err);
@@ -89,41 +93,35 @@ async function init() {
     return;
   }
 
-  // --- SHORT QUIZ: shuffle + take 10 players ---
   shuffleArray(loadedRoster);
   loadedRoster = loadedRoster.slice(0, 10);
   log('Short quiz: selected 10 random players');
 
-  // 3) Initialize working pool in localStorage
   try {
-    const rawSaved = localStorage.getItem(SHORT_POOL_KEY);
-    let saved = safeParseJSON(rawSaved);
+    const saved = safeParseJSON(localStorage.getItem(SHORT_POOL_KEY));
     if (!Array.isArray(saved) || saved.length === 0) {
-      const fresh = [...loadedRoster];
-      localStorage.setItem(SHORT_POOL_KEY, JSON.stringify(fresh));
-      localStorage.setItem(SHORT_TOTAL_KEY, '10');
+      localStorage.setItem(SHORT_POOL_KEY, JSON.stringify(loadedRoster));
+      localStorage.setItem(SHORT_TOTAL_KEY, String(initialRosterCount));
       localStorage.setItem(SHORT_ASKED_KEY, '0');
       localStorage.setItem(SHORT_SCORE_KEY, '0');
-      log('Saved fresh short quiz pool to localStorage');
+      localStorage.removeItem(SHORT_LAST_PLAYER);
+      localStorage.removeItem(SHORT_LAST_ANSWER);
+      log('Initialized short quiz pool');
     } else {
-      log(`Found existing short quiz pool — ${saved.length} players remain`);
+      log(`Resuming short quiz pool — ${saved.length} players remain`);
     }
-    initialRosterCount = 10;
   } catch (err) {
-    console.error('[short-quiz] Error initializing roster in localStorage:', err);
+    console.error('[short-quiz] Error initializing pool:', err);
     questionDisplay.textContent = `Error initializing roster: ${err.message}`;
     showView('quiz1');
     return;
   }
 
-  // 4) Resume if lastPlayer exists
-  const lastPlayerRaw = localStorage.getItem(SHORT_LAST_PLAYER);
-  const lastAnswerRaw = localStorage.getItem(SHORT_LAST_ANSWER);
-
-  if (lastPlayerRaw && lastAnswerRaw !== null) {
-    log('Resuming short quiz from storage');
-    try { currentPlayer = safeParseJSON(lastPlayerRaw) || null; showAnswerView(); return; } 
-    catch (err) { console.warn('[short-quiz] Could not parse lastPlayer; will pick next player', err); }
+  const lp = localStorage.getItem(SHORT_LAST_PLAYER);
+  const la = localStorage.getItem(SHORT_LAST_ANSWER);
+  if (lp && la !== null) {
+    try { currentPlayer = safeParseJSON(lp) || null; showAnswerView(); return; }
+    catch { log('Could not parse last player; picking next'); }
   }
 
   pickNextPlayer();
@@ -131,41 +129,40 @@ async function init() {
 
 ///// Pick next player
 function pickNextPlayer() {
-  const raw = localStorage.getItem(SHORT_POOL_KEY);
-  const pool = Array.isArray(safeParseJSON(raw)) ? safeParseJSON(raw) : [];
+  const pool = safeParseJSON(localStorage.getItem(SHORT_POOL_KEY)) || [];
 
-  log('pickNextPlayer: pool length before pick =', pool.length);
-
-  if (pool.length === 0) { log('No players left; redirecting to short-quiz-end.html'); window.location.href = 'short-quiz-end.html'; return; }
+  if (pool.length === 0) {
+    const finalScore = parseInt(localStorage.getItem(SHORT_SCORE_KEY) || '0', 10);
+    const finalAsked = parseInt(localStorage.getItem(SHORT_ASKED_KEY) || '0', 10);
+    localStorage.setItem(SHORT_SCORE_KEY, String(finalScore));
+    localStorage.setItem(SHORT_ASKED_KEY, String(finalAsked));
+    window.location.href = 'short-quiz-end.html';
+    return;
+  }
 
   currentPlayer = pool.shift();
   localStorage.setItem(SHORT_POOL_KEY, JSON.stringify(pool));
   localStorage.setItem(SHORT_LAST_PLAYER, JSON.stringify(currentPlayer));
+  localStorage.removeItem(SHORT_LAST_ANSWER);
 
-  const questionPhrases = [
+  const phrases = [
     "What number is {player}?",
     "Which digits are on {player}'s jersey?",
-    "Which number’s on {player}'s back?",
-    "What’s {player}'s Steel Curtain number?",
+    "What number’s on {player}'s back?",
     "What jersey number is {player}?",
-    "What digits does {player} rep for Steelers Nation?",
-    "What’s {player}'s jersey number?",
-    "What number’s on {player}'s helmet stripe?",
-    "Which jersey number does {player} wear?",
-    "What number’s stitched on {player}'s uniform?",
+    "Which number does {player} wear?"
   ];
-  const phrase = questionPhrases[Math.floor(Math.random() * questionPhrases.length)];
+  const phrase = chooseRandom(phrases);
   questionDisplay.textContent = phrase.replace('{player}', currentPlayer.player_name);
   answerDisplay.value = '';
 
-  showView('quiz1');
   updateCounters();
-  log(`Picked player ${currentPlayer.player_id} - ${currentPlayer.player_name}. Remaining in pool: ${pool.length}`);
+  showView('quiz1');
 }
 
 ///// Handle submit
 function handleSubmit() {
-  const raw = answerDisplay.value.trim();
+  const raw = (answerDisplay.value || '').trim();
   if (!raw) return;
   const userAnswer = parseInt(raw, 10);
   if (Number.isNaN(userAnswer)) return;
@@ -181,16 +178,17 @@ function handleSubmit() {
   if (!Number.isNaN(correctNumber) && correctNumber === userAnswer) score += 1;
   localStorage.setItem(SHORT_SCORE_KEY, String(score));
 
-  log(`Answer submitted for player ${currentPlayer?.player_id}: guess=${userAnswer} correct=${correctNumber === userAnswer}`);
-
   showAnswerView();
 }
 
 ///// Show answer/trivia
 function showAnswerView() {
-  const rawLast = localStorage.getItem(SHORT_LAST_PLAYER);
-  const last = safeParseJSON(rawLast) || currentPlayer;
-  if (!last) { feedbackEl.textContent = 'Player not found.'; showView('quiz1'); return; }
+  const last = safeParseJSON(localStorage.getItem(SHORT_LAST_PLAYER)) || currentPlayer;
+  if (!last) {
+    feedbackEl.textContent = 'Player not found.';
+    showView('quiz1');
+    return;
+  }
   currentPlayer = last;
 
   playerImageEl.src = currentPlayer.player_image || '';
@@ -199,29 +197,25 @@ function showAnswerView() {
 
   const storedAnswer = parseInt(localStorage.getItem(SHORT_LAST_ANSWER), 10);
   const correctNumber = Number(currentPlayer?.number ?? NaN);
-  feedbackEl.textContent = !Number.isNaN(correctNumber) && storedAnswer === correctNumber
-    ? chooseRandom(["Nice job!","That's right!","You got it!","Exactly!","Spot on!","Great work!","Correct!"])
-    : chooseRandom(["Oops, try again.","Not quite.","Wrong number.","Almost, keep going.","Try once more.","Incorrect, keep going."]);
+  feedbackEl.textContent = (storedAnswer === correctNumber)
+    ? chooseRandom(["Correct!", "Nice job!", "You got it!"])
+    : chooseRandom(["Not quite.", "Wrong number.", "Try again."]);
 
-  let triviaRes = { paragraph: '', selectedStrings: [], debug: null };
   try {
-    const res = generateTriviaParagraph(currentPlayer.player_id);
-    triviaRes = res ?? triviaRes;
-    playerTriviaEl.textContent = (triviaRes.paragraph || '').trim();
-  } catch { playerTriviaEl.textContent = ''; }
+    const triviaRes = generateTriviaParagraph(currentPlayer.player_id);
+    playerTriviaEl.textContent = (triviaRes?.paragraph || '').trim();
+  } catch {
+    playerTriviaEl.textContent = '';
+  }
 
   updateCounters();
   showView('quiz2');
 }
 
-///// Simple random choice helper
-function chooseRandom(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
-
 ///// Event listeners
 goButton.addEventListener('click', handleSubmit);
 clearButton.addEventListener('click', () => { answerDisplay.value = ''; });
 keypadButtons.forEach(btn => btn.addEventListener('click', () => { answerDisplay.value += btn.textContent; }));
-
 nextButton.addEventListener('click', pickNextPlayer);
 
 ///// Start
