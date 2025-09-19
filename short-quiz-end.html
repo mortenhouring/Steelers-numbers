@@ -8,16 +8,23 @@
   <style>
     /* Center content vertically */
     #end-content {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 20px;
-      min-height: 70vh;
-      text-align: center;
-      padding: 0 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start; /* aligns content to top */
+  gap: 20px;
+  min-height: 70vh;
+  text-align: center;
+  padding: 40px 20px 0 20px; /* add top padding */
     }
-
+    
+    #qualification-text {
+  font-size: 1.1em;
+  font-weight: normal;
+  margin: 15px 0 0 0;  /* space below "Drill over!" */
+  text-align: center;
+    }
+    
     #final-score {
       font-size: 1.2em;
       font-weight: bold;
@@ -57,6 +64,8 @@
 
 <main id="end-content">
   <h1>Drill over!</h1>
+  <p id="qualification-text">You're qualified to be a:</p>  
+  <div id="role-text"></div>
   <div id="role-text"></div>
 
   <!-- Combine score text and number in one line -->
@@ -82,13 +91,13 @@
 
     const roleImages = [
       { maxWrong: 0,  src: 'role-images/head_coach.PNG',            alt: '01 head coach' },
-      { maxWrong: 4,  src: 'role-images/ceo.PNG',                   alt: '02 CEO' },
-      { maxWrong: 8,  src: 'role-images/general_manager.PNG',       alt: '03 general manager' },
-      { maxWrong: 12, src: 'role-images/assistant_gm.PNG',          alt: '04 assistant GM' },
-      { maxWrong: 20, src: 'role-images/equipment_manager.PNG',     alt: '05 equipment manager' },
-      { maxWrong: 28, src: 'role-images/intern.PNG',                alt: '06 intern' },
-      { maxWrong: 36, src: 'role-images/ball_boy.PNG',              alt: '07 ball boy' },
-      { maxWrong: 44, src: 'role-images/season_ticket_holder.PNG',  alt: '08 season ticket holder' },
+      { maxWrong: 1,  src: 'role-images/ceo.PNG',                   alt: '02 CEO' },
+      { maxWrong: 2,  src: 'role-images/general_manager.PNG',       alt: '03 general manager' },
+      { maxWrong: 3, src: 'role-images/assistant_gm.PNG',          alt: '04 assistant GM' },
+      { maxWrong: 4, src: 'role-images/equipment_manager.PNG',     alt: '05 equipment manager' },
+      { maxWrong: 5, src: 'role-images/intern.PNG',                alt: '06 intern' },
+      { maxWrong: 6, src: 'role-images/ball_boy.PNG',              alt: '07 ball boy' },
+      { maxWrong: 8, src: 'role-images/season_ticket_holder.PNG',  alt: '08 season ticket holder' },
       { maxWrong: Infinity, src: 'role-images/casual_fan.PNG',      alt: '09 casual fan' }
     ];
 
