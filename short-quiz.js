@@ -62,11 +62,8 @@ function updateCounters() {
   const questionsAsked = parseInt(localStorage.getItem(SHORT_ASKED_KEY) || '0', 10);
   const remaining = initialRosterCount - questionsAsked;
 
-  // Display "correct / questions asked"
-  scoreEl.textContent = `${score} / ${questionsAsked}`;
-
-  // Display "questions asked / remaining"
-  remainingEl.textContent = `${questionsAsked} / ${remaining}`;
+  scoreSpan.textContent = `${correctCount}/${questionsAsked} correct`;
+remainingSpan.textContent = `${questionsAsked}/${currentRoster.length} asked`;
 }
 
 ///// Initialization
