@@ -13,7 +13,10 @@ jobs:
         with:
           node-version: '20'
       - name: Install dependencies
-        run: npm install
+        run: |
+          cd fetchimages
+          npm install
+npm install
       - name: Run depth fetch
         run: |
           cd fetchimages
