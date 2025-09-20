@@ -1,3 +1,4 @@
+// depth.js
 import { writeFile } from 'fs/promises';
 import path from 'path';
 import axios from 'axios';
@@ -51,6 +52,9 @@ const positions = {
 
     // Tables: offense, defense, special teams
     $('table.d3-o-depthchart').each((i, table) => {
+      // collect TE rows for special handling, process others normally
+      const teRows = [];
+
       $(table)
         .find('tbody tr')
         .each((_, row) => {
@@ -58,43 +62,93 @@ const positions = {
           const posEntry = positions[posId];
           if (!posEntry || !posEntry[0]) return; // skip positions marked null
 
+          // Special-case: collect TE rows to handle them together later
+          if (posId === 'TE') {
+            teRows.push(row);
+            return;
+          }
+
           const posName = posEntry[0];
           const maxPlayers = posEntry[1];
 
-          // Process all columns
-          $(row)
-            .find('td.d3-o-depthchart__tiers-5')
-            .each((colIndex, col) => {
-              if (colIndex >= maxPlayers && maxPlayers !== 0) return;
+          // Process all columns for this row (non-TE)
+          const cols = $(row).find('td.d3-o-depthchart__tiers-5').toArray();
+          cols.forEach((col, colIndex) => {
+            if (maxPlayers !== 0 && colIndex >= maxPlayers) return;
+            const anchors = $(col).find('a').toArray();
+            anchors.forEach(a => {
+              const playerName = $(a).text().trim();
+              if (!playerName) return;
 
-              const anchors = $(col).find('a');
-              anchors.each((_, a) => {
-                const playerName = $(a).text().trim();
-                if (!playerName) return;
+              // Build depth string (no leading digit)
+              let depthPos;
+              if (colIndex === 0) {
+                depthPos = posName;
+              } else {
+                const ord = ['2nd', '3rd', '4th', '5th'][colIndex - 1] || `${colIndex + 1}th`;
+                depthPos = `${ord} ${posName}`;
+              }
 
-                // Build depth string
-                let depthPos;
-                if (colIndex === 0) {
-                  depthPos = posName;
-                } else {
-                  depthPos = `${colIndex + 1} ${['2nd', '3rd', '4th', '5th'][colIndex - 1]} ${posName}`;
-                  depthPos = depthPos.replace(/^\d+\s/, ''); // remove leading number
-                }
-
-                if (seenPlayers[playerName]) {
-                  // Already exists, append
+              if (seenPlayers[playerName]) {
+                // Already exists, append if position not present
+                if (!seenPlayers[playerName].depth_pos.includes(posName)) {
                   seenPlayers[playerName].depth_pos += ` | ${posName}`;
-                } else {
-                  const entry = {
-                    depth_name: playerName,
-                    depth_pos: depthPos,
-                  };
-                  seenPlayers[playerName] = entry;
-                  depthData.push(entry);
                 }
-              });
+              } else {
+                const entry = {
+                  depth_name: playerName,
+                  depth_pos: depthPos,
+                };
+                seenPlayers[playerName] = entry;
+                depthData.push(entry);
+              }
             });
+          });
         });
+
+      // --- TE special handling (combine all TE rows and number across them) ---
+      if (teRows.length > 0) {
+        const maxTE = positions['TE'][1]; // typically 3 in your config
+        const combined = [];
+
+        // Row-major: iterate teRows in document order, for each row take its columns left-to-right,
+        // and collect anchors in the order they appear, stopping when we reach maxTE (if maxTE !== 0).
+        outer: for (const row of teRows) {
+          const cols = $(row).find('td.d3-o-depthchart__tiers-5').toArray();
+          for (let c = 0; c < cols.length; c++) {
+            const anchors = $(cols[c]).find('a').toArray();
+            for (const a of anchors) {
+              const playerName = $(a).text().trim();
+              if (!playerName) continue;
+              combined.push(playerName);
+              if (maxTE !== 0 && combined.length >= maxTE) break outer;
+            }
+          }
+        }
+
+        // Assign depth_pos strings for combined TE players (Tight End, 2nd Tight End, 3rd Tight End, ...)
+        const ordinals = ['2nd', '3rd', '4th', '5th'];
+        for (let idx = 0; idx < combined.length; idx++) {
+          const playerName = combined[idx];
+          if (!playerName) continue;
+          const posName = positions['TE'][0];
+          const depthPos = idx === 0 ? posName : `${ordinals[idx - 1] || `${idx + 1}th`} ${posName}`;
+
+          if (seenPlayers[playerName]) {
+            if (!seenPlayers[playerName].depth_pos.includes(posName)) {
+              seenPlayers[playerName].depth_pos += ` | ${posName}`;
+            }
+          } else {
+            const entry = {
+              depth_name: playerName,
+              depth_pos: depthPos,
+            };
+            seenPlayers[playerName] = entry;
+            depthData.push(entry);
+          }
+        }
+      }
+      // --- end TE special handling ---
     });
 
     console.log(`Found ${depthData.length} players. Writing to depth.json...`);
