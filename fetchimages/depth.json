@@ -20,18 +20,6 @@
     "depth_pos": "Right Tackle"
   },
   {
-    "depth_name": "Pat Freiermuth",
-    "depth_pos": "Tight End"
-  },
-  {
-    "depth_name": "Jonnu Smith",
-    "depth_pos": "Tight End"
-  },
-  {
-    "depth_name": "Darnell Washington",
-    "depth_pos": "Tight End"
-  },
-  {
     "depth_name": "Jaylen Warren",
     "depth_pos": "Running Back"
   },
@@ -66,6 +54,18 @@
   {
     "depth_name": "Ben Skowronek",
     "depth_pos": "3rd Wide Receiver"
+  },
+  {
+    "depth_name": "Pat Freiermuth",
+    "depth_pos": "Tight End"
+  },
+  {
+    "depth_name": "Jonnu Smith",
+    "depth_pos": "2nd Tight End"
+  },
+  {
+    "depth_name": "Darnell Washington",
+    "depth_pos": "3rd Tight End"
   },
   {
     "depth_name": "Cameron Heyward",
@@ -113,7 +113,7 @@
   },
   {
     "depth_name": "Brandin Echols",
-    "depth_pos": "2nd Cornerback | Cornerback"
+    "depth_pos": "2nd Cornerback"
   },
   {
     "depth_name": "Juan Thornhill",
