@@ -8,6 +8,7 @@
   <style>
     /* Center content vertically */
     #end-content {
+      font-size: 1.2em;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -28,9 +29,14 @@
     }
 
     #role-text {
-      margin-top: 10px;
+      margin-top: 3px;
     }
-
+    #qualification-text {
+      font-size: 1.0em;
+      font-weight: normal;
+      margin: 5px 0 0 0;  /* space below "That's the end of the ballgame!" */
+      text-align: center;
+    }
     #role-text img {
       max-width: 90vw;       /* responsive for mobile */
       max-height: 300px;     /* prevent too tall images on desktop */
@@ -57,6 +63,7 @@
 
 <main id="end-content">
   <h1>That's the end of the ballgame!</h1>
+  <p id="qualification-text">You're qualified to be a:</p>
   <div id="role-text"></div>
 
   <!-- Combine score text and number in one line -->
