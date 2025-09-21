@@ -9,7 +9,7 @@
 ///////////////////////////
 const CONFIG = {
   // JSON & Trivia module
-  ROSTER_JSON: 'currentroster.json',          // roster source
+  ROSTER_JSON: 'depth-roster.json',          // roster source
   TRIVIA_MODULE_PATH: './main-trivia-shuffle.js', // path to trivia JS module
 
   // HTML element IDs
@@ -33,16 +33,16 @@ const CONFIG = {
 
   // LocalStorage keys
   STORAGE_KEYS: {
-    CURRENT_ROSTER: 'currentRoster',
-    TOTAL_QUESTIONS: 'totalQuestions',
-    LAST_PLAYER: 'lastPlayer',
-    LAST_ANSWER: 'lastAnswer',
-    QUESTIONS_ASKED: 'questionsAsked',
-    SCORE: 'score'
+    CURRENT_ROSTER: 'depth-currentRoster',
+    TOTAL_QUESTIONS: 'depth-totalQuestions',
+    LAST_PLAYER: 'depth-lastPlayer',
+    LAST_ANSWER: 'depth-lastAnswer',
+    QUESTIONS_ASKED: 'depth-questionsAsked',
+    SCORE: 'depth-score'
   },
 
   // End page
-  END_PAGE: 'currentquizend.html',
+  END_PAGE: 'depth-quiz-end.html',
 
   // Question phrases
   QUESTION_PHRASES: [
