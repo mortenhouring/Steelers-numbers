@@ -1,4 +1,5 @@
- one-page-quiz-template.js
+//DEPTH quiz//
+// one-page-quiz-template.js
 // Single-page quiz controller template
 // All configurable paths, filenames, HTML IDs, and localStorage keys
 // are defined at the top for easy modification.
