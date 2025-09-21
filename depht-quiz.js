@@ -32,12 +32,12 @@ const CONFIG = {
 
   // LocalStorage keys
   STORAGE_KEYS: {
-    CURRENT_ROSTER: 'currentRoster',
-    TOTAL_QUESTIONS: 'totalQuestions',
-    LAST_PLAYER: 'lastPlayer',
-    LAST_ANSWER: 'lastAnswer',
-    QUESTIONS_ASKED: 'questionsAsked',
-    SCORE: 'score'
+    CURRENT_ROSTER: 'depth-currentRoster',
+    TOTAL_QUESTIONS: 'depth-totalQuestions',
+    LAST_PLAYER: 'depth-lastPlayer',
+    LAST_ANSWER: 'depth-lastAnswer',
+    QUESTIONS_ASKED: 'depth-questionsAsked',
+    SCORE: 'depth-score'
   },
 
   // End page
