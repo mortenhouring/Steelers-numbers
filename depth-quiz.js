@@ -9,7 +9,7 @@
 ///////////////////////////
 const CONFIG = {
   // JSON & Trivia module
-  ROSTER_JSON: 'depth-roster.json',          // roster source
+  ROSTER_JSON: 'depth.json',          // roster source
   TRIVIA_MODULE_PATH: './main-trivia-shuffle.js', // path to trivia JS module
 
   // HTML element IDs
