@@ -10,20 +10,22 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      ####################################
+      # Checkout repo
+      ####################################
       - name: Checkout repo
         uses: actions/checkout@v4
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-
-      - name: Install dependencies
-        run: npm ci
 
       ####################################
       # 1. fetch-steelers.js
       ####################################
+      - name: Install dependencies for fetch-steelers.js
+        run: |
+          echo ">>> Installing dependencies in fetch/"
+          cd fetch
+          npm install
+          cd -
+      
       - name: Run fetch-steelers.js
         run: |
           echo ">>> Running fetch/fetch-steelers.js"
@@ -41,6 +43,13 @@ jobs:
       ####################################
       # 2. images-fetch-steelers.js
       ####################################
+      - name: Install dependencies for images-fetch-steelers.js
+        run: |
+          echo ">>> Installing dependencies in fetchimages/"
+          cd fetchimages
+          npm install
+          cd -
+
       - name: Run images-fetch-steelers.js
         run: |
           echo ">>> Running fetchimages/images-fetch-steelers.js"
@@ -59,6 +68,13 @@ jobs:
       ####################################
       # 3. trivia.js
       ####################################
+      - name: Install dependencies for trivia.js
+        run: |
+          echo ">>> Installing dependencies in fetchimages/"
+          cd fetchimages
+          npm install
+          cd -
+
       - name: Run trivia.js
         run: |
           echo ">>> Running fetchimages/trivia.js"
@@ -76,6 +92,13 @@ jobs:
       ####################################
       # 4. depth.js
       ####################################
+      - name: Install dependencies for depth.js
+        run: |
+          echo ">>> Installing dependencies in fetchimages/"
+          cd fetchimages
+          npm install
+          cd -
+
       - name: Run depth.js
         run: |
           echo ">>> Running fetchimages/depth.js"
