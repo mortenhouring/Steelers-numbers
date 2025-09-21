@@ -20,11 +20,8 @@ jobs:
         with:
           node-version: '18'
 
-      - name: Install dependencies in fetchimages
-        working-directory: fetchimages
-        run: |
-          set -e
-          npm ci
+      - name: Skip install (no dependencies needed)
+        run: echo "No dependencies to install, skipping npm ci"
 
       - name: Run update script
         working-directory: fetchimages
