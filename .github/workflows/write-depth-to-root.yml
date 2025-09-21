@@ -43,3 +43,4 @@ jobs:
           else
             git commit -m "chore: update root depth.json"
             git push
+          fi
