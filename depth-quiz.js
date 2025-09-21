@@ -62,8 +62,7 @@ const CONFIG = {
 ///////////////////////////
 // IMPORT TRIVIA MODULE
 ///////////////////////////
-import { loadTrivia } from './main-trivia-shuffle.js';
-
+import { loadTrivia, generateTriviaParagraph } from './main-trivia-shuffle.js';
 ///////////////////////////
 // ELEMENTS
 ///////////////////////////
