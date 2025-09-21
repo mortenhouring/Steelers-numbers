@@ -1,27 +1,34 @@
-'use strict';
-const fs = require('fs').promises;
-const path = require('path');
+import { promises as fs } from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
-// Source files
+// Emulate __dirname in ES module
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Input files
 const depthSource = path.join(__dirname, 'depth.json'); // fetchimages/depth.json
 const rosterPath = path.join(__dirname, 'images-rosterupdate.json'); // fetchimages/images-rosterupdate.json
 
-// Target file (root depth.json)
+// Output file (root depth.json)
 const depthTarget = path.join(__dirname, '..', 'depth.json'); // repo root
 
-(async function main() {
-  const depthData = JSON.parse(await fs.readFile(depthSource, 'utf8'));
-  const rosterData = JSON.parse(await fs.readFile(rosterPath, 'utf8'));
+const main = async () => {
+  // Read input JSON files
+  const depthDataRaw = await fs.readFile(depthSource, 'utf8');
+  const rosterDataRaw = await fs.readFile(rosterPath, 'utf8');
 
-  if (!Array.isArray(depthData)) {
-    throw new Error('fetchimages/depth.json must be an array');
-  }
-  if (!Array.isArray(rosterData)) {
-    throw new Error('fetchimages/images-rosterupdate.json must be an array');
-  }
+  const depthData = JSON.parse(depthDataRaw);
+  const rosterData = JSON.parse(rosterDataRaw);
 
+  // Validate arrays
+  if (!Array.isArray(depthData)) throw new Error('fetchimages/depth.json must be an array');
+  if (!Array.isArray(rosterData)) throw new Error('fetchimages/images-rosterupdate.json must be an array');
+
+  // Extract depth names
   const depthNames = depthData.map(entry => entry.depth_name);
 
+  // Build output array
   const output = [];
   for (const name of depthNames) {
     const match = rosterData.find(p => p.player_name === name);
@@ -39,6 +46,13 @@ const depthTarget = path.join(__dirname, '..', 'depth.json'); // repo root
     }
   }
 
+  // Write root depth.json
   await fs.writeFile(depthTarget, JSON.stringify(output, null, 2) + '\n', 'utf8');
   console.log(`Wrote ${output.length} matched players to root depth.json`);
-})();
+};
+
+// Run
+main().catch(err => {
+  console.error('Error updating root depth.json:', err);
+  process.exit(1);
+});
