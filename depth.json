@@ -1,1 +1,362 @@
-jk
+[
+  {
+    "player_name": "Broderick Jones",
+    "number": 77,
+    "position": "OT",
+    "player_id": "4428990",
+    "player_image": "fetchimages/images/4428990.png",
+    "group": "OFF",
+    "trivia": "",
+    "stats": ""
+  },
+  {
+    "player_name": "Isaac Seumalo",
+    "number": 73,
+    "position": "G",
+    "player_id": "2978247",
+    "player_image": "fetchimages/images/2978247.png",
+    "group": "OFF",
+    "trivia": "",
+    "stats": ""
+  },
+  {
+    "player_name": "Zach Frazier",
+    "number": 54,
+    "position": "C",
+    "player_id": "4429775",
+    "player_image": "fetchimages/images/4429775.png",
+    "group": "OFF",
+    "trivia": "",
+    "stats": ""
+  },
+  {
+    "player_name": "Mason McCormick",
+    "number": 66,
+    "position": "G",
+    "player_id": "4368304",
+    "player_image": "fetchimages/images/4368304.png",
+    "group": "OFF",
+    "trivia": "",
+    "stats": ""
+  },
+  {
+    "player_name": "Troy Fautanu",
+    "number": 76,
+    "position": "OT",
+    "player_id": "4427170",
+    "player_image": "fetchimages/images/4427170.png",
+    "group": "OFF",
+    "trivia": "",
+    "stats": ""
+  },
+  {
+    "player_name": "Jaylen Warren",
+    "number": 30,
+    "position": "RB",
+    "player_id": "4569987",
+    "player_image": "fetchimages/images/4569987.png",
+    "group": "OFF",
+    "trivia": "",
+    "stats": ""
+  },
+  {
+    "player_name": "Kenneth Gainwell",
+    "number": 14,
+    "position": "RB",
+    "player_id": "4371733",
+    "player_image": "fetchimages/images/4371733.png",
+    "group": "OFF",
+    "trivia": "",
+    "stats": ""
+  },
+  {
+    "player_name": "Kaleb Johnson",
+    "number": 20,
+    "position": "RB",
+    "player_id": "4819231",
+    "player_image": "fetchimages/images/4819231.png",
+    "group": "OFF",
+    "trivia": "",
+    "stats": ""
+  },
+  {
+    "player_name": "Aaron Rodgers",
+    "number": 8,
+    "position": "QB",
+    "player_id": "8439",
+    "player_image": "fetchimages/images/8439.png",
+    "group": "OFF",
+    "trivia": "",
+    "stats": ""
+  },
+  {
+    "player_name": "Calvin Austin III",
+    "number": 19,
+    "position": "WR",
+    "player_id": "4243389",
+    "player_image": "fetchimages/images/4243389.png",
+    "group": "OFF",
+    "trivia": "",
+    "stats": ""
+  },
+  {
+    "player_name": "Roman Wilson",
+    "number": 10,
+    "position": "WR",
+    "player_id": "4431492",
+    "player_image": "fetchimages/images/4431492.png",
+    "group": "OFF",
+    "trivia": "",
+    "stats": ""
+  },
+  {
+    "player_name": "DK Metcalf",
+    "number": 4,
+    "position": "WR",
+    "player_id": "4047650",
+    "player_image": "fetchimages/images/4047650.png",
+    "group": "OFF",
+    "trivia": "",
+    "stats": ""
+  },
+  {
+    "player_name": "Scotty Miller",
+    "number": 13,
+    "position": "WR",
+    "player_id": "3914397",
+    "player_image": "fetchimages/images/3914397.png",
+    "group": "OFF",
+    "trivia": "",
+    "stats": ""
+  },
+  {
+    "player_name": "Ben Skowronek",
+    "number": 15,
+    "position": "WR",
+    "player_id": "4035656",
+    "player_image": "fetchimages/images/4035656.png",
+    "group": "OFF",
+    "trivia": "",
+    "stats": ""
+  },
+  {
+    "player_name": "Pat Freiermuth",
+    "number": 88,
+    "position": "TE",
+    "player_id": "4361411",
+    "player_image": "fetchimages/images/4361411.png",
+    "group": "OFF",
+    "trivia": "",
+    "stats": ""
+  },
+  {
+    "player_name": "Jonnu Smith",
+    "number": 81,
+    "position": "TE",
+    "player_id": "3054212",
+    "player_image": "fetchimages/images/3054212.png",
+    "group": "OFF",
+    "trivia": "",
+    "stats": ""
+  },
+  {
+    "player_name": "Darnell Washington",
+    "number": 80,
+    "position": "TE",
+    "player_id": "4430802",
+    "player_image": "fetchimages/images/4430802.png",
+    "group": "OFF",
+    "trivia": "",
+    "stats": ""
+  },
+  {
+    "player_name": "Cameron Heyward",
+    "number": 97,
+    "position": "DT",
+    "player_id": "13977",
+    "player_image": "fetchimages/images/13977.png",
+    "group": "DEF",
+    "trivia": "",
+    "stats": ""
+  },
+  {
+    "player_name": "Keeanu Benton",
+    "number": 95,
+    "position": "DT",
+    "player_id": "4426694",
+    "player_image": "fetchimages/images/4426694.png",
+    "group": "DEF",
+    "trivia": "",
+    "stats": ""
+  },
+  {
+    "player_name": "Derrick Harmon",
+    "number": 99,
+    "position": "DT",
+    "player_id": "4682980",
+    "player_image": "fetchimages/images/4682980.png",
+    "group": "DEF",
+    "trivia": "",
+    "stats": ""
+  },
+  {
+    "player_name": "Yahya Black",
+    "number": 94,
+    "position": "DE",
+    "player_id": "4430947",
+    "player_image": "fetchimages/images/4430947.png",
+    "group": "DEF",
+    "trivia": "",
+    "stats": ""
+  },
+  {
+    "player_name": "T.J. Watt",
+    "number": 90,
+    "position": "LB",
+    "player_id": "3045282",
+    "player_image": "fetchimages/images/3045282.png",
+    "group": "DEF",
+    "trivia": "",
+    "stats": ""
+  },
+  {
+    "player_name": "Jack Sawyer",
+    "number": 33,
+    "position": "LB",
+    "player_id": "4431590",
+    "player_image": "fetchimages/images/4431590.png",
+    "group": "DEF",
+    "trivia": "",
+    "stats": ""
+  },
+  {
+    "player_name": "Patrick Queen",
+    "number": 6,
+    "position": "LB",
+    "player_id": "4242207",
+    "player_image": "fetchimages/images/4242207.png",
+    "group": "DEF",
+    "trivia": "",
+    "stats": ""
+  },
+  {
+    "player_name": "Payton Wilson",
+    "number": 41,
+    "position": "LB",
+    "player_id": "4361652",
+    "player_image": "fetchimages/images/4361652.png",
+    "group": "DEF",
+    "trivia": "",
+    "stats": ""
+  },
+  {
+    "player_name": "Alex Highsmith",
+    "number": 56,
+    "position": "LB",
+    "player_id": "4037333",
+    "player_image": "fetchimages/images/4037333.png",
+    "group": "DEF",
+    "trivia": "",
+    "stats": ""
+  },
+  {
+    "player_name": "Nick Herbig",
+    "number": 51,
+    "position": "LB",
+    "player_id": "4429164",
+    "player_image": "fetchimages/images/4429164.png",
+    "group": "DEF",
+    "trivia": "",
+    "stats": ""
+  },
+  {
+    "player_name": "Darius Slay",
+    "number": 23,
+    "position": "CB",
+    "player_id": "15863",
+    "player_image": "fetchimages/images/15863.png",
+    "group": "DEF",
+    "trivia": "",
+    "stats": ""
+  },
+  {
+    "player_name": "Brandin Echols",
+    "number": 26,
+    "position": "CB",
+    "player_id": "4567979",
+    "player_image": "fetchimages/images/4567979.png",
+    "group": "DEF",
+    "trivia": "",
+    "stats": ""
+  },
+  {
+    "player_name": "Juan Thornhill",
+    "number": 22,
+    "position": "S",
+    "player_id": "3917909",
+    "player_image": "fetchimages/images/3917909.png",
+    "group": "DEF",
+    "trivia": "",
+    "stats": ""
+  },
+  {
+    "player_name": "DeShon Elliott",
+    "number": 25,
+    "position": "S",
+    "player_id": "3929846",
+    "player_image": "fetchimages/images/3929846.png",
+    "group": "DEF",
+    "trivia": "",
+    "stats": ""
+  },
+  {
+    "player_name": "Chuck Clark",
+    "number": 21,
+    "position": "S",
+    "player_id": "3045463",
+    "player_image": "fetchimages/images/3045463.png",
+    "group": "DEF",
+    "trivia": "",
+    "stats": ""
+  },
+  {
+    "player_name": "Joey Porter Jr.",
+    "number": 24,
+    "position": "CB",
+    "player_id": "4426506",
+    "player_image": "fetchimages/images/4426506.png",
+    "group": "DEF",
+    "trivia": "",
+    "stats": ""
+  },
+  {
+    "player_name": "Jalen Ramsey",
+    "number": 5,
+    "position": "CB",
+    "player_id": "3045373",
+    "player_image": "fetchimages/images/3045373.png",
+    "group": "DEF",
+    "trivia": "",
+    "stats": ""
+  },
+  {
+    "player_name": "Corliss Waitman",
+    "number": 3,
+    "position": "P",
+    "player_id": "3125280",
+    "player_image": "fetchimages/images/3125280.png",
+    "group": "ST",
+    "trivia": "",
+    "stats": ""
+  },
+  {
+    "player_name": "Chris Boswell",
+    "number": 9,
+    "position": "PK",
+    "player_id": "17372",
+    "player_image": "fetchimages/images/17372.png",
+    "group": "ST",
+    "trivia": "",
+    "stats": ""
+  }
+]
