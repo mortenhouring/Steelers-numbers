@@ -184,3 +184,70 @@ color: #f0f0e0 !important;
 #quiz2-content.visible {
   opacity: 1;
 }
+
+/* BUTTON TEST */
+/* Base button style shared across all */
+button {
+  font-family: 'Arial Narrow', Verdana, Tahoma, sans-serif;
+  font-weight: bold;
+  text-transform: uppercase;
+  padding: 14px 20px;
+  font-size: 16px;
+  width: 100%;
+  max-width: 300px; /* keeps buttons from stretching too far */
+  margin: 10px auto;
+  display: block;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+/* Option A — Primary Gold */
+.btn-primary {
+  background-color: #FFB612; /* Steelers gold */
+  color: #000;
+  border: none;
+  border-radius: 10px;
+}
+
+.btn-primary:active {
+  background-color: #e6a500;
+  transform: translateY(1px);
+}
+
+/* Option B — Secondary Outline */
+.btn-secondary {
+  background-color: transparent;
+  color: #fff;
+  border: 2px solid #FFB612;
+  border-radius: 10px;
+}
+
+.btn-secondary:active {
+  background-color: #FFB612;
+  color: #000;
+  transform: translateY(1px);
+}
+
+/* Option C — Icon + Text Chip */
+.btn-chip {
+  background-color: #000;
+  color: #fff;
+  border: none;
+  border-radius: 30px; /* pill shape */
+  padding: 12px 18px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px; /* space between icon and text */
+  box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+}
+
+.btn-chip:active {
+  box-shadow: 0 0 10px #FFB612;
+  transform: scale(1.05);
+}
+
+/* Example icon style */
+.btn-chip img {
+  width: 20px;
+  height: 20px;
+}
