@@ -88,9 +88,6 @@ main > div {
 /* quiz1 Button Styles */
 /* Numeric keypad buttons styled like frontpage buttons, larger for mobile */
 #keypad button {
-    display: flex;
-    align-items: center;           /* vertical center */
-    justify-content: center;       /* horizontal center */
     width: 70px;                   /* increased size */
     height: 70px;
     margin: 8px;
