@@ -14,17 +14,17 @@ h1 {
     margin-bottom: 20px;
 }
 
-/* Front page buttons */
 .frontpage-btn {
     display: flex;
-    align-items: center;
+    align-items: center;       /* vertical center */
+    justify-content: center;   /* horizontal center of entire content */
     gap: 12px;
     width: 100%;
-    max-width: 400px; /* optional limit */
-    padding: 16px;
-    border-radius: 30px; /* pill shape */
+    max-width: 400px;          /* optional limit */
+    padding: 16px 16px 16px 56px; /* left padding accounts for icon width + spacing */
+    border-radius: 30px;       /* pill shape */
     border: none;
-    background-color: var(--black);
+    background-color: rgba(0, 0, 0, 0.7); /* 70% opaque black */
     color: var(--white) !important;
     font-weight: bold;
     text-transform: uppercase;
@@ -32,12 +32,25 @@ h1 {
     cursor: pointer;
     box-shadow: 0 4px 12px rgba(0,0,0,0.6);
     transition: transform 0.12s ease, box-shadow 0.12s ease, background-color 0.12s ease;
-    background-image: url('white-logo.PNG');
-    background-repeat: no-repeat;
-    background-size: 28px 28px;
-    background-position: 12px center;   /* horizontal offset and vertical center */
-    
+    position: relative;        /* for pseudo-element overlay if needed */
 }
+
+.frontpage-btn:active {
+    transform: scale(1.03);
+    box-shadow: 0 0 10px var(--white);
+    background-color: rgba(17,17,17,0.7); /* darker on click */
+}
+
+/* Icon as separate element inside button */
+.frontpage-btn img {
+    position: absolute;
+    left: 12px;
+    width: 28px;
+    height: 28px;
+    flex-shrink: 0;
+}
+
+/* Container */
 main > div {
     display: flex;
     flex-direction: column;
@@ -45,17 +58,6 @@ main > div {
     gap: 15px;            /* space between buttons */
     margin-top: 20px;
 }
-.frontpage-btn:active {
-    transform: scale(1.03);
-    box-shadow: 0 0 10px var(--white);
-    background-color: #111;
-}
-
-.frontpage-btn img {
-    width: 38px;
-    height: 38px;
-    flex-shrink: 0;
-    display: block;
 }
 
 /* Keep all your .end-buttons styling */
