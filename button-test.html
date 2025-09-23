@@ -1,137 +1,79 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Steelers Chip Button — Fixed</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mobile Steelers Chip Button</title>
 <style>
   :root {
     --gold: #FFB612;
     --black: #000;
-    --bg-dark: #070707;
+    --white: #fff;
   }
-  * { box-sizing: border-box; }
-  html,body { height:100%; margin:0; }
-  body{
+
+  body {
+    background: black; /* App background */
+    color: var(--white);
     font-family: 'Arial Narrow', Verdana, Tahoma, sans-serif;
-    -webkit-font-smoothing:antialiased;
-    background: linear-gradient(180deg, #020202 0%, #0b0b0b 100%);
-    color: #fff;
-    min-height:100vh;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    padding:24px;
-    position:relative;
+    margin: 0;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
   }
 
-  /* thin yellow stripe (a bit from left, most of the way to right) */
-  .bg-stripe{
-    position:absolute;
-    left:84px;        /* "a little from the logo" — tweak if needed */
-    right:40px;       /* "most of the way to the right" */
-    top:50%;
-    height:3px;
-    background: var(--gold);
-    border-radius:2px;
-    box-shadow: 0 0 10px rgba(255,182,18,0.12);
-    transform: translateY(-50%);
-    pointer-events:none;
-    z-index:0;
-  }
-
-  .wrap{
-    width:100%;
-    max-width:420px;
-    z-index:1; /* sits above the stripe */
-    text-align:center;
-  }
-
-  /* base button (do not force full width here) */
-  .btn {
-    font-weight:700;
-    text-transform:uppercase;
-    letter-spacing:0.6px;
-    font-size:16px;
-    padding:12px 16px;
-    border-radius:10px;
-    border: none;
-    cursor:pointer;
-    transition: transform .12s ease, box-shadow .12s ease, background-color .12s ease;
-    -webkit-tap-highlight-color: transparent;
-    display:inline-block; /* default inline so chip does not stretch */
-  }
-
-  /* helper class for mobile full-width CTAs */
-  .btn-full {
-    display:block;
-    width:100%;
-    margin:12px 0;
-    min-height:52px;
-  }
-
-  .btn-primary {
-    background: var(--gold);
-    color: #000;
-    box-shadow: 0 6px 18px rgba(255,182,18,0.08);
-  }
-  .btn-primary:active { transform: translateY(1px); filter: brightness(.96); }
-
-  .btn-secondary {
-    background: transparent;
-    color: #fff;
-    border: 2px solid var(--gold);
-    min-height:50px;
-  }
-  .btn-secondary:active { background:var(--gold); color:#000; transform: translateY(1px); }
-
-  /* CHIP button: compact, pill-shaped with svg on the left */
+  /* Mobile full-width chip button */
   .btn-chip {
-    display:inline-flex;
-    align-items:center;
-    gap:12px;
-    padding:10px 14px;
-    border-radius:999px;
-    background: var(--black);
-    color: #fff;
-    box-shadow: 0 6px 18px rgba(0,0,0,0.6);
-    border: 1px solid rgba(255,255,255,0.03);
-    min-height:44px;
-    font-size:15px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    max-width: 400px; /* optional limit */
+    padding: 16px;
+    border-radius: 30px; /* pill shape */
+    border: none;
+    background-color: var(--black);
+    color: var(--white);
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 16px;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.6);
+    transition: transform 0.12s ease, box-shadow 0.12s ease, background-color 0.12s ease;
   }
-  .btn-chip:active { transform: scale(1.03); box-shadow: 0 8px 24px rgba(0,0,0,0.7); }
 
-  /* SVG sizing so it stays small and crisp */
-  .btn-chip svg { width:20px; height:20px; flex-shrink:0; display:block; }
+  /* Tap/active effect */
+  .btn-chip:active {
+    transform: scale(1.03);
+    box-shadow: 0 0 10px var(--gold);
+    background-color: #111;
+  }
 
-  .hint { opacity:.9; font-weight:600; margin-top:10px; font-size:13px; color:#ddd; }
-  @media(min-width:700px){
-    .wrap{ max-width:620px; }
-    .btn-chip{ font-size:16px; padding:12px 18px; }
+  /* Icon inside button */
+  .btn-chip img {
+    width: 28px;
+    height: 28px;
+    flex-shrink: 0;
+    display: block;
+  }
+
+  /* Optional text centering on small screens */
+  @media (max-width: 480px) {
+    .btn-chip {
+      font-size: 18px;
+      padding: 18px;
+    }
   }
 </style>
 </head>
 <body>
 
-  <div class="bg-stripe" aria-hidden="true"></div>
-
-  <div class="wrap">
-    <button class="btn btn-full btn-primary">Primary Gold</button>
-    <button class="btn btn-full btn-secondary">Secondary Outline</button>
-
-    <div style="height:14px;"></div>
-
-    <!-- Chip button with a 4-cusp hypocycloid (astroid) in Steelers yellow on the left -->
-    <button class="btn-chip" aria-label="Chip button with steelers hypocycloid">
-      <!-- astroid/hypocycloid path scaled to 24x24 viewBox -->
-      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <path fill="var(--gold)" d="M22 12 L21.886 12.007 L21.551 12.052 L21.012 12.173 L20.282 12.393 L19.382 12.73 L18.335 13.21 L17.166 13.853 L15.894 14.686 L14.547 15.73 L13.145 16.998 L11.708 18.49 L10.253 20.205 L8.798 22.135 L7.36 24.264 L6.386 23.043 L5.583 21.632 L4.967 20.064 L4.556 18.37 L4.363 16.582 L4.396 14.736 L4.661 12.864 L5.151 11.002 L5.859 9.189 L6.774 7.469 L7.88 5.878 L9.157 4.46 L10.58 3.247 L12.12 2.267 L13.748 1.536 L15.432 1.06 L17.135 0.839 L18.821 0.874 L20.447 1.167 L21.997 1.716 L22 12 Z"/>
-      </svg>
-      Chip Button
-    </button>
-
-    <div class="hint">Tip: open this file on a phone or resize your browser to narrow width to preview a mobile feel.</div>
-  </div>
+  <button class="btn-chip">
+    <img src="yellow-hypocycloid.png" alt="Steelers Hypocycloid">
+    Chip Button
+  </button>
 
 </body>
 </html>
