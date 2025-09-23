@@ -76,7 +76,12 @@ main > div {
   justify-content: center;         /* center horizontally */
   align-items: center;             /* align baseline */
 }
-
+#info-text {
+  font-size: 1.1em;
+  font-weight: normal;
+  margin: 5px 0 0 0;  /* space below "Drill over!" */
+  text-align: center;
+}
 /* quiz1 Button Styles */
 #keypad button {
     background-color: black !important;
