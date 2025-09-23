@@ -66,7 +66,8 @@ main > div {
 #answer-display {
     font-size: 1.5em
     outline: var(--white)
-    width: 100px;
+    width: 80px;
+    height: 70px;
     text-align: center;
     background-color: rgba(0, 0, 0, 0.5); /* 70% opaque black */
     margin-bottom: 10px;
