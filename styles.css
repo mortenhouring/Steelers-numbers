@@ -32,7 +32,7 @@ h1 {
     cursor: pointer;
     box-shadow: 0 4px 12px rgba(0,0,0,0.6);
     transition: transform 0.12s ease, box-shadow 0.12s ease, background-color 0.12s ease;
-    background-image: url('yellow-hypocycloid.png');
+    background-image: url('white-logo.PNG');
     background-repeat: no-repeat;
     background-size: 28px 28px;
     background-position: 12px center;   /* horizontal offset and vertical center */
