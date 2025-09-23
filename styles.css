@@ -86,33 +86,41 @@ main > div {
   text-align: center;
 }
 /* quiz1 Button Styles */
+/* Numeric keypad buttons styled like frontpage buttons, larger for mobile */
 #keypad button {
-    background-color: black !important;
+    display: flex;
+    align-items: center;           /* vertical center */
+    justify-content: center;       /* horizontal center */
+    width: 70px;                   /* increased size */
+    height: 70px;
+    margin: 8px;
+    padding: 0 16px;               /* horizontal padding only; vertical is controlled by height */
+    border-radius: 30px;           /* pill shape like frontpage-btn */
+    border: none;
+    background-color: rgba(0, 0, 0, 0.7); /* 70% opaque black */
     color: white !important;
     font-family: 'Courier New', Courier, monospace;
-    font-size: 20px;
-    width: 50px;
-    height: 50px;
-    margin: 5px;
-    border: none;
+    font-size: 24px;               /* slightly bigger text */
+    font-weight: bold;
+    text-transform: uppercase;
     cursor: pointer;
-    text-align: center;
-    border-radius: 0;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.6);
+    transition: transform 0.12s ease, box-shadow 0.12s ease, background-color 0.12s ease;
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
-
 }
 
 #keypad button:active {
-    background-color: black !important;
+    transform: scale(1.03);
+    box-shadow: 0 0 10px rgba(255,255,255,0.6);
+    background-color: rgba(17,17,17,0.7);
     color: white !important;
-    box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.5) !important;
 }
 
 #keypad button:focus {
     outline: none !important;
-    background-color: black !important;
+    background-color: rgba(0,0,0,0.7);
     color: white !important;
 }
 
