@@ -64,9 +64,11 @@ main > div {
   margin-top: 20px;
 }
 #answer-display {
-    font-size: 1.5em;
+    font-size: 1.5em
+    outline: var(--white)
     width: 100px;
     text-align: center;
+    background-color: rgba(0, 0, 0, 0.5); /* 70% opaque black */
     margin-bottom: 10px;
 }
 #final-score-text {
