@@ -93,24 +93,34 @@ main > div {
 /* quiz1 Button Styles */
 /* Numeric keypad buttons styled like frontpage buttons, larger for mobile */
 #keypad button {
-    width: 70px;                   /* increased size */
+    /* Layout and sizing */
+    width: 70px;
     height: 70px;
-    margin: 8px;
-    padding: 0 16px;               /* horizontal padding only; vertical is controlled by height */
-    border-radius: 30px;           /* pill shape like frontpage-btn */
+    margin: 5px;
+    padding: 0;                  /* remove extra padding */
+    border-radius: 30px;
     border: none;
     background-color: rgba(0, 0, 0, 0.7); /* 70% opaque black */
+
+    /* Text styling */
     color: white !important;
     font-family: 'Courier New', Courier, monospace;
-    font-size: 24px;               /* slightly bigger text */
+    font-size: 24px;
     font-weight: bold;
     text-transform: uppercase;
+    text-align: center;
+    line-height: 70px;           /* vertical centering without flex */
+    
+    /* Appearance */
     cursor: pointer;
     box-shadow: 0 4px 12px rgba(0,0,0,0.6);
     transition: transform 0.12s ease, box-shadow 0.12s ease, background-color 0.12s ease;
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
+
+    /* Flex removed to avoid double click issues */
+    display: block;
 }
 
 #keypad button:active {
