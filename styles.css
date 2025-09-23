@@ -16,13 +16,12 @@ h1 {
 
 .frontpage-btn {
     display: flex;
-    align-items: center;       /* vertical center */
-    justify-content: center;   /* horizontal center of entire content */
-    gap: 12px;
+    align-items: center;           /* vertical center */
+    justify-content: flex-start;   /* left align text + icon */
     width: 100%;
-    max-width: 400px;          /* optional limit */
-    padding: 16px 16px 16px 56px; /* left padding accounts for icon width + spacing */
-    border-radius: 30px;       /* pill shape */
+    max-width: 400px;
+    padding: 16px 16px 16px 56px;  /* left padding = icon width + spacing */
+    border-radius: 30px;
     border: none;
     background-color: rgba(0, 0, 0, 0.7); /* 70% opaque black */
     color: var(--white) !important;
@@ -32,32 +31,27 @@ h1 {
     cursor: pointer;
     box-shadow: 0 4px 12px rgba(0,0,0,0.6);
     transition: transform 0.12s ease, box-shadow 0.12s ease, background-color 0.12s ease;
-    position: relative;        /* for pseudo-element overlay if needed */
+
+    /* Background image */
+    background-image: url('white-logo.PNG');
+    background-repeat: no-repeat;
+    background-size: 28px 28px;
+    background-position: 16px center;  /* left offset + vertical center */
 }
 
 .frontpage-btn:active {
     transform: scale(1.03);
     box-shadow: 0 0 10px var(--white);
-    background-color: rgba(17,17,17,0.7); /* darker on click */
-}
-
-/* Icon as separate element inside button */
-.frontpage-btn img {
-    position: absolute;
-    left: 12px;
-    width: 28px;
-    height: 28px;
-    flex-shrink: 0;
+    background-color: rgba(17,17,17,0.7);
 }
 
 /* Container */
 main > div {
     display: flex;
     flex-direction: column;
-    align-items: center;  /* center horizontally */
-    gap: 15px;            /* space between buttons */
+    align-items: center;
+    gap: 15px;
     margin-top: 20px;
-}
 }
 
 /* Keep all your .end-buttons styling */
