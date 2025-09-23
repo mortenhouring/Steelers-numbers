@@ -16,22 +16,26 @@ h1 {
 
 /* Front page buttons */
 .frontpage-btn {
-    background-color: black;
-    color: white;
-    font-family: 'Arial Narrow', Verdana, Tahoma, sans-serif;
-    font-size: 20px;
-    width: 80%;            /* responsive width */
-    max-width: 200px;       /* don’t get too wide on large phones/tablets */
-    height: 50px;
-    margin: 10px 20px 0px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    max-width: 400px; /* optional limit */
+    padding: 16px;
+    border-radius: 30px; /* pill shape */
     border: none;
+    background-color: var(--black);
+    color: var(--white) !important;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 16px;
     cursor: pointer;
-    text-align: center;
-    border-radius: 0;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    transition: all 0.1s ease-in-out;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.6);
+    transition: transform 0.12s ease, box-shadow 0.12s ease, background-color 0.12s ease;
+    background-image: url('yellow-hypocycloid.png');
+    background-repeat: no-repeat;
+    background-size: 28px 28px;
+    background-position: 12px center;   /* horizontal offset and vertical center */
     
 }
 main > div {
@@ -42,15 +46,18 @@ main > div {
     margin-top: 20px;
 }
 .frontpage-btn:active {
-    background-color: black;
-    color: white;
-    box-shadow: inset 2px 2px 5px rgba(0,0,0,0.5);
-    transform: translateY(1px);
+    transform: scale(1.03);
+    box-shadow: 0 0 10px var(--white);
+    background-color: #111;
 }
 
-.frontpage-btn:focus {
-    outline: none;
+.frontpage-btn img {
+    width: 38px;
+    height: 38px;
+    flex-shrink: 0;
+    display: block;
 }
+
 /* Keep all your .end-buttons styling */
 .end-buttons {
   display: flex;
@@ -183,72 +190,4 @@ color: #f0f0e0 !important;
 }
 #quiz2-content.visible {
   opacity: 1;
-}
-
-/* BUTTON TEST */
-/* Base button style shared across all */
-button {
-  font-family: 'Arial Narrow', Verdana, Tahoma, sans-serif;
-  font-weight: bold;
-  text-transform: uppercase;
-  padding: 14px 20px;
-  font-size: 16px;
-  width: 100%;
-  max-width: 300px;
-  margin: 10px auto;
-  display: block;
-  cursor: pointer;
-  transition: all 0.2s ease-in-out;
-}
-
-/* Primary Gold */
-.btn-primary {
-  background-color: #FFB612;
-  color: #000;
-  border: none;
-  border-radius: 10px;
-}
-
-.btn-primary:active {
-  background-color: #e6a500;
-  transform: translateY(1px);
-}
-
-/* Secondary Outline */
-.btn-secondary {
-  background-color: transparent;
-  color: #fff;
-  border: 2px solid #FFB612;
-  border-radius: 10px;
-}
-
-.btn-secondary:active {
-  background-color: #FFB612;
-  color: #000;
-  transform: translateY(1px);
-}
-
-/* Chip Button */
-.btn-chip {
-  background-color: #000;
-  color: #fff;
-  border: none;
-  border-radius: 30px;
-  padding: 12px 18px;
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.5);
-}
-
-.btn-chip:active {
-  box-shadow: 0 0 10px #FFB612;
-  transform: scale(1.05);
-}
-
-/* SVG inside chip */
-.btn-chip svg {
-  width: 20px;
-  height: 20px;
-  flex-shrink: 0;
 }
