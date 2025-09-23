@@ -64,8 +64,10 @@ main > div {
   margin-top: 20px;
 }
 #answer-display {
-    font-size: 1.5em
-    outline: var(--white)
+    font-size: 1.5em;
+    color: white;
+    font-weight: bold;
+    outline: var(--white);
     width: 80px;
     height: 70px;
     text-align: center;
