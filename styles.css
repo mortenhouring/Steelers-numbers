@@ -23,7 +23,7 @@ h1 {
     width: 80%;            /* responsive width */
     max-width: 200px;       /* don’t get too wide on large phones/tablets */
     height: 50px;
-    margin: 10px 20px 3px;
+    margin: 10px 20px 0px;
     border: none;
     cursor: pointer;
     text-align: center;
@@ -79,7 +79,7 @@ main > div {
 #info-text {
   font-size: 1.0em;
   font-weight: normal;
-  margin:2px 20px 20px; 
+  margin:0px 20px 20px; 
   text-align: center;
 }
 /* quiz1 Button Styles */
