@@ -10,6 +10,13 @@ body {
     background-position: center; /* centers the image */
     background-repeat: no-repeat;
 }
+main > div:not(.end-buttons-container) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    margin-top: 20px;
+}
 h1 {
     margin-bottom: 20px;
 }
@@ -46,14 +53,6 @@ h1 {
 }
 
 /* Container */
-main > div {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 15px;
-    margin-top: 20px;
-}
-
 .end-buttons-container {
   display: flex !important;
   flex-direction: row !important;
