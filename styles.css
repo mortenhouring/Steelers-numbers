@@ -54,29 +54,29 @@ main > div {
     margin-top: 20px;
 }
 
+/* Container for the row of end buttons */
 .end-buttons-container {
-  display: flex !important;
-  flex-direction: row !important;
-  justify-content: center;
-  align-items: stretch;
-  gap: 15px !important;
-  width: 100% !important;
-  max-width: 100% !important;
-  flex-wrap: nowrap !important; /* force single row */
+  display: flex;
+  justify-content: center;      /* center the row horizontally */
+  align-items: stretch;         /* make all buttons the same height */
+  gap: 15px;                    /* horizontal space between buttons */
+  flex-wrap: nowrap;            /* force single row */
+  width: 100%;
+  max-width: 100%;
+  margin-top: 20px;
 }
 
+/* Individual end buttons */
 .end-buttons {
-  display: flex !important;
+  display: flex;
   align-items: center;
-  justify-content: flex-start !important; /* left-align text */
-
-  flex: 1 1 auto !important;      /* grow/shrink equally */
-  min-width: 120px;               /* ensures text fits */
-  max-width: 30%;                 /* three buttons per row max */
-
-  border: none;
+  justify-content: flex-start;  /* text left-aligned */
+  
+  width: 180px;                 /* fixed width for consistent layout */
+  height: 60px;                 /* fixed height */
+  padding-left: 56px;           /* space for background logo */
   border-radius: 30px;
-  padding: 16px 0 16px 50px;      /* top/right/bottom/left; left = logo width + margin */
+  border: none;
   box-sizing: border-box;
 
   background-color: rgba(0,0,0,0.7);
@@ -92,7 +92,7 @@ main > div {
   background-image: url('white-logo.PNG');
   background-repeat: no-repeat;
   background-size: 28px 28px;
-  background-position: 16px center; /* logo left + vertical center */
+  background-position: 16px center;  /* logo offset + vertical center */
 
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -114,6 +114,19 @@ main > div {
   outline: none !important;
   background-color: #111;
   color: white;
+}
+
+/* ===== Responsive tweaks for small screens ===== */
+@media (max-width: 400px) {
+  .end-buttons {
+    width: 140px;         /* slightly smaller buttons on mobile */
+    padding-left: 48px;   /* scale left padding proportionally */
+    font-size: 14px;      /* smaller text to fit */
+  }
+
+  .end-buttons-container {
+    gap: 10px;            /* reduce space between buttons */
+  }
 }
 
 
