@@ -68,7 +68,7 @@ main > div {
 .end-buttons {
   display: flex !important;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
 
   flex: 1 1 auto !important;      /* grow & shrink equally */
   min-width: 120px;               /* ensures text fits */
@@ -76,7 +76,7 @@ main > div {
   
   border: none;
   border-radius: 30px;
-  padding: 16px 0 16px 44px;     /* top/right/bottom/left for logo spacing */
+  padding: 16px 0 16px 50px;
   box-sizing: border-box;
 
   background-color: rgba(0,0,0,0.7);
