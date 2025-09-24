@@ -63,10 +63,10 @@ h1 {
 }
 
 .end-buttons {
-  display: flex;
   align-items: center;
   justify-content: flex-start;  /* text left-aligned after logo */
-
+  text-align: left;
+  line-height: 60px;
   width: 155px;          /* fixed width */
   height: 60px;          /* fixed height */
   padding-left: 56px;    /* space for background logo */
