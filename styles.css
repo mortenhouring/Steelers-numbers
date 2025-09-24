@@ -55,13 +55,11 @@ main > div {
 }
 
 .end-buttons-container {
-  display: flex;
-  justify-content: center;   /* horizontal row */
-  align-items: stretch;      /* buttons same height */
-  gap: 15px;                 /* spacing between buttons */
-  flex-wrap: nowrap;         /* force single row */
-  width: 100%;
-  max-width: 100%;
+  display: flex !important;
+  flex-direction: row !important;
+  justify-content: center;
+  gap: 15px;
+  flex-wrap: nowrap;
   margin-top: 20px;
 }
 
