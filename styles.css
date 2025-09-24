@@ -55,28 +55,20 @@ main > div {
 }
 
 .end-buttons-container {
-  display: flex;
-  justify-content: center;   /* horizontal row */
-  align-items: stretch;      /* buttons same height */
-  gap: 15px;                 /* spacing between buttons */
-  flex-wrap: nowrap;         /* force single row */
-  width: 100%;
-  max-width: 100%;
+  display: flex;              /* row layout */
+  justify-content: center;    /* center buttons as a group */
+  gap: 15px;                  /* space between buttons */
+  flex-wrap: nowrap;          /* force one row */
   margin-top: 20px;
 }
 
 .end-buttons {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;  /* text left-aligned after logo */
-
-  width: 180px;          /* fixed width */
-  height: 60px;          /* fixed height */
-  padding-left: 56px;    /* space for background logo */
+  display: block;             /* no flex inside the button */
+  width: 200px;               /* fixed width so all match */
+  height: 60px;               /* consistent height */
+  padding: 16px 16px 16px 56px; /* padding-left = logo space */
   border-radius: 30px;
   border: none;
-  box-sizing: border-box;
-
   background-color: rgba(0,0,0,0.7);
   color: var(--white) !important;
   font-weight: bold;
@@ -87,42 +79,11 @@ main > div {
   box-shadow: 0 4px 12px rgba(0,0,0,0.6);
   transition: transform 0.12s ease, box-shadow 0.12s ease, background-color 0.12s ease;
 
+  /* Background image */
   background-image: url('white-logo.PNG');
   background-repeat: no-repeat;
   background-size: 28px 28px;
   background-position: 16px center;
-
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-
-  touch-action: manipulation;
-  user-select: none;
-}
-
-/* Pressed and focused states */
-.end-buttons:active {
-  transform: scale(1.03);
-  box-shadow: 0 0 10px var(--white);
-  background-color: #111;
-}
-
-.end-buttons:focus {
-  outline: none !important;
-  background-color: #111;
-  color: white;
-}
-
-/* Mobile tweaks */
-@media (max-width: 400px) {
-  .end-buttons {
-    width: 140px;          /* narrower buttons for small screens */
-    padding-left: 48px;    /* adjust logo spacing proportionally */
-    font-size: 14px;       /* smaller text */
-  }
-  .end-buttons-container {
-    gap: 10px;             /* less horizontal gap */
-  }
 }
 
 #answer-display {
