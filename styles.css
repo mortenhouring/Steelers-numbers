@@ -71,7 +71,7 @@ main > div {
     width: 80px;
     height: 70px;
     text-align: center;
-    background-color: rgba(0, 0, 0, 0.5); /* 70% opaque black */
+    background-color: rgba(0, 0, 0, 0.4); /* 40% opaque black */
     margin-bottom: 10px;
 }
 #final-score-text {
@@ -107,7 +107,6 @@ main > div {
   border-radius: 30px; /* pill style like frontpage-btn */
   cursor: pointer;
 
-  display: flex;               /* center the text */
   align-items: center;
   justify-content: center;
 
