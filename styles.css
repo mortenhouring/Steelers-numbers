@@ -4,6 +4,7 @@ body {
     text-align: center;
     margin: 0;
     padding: 20px;
+    padding-top: 20px;
     min-height: 100vh; /* ensures the body is at least the height of the viewport */
     background-image: url('clean_background.PNG');
     background-size: cover;      /* fills the screen */
@@ -62,9 +63,10 @@ main > div:not(.end-buttons-container) {
   justify-content: flex-start;  /* text left-aligned after logo */
   text-align: left;
   line-height: 60px;
-  width: 120px;          /* fixed width */
-  height: 80px;          /* fixed height */
+  width: 100px;          /* fixed width */
+  height: 100px;          /* fixed height */
   padding-left: 56px;    /* space for background logo */
+  padding-top: 40px;
   border-radius: 30px;
   border: none;
   box-sizing: border-box;
