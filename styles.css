@@ -54,6 +54,7 @@ main > div {
     margin-top: 20px;
 }
 
+/* End buttons container */
 .end-buttons-container {
   display: flex;
   justify-content: center; /* centers the row of buttons */
@@ -61,29 +62,51 @@ main > div {
   margin-top: 20px;
 }
 
-/* Keep all your .end-buttons styling */
 .end-buttons {
     display: flex;
-    flex-direction: row;
     justify-content: center;
-    gap: 15px;
-    flex-wrap: nowrap;
-    margin-top: 20px;
+    align-items: center;
+
     border: none;
+    border-radius: 30px;          /* pill shape */
+    padding: 16px 24px;           /* button size */
+
     background-color: rgba(0, 0, 0, 0.7); /* 70% opaque black */
     color: var(--white) !important;
     font-weight: bold;
     text-transform: uppercase;
     font-size: 16px;
     cursor: pointer;
+
     box-shadow: 0 4px 12px rgba(0,0,0,0.6);
     transition: transform 0.12s ease, box-shadow 0.12s ease, background-color 0.12s ease;
 
-/* Background image */
+    /* Background image */
     background-image: url('white-logo.PNG');
     background-repeat: no-repeat;
     background-size: 28px 28px;
     background-position: 16px center;  /* left offset + vertical center */
+
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+
+    touch-action: manipulation;
+    user-select: none;
+}
+
+/* Pressed state */
+.end-buttons:active {
+    transform: scale(1.03);
+    box-shadow: 0 0 10px var(--white);
+    background-color: #111;
+}
+
+/* Focused state */
+.end-buttons:focus {
+    outline: none !important;
+    background-color: #111;
+    color: white;
 }
 
 #answer-display {
