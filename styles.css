@@ -4,7 +4,7 @@ body {
     text-align: center;
     margin: 0;
     padding: 20px;
-    padding-top: 20px;
+    margin-top: 20px;
     min-height: 100vh; /* ensures the body is at least the height of the viewport */
     background-image: url('clean_background.PNG');
     background-size: cover;      /* fills the screen */
@@ -15,7 +15,7 @@ main > div:not(.end-buttons-container) {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding-top: 20px;
+    margin-top: 20px;
 }
 
 .frontpage-btn {
