@@ -54,27 +54,27 @@ main > div {
     margin-top: 20px;
 }
 
-/* Container for the row of end buttons */
 .end-buttons-container {
   display: flex;
-  justify-content: center;      /* center the row horizontally */
-  align-items: stretch;         /* make all buttons the same height */
-  gap: 15px;                    /* horizontal space between buttons */
-  flex-wrap: nowrap;            /* force single row */
+  justify-content: center;
+  align-items: stretch;
+  gap: 15px;
+  flex-wrap: nowrap;    /* force a single row */
   width: 100%;
   max-width: 100%;
   margin-top: 20px;
 }
 
-/* Individual end buttons */
 .end-buttons {
   display: flex;
   align-items: center;
-  justify-content: flex-start;  /* text left-aligned */
-  
-  width: 180px;                 /* fixed width for consistent layout */
-  height: 60px;                 /* fixed height */
-  padding-left: 56px;           /* space for background logo */
+  justify-content: flex-start;
+
+  flex: 1 0 auto;      /* grow to fill row, but don't shrink below min-width */
+  min-width: 140px;    /* ensures text fits */
+  max-width: 180px;    /* prevents overgrowth on wide screens */
+  height: 60px;
+  padding-left: 56px;  /* logo spacing */
   border-radius: 30px;
   border: none;
   box-sizing: border-box;
@@ -92,7 +92,7 @@ main > div {
   background-image: url('white-logo.PNG');
   background-repeat: no-repeat;
   background-size: 28px 28px;
-  background-position: 16px center;  /* logo offset + vertical center */
+  background-position: 16px center;
 
   -webkit-appearance: none;
   -moz-appearance: none;
