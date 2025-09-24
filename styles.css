@@ -56,13 +56,29 @@ main > div {
 
 /* Keep all your .end-buttons styling */
 .end-buttons {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  gap: 15px;
-  flex-wrap: nowrap;
-  margin-top: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: nowrap;
+    margin-top: 20px;
+    border: none;
+    background-color: rgba(0, 0, 0, 0.7); /* 70% opaque black */
+    color: var(--white) !important;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 16px;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.6);
+    transition: transform 0.12s ease, box-shadow 0.12s ease, background-color 0.12s ease;
+
+/* Background image */
+    background-image: url('white-logo.PNG');
+    background-repeat: no-repeat;
+    background-size: 28px 28px;
+    background-position: 16px center;  /* left offset + vertical center */
 }
+
 #answer-display {
     font-size: 1.5em;
     color: white;
