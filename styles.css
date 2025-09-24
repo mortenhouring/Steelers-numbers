@@ -140,7 +140,11 @@ main > div:not(.end-buttons-container) {
     text-align: center;
     font-weight: bold;
 }
-
+#score-remaining /* counters in quiz*/
+  font-size: 1.0em;
+  font-weight: bold;
+  margin:5px 20px 20px; 
+  text-align: center;
 #final-score-text {
   display: flex !important;       /* force row layout */
   flex-direction: row !important; /* horizontal */
