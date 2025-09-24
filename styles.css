@@ -55,28 +55,28 @@ main > div {
 }
 
 .end-buttons-container {
-  display: flex !important;       /* force flex layout */
-  flex-direction: row !important; /* ensure horizontal layout */
-  justify-content: center;        /* center the row */
-  align-items: stretch;           /* buttons same height */
-  gap: 15px !important;           /* horizontal spacing */
-  width: 100% !important;         /* fill parent */
-  max-width: 100% !important;     /* prevent parent max-width from shrinking row */
-  flex-wrap: nowrap !important;   /* force single row */
+  display: flex !important;
+  flex-direction: row !important;
+  justify-content: center;
+  align-items: stretch;
+  gap: 15px !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  flex-wrap: nowrap !important; /* force single row */
 }
 
 .end-buttons {
   display: flex !important;
   align-items: center;
-  justify-content: flex-start !important;
+  justify-content: flex-start !important; /* left-align text */
 
-  flex: 1 1 auto !important;      /* grow & shrink equally */
+  flex: 1 1 auto !important;      /* grow/shrink equally */
   min-width: 120px;               /* ensures text fits */
   max-width: 30%;                 /* three buttons per row max */
-  
+
   border: none;
   border-radius: 30px;
-  padding: 16px 0 16px 50px;
+  padding: 16px 0 16px 50px;      /* top/right/bottom/left; left = logo width + margin */
   box-sizing: border-box;
 
   background-color: rgba(0,0,0,0.7);
@@ -92,7 +92,7 @@ main > div {
   background-image: url('white-logo.PNG');
   background-repeat: no-repeat;
   background-size: 28px 28px;
-  background-position: 16px center;
+  background-position: 16px center; /* logo left + vertical center */
 
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -115,6 +115,7 @@ main > div {
   background-color: #111;
   color: white;
 }
+
 
 #answer-display {
     font-size: 1.5em;
