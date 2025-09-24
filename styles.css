@@ -67,8 +67,8 @@ h1 {
   justify-content: flex-start;  /* text left-aligned after logo */
   text-align: left;
   line-height: 60px;
-  width: 155px;          /* fixed width */
-  height: 60px;          /* fixed height */
+  width: 120px;          /* fixed width */
+  height: 80px;          /* fixed height */
   padding-left: 56px;    /* space for background logo */
   border-radius: 30px;
   border: none;
