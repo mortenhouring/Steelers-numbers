@@ -54,25 +54,23 @@ main > div {
     margin-top: 20px;
 }
 
-/* Container for buttons */
 .end-buttons-container {
   display: flex;
-  justify-content: center;  /* center row horizontally */
-  gap: 2%;                  /* horizontal spacing between buttons */
+  justify-content: center;  /* center the row */
+  gap: 15px;                /* horizontal spacing */
   margin-top: 20px;
-  flex-wrap: nowrap;         /* force single row */
+  flex-wrap: nowrap;         /* single row */
   width: 100%;
   box-sizing: border-box;
 }
 
-/* Individual buttons */
 .end-buttons {
   display: flex;
   align-items: center;
   justify-content: center;
 
   border: none;
-  border-radius: 30px;          /* pill shape */
+  border-radius: 30px;
   background-color: rgba(0,0,0,0.7);
   color: var(--white) !important;
   font-weight: bold;
@@ -89,9 +87,10 @@ main > div {
   background-size: 28px 28px;
   background-position: 16px center;
 
-  /* Critical: fixed percentage width so 3 buttons + gap fit in one row */
-  width: calc((100% - 2 * 2%) / 3); /* subtract container gap (2%) twice) */
-  padding: 16px 0 16px 44px;        /* top/bottom + left space for logo */
+  /* Critical change: flexible width */
+  flex: 1 1 0;           /* grow & shrink equally, base width 0 */
+  min-width: 100px;      /* ensures text always fits */
+  padding: 16px 0 16px 44px; /* top/right/bottom/left */
   box-sizing: border-box;
 
   -webkit-appearance: none;
