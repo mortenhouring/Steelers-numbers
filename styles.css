@@ -54,14 +54,14 @@ main > div {
     margin-top: 20px;
 }
 
-/* Container: horizontal row, spacing, no wrapping */
+/* Container for buttons */
 .end-buttons-container {
   display: flex;
-  justify-content: center; /* center row of buttons */
-  gap: 2%;                 /* horizontal gap between buttons */
+  justify-content: center;  /* center row horizontally */
+  gap: 2%;                  /* horizontal spacing between buttons */
   margin-top: 20px;
-  flex-wrap: nowrap;        /* prevent wrapping to next line */
-  width: 100%;              /* full width of parent */
+  flex-wrap: nowrap;         /* force single row */
+  width: 100%;
   box-sizing: border-box;
 }
 
@@ -72,10 +72,8 @@ main > div {
   justify-content: center;
 
   border: none;
-  border-radius: 30px;     /* pill shape */
-  padding: 16px 0;         /* top/bottom padding; left/right handled by width */
-  
-  background-color: rgba(0, 0, 0, 0.7);
+  border-radius: 30px;          /* pill shape */
+  background-color: rgba(0,0,0,0.7);
   color: var(--white) !important;
   font-weight: bold;
   text-transform: uppercase;
@@ -91,8 +89,10 @@ main > div {
   background-size: 28px 28px;
   background-position: 16px center;
 
-  width: calc((100% - 2 * 2%) / 3); /* 3 buttons with 2% gap each side */
-  box-sizing: border-box;            /* include padding in width */
+  /* Critical: fixed percentage width so 3 buttons + gap fit in one row */
+  width: calc((100% - 2 * 2%) / 3); /* subtract container gap (2%) twice) */
+  padding: 16px 0 16px 44px;        /* top/bottom + left space for logo */
+  box-sizing: border-box;
 
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -100,8 +100,6 @@ main > div {
 
   touch-action: manipulation;
   user-select: none;
-
-  padding-left: 44px; /* prevent logo/text overlap */
 }
 
 /* Pressed state */
