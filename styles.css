@@ -14,11 +14,6 @@ main > div:not(.end-buttons-container) {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 15px;
-    margin-top: 20px;
-}
-h1 {
-    margin-bottom: 20px;
 }
 
 .frontpage-btn {
