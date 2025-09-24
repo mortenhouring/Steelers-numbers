@@ -25,6 +25,7 @@ main > div:not(.end-buttons-container) {
     width: 100%;
     max-width: 400px;
     padding: 16px 16px 16px 56px;  /* left padding = icon width + spacing */
+    padding-top: 20px;
     border-radius: 30px;
     border: none;
     background-color: rgba(0, 0, 0, 0.7); /* 70% opaque black */
@@ -33,6 +34,7 @@ main > div:not(.end-buttons-container) {
     text-transform: uppercase;
     font-size: 16px;
     cursor: pointer;
+    
     box-shadow: 0 4px 12px rgba(0,0,0,0.6);
     transition: transform 0.12s ease, box-shadow 0.12s ease, background-color 0.12s ease;
 
