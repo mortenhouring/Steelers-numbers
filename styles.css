@@ -54,6 +54,13 @@ main > div {
     margin-top: 20px;
 }
 
+.end-buttons-container {
+  display: flex;
+  justify-content: center; /* centers the row of buttons */
+  gap: 15px;               /* horizontal spacing between buttons */
+  margin-top: 20px;
+}
+
 /* Keep all your .end-buttons styling */
 .end-buttons {
     display: flex;
