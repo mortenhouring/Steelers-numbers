@@ -56,10 +56,10 @@ main > div {
 
 .end-buttons-container {
   display: flex;
-  justify-content: center;
-  align-items: stretch;
-  gap: 15px;
-  flex-wrap: nowrap;    /* force a single row */
+  justify-content: center;   /* horizontal row */
+  align-items: stretch;      /* buttons same height */
+  gap: 15px;                 /* spacing between buttons */
+  flex-wrap: nowrap;         /* force single row */
   width: 100%;
   max-width: 100%;
   margin-top: 20px;
@@ -68,13 +68,11 @@ main > div {
 .end-buttons {
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: flex-start;  /* text left-aligned after logo */
 
-  flex: 1 0 auto;      /* grow to fill row, but don't shrink below min-width */
-  min-width: 140px;    /* ensures text fits */
-  max-width: 180px;    /* prevents overgrowth on wide screens */
-  height: 60px;
-  padding-left: 56px;  /* logo spacing */
+  width: 180px;          /* fixed width */
+  height: 60px;          /* fixed height */
+  padding-left: 56px;    /* space for background logo */
   border-radius: 30px;
   border: none;
   box-sizing: border-box;
@@ -102,33 +100,30 @@ main > div {
   user-select: none;
 }
 
-/* Pressed state */
+/* Pressed and focused states */
 .end-buttons:active {
   transform: scale(1.03);
   box-shadow: 0 0 10px var(--white);
   background-color: #111;
 }
 
-/* Focused state */
 .end-buttons:focus {
   outline: none !important;
   background-color: #111;
   color: white;
 }
 
-/* ===== Responsive tweaks for small screens ===== */
+/* Mobile tweaks */
 @media (max-width: 400px) {
   .end-buttons {
-    width: 140px;         /* slightly smaller buttons on mobile */
-    padding-left: 48px;   /* scale left padding proportionally */
-    font-size: 14px;      /* smaller text to fit */
+    width: 140px;          /* narrower buttons for small screens */
+    padding-left: 48px;    /* adjust logo spacing proportionally */
+    font-size: 14px;       /* smaller text */
   }
-
   .end-buttons-container {
-    gap: 10px;            /* reduce space between buttons */
+    gap: 10px;             /* less horizontal gap */
   }
 }
-
 
 #answer-display {
     font-size: 1.5em;
