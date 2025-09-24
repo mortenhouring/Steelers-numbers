@@ -54,62 +54,68 @@ main > div {
     margin-top: 20px;
 }
 
-/* End buttons container */
+/* Container: horizontal row, spacing, no wrapping */
 .end-buttons-container {
   display: flex;
-  justify-content: center;
-  gap: 2%; /* horizontal gap as percentage of screen */
+  justify-content: center; /* center row of buttons */
+  gap: 2%;                 /* horizontal gap between buttons */
   margin-top: 20px;
-  flex-wrap: nowrap;
+  flex-wrap: nowrap;        /* prevent wrapping to next line */
+  width: 100%;              /* full width of parent */
+  box-sizing: border-box;
 }
 
+/* Individual buttons */
 .end-buttons {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-    border: none;
-    border-radius: 30px;
-    padding: 16px 24px 16px 44px; /* top/right/bottom/left: left padded for logo */
-    
-    background-color: rgba(0, 0, 0, 0.7);
-    color: var(--white) !important;
-    font-weight: bold;
-    text-transform: uppercase;
-    font-size: 16px;
-    cursor: pointer;
+  border: none;
+  border-radius: 30px;     /* pill shape */
+  padding: 16px 0;         /* top/bottom padding; left/right handled by width */
+  
+  background-color: rgba(0, 0, 0, 0.7);
+  color: var(--white) !important;
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 16px;
+  cursor: pointer;
 
-    box-shadow: 0 4px 12px rgba(0,0,0,0.6);
-    transition: transform 0.12s ease, box-shadow 0.12s ease, background-color 0.12s ease;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.6);
+  transition: transform 0.12s ease, box-shadow 0.12s ease, background-color 0.12s ease;
 
-    background-image: url('white-logo.PNG');
-    background-repeat: no-repeat;
-    background-size: 28px 28px;
-    background-position: 16px center;
+  /* Logo */
+  background-image: url('white-logo.PNG');
+  background-repeat: no-repeat;
+  background-size: 28px 28px;
+  background-position: 16px center;
 
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
+  width: calc((100% - 2 * 2%) / 3); /* 3 buttons with 2% gap each side */
+  box-sizing: border-box;            /* include padding in width */
 
-    touch-action: manipulation;
-    user-select: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
 
-    width: 30%; /* percentage-based width so all three fit horizontally */
-    box-sizing: border-box; /* include padding in width */
+  touch-action: manipulation;
+  user-select: none;
+
+  padding-left: 44px; /* prevent logo/text overlap */
 }
 
 /* Pressed state */
 .end-buttons:active {
-    transform: scale(1.03);
-    box-shadow: 0 0 10px var(--white);
-    background-color: #111;
+  transform: scale(1.03);
+  box-shadow: 0 0 10px var(--white);
+  background-color: #111;
 }
 
 /* Focused state */
 .end-buttons:focus {
-    outline: none !important;
-    background-color: #111;
-    color: white;
+  outline: none !important;
+  background-color: #111;
+  color: white;
 }
 
 #answer-display {
