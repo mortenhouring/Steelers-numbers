@@ -3,8 +3,8 @@ body {
     color: white;
     text-align: center;
     margin: 0;
-    padding: 20px;
-    margin-top: 20px;
+    padding: 0px;
+    margin-top: 0px;
     min-height: 100vh; /* ensures the body is at least the height of the viewport */
     background-image: url('clean_background.PNG');
     background-size: cover;      /* fills the screen */
