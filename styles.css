@@ -145,15 +145,6 @@ main > div:not(.end-buttons-container) {
   font-weight: bold;
   margin:5px 20px 20px; 
   text-align: center;
-#final-score-text {
-  display: flex !important;       /* force row layout */
-  flex-direction: row !important; /* horizontal */
-  gap: 5px;                       /* space between text and number */
-  font-size: 1.2em;
-  font-weight: bold;
-  white-space: nowrap;
-  justify-content: center;         /* center horizontally */
-  align-items: center;             /* align baseline */
 }
 #info-text {
   font-size: 1.0em;
@@ -270,7 +261,16 @@ color: #f0f0e0 !important;
   transform: translateY(-13.8%); /* adjust until bottoms align */
   /*outline: 2px solid green;  /* debug: image box */
 }
-
+#final-score-text {
+  display: inline-flex !important;    /* inline so it doesn’t act like a full-width block */
+  flex-direction: row !important;     /* horizontal layout */
+  gap: 5px !important;                /* space between text and number */
+  font-size: 1.2em;
+  font-weight: bold;
+  white-space: nowrap !important;     /* prevent wrapping */
+  justify-content: center !important; /* center horizontally */
+  align-items: center !important;     /* vertical alignment */
+}
 /* fading in on quiz2 */
 #quiz2-content {
   opacity: 0;
