@@ -262,6 +262,7 @@ color: #f0f0e0 !important;
   /*outline: 2px solid green;  /* debug: image box */
 }
 #final-score-text {
+  margin:top 10px !important;
   display: inline-flex !important;    /* inline so it doesn’t act like a full-width block */
   flex-direction: row !important;     /* horizontal layout */
   gap: 5px !important;                /* space between text and number */
