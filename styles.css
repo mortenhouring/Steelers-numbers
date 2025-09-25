@@ -133,8 +133,8 @@ main > div:not(.end-buttons-container) {
     height: 70px;
     text-align: center;
     background-color: rgba(0, 0, 0, 0.4); /* 40% opaque black */
-    margin-top: 20px;
-    margin-bottom: 10px;
+    margin-top: 15px;
+    margin-bottom: 15px;
 }
 #player-info {
     font-size: 1.2em;
