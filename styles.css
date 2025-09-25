@@ -58,7 +58,8 @@ main > div:not(.end-buttons-container) {
   justify-content: center;
   gap: 15px;
   flex-wrap: nowrap;
-  margin-top: 20px;
+  margin-top: 10px !important;
+  margin-bottom: 10px !important;
 }
 
 .end-buttons {
