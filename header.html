@@ -10,6 +10,15 @@
       padding: 0;
       box-sizing: border-box;
     }
+    .header-title {
+  position: absolute;   /* overlay on top of header content */
+  top: 50%;             /* start in vertical center */
+  left: 50%;            /* start in horizontal center */
+  transform: translate(-50%, -50%); /* center exactly */
+  font-size: 20px;
+  font-weight: bold;
+  color: #FFB600;
+}
 .header-logo {
       height: 60px; /* adjust to fit your header */
       width: 100%;
@@ -149,13 +158,13 @@
 <body>
   <!-- Mobile Header -->
   <header class="mobile-header">
-    <img src="header_image.jpg" alt="Steelers Quiz" class="header-logo">
-   <!--  <div class="app-title">Jersey Numbers</div> -->
-    <button class="hamburger-button" id="hamburgerButton">
-      <div class="hamburger-line"></div>
-      <div class="hamburger-line"></div>
-      <div class="hamburger-line"></div>
-    </button>
+  <img src="header_image.jpg" alt="Steelers Quiz" class="header-logo">
+  <div class="header-title">JERSEY QUIZ</div>
+  <button class="hamburger-button" id="hamburgerButton">
+    <div class="hamburger-line"></div>
+    <div class="hamburger-line"></div>
+    <div class="hamburger-line"></div>
+  </button>
   </header>
 
   <!-- Dropdown Overlay -->
