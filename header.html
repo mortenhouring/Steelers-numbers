@@ -12,53 +12,48 @@
   width: 100%;
   height: 60px;
   background-color: black;
-  border-bottom: 2px solid black;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 0 20px;
+  justify-content: space-between; /* image left, button right */
+  padding: 0 10px;
   z-index: 1000;
   font-family: Arial, sans-serif;
 }
 
-.header-container {
-  position: relative;   /* enables layered positioning */
-  flex: 1;              /* fill space until the hamburger */
-  height: 100%;
-}
-
 .header-logo {
   height: 100%;
-  width: 100%;
-  object-fit: cover;    /* image fills container nicely */
+  width: auto;
   display: block;
 }
 
 .app-title {
-  position: absolute;   /* layer it on top of the image */
+  position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   font-size: 20px;
   font-weight: bold;
-  color: white;       
+  color: #FFB600;
   white-space: nowrap;
-  z-index: 2;           /* make sure it’s above the image */
+  z-index: 2;
+  pointer-events: none; /* ensures clicks pass through */
 }
-    .hamburger-button {
-      width: 44px;
-      height: 44px;
-      background-color: black;
-      border: 2px solid black;
-      border-radius: 4px;
-      cursor: pointer;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-      position: relative;
-    }
+
+.hamburger-button {
+  width: 44px;
+  height: 44px;
+  background-color: black;
+  border: 2px solid black;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+  position: relative;
+}
+
 
     .hamburger-button:active {
       box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
@@ -155,12 +150,9 @@
 </head>
 <body>
   <!-- Mobile Header -->
-  <header class="mobile-header">
-  <div class="header-container">
-    <img src="header_image.jpg" alt="Steelers Quiz" class="header-logo">
-    <div class="app-title">Jersey Numbers</div>
-  </div>
-
+<header class="mobile-header">
+  <img src="header_image.jpg" alt="Steelers Quiz" class="header-logo">
+  <div class="app-title">JERSEY QUIZ</div>
   <button class="hamburger-button" id="hamburgerButton">
     <div class="hamburger-line"></div>
     <div class="hamburger-line"></div>
