@@ -5,39 +5,46 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Numbers Game - Mobile Header</title>
   <style>
-    {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+.mobile-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 60px;
+  background-color: black;
+  border-bottom: 2px solid black;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  z-index: 1000;
+  font-family: Arial, sans-serif;
+}
+
+.header-container {
+  position: relative;   /* enables layered positioning */
+  flex: 1;              /* fill space until the hamburger */
+  height: 100%;
+}
+
 .header-logo {
-      height: 60px; /* adjust to fit your header */
-      width: 100%;
-      margin-right: 10px; /* space between logo and title */
-      align-items: left;
-    }
-    .mobile-header {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 60px;
-      background-color: black;
-      border-bottom: 2px solid black;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 20px;
-      z-index: 1000;
-      font-family: Arial, sans-serif;
-    }
+  height: 100%;
+  width: 100%;
+  object-fit: cover;    /* image fills container nicely */
+  display: block;
+}
 
-    .app-title {
-      font-size: 20px;
-      font-weight: bold;
-      color: black;
-    }
-
+.app-title {
+  position: absolute;   /* layer it on top of the image */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 20px;
+  font-weight: bold;
+  color: white;       
+  white-space: nowrap;
+  z-index: 2;           /* make sure it’s above the image */
+}
     .hamburger-button {
       width: 44px;
       height: 44px;
@@ -149,13 +156,17 @@
 <body>
   <!-- Mobile Header -->
   <header class="mobile-header">
+  <div class="header-container">
     <img src="header_image.jpg" alt="Steelers Quiz" class="header-logo">
-    <button class="hamburger-button" id="hamburgerButton">
-      <div class="hamburger-line"></div>
-      <div class="hamburger-line"></div>
-      <div class="hamburger-line"></div>
-    </button>
-  </header>
+    <div class="app-title">Jersey Numbers</div>
+  </div>
+
+  <button class="hamburger-button" id="hamburgerButton">
+    <div class="hamburger-line"></div>
+    <div class="hamburger-line"></div>
+    <div class="hamburger-line"></div>
+  </button>
+</header>
 
   <!-- Dropdown Overlay -->
   <div class="dropdown-overlay" id="dropdownOverlay"></div>
