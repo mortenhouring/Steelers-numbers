@@ -1,6 +1,6 @@
 [
   {
-    "player_name": "Aaron Rodgers1",
+    "player_name": "Aaron Rodgers",
     "number": 8,
     "position": "QB",
     "player_id": "8439",
@@ -163,19 +163,10 @@
   },
   {
     "player_name": "Andrus Peat",
-    "number": 68,
+    "number": 71,
     "position": "G",
     "player_id": "2978278",
     "player_image": "https://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/2978278.png",
-    "group": "OFF",
-    "trivia": ""
-  },
-  {
-    "player_name": "Max Scharping",
-    "number": 64,
-    "position": "G",
-    "player_id": "3126035",
-    "player_image": "https://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/3126035.png",
     "group": "OFF",
     "trivia": ""
   },
@@ -217,7 +208,7 @@
   },
   {
     "player_name": "Yahya Black",
-    "number": 78,
+    "number": 94,
     "position": "DE",
     "player_id": "4430947",
     "player_image": "https://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/4430947.png",
@@ -225,8 +216,17 @@
     "trivia": ""
   },
   {
+    "player_name": "DeMarvin Leal",
+    "number": 98,
+    "position": "DE",
+    "player_id": "4426359",
+    "player_image": "https://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/4426359.png",
+    "group": "DEF",
+    "trivia": ""
+  },
+  {
     "player_name": "Esezi Otomewo",
-    "number": 72,
+    "number": 93,
     "position": "DE",
     "player_id": "4240759",
     "player_image": "https://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/4240759.png",
@@ -275,15 +275,6 @@
     "position": "DT",
     "player_id": "4569474",
     "player_image": "https://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/4569474.png",
-    "group": "DEF",
-    "trivia": ""
-  },
-  {
-    "player_name": "Isaiahh Loudermilk",
-    "number": 92,
-    "position": "DT",
-    "player_id": "4035798",
-    "player_image": "https://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/4035798.png",
     "group": "DEF",
     "trivia": ""
   },
@@ -504,6 +495,15 @@
     "trivia": ""
   },
   {
+    "player_name": "Max Scharping",
+    "number": 64,
+    "position": "G",
+    "player_id": "3126035",
+    "player_image": "https://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/3126035.png",
+    "group": "OUT",
+    "trivia": ""
+  },
+  {
     "player_name": "Gareth Warren",
     "number": 78,
     "position": "OT",
@@ -518,6 +518,15 @@
     "position": "DT",
     "player_id": "4590720",
     "player_image": "https://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/4590720.png",
+    "group": "OUT",
+    "trivia": ""
+  },
+  {
+    "player_name": "Isaiahh Loudermilk",
+    "number": 92,
+    "position": "DT",
+    "player_id": "4035798",
+    "player_image": "https://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/4035798.png",
     "group": "OUT",
     "trivia": ""
   },
@@ -577,7 +586,7 @@
   },
   {
     "player_name": "Max Hurleman",
-    "number": 34,
+    "number": null,
     "position": "RB",
     "player_id": "4694237",
     "player_image": "https://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/4694237.png",
@@ -603,11 +612,11 @@
     "trivia": ""
   },
   {
-    "player_name": "Rakim Jarrett",
+    "player_name": "Isaiah Hodgins",
     "number": null,
     "position": "WR",
-    "player_id": "4429006",
-    "player_image": "https://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/4429006.png",
+    "player_id": "4242540",
+    "player_image": "https://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/4242540.png",
     "group": "PS",
     "trivia": ""
   },
@@ -621,17 +630,17 @@
     "trivia": ""
   },
   {
-    "player_name": "JJ Galbreath",
-    "number": 87,
+    "player_name": "Matt Sokol",
+    "number": null,
     "position": "TE",
-    "player_id": "4695800",
-    "player_image": "https://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/4695800.png",
+    "player_id": "3121378",
+    "player_image": "https://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/3121378.png",
     "group": "PS",
     "trivia": ""
   },
   {
     "player_name": "Steven Jones",
-    "number": 79,
+    "number": null,
     "position": "G",
     "player_id": "4373830",
     "player_image": "https://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/4373830.png",
@@ -640,7 +649,7 @@
   },
   {
     "player_name": "Dylan Cook",
-    "number": 60,
+    "number": null,
     "position": "OT",
     "player_id": "4570898",
     "player_image": "https://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/4570898.png",
@@ -648,17 +657,8 @@
     "trivia": ""
   },
   {
-    "player_name": "DeMarvin Leal",
-    "number": 98,
-    "position": "DE",
-    "player_id": "4426359",
-    "player_image": "https://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/4426359.png",
-    "group": "PS",
-    "trivia": ""
-  },
-  {
     "player_name": "Kyler Baugh",
-    "number": 65,
+    "number": null,
     "position": "DT",
     "player_id": "4573443",
     "player_image": "https://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/4573443.png",
@@ -666,8 +666,17 @@
     "trivia": ""
   },
   {
-    "player_name": "Jon Rhattigan",
+    "player_name": "Ja'Whaun Bentley",
     "number": null,
+    "position": "LB",
+    "player_id": "3116187",
+    "player_image": "https://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/3116187.png",
+    "group": "PS",
+    "trivia": ""
+  },
+  {
+    "player_name": "Jon Rhattigan",
+    "number": 26,
     "position": "LB",
     "player_id": "4258485",
     "player_image": "https://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/4258485.png",
@@ -712,7 +721,7 @@
   },
   {
     "player_name": "Sebastian Castro",
-    "number": 29,
+    "number": null,
     "position": "S",
     "player_id": "4426882",
     "player_image": "https://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/4426882.png",
