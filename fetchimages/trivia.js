@@ -270,6 +270,16 @@ const playerTrivia = await page.evaluate(() => {
             sections[key] = (sections[key] || []).concat(unique);
           }
         }
+        
+  // 2️⃣ Fallback for loose paragraphs
+  // If no allowed sections were found OR if there are loose paragraphs at the start of the biography, capture them as "BIOGRAPHY"
+  if (Object.keys(sections).length === 0 || !sections["BIOGRAPHY"]) {
+    const paras = Array.from(document.querySelectorAll('.nfl-c-biography .nfl-c-body-part--text p'));
+    const texts = paras.map(p => (p.textContent || '').trim()).filter(Boolean);
+    if (texts.length) {
+      sections["BIOGRAPHY"] = texts;
+    }
+  }
 
         return sections;
       });
