@@ -46,40 +46,29 @@ function loadExistingTrivia() {
 }
 
 async function tryClickReadMore(page) {
-  // Try a few selectors; also attempt to find a button/link with "read more" / "show more" text
   try {
     const ctaHandle = await page.$('.d3-o-section__cta a[role="button"]');
-if (ctaHandle) {
-  await ctaHandle.evaluate(el => el.scrollIntoView({ block: 'center' }));
-  await ctaHandle.click().catch(() => {});
-  await page.waitForTimeout(800); // give it time to expand
-  console.log('ℹ️ Clicked READ MORE via .d3-o-section__cta');
-  return;
-}
-    // Prefer known class first
-    const candidates = [
-      ".nfl-c-biography__read-more",
-      "button.nfl-c-biography__read-more",
-      "button",
-      "a"
-    ];
+    if (ctaHandle) {
+      await ctaHandle.evaluate(el => el.scrollIntoView({ block: 'center' }));
+      await ctaHandle.click().catch(() => {});
+      await page.waitForSelector('.nfl-c-biography', { visible: true, timeout: 3000 }).catch(()=>{});
+      console.log('ℹ️ Clicked READ MORE via .d3-o-section__cta');
+      return;
+    }
 
-    // Try to find a read-more element inside biography by XPath containing text "read more" / "show more"
     const readMoreXPath = `//section//*[translate(normalize-space(.), 'abcdefghijklmnopqrstuvwxyz', 'ABCDEFGHIJKLMNOPQRSTUVWXYZ') 
       [contains(., 'READ MORE') or contains(., 'SHOW MORE') or contains(., 'EXPAND')]]`;
 
-    // First try smart XPath search (more likely to hit the actual control)
     const handles = await page.$x(readMoreXPath);
     if (handles && handles.length) {
       const h = handles[0];
       await h.evaluate(el => el.scrollIntoView({block: 'center'}));
       await h.click().catch(()=>{});
-      await page.waitForTimeout(600);
+      await page.waitForSelector('.nfl-c-biography', { visible: true, timeout: 3000 }).catch(()=>{});
       console.log('ℹ️ Clicked READ MORE via XPath candidate');
       return;
     }
 
-    // Fallback: search for button inside biography that contains "read" or "show"
     const bio = await page.$('.nfl-c-biography');
     if (bio) {
       const buttonHandles = await bio.$$('button, a');
@@ -89,13 +78,12 @@ if (ctaHandle) {
         if (txt.includes('READ') || txt.includes('SHOW') || txt.includes('EXPAND')) {
           await btn.evaluate(el => el.scrollIntoView({block: 'center'}));
           await btn.click().catch(()=>{});
-          await page.waitForTimeout(600);
+          await page.waitForSelector('.nfl-c-biography', { visible: true, timeout: 3000 }).catch(()=>{});
           console.log('ℹ️ Clicked READ MORE inside .nfl-c-biography');
           return;
         }
       }
     }
-    // if none found, just continue
     console.log('ℹ️ No READ MORE button detected (ok to continue)');
   } catch (err) {
     console.warn('⚠️ Error while trying to click READ MORE:', err.message);
@@ -117,11 +105,8 @@ async function main() {
   });
   const page = await browser.newPage();
 
-  // forward page console messages to node logs (helpful for debugging evaluate() logs)
   page.on('console', msg => {
-    try {
-      console.log(`[page] ${msg.text()}`);
-    } catch (e) {}
+    try { console.log(`[page] ${msg.text()}`); } catch (e) {}
   });
 
   for (const player of roster) {
@@ -137,62 +122,48 @@ async function main() {
 
       await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 30_000 });
 
-      // try to expand hidden biography content (if applicable)
       await tryClickReadMore(page);
 
-      // now extract subsectioned bullets robustly
-const playerTrivia = await page.evaluate(() => {
-  // allowed subsections we care about (we normalize variants later)
-  const allowedSubsections = [
-    'PRO CAREER',
-    'PERSONAL',
-    'CAREER HIGHLIGHTS',
-    'AWARDS',
-    '2024' // match headings that include 2024
-  ];
+      const playerTrivia = await page.evaluate(() => {
+        const allowedSubsections = [
+          'PRO CAREER',
+          'PERSONAL',
+          'CAREER HIGHLIGHTS',
+          'AWARDS'
+        ];
 
-  // headings we explicitly want to skip
-  const ignoredSubsections = [
-    'COLLEGE',
-    'COLLEGE CAREER'
-  ];
+        const ignoredSubsections = [
+          'COLLEGE',
+          'COLLEGE CAREER'
+        ];
 
-  function headingAllowed(h) {
-    if (!h) return false;
-    const UH = h.toUpperCase();
+        function headingAllowed(h) {
+          if (!h) return false;
+          const UH = h.toUpperCase();
+          for (const skip of ignoredSubsections) {
+            if (UH.includes(skip)) return false;
+          }
+          for (const s of allowedSubsections) {
+            if (UH.includes(s)) return true;
+          }
+          return false;
+        }
 
-    // ignore COLLEGE-related headings
-    for (const skip of ignoredSubsections) {
-      if (UH.includes(skip)) return false;
-    }
+        const headingNodes = Array.from(document.querySelectorAll('p strong, h3, h4'));
+        const sections = {};
 
-    // allow only headings in allowed list
-    for (const s of allowedSubsections) {
-      if (UH.includes(s)) return true;
-    }
-    return false;
-  }
+        for (const hn of headingNodes) {
+          const rawHeading = (hn.textContent || '').trim();
+          if (!rawHeading) continue;
+          if (/^\d{4}\s*\(/.test(rawHeading)) continue;
+          if (!headingAllowed(rawHeading)) continue;
 
-  // Find all potential heading nodes (p strong, h3, h4)
-  const headingNodes = Array.from(document.querySelectorAll('p strong, h3, h4'));
-
-  const sections = {};
-
-  for (const hn of headingNodes) {
-    const rawHeading = (hn.textContent || '').trim();
-    if (!rawHeading) continue;
-    if (!headingAllowed(rawHeading)) continue;
-
-    
-          // Ensure the heading is inside the "Biography" area:
           let inBiography = false;
           for (let anc = hn.parentElement; anc; anc = anc.parentElement) {
-            // if an ancestor explicitly has the biography class
             if (anc.classList && anc.classList.contains('nfl-c-biography')) {
               inBiography = true;
               break;
             }
-            // if ancestor contains an H2 with 'Biography' text, treat it as inside biography
             const h2 = anc.querySelector && anc.querySelector('h2');
             if (h2 && (h2.textContent || '').toUpperCase().includes('BIOGRAPHY')) {
               inBiography = true;
@@ -201,30 +172,24 @@ const playerTrivia = await page.evaluate(() => {
           }
           if (!inBiography) continue;
 
-          // Normalize heading key
           let key = rawHeading.toUpperCase();
           if (key.includes('CAREER HIGHLIGHT')) key = 'CAREER HIGHLIGHTS';
           if (/\b2024\b/.test(key)) key = '2024';
 
-          // Start collecting bullets:
           const bullets = [];
-
-          // Case A: the heading container itself may include ULs
           const container = hn.closest('.nfl-c-body-part') || hn.parentElement;
           if (container) {
-            // collect ULs inside the same container
             const innerUls = container.querySelectorAll('ul li');
             innerUls.forEach(li => {
               const t = (li.textContent || '').trim();
+              if (/^\d{4}\s*\(/.test(t)) return;
               if (t) bullets.push(t);
             });
           }
 
-          // Case B: also scan next siblings until next heading or until a safe limit
           let next = (container && container.nextElementSibling) || hn.parentElement.nextElementSibling;
           let guard = 0;
           while (next && guard < 12) {
-            // stop if the next block contains a heading we might treat as a new section
             const nextHeading = next.querySelector && next.querySelector('p strong, h3, h4');
             if (nextHeading && (nextHeading.textContent || '').trim()) break;
 
@@ -232,33 +197,29 @@ const playerTrivia = await page.evaluate(() => {
               const lis = next.querySelectorAll('li');
               lis.forEach(li => {
                 const t = (li.textContent || '').trim();
+                if (/^\d{4}\s*\(/.test(t)) return;
                 if (t) bullets.push(t);
               });
             } else {
-              // if the next block contains ULs deeper inside (often the site wraps lists)
               const innerLis = next.querySelectorAll && next.querySelectorAll('ul li');
               if (innerLis && innerLis.length) {
                 innerLis.forEach(li => {
                   const t = (li.textContent || '').trim();
+                  if (/^\d{4}\s*\(/.test(t)) return;
                   if (t) bullets.push(t);
                 });
               } else if (next.tagName === 'P') {
-                // some subsections are paragraphs, capture those (single-line)
                 const txt = (next.textContent || '').trim();
-                if (txt) {
-                  // small guard to avoid repeating the heading text itself
+                if (txt && !/^\d{4}\s*\(/.test(txt)) {
                   const UH = txt.toUpperCase();
                   if (!UH.includes((rawHeading || '').toUpperCase())) bullets.push(txt);
                 }
               }
             }
-
-            // move on
             next = next.nextElementSibling;
             guard++;
           }
 
-          // remove duplicates & empty and trim
           const unique = [];
           bullets.forEach(b => {
             const clean = (b || '').replace(/\s+/g, ' ').trim();
@@ -270,21 +231,17 @@ const playerTrivia = await page.evaluate(() => {
             sections[key] = (sections[key] || []).concat(unique);
           }
         }
-        
-  // 2️⃣ Fallback for loose paragraphs
-  // If no allowed sections were found OR if there are loose paragraphs at the start of the biography, capture them as "BIOGRAPHY"
-  if (Object.keys(sections).length === 0 || !sections["BIOGRAPHY"]) {
-    const paras = Array.from(document.querySelectorAll('.nfl-c-biography .nfl-c-body-part--text p'));
-    const texts = paras.map(p => (p.textContent || '').trim()).filter(Boolean);
-    if (texts.length) {
-      sections["BIOGRAPHY"] = texts;
-    }
-  }
+
+        // ✅ Fixed: fallback only if no sections at all
+        if (Object.keys(sections).length === 0) {
+          const paras = Array.from(document.querySelectorAll('.nfl-c-biography .nfl-c-body-part--text p'));
+          const texts = paras.map(p => (p.textContent || '').trim()).filter(Boolean);
+          if (texts.length) sections["BIOGRAPHY"] = texts;
+        }
 
         return sections;
       });
 
-      // Log what we found for this player (counts per section)
       const keys = Object.keys(playerTrivia || {});
       if (keys.length === 0) {
         console.log(`⚠️ No biography headings found for ${player.player_name}`);
@@ -305,8 +262,6 @@ const playerTrivia = await page.evaluate(() => {
   }
 
   await browser.close();
-
-  // save to trivia.json
   fs.writeFileSync(triviaFile, JSON.stringify(triviaData, null, 2), 'utf8');
   console.log(`\nTrivia saved to ${triviaFile}`);
 }
