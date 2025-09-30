@@ -1,17 +1,104 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <script src="headerscript.js" defer></script>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Scoreboard - Steelers Numbers</title>
-  <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Steelers — Hall of Fame</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* Additional scoreboard-specific tweaks */
+    #scoreboard-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .mode-section {
+      background-color: rgba(0,0,0,0.6);
+      border-radius: 12px;
+      padding: 15px 20px;
+      width: 100%;
+      max-width: 400px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.6);
+    }
+
+    .mode-section h2 {
+      margin: 0 0 10px;
+      font-size: 1.3em;
+      text-transform: uppercase;
+    }
+
+    .score-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      text-align: left;
+    }
+
+    .score-list li {
+      margin: 6px 0;
+      font-size: 1.1em;
+    }
+  </style>
 </head>
 <body>
-  <main>
-    <h1>Scoreboard</h1>
-    <p>Your game scores will appear here!</p>
-    <button onclick="window.location.href='index.html'">Back to Menu</button>
+  <!-- Header placeholder and menu script -->
+  <div id="header-placeholder"></div>
+  <script src="headerscript.js" defer></script>
+
+  <main id="scoreboard-content">
+    <h1>Hall of Fame</h1>
+    <div id="scoreboards"></div>
+
+    <div class="end-buttons-container">
+      <button class="end-buttons" onclick="window.location.href='index.html'">Front Office</button>
+    </div>
   </main>
+
+  <script>
+    function renderScoreboard() {
+      const leaderboard = JSON.parse(localStorage.getItem("leaderboard")) || {};
+      const container = document.getElementById("scoreboards");
+      container.innerHTML = "";
+
+      const modes = Object.keys(leaderboard);
+      if (modes.length === 0) {
+        container.textContent = "No scores yet.";
+        return;
+      }
+
+      modes.forEach(mode => {
+        const section = document.createElement("div");
+        section.className = "mode-section";
+        section.innerHTML = `<h2>${mode}</h2>`;
+
+        const ul = document.createElement("ul");
+        ul.className = "score-list";
+
+        const entries = leaderboard[mode] || [];
+        if (entries.length === 0) {
+          const li = document.createElement("li");
+          li.textContent = "No scores yet.";
+          ul.appendChild(li);
+        } else {
+          entries.forEach((entry, i) => {
+            const perc = entry.total > 0
+              ? ((entry.score / entry.total) * 100).toFixed(1)
+              : "0.0";
+            const li = document.createElement("li");
+            li.textContent = `${i+1}. ${entry.date}: ${entry.score}/${entry.total}, ${perc}%`;
+            ul.appendChild(li);
+          });
+        }
+
+        section.appendChild(ul);
+        container.appendChild(section);
+      });
+    }
+
+    document.addEventListener("DOMContentLoaded", renderScoreboard);
+  </script>
 </body>
 </html>
