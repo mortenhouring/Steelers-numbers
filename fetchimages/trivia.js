@@ -48,6 +48,14 @@ function loadExistingTrivia() {
 async function tryClickReadMore(page) {
   // Try a few selectors; also attempt to find a button/link with "read more" / "show more" text
   try {
+    const ctaHandle = await page.$('.d3-o-section__cta a[role="button"]');
+if (ctaHandle) {
+  await ctaHandle.evaluate(el => el.scrollIntoView({ block: 'center' }));
+  await ctaHandle.click().catch(() => {});
+  await page.waitForTimeout(800); // give it time to expand
+  console.log('ℹ️ Clicked READ MORE via .d3-o-section__cta');
+  return;
+}
     // Prefer known class first
     const candidates = [
       ".nfl-c-biography__read-more",
