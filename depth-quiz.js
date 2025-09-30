@@ -111,6 +111,26 @@ function showView(viewId) {
 function chooseRandom(arr) { return arr[Math.floor(Math.random()*arr.length)]; }
 
 ///////////////////////////
+// SAVE SCORE TO LEADERBOARD
+///////////////////////////
+function saveScore(mode, correctAnswers, totalQuestions) {
+  // Format date like: Sep 30 '25
+  const d = new Date();
+  const options = { month: "short", day: "numeric" };
+  const dateStr = `${d.toLocaleDateString("en-US", options)} '${String(d.getFullYear()).slice(-2)}`;
+
+  const leaderboard = JSON.parse(localStorage.getItem("leaderboard")) || {};
+  if (!leaderboard[mode]) leaderboard[mode] = [];
+
+  const entry = { date: dateStr, score: correctAnswers, total: totalQuestions };
+
+  leaderboard[mode].push(entry);
+  leaderboard[mode].sort((a, b) => (b.score / b.total) - (a.score / a.total));
+  leaderboard[mode] = leaderboard[mode].slice(0, 3);
+
+  localStorage.setItem("leaderboard", JSON.stringify(leaderboard));
+}
+///////////////////////////
 // INIT
 ///////////////////////////
 async function init() {
@@ -170,7 +190,15 @@ function pickNextPlayer(){
   const raw=localStorage.getItem(CONFIG.STORAGE_KEYS.CURRENT_ROSTER);
   const pool=Array.isArray(safeParseJSON(raw))?safeParseJSON(raw):[];
   log('pickNextPlayer pool length before pick=',pool.length);
-  if(pool.length===0){ log('No players left; redirecting'); window.location.href=CONFIG.END_PAGE; return; }
+  if(pool.length===0){ log('No players left; redirecting'); 
+  
+  // ⬇️ SAVE SCORE //
+  const score = parseInt(localStorage.getItem(CONFIG.STORAGE_KEYS.SCORE), 10) || 0;
+  const total = parseInt(localStorage.getItem(CONFIG.STORAGE_KEYS.TOTAL_QUESTIONS), 10) || 0;
+  saveScore("depth", score, total);
+  // ⬆️ SAVE SCORE //
+  
+  window.location.href=CONFIG.END_PAGE; return; }
   currentPlayer=pool.shift();
   localStorage.setItem(CONFIG.STORAGE_KEYS.CURRENT_ROSTER,JSON.stringify(pool));
   localStorage.setItem(CONFIG.STORAGE_KEYS.LAST_PLAYER,JSON.stringify(currentPlayer));
