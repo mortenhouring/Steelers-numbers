@@ -896,6 +896,12 @@
     "player_id": "3115962",
     "trivia": {}
   },
+  "3116187": {
+    "player_name": "Ja'Whaun Bentley",
+    "player_url": "https://www.steelers.com/team/players-roster/ja-whaun-bentley",
+    "player_id": "3116187",
+    "trivia": {}
+  },
   "3116407": {
     "player_name": "Mason Rudolph",
     "player_url": "https://www.steelers.com/team/players-roster/mason-rudolph",
@@ -990,6 +996,27 @@
         "In 2017, led the team in tackles for the second year in a row with 93 and ranked sixth in the ACC with 8.5 tackles per game",
         "In 2016, finished fifth in the ACC in tackles per game (8.8 avg.) and led the team with 115 tackles",
         "Joined the team as a walk-on prior to the 2014 season"
+      ]
+    }
+  },
+  "3121378": {
+    "player_name": "Matt Sokol",
+    "player_url": "https://www.steelers.com/team/players-roster/matt-sokol",
+    "player_id": "3121378",
+    "trivia": {
+      "PRO CAREER": [
+        "Has played in eight games (one start) in his four-year NFL career (L.A. Chargers 2019, 2020-21; Jacksonville 2019, 2021; Detroit 2019-20, 2022; New England 2022-23)",
+        "Made NFL debut in Week 16 of 2020 (vs. Denver)",
+        "Made NFL starting debut in Week 18 of 2023 (vs. N.Y. Jets)",
+        "Has played in eight games (one start) in his four-year NFL career (L.A. Chargers 2019, 2020-21; Jacksonville 2019, 2021; Detroit 2019-20, 2022; New England 2022-23)",
+        "Made NFL debut in Week 16 of 2020 (vs. Denver)",
+        "Made NFL starting debut in Week 18 of 2023 (vs. N.Y. Jets)"
+      ],
+      "PERSONAL": [
+        "Father, Dave, played football at West Point, while his mother, Kim, played softball at West Point",
+        "Brother, Mitchell, played linebacker at Michigan State",
+        "Earned a degree in economics and a Master's in marketing research",
+        "Played football and was a two-year captain at Rochester Adams H.S. in Rochester Hills, Michigan"
       ]
     }
   },
@@ -1653,6 +1680,12 @@
         "Was a four-year starter for the baseball team, batting .380 as the team's leadoff hitter and left fielder"
       ]
     }
+  },
+  "4242540": {
+    "player_name": "Isaiah Hodgins",
+    "player_url": "https://www.steelers.com/team/players-roster/isaiah-hodgins",
+    "player_id": "4242540",
+    "trivia": {}
   },
   "4243389": {
     "player_name": "Calvin Austin III",
