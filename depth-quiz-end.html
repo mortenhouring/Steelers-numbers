@@ -80,8 +80,8 @@
 </main>
   <script>
     // Read score and questionsAsked from localStorage
-    const score = parseInt(localStorage.getItem('score') || '0', 10);
-    const questionsAsked = parseInt(localStorage.getItem('questionsAsked') || '0', 10);
+    const score = parseInt(localStorage.getItem('depth-score') || '0', 10);
+    const questionsAsked = parseInt(localStorage.getItem('depth-questionsAsked') || '0', 10);
     const wrongAnswers = questionsAsked - score;
 
     // Display final score
