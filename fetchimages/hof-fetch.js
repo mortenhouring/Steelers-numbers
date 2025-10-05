@@ -119,24 +119,51 @@ async function scrape() {
         })
       );
 
-      // --- 5️⃣ Extract Personal Information (for "info") ---
-const info = await page.evaluate(() => {
+      // --- 5️⃣ Extract Position and Draft Info ---
+const { position, info } = await page.evaluate(() => {
   const header = [...document.querySelectorAll("th")]
     .find(th => th.textContent.trim().toUpperCase().includes("PERSONAL INFORMATION"));
-  if (!header) return "";
+  if (!header) return { position: "", info: "" };
   const table = header.closest("table");
-  if (!table) return "";
+  if (!table) return { position: "", info: "" };
 
-  const rows = table.querySelectorAll("tbody tr");
-  return Array.from(rows).map(row => {
-    const cells = row.querySelectorAll("td.d3-o-table-item--optional-large");
-    if (cells.length === 2 && cells[0].textContent.trim() && cells[1].textContent.trim()) {
-      return `${cells[0].textContent.trim()}: ${cells[1].textContent.trim()}`;
-    } else if (cells.length === 2 && !cells[0].textContent.trim()) {
-      return cells[1].textContent.trim();
-    }
-    return '';
-  }).filter(Boolean).join('\n');
+  const lines = Array.from(table.querySelectorAll("tbody tr"))
+    .map(row => {
+      const cells = row.querySelectorAll("td.d3-o-table-item--optional-large");
+      if (cells.length === 2 && cells[0].textContent.trim() && cells[1].textContent.trim()) {
+        return `${cells[0].textContent.trim()}: ${cells[1].textContent.trim()}`;
+      } else if (cells.length === 2 && !cells[0].textContent.trim()) {
+        return cells[1].textContent.trim();
+      }
+      return '';
+    })
+    .filter(Boolean);
+
+  // Extract position
+  const posLine = lines.find(l => l.startsWith("Position:"));
+  const position = posLine ? posLine.replace("Position:", "").trim() : "";
+
+  // Extract drafted info
+  let draftLine = "";
+  const draftIndex = lines.findIndex(l => l.startsWith("Drafted:"));
+  if (draftIndex !== -1) {
+    const drafted = lines[draftIndex].replace("Drafted:", "").trim();
+    const round = lines[draftIndex + 1] && /^\d/.test(lines[draftIndex + 1])
+      ? lines[draftIndex + 1].trim()
+      : "";
+    const team = lines[draftIndex + 2] &&
+      !lines[draftIndex + 2].startsWith("College") &&
+      !lines[draftIndex + 2].startsWith("Height") &&
+      !lines[draftIndex + 2].startsWith("Weight")
+      ? lines[draftIndex + 2].trim()
+      : "";
+
+    draftLine = `Drafted: ${drafted}${round ? `, ${round}` : ""}${team ? ` by ${team}` : ""}`;
+  } else if (lines.some(l => /Undrafted/i.test(l))) {
+    draftLine = "Draft: Undrafted";
+  }
+
+  return { position, info: draftLine };
 });
 
 // --- 6️⃣ Extract Career History (for "career") ---
@@ -174,7 +201,7 @@ const achievements = await page.$$eval('table.d3-o-table', tables => {
       players.push({
         player_name,
         number: null, // HOF page does not provide jersey numbers reliably
-        position: "",
+        position,
         group: "HOF",
         image: imageUrl ? `fetchimages/hofimages/${filename}` : '',
         info,
