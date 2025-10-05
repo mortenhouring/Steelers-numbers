@@ -1,7 +1,7 @@
 name: Scrape Steelers HOF
 
 on:
-  workflow_dispatch:  # Allows manual trigger
+  workflow_dispatch:  # Manual trigger from GitHub Actions tab
 
 jobs:
   scrape-hof:
@@ -12,7 +12,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
         with:
-          fetch-depth: 0  # Needed for pushing commits
+          fetch-depth: 0  # Needed to allow pushes later
 
       # 2️⃣ Setup Node.js
       - name: Setup Node.js
@@ -22,28 +22,35 @@ jobs:
 
       # 3️⃣ Install dependencies
       - name: Install dependencies
-        run: npm ci
+        run: npm install
 
       # 4️⃣ Install Puppeteer Chrome dependencies
       - name: Install Puppeteer Chrome dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y wget ca-certificates fonts-liberation libappindicator3-1 libasound2 libatk-bridge2.0-0 libatk1.0-0 libcups2 libdbus-1-3 libdrm2 libgbm1 libgtk-3-0 libnspr4 libnss3 libxcomposite1 libxdamage1 libxrandr2 xdg-utils
+          sudo apt-get install -y wget ca-certificates fonts-liberation \
+            libappindicator3-1 libasound2 libatk-bridge2.0-0 libatk1.0-0 \
+            libcups2 libdbus-1-3 libdrm2 libgbm1 libgtk-3-0 libnspr4 \
+            libnss3 libxcomposite1 libxdamage1 libxrandr2 xdg-utils
 
-      # 5️⃣ Run scraper
+      # 5️⃣ Run the scraper script
       - name: Run HOF Scraper
         run: node fetchimages/hof-fetch.js
 
-      # 6️⃣ Configure Git user
+      # 6️⃣ Configure Git for commit
       - name: Configure Git
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-      # 7️⃣ Commit and push changes
+      # 7️⃣ Commit and push JSON + images
       - name: Commit and push scraped data
         run: |
           git add ./hof.json
           git add ./fetchimages/hofimages
-          git diff --cached --quiet || git commit -m "Update HOF JSON & images [Automated]"
-          git push
+          if ! git diff --cached --quiet; then
+            git commit -m "Update HOF JSON & images [Automated]"
+            git push
+          else
+            echo "No changes to commit."
+          fi
