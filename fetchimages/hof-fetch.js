@@ -2,6 +2,7 @@
 
 import fs from 'fs';
 import path from 'path';
+import https from 'https';  // ← added for image download
 import puppeteer from 'puppeteer';
 import sanitize from 'sanitize-filename';
 // ------------------------
@@ -74,14 +75,17 @@ async function scrape() {
         filename = sanitize(player_name.toLowerCase().replace(/\s+/g, '_')) + ext;
         const imagePath = path.join(IMAGE_DIR, filename);
 
-        try {
-          const res = await fetch(imageUrl);
-          const buffer = Buffer.from(await res.arrayBuffer());
-          fs.writeFileSync(imagePath, buffer);
-          console.log(`✅ Saved image for ${player_name}`);
-        } catch (err) {
+        // --- 2️⃣a Download Image using Node https ---
+        const file = fs.createWriteStream(imagePath);
+        https.get(imageUrl, response => {
+          response.pipe(file);
+          file.on('finish', () => {
+            file.close();
+            console.log(`✅ Saved image for ${player_name}`);
+          });
+        }).on('error', err => {
           console.error(`❌ Failed to save image for ${player_name}:`, err.message);
-        }
+        });
       }
 
       // --- 3️⃣ Trivia Paragraphs ---
