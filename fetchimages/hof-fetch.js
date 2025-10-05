@@ -120,9 +120,23 @@ async function scrape() {
           career_history = tbl.rows.map(r => r[1] ? `${r[0]}: ${r[1]}` : `${r[0]}`).join(' | ');
         }
 
-        // Career Highlights / Achievements
-        if (tbl.rows[0] && tbl.rows[0][0].toLowerCase().includes('career highlights')) {
-          achievements = tbl.rows.map(r => `${r[0]}: ${r[1]}`).join(' | ');
+// --- Extract Career Highlights / Achievements ---
+achievements = await page.$$eval('table.d3-o-table', tables => {
+  const highlightsTable = tables.find(tbl => {
+    const th = tbl.querySelector('thead th');
+    return th && th.textContent.trim().toUpperCase() === 'CAREER HIGHLIGHTS';
+  });
+  if (!highlightsTable) return '';
+
+  const rows = Array.from(highlightsTable.querySelectorAll('tbody tr')).map(tr => {
+    const tds = tr.querySelectorAll('td');
+    const label = tds[0]?.textContent.trim() || '';
+    const value = tds[1]?.textContent.trim() || '';
+    return label && value ? `${label}: ${value}` : null;
+  }).filter(Boolean);
+
+  return rows.join(' | ');
+});
         }
       }
 
