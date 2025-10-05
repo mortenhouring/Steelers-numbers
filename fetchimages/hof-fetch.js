@@ -104,37 +104,35 @@ async function scrape() {
         })
       );
 
-      // --- 5️⃣ Extract Personal Info, Career History, Draft Info ---
+      // --- 5️⃣ Extract Draft Info and Career History ---
 let position = '';
-let career_history = '';
 let draft_year = 'Undrafted', draft_round = '', draft_team = '';
+let career_history = '';
 
 tables.forEach(tbl => {
-  // Convert rows to an easier format
-  const rows = tbl.rows;
-
-  // Check if table is Personal Information
-  if (rows.some(r => r[0].toLowerCase().includes('position'))) {
-    const posRow = rows.find(r => r[0].toLowerCase().includes('position'));
-    position = posRow ? posRow[1] : '';
-    
-    const draftedRow = rows.find(r => r[0].toLowerCase().includes('drafted'));
-    if (draftedRow) {
-      draft_year = draftedRow[1] || 'Undrafted';
-      const draftedIndex = rows.indexOf(draftedRow);
-      draft_round = rows[draftedIndex + 1]?.[1] || '';
-      draft_team = rows[draftedIndex + 2]?.[1] || '';
+  const header = tbl.caption?.textContent?.trim().toUpperCase() || tbl.rows[0]?.[0]?.toUpperCase() || '';
+  
+  // Draft Info
+  if (header.includes('PERSONAL INFORMATION')) {
+    const draftRowIndex = tbl.rows.findIndex(r => r[0]?.toLowerCase().includes('drafted'));
+    if (draftRowIndex >= 0) {
+      draft_year = tbl.rows[draftRowIndex][1] || 'Undrafted';
+      draft_round = tbl.rows[draftRowIndex + 1]?.[1] || '';
+      draft_team = tbl.rows[draftRowIndex + 2]?.[1] || '';
     }
+    // Position
+    const positionRow = tbl.rows.find(r => r[0]?.toLowerCase().includes('position'));
+    if (positionRow) position = positionRow[1] || '';
   }
 
-  // Check if table is Career History
-  if (rows[0] && tbl.caption.toLowerCase().includes('career history')) {
-    career_history = rows.map(r => `${r[0]}: ${r[1]}`).join(' | ');
+  // Career History
+  if (header.includes('CAREER HISTORY')) {
+    career_history = tbl.rows.map(r => `${r[0]}: ${r[1]}`).join(' | ');
   }
 });
 
-      const info = `Draft: ${draft_year} ${draft_round} by ${draft_team}\nCareer History: ${career_history}`;
-
+// --- Build info string for draft only ---
+const info = `Draft: ${draft_year} ${draft_round} ${draft_team}`;
       // --- 6️⃣ Extract Career Highlights / Achievements ---
       const achievements = await page.$$eval('table.d3-o-table', tables => {
         const highlightsTable = tables.find(tbl => {
@@ -161,6 +159,7 @@ tables.forEach(tbl => {
         group: "HOF",
         image: imageUrl ? `fetchimages/hofimages/${filename}` : '',
         info,
+        career: career_history,
         achievements,
         trivia,
         stats: ""
