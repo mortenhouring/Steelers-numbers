@@ -110,26 +110,32 @@ let draft_year = 'Undrafted', draft_round = '', draft_team = '';
 let career_history = '';
 
 tables.forEach(tbl => {
-  const header = tbl.caption?.textContent?.trim().toUpperCase() || tbl.rows[0]?.[0]?.toUpperCase() || '';
-  
-  // Draft Info
+  const header = tbl.querySelector('thead th')?.textContent?.trim().toUpperCase() || '';
+
+  // PERSONAL INFORMATION table
   if (header.includes('PERSONAL INFORMATION')) {
-    const draftRowIndex = tbl.rows.findIndex(r => r[0]?.toLowerCase().includes('drafted'));
-    if (draftRowIndex >= 0) {
-      draft_year = tbl.rows[draftRowIndex][1] || 'Undrafted';
-      draft_round = tbl.rows[draftRowIndex + 1]?.[1] || '';
-      draft_team = tbl.rows[draftRowIndex + 2]?.[1] || '';
-    }
-    // Position
-    const positionRow = tbl.rows.find(r => r[0]?.toLowerCase().includes('position'));
-    if (positionRow) position = positionRow[1] || '';
+    tbl.rows.forEach((row, i) => {
+      const label = row[0]?.trim().toLowerCase() || '';
+      const value = row[1]?.trim() || '';
+
+      if (label === 'position') position = value;
+      if (label === 'drafted') draft_year = value;
+      // Draft round and team come after the drafted row
+      if (draft_year !== 'Undrafted') {
+        draft_round = tbl.rows[i + 1]?.[1]?.trim() || '';
+        draft_team = tbl.rows[i + 2]?.[1]?.trim() || '';
+      }
+    });
   }
 
-  // Career History
+  // CAREER HISTORY table
   if (header.includes('CAREER HISTORY')) {
     career_history = tbl.rows.map(r => `${r[0]}: ${r[1]}`).join(' | ');
   }
 });
+
+// --- Build info string for draft only ---
+const info = `Draft: ${draft_year} ${draft_round} by ${draft_team}`;
 
 // --- Build info string for draft only ---
 const info = `Draft: ${draft_year} ${draft_round} ${draft_team}`;
