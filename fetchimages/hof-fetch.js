@@ -1,9 +1,16 @@
 // fetchimages/hof-fetch.js
+// -----------------------------------------------
+// Steelers Hall of Fame Scraper
+// Scrapes player info, achievements, trivia, and portrait images
+// -----------------------------------------------
+
 import fs from 'fs';
 import path from 'path';
 import puppeteer from 'puppeteer';
 import sanitize from 'sanitize-filename';
+import https from 'https';
 
+// ---------- Configuration ----------
 const BASE_URL = 'https://www.steelers.com';
 const HOF_URL = `${BASE_URL}/history/hall-of-fame/`;
 const OUTPUT_JSON = path.join('./hof.json');
@@ -11,16 +18,48 @@ const IMAGE_DIR = path.join('./fetchimages/hofimages');
 
 if (!fs.existsSync(IMAGE_DIR)) fs.mkdirSync(IMAGE_DIR, { recursive: true });
 
-async function scrape() {
-  const browser = await puppeteer.launch({
-    args: ['--no-sandbox', '--disable-setuid-sandbox'],
-    headless: "new"
+// ---------- Helper function to download image ----------
+async function downloadImage(url, filepath) {
+  return new Promise((resolve, reject) => {
+    const file = fs.createWriteStream(filepath);
+    https.get(url, (response) => {
+      if (response.statusCode !== 200) {
+        file.close();
+        fs.unlinkSync(filepath);
+        return reject(new Error(`Image not found: ${url}`));
+      }
+      response.pipe(file);
+      file.on('finish', () => {
+        file.close();
+        resolve();
+      });
+    }).on('error', (err) => {
+      fs.unlinkSync(filepath);
+      reject(err);
+    });
   });
+}
+
+// ---------- Main scrape function ----------
+async function scrape() {
+  let browser;
+  try {
+    browser = await puppeteer.launch({
+      args: ['--no-sandbox', '--disable-setuid-sandbox'],
+      headless: "new"
+    });
+    console.log("✅ Puppeteer launched successfully");
+  } catch (error) {
+    console.error("❌ Failed to launch Puppeteer:", error.message);
+    fs.writeFileSync(OUTPUT_JSON, JSON.stringify({ error: "Puppeteer launch failed", message: error.message }, null, 2));
+    process.exit(1);
+  }
 
   const page = await browser.newPage();
   console.log('Navigating to Steelers Hall of Fame page...');
   await page.goto(HOF_URL, { waitUntil: 'networkidle2' });
 
+  // ---------- Extract all player URLs ----------
   const playerUrls = await page.$$eval('table.d3-o-table tbody tr td a', links => links.map(a => a.href));
   console.log(`Found ${playerUrls.length} HOF players.`);
 
@@ -31,25 +70,23 @@ async function scrape() {
       console.log(`Scraping player: ${url}`);
       await page.goto(url, { waitUntil: 'networkidle2' });
 
-      // Player name
+      // ---------- 1️⃣ Player Name ----------
       const player_name = await page.$eval('h1.nfl-o-page-title--visuallyhidden', el => el.textContent.split('|')[0].trim());
 
-      // Image
-      const imageUrl = await page.$eval('.nfl-c-custom-promo__figure source', el => el.dataset.srcset);
+      // ---------- 2️⃣ Player Image ----------
+      const imageUrl = await page.$eval('source[data-srcset]', src => src.dataset.srcset);
       const ext = path.extname(new URL(imageUrl).pathname) || '.jpg';
       const filename = sanitize(player_name.toLowerCase().replace(/\s+/g, '_')) + ext;
       const imagePath = path.join(IMAGE_DIR, filename);
 
       try {
-        const viewSource = await page.goto(imageUrl);
-        const buffer = await viewSource.buffer();
-        fs.writeFileSync(imagePath, buffer);
-        console.log(`Saved image for ${player_name}`);
-      } catch {
-        console.log(`⚠️ Image not found for ${player_name}`);
+        await downloadImage(imageUrl, imagePath);
+        console.log(`✅ Saved image for ${player_name}`);
+      } catch (err) {
+        console.warn(`⚠️ Image not found or failed for ${player_name}: ${err.message}`);
       }
 
-      // Tables
+      // ---------- 3️⃣ Extract tables ----------
       const tables = await page.$$eval('table.d3-o-table', tables =>
         tables.map(tbl => {
           const caption = tbl.querySelector('caption')?.textContent.trim() || '';
@@ -60,41 +97,55 @@ async function scrape() {
         })
       );
 
-      // Personal Info
-      const personal = tables.find(t => t.rows[0]?.[0].toLowerCase().includes('position'))?.rows || [];
-      let draft_year = '';
-      let draft_round = '';
-      let draft_team = '';
-      if (personal.length) {
-        const draftedRow = personal.find(r => r[0].toLowerCase() === 'drafted');
-        if (draftedRow) {
-          draft_year = draftedRow[1] || '';
-          const roundRow = personal[personal.indexOf(draftedRow) + 1];
-          if (roundRow && !roundRow[0]) draft_round = roundRow[1] || '';
-          const teamRow = personal[personal.indexOf(draftedRow) + 2];
-          if (teamRow && !teamRow[0]) draft_team = teamRow[1] || '';
+      // ---------- 4️⃣ Parse info, achievements ----------
+      let position = '';
+      let career_history = '';
+      let achievements = '';
+      let draft_year = '', draft_round = '', draft_team = '';
+
+      for (const tbl of tables) {
+        // Personal Information
+        if (tbl.rows[0] && tbl.rows[0][0].toLowerCase() === 'position') {
+          position = tbl.rows[0][1] || '';
+        }
+
+        if (tbl.rows[0] && tbl.rows[0][0].toLowerCase() === 'drafted') {
+          draft_year = tbl.rows[0][1] || '';
+          draft_round = tbl.rows[1]?.[1] || '';
+          draft_team = tbl.rows[2]?.[1] || '';
+        }
+
+        // Career History
+        if (tbl.rows[0] && tbl.rows[0][0].toLowerCase().includes('career history')) {
+          career_history = tbl.rows.map(r => r[1] ? `${r[0]}: ${r[1]}` : `${r[0]}`).join(' | ');
+        }
+
+        // Career Highlights / Achievements
+        if (tbl.rows[0] && tbl.rows[0][0].toLowerCase().includes('career highlights')) {
+          achievements = tbl.rows.map(r => `${r[0]}: ${r[1]}`).join(' | ');
         }
       }
-      if (!draft_year) draft_year = personal.find(r => r[0].toLowerCase() === 'height')?.[1] || '';
-      if (!draft_round && !draft_team) draft_round = 'undrafted';
 
-      // Career History
-      const careerTable = tables.find(t => t.rows[0]?.[0].toLowerCase().includes('career history'))?.rows || [];
-      const career_history = careerTable.map(r => `${r[0]}: ${r[1] || ''}`).join(' | ');
+      // Fallback for undrafted players
+      if (!draft_year) draft_year = 'undrafted';
 
-      // Career Highlights
-      const highlightsTable = tables.find(t => t.rows[0]?.[0].toLowerCase().includes('career highlights'))?.rows || [];
-      const achievements = highlightsTable.map(r => `${r[0]}: ${r[1] || ''}`).join(' | ');
+      const info = `Draft: ${draft_year}${draft_round ? ' ' + draft_round : ''}${draft_team ? ' by ' + draft_team : ''}\nCareer History: ${career_history}`;
 
-      const info = `Draft: ${draft_year} ${draft_round}${draft_team ? ` by ${draft_team}` : ''}\nCareer History: ${career_history}`;
+      // ---------- 5️⃣ Trivia (paragraphs) ----------
+      let trivia = '';
+      try {
+        trivia = await page.$$eval('div.nfl-c-body-part--text p', ps =>
+          ps.map(p => p.textContent.trim()).join('\n\n')
+        );
+      } catch (e) {
+        trivia = '';
+      }
 
-      // Trivia paragraphs (unchanged)
-      const trivia = await page.$$eval('div.nfl-c-body-part--text p', ps => ps.map(p => p.textContent.trim()).join('\n\n'));
-
+      // ---------- 6️⃣ Add player object ----------
       players.push({
         player_name,
-        number: null,
-        position: personal.find(r => r[0].toLowerCase() === 'position')?.[1] || '',
+        number: null, // HOF page does not provide jersey numbers reliably
+        position,
         group: "HOF",
         image: `fetchimages/hofimages/${filename}`,
         info,
@@ -103,15 +154,18 @@ async function scrape() {
         stats: ""
       });
 
-      console.log(`Scraped ${player_name} ✅`);
+      console.log(`✅ Scraped ${player_name}`);
     } catch (err) {
-      console.error(`Failed to scrape ${url}:`, err);
+      console.error(`❌ Failed to scrape ${url}:`, err);
     }
   }
 
   await browser.close();
+
+  // ---------- 7️⃣ Save JSON ----------
   fs.writeFileSync(OUTPUT_JSON, JSON.stringify(players, null, 2), 'utf-8');
   console.log(`🎯 Done. Saved ${players.length} players to ${OUTPUT_JSON}`);
 }
 
+// ---------- Run the scraper ----------
 scrape().catch(err => console.error(err));
