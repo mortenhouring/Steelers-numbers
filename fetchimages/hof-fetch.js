@@ -4,8 +4,6 @@ import fs from 'fs';
 import path from 'path';
 import puppeteer from 'puppeteer';
 import sanitize from 'sanitize-filename';
-import fetch from 'node-fetch'; // required for image download
-
 // ------------------------
 //  Configuration
 // ------------------------
