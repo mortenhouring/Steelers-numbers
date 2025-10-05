@@ -137,8 +137,6 @@ tables.forEach(tbl => {
 // --- Build info string for draft only ---
 const info = `Draft: ${draft_year} ${draft_round} by ${draft_team}`;
 
-// --- Build info string for draft only ---
-const info = `Draft: ${draft_year} ${draft_round} ${draft_team}`;
       // --- 6️⃣ Extract Career Highlights / Achievements ---
       const achievements = await page.$$eval('table.d3-o-table', tables => {
         const highlightsTable = tables.find(tbl => {
