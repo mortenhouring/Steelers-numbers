@@ -119,38 +119,42 @@ async function scrape() {
         })
       );
 
-      // --- 5️⃣ Extract Draft Info & Career History ---
-      let position = '';
-      let draft_year = 'Undrafted', draft_round = '', draft_team = '';
-      let career_history = '';
+      // --- Extract Draft Info ---
+const draftInfoSection = await page.$('.d3-o-player-bio__info');
+let draft_year = 'Undrafted';
+let draft_round = '';
+let draft_team = '';
 
-      tables.forEach(tbl => {
-        const header = (tbl.caption || '').toUpperCase();
+if (draftInfoSection) {
+  const draftText = await page.evaluate(el => el.innerText, draftInfoSection);
+  const draftMatch = draftText.match(/Drafted:.*?(\d{4}).*?Round\s+(\d+).*?,\s*(.*)/i);
+  if (draftMatch) {
+    draft_year = draftMatch[1];
+    draft_round = `Round ${draftMatch[2]},`;
+    draft_team = draftMatch[3];
+  }
+}
 
-        // PERSONAL INFORMATION table
-        if (header.includes('PERSONAL INFORMATION')) {
-          tbl.rows.forEach((row, i) => {
-            const label = row[0]?.trim().toLowerCase() || '';
-            const value = row[1]?.trim() || '';
+const info = `Draft: ${draft_year} ${draft_round} ${draft_team}`.trim();
 
-            if (label === 'position') position = value;
-            if (label === 'drafted') draft_year = value;
-
-            if (label === 'drafted') {
-              draft_round = tbl.rows[i + 1]?.[1]?.trim() || '';
-              draft_team = tbl.rows[i + 2]?.[1]?.trim() || '';
-            }
-          });
-        }
-
-        // CAREER HISTORY table
-        if (header.includes('CAREER HISTORY')) {
-          career_history = tbl.rows.map(r => `${r[0]}: ${r[1]}`).join(' | ');
-        }
-      });
-
-      const info = `Draft: ${draft_year} ${draft_round} by ${draft_team}`;
-
+// --- Extract Career History ---
+let career = '';
+try {
+  const careerTable = await page.$x("//th[contains(., 'CAREER HISTORY')]/ancestor::table[1]");
+  if (careerTable.length > 0) {
+    career = await page.evaluate(table => {
+      const rows = Array.from(table.querySelectorAll('tbody tr'));
+      return rows
+        .map(row => {
+          const cols = Array.from(row.querySelectorAll('td'));
+          return cols.map(col => col.innerText.trim()).join(' – ');
+        })
+        .join('; ');
+    }, careerTable[0]);
+  }
+} catch (err) {
+  console.error('Career extract error:', err);
+}
       // --- 6️⃣ Extract Career Highlights / Achievements ---
       const achievements = await page.$$eval('table.d3-o-table', tables => {
         const highlightsTable = tables.find(tbl => {
@@ -173,11 +177,11 @@ async function scrape() {
       players.push({
         player_name,
         number: null, // HOF page does not provide jersey numbers reliably
-        position,
+        position: "",
         group: "HOF",
         image: imageUrl ? `fetchimages/hofimages/${filename}` : '',
         info,
-        career: career_history,
+        career,
         achievements,
         trivia,
         stats: ""
