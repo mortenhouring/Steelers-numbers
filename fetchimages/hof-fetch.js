@@ -3,6 +3,7 @@ import fs from 'fs';
 import path from 'path';
 import puppeteer from 'puppeteer';
 import sanitize from 'sanitize-filename';
+import fetch from 'node-fetch';
 
 const BASE_URL = 'https://www.steelers.com';
 const HOF_URL = `${BASE_URL}/history/hall-of-fame/`;
@@ -15,12 +16,13 @@ async function scrape() {
   let browser;
   try {
     browser = await puppeteer.launch({
-      args: ['--no-sandbox', '--disable-setuid-sandbox']
+      args: ['--no-sandbox', '--disable-setuid-sandbox'],
+      headless: "new"
     });
     console.log("✅ Puppeteer launched successfully");
   } catch (error) {
     console.error("❌ Failed to launch Puppeteer:", error.message);
-    fs.writeFileSync("hof.json", JSON.stringify({ error: "Puppeteer launch failed", message: error.message }, null, 2));
+    fs.writeFileSync(OUTPUT_JSON, JSON.stringify({ error: "Puppeteer launch failed", message: error.message }, null, 2));
     process.exit(1);
   }
 
@@ -28,10 +30,8 @@ async function scrape() {
   console.log('Navigating to Steelers Hall of Fame page...');
   await page.goto(HOF_URL, { waitUntil: 'networkidle2' });
 
-  // Get all player URLs from the table
-  const playerUrls = await page.$$eval('table.d3-o-table a', links =>
-    links.map(a => a.href).filter(Boolean)
-  );
+  // Get all player URLs from the main table
+  const playerUrls = await page.$$eval('table.d3-o-table tbody tr td a', links => links.map(a => a.href));
   console.log(`Found ${playerUrls.length} HOF players.`);
 
   const players = [];
@@ -41,64 +41,55 @@ async function scrape() {
       console.log(`Scraping player: ${url}`);
       await page.goto(url, { waitUntil: 'networkidle2' });
 
-      // 1️⃣ Name
-      const player_name_full = await page.$eval('h1.nfl-o-page-title', el => el.textContent.trim());
-      const player_name = player_name_full.split('|')[0].trim();
+      // 1️⃣ Player name
+      const player_name = await page.$eval('h1.nfl-o-page-title--visuallyhidden', el => el.textContent.split('|')[0].trim());
 
-      // 2️⃣ Main Image
-      const image = await page.$eval('figure.nfl-c-custom-promo__figure img', img => img.dataset.src || img.src);
-      const ext = path.extname(new URL(image).pathname) || '.jpg';
+      // 2️⃣ Image URL
+      const imageUrl = await page.$eval('img.img-responsive', img => img.dataset.src || img.src);
+      const ext = path.extname(new URL(imageUrl).pathname) || '.jpg';
       const filename = sanitize(player_name.toLowerCase().replace(/\s+/g, '_')) + ext;
       const imagePath = path.join(IMAGE_DIR, filename);
 
-      // Download image
-      const view = await page.goto(image);
-      fs.writeFileSync(imagePath, Buffer.from(await view.arrayBuffer()));
+      // Download image using fetch
+      const res = await fetch(imageUrl);
+      const buffer = Buffer.from(await res.arrayBuffer());
+      fs.writeFileSync(imagePath, buffer);
 
-      // 3️⃣ Position from Personal Info table
-      let position = null;
-      try {
-        const rows = await page.$$eval('div.nfl-c-body-part--table tbody tr', trs =>
-          trs.map(tr => Array.from(tr.querySelectorAll('td')).map(td => td.textContent.trim()))
-        );
-        const posRow = rows.find(r => r[0].toLowerCase() === 'position');
-        if (posRow) position = posRow[1];
-      } catch {}
+      // 3️⃣ Trivia paragraphs
+      const trivia = await page.$$eval('div.nfl-c-body-part--text p', ps => ps.map(p => p.textContent.trim()).join('\n\n'));
 
-      // 4️⃣ Trivia paragraphs
-      const trivia = await page.$$eval('div.nfl-c-body-part--text p', ps =>
-        ps.map(p => p.textContent.trim()).join('\n\n')
-      );
-
-      // 5️⃣ Tables: Career History & Achievements
-      const tables = await page.$$eval('div.nfl-c-body-part--table', tables =>
+      // 4️⃣ Tables: Personal Info, Career History, Career Highlights
+      const tables = await page.$$eval('table.d3-o-table', tables =>
         tables.map(tbl => {
-          const header = tbl.querySelector('th')?.textContent.trim() || '';
+          const caption = tbl.querySelector('caption')?.textContent.trim() || '';
           const rows = Array.from(tbl.querySelectorAll('tbody tr')).map(tr =>
             Array.from(tr.querySelectorAll('td')).map(td => td.textContent.trim())
           );
-          return { header, rows };
+          return { caption, rows };
         })
       );
 
-      // Career History
+      let position = '';
       let career_history = '';
+      let achievements = '';
+      let draft_year = '', draft_round = '', draft_overall = '', draft_team = '';
+
       tables.forEach(tbl => {
-        if (tbl.header.toLowerCase().includes('career history')) {
+        // Personal Info
+        if (tbl.rows[0] && tbl.rows[0][0].toLowerCase().includes('position')) {
+          position = tbl.rows[0][1] || '';
+        }
+        // Career History
+        if (tbl.rows[0] && tbl.rows[0][0].toLowerCase().includes('career history')) {
           career_history = tbl.rows.map(r => `${r[0]}: ${r[1]}`).join(' | ');
         }
-      });
-
-      // Achievements
-      let achievements = '';
-      tables.forEach(tbl => {
-        if (tbl.header.toLowerCase().includes('career highlights')) {
+        // Career Highlights
+        if (tbl.rows[0] && tbl.rows[0][0].toLowerCase().includes('career highlights')) {
           achievements = tbl.rows.map(r => `${r[0]}: ${r[1]}`).join(' | ');
         }
       });
 
-      // Draft info
-      let draft_year = '', draft_round = '', draft_overall = '', draft_team = '';
+      // Draft info from trivia
       const draftMatch = trivia.match(/(\d{4}) NFL Draft/);
       if (draftMatch) draft_year = draftMatch[1];
       const roundMatch = trivia.match(/(\d+)(?:st|nd|rd|th) Round/i);
@@ -110,10 +101,9 @@ async function scrape() {
 
       const info = `Draft: ${draft_year} ${draft_round} (${draft_overall}) by ${draft_team}\nCareer History: ${career_history}`;
 
-      // 6️⃣ Assemble JSON
       players.push({
         player_name,
-        number: null, // Not reliably on page
+        number: null, // HOF page does not provide jersey numbers reliably
         position,
         group: "HOF",
         image: `fetchimages/hofimages/${filename}`,
@@ -125,7 +115,7 @@ async function scrape() {
 
       console.log(`Scraped ${player_name} ✅`);
     } catch (err) {
-      console.error(`Failed to scrape ${url}:`, err.message);
+      console.error(`Failed to scrape ${url}:`, err);
     }
   }
 
