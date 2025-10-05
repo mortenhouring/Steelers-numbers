@@ -119,61 +119,58 @@ async function scrape() {
         })
       );
 
-      // --- Extract Draft Info ---
-const draftInfoSection = await page.$('.d3-o-player-bio__info');
-let draft_year = 'Undrafted';
-let draft_round = '';
-let draft_team = '';
+      // --- 5️⃣ Extract Personal Information (for "info") ---
+const info = await page.evaluate(() => {
+  const header = [...document.querySelectorAll("th")]
+    .find(th => th.textContent.trim().toUpperCase().includes("PERSONAL INFORMATION"));
+  if (!header) return "";
+  const table = header.closest("table");
+  if (!table) return "";
 
-if (draftInfoSection) {
-  const draftText = await page.evaluate(el => el.innerText, draftInfoSection);
-  const draftMatch = draftText.match(/Drafted:.*?(\d{4}).*?Round\s+(\d+).*?,\s*(.*)/i);
-  if (draftMatch) {
-    draft_year = draftMatch[1];
-    draft_round = `Round ${draftMatch[2]},`;
-    draft_team = draftMatch[3];
-  }
-}
+  const rows = table.querySelectorAll("tbody tr");
+  return Array.from(rows).map(row => {
+    const cells = row.querySelectorAll("td.d3-o-table-item--optional-large");
+    if (cells.length === 2 && cells[0].textContent.trim() && cells[1].textContent.trim()) {
+      return `${cells[0].textContent.trim()}: ${cells[1].textContent.trim()}`;
+    } else if (cells.length === 2 && !cells[0].textContent.trim()) {
+      return cells[1].textContent.trim();
+    }
+    return '';
+  }).filter(Boolean).join('\n');
+});
 
-const info = `Draft: ${draft_year} ${draft_round} ${draft_team}`.trim();
+// --- 6️⃣ Extract Career History (for "career") ---
+const career = await page.evaluate(() => {
+  const header = [...document.querySelectorAll("th")]
+    .find(th => th.textContent.trim().toUpperCase().includes("CAREER HISTORY"));
+  if (!header) return "";
+  const table = header.closest("table");
+  if (!table) return "";
 
-// --- Extract Career History ---
-let career = '';
-try {
-  const careerTable = await page.$x("//th[contains(., 'CAREER HISTORY')]/ancestor::table[1]");
-  if (careerTable.length > 0) {
-    career = await page.evaluate(table => {
-      const rows = Array.from(table.querySelectorAll('tbody tr'));
-      return rows
-        .map(row => {
-          const cols = Array.from(row.querySelectorAll('td'));
-          return cols.map(col => col.innerText.trim()).join(' – ');
-        })
-        .join('; ');
-    }, careerTable[0]);
-  }
-} catch (err) {
-  console.error('Career extract error:', err);
-}
-      // --- 6️⃣ Extract Career Highlights / Achievements ---
-      const achievements = await page.$$eval('table.d3-o-table', tables => {
-        const highlightsTable = tables.find(tbl => {
-          const th = tbl.querySelector('thead th');
-          return th && th.textContent.trim().toUpperCase() === 'CAREER HIGHLIGHTS';
-        });
-        if (!highlightsTable) return '';
+  const rows = table.querySelectorAll("tbody tr");
+  return Array.from(rows).map(row => {
+    const cells = row.querySelectorAll("td.d3-o-table-item--optional-large");
+    return Array.from(cells).map(c => c.textContent.trim()).join(' | ');
+  }).filter(Boolean).join('\n');
+});
+// --- 7️⃣ Extract Career Highlights / Achievements ---
+const achievements = await page.$$eval('table.d3-o-table', tables => {
+  const highlightsTable = tables.find(tbl => {
+    const th = tbl.querySelector('thead th');
+    return th && th.textContent.trim().toUpperCase() === 'CAREER HIGHLIGHTS';
+  });
+  if (!highlightsTable) return '';
 
-        const rows = Array.from(highlightsTable.querySelectorAll('tbody tr')).map(tr => {
-          const tds = tr.querySelectorAll('td');
-          const label = tds[0]?.textContent.trim() || '';
-          const value = tds[1]?.textContent.trim() || '';
-          return label && value ? `${label}: ${value}` : null;
-        }).filter(Boolean);
+  const rows = Array.from(highlightsTable.querySelectorAll('tbody tr')).map(tr => {
+    const tds = tr.querySelectorAll('td');
+    const label = tds[0]?.textContent.trim() || '';
+    const value = tds[1]?.textContent.trim() || '';
+    return label && value ? `${label}: ${value}` : null;
+  }).filter(Boolean);
 
-        return rows.join(' | ');
-      });
-
-      // --- 7️⃣ Push player data ---
+  return rows.join(' | ');
+});
+      // --- 8️⃣ Push player data ---
       players.push({
         player_name,
         number: null, // HOF page does not provide jersey numbers reliably
