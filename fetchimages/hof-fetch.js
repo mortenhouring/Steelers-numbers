@@ -105,26 +105,33 @@ async function scrape() {
       );
 
       // --- 5️⃣ Extract Personal Info, Career History, Draft Info ---
-      let position = '';
-      let career_history = '';
-      let draft_year = 'Undrafted', draft_round = '', draft_team = '';
+let position = '';
+let career_history = '';
+let draft_year = 'Undrafted', draft_round = '', draft_team = '';
 
-      tables.forEach(tbl => {
-        // Personal Info
-        if (tbl.rows[0] && tbl.rows[0][0].toLowerCase().includes('position')) {
-          position = tbl.rows[0][1] || '';
-        }
-        // Career History
-        if (tbl.rows[0] && tbl.rows[0][0].toLowerCase().includes('career history')) {
-          career_history = tbl.rows.map(r => `${r[0]}: ${r[1]}`).join(' | ');
-        }
-        // Draft Info
-        if (tbl.rows[0] && tbl.rows[0][0].toLowerCase().includes('drafted')) {
-          draft_year = tbl.rows[0][1] || 'Undrafted';
-          draft_round = tbl.rows[1]?.[1] || '';
-          draft_team = tbl.rows[2]?.[1] || '';
-        }
-      });
+tables.forEach(tbl => {
+  // Convert rows to an easier format
+  const rows = tbl.rows;
+
+  // Check if table is Personal Information
+  if (rows.some(r => r[0].toLowerCase().includes('position'))) {
+    const posRow = rows.find(r => r[0].toLowerCase().includes('position'));
+    position = posRow ? posRow[1] : '';
+    
+    const draftedRow = rows.find(r => r[0].toLowerCase().includes('drafted'));
+    if (draftedRow) {
+      draft_year = draftedRow[1] || 'Undrafted';
+      const draftedIndex = rows.indexOf(draftedRow);
+      draft_round = rows[draftedIndex + 1]?.[1] || '';
+      draft_team = rows[draftedIndex + 2]?.[1] || '';
+    }
+  }
+
+  // Check if table is Career History
+  if (rows[0] && tbl.caption.toLowerCase().includes('career history')) {
+    career_history = rows.map(r => `${r[0]}: ${r[1]}`).join(' | ');
+  }
+});
 
       const info = `Draft: ${draft_year} ${draft_round} by ${draft_team}\nCareer History: ${career_history}`;
 
