@@ -43,25 +43,29 @@ async function scrape() {
       // 1️⃣ Player name
       const player_name = await page.$eval('h1.nfl-o-page-title--visuallyhidden', el => el.textContent.split('|')[0].trim());
 
-      // 2️⃣ Image URL (portrait)
-      const imageUrl = await page.$eval('.nfl-c-custom-promo__figure source[data-srcset]', src => src.dataset.srcset);
-      const ext = path.extname(new URL(imageUrl).pathname) || '.jpg';
-      const filename = sanitize(player_name.toLowerCase().replace(/\s+/g, '_')) + ext;
-      const imagePath = path.join(IMAGE_DIR, filename);
+      // 2️⃣ Image URL from player portrait
+      const imageUrl = await page.$eval('.nfl-c-custom-promo__figure source', src => src.dataset.srcset);
+      if (!imageUrl) {
+        console.warn(`⚠️ Image not found for ${player_name}`);
+      } else {
+        const ext = path.extname(new URL(imageUrl).pathname) || '.jpg';
+        const filename = sanitize(player_name.toLowerCase().replace(/\s+/g, '_')) + ext;
+        const imagePath = path.join(IMAGE_DIR, filename);
 
-      try {
         const res = await fetch(imageUrl);
-        const buffer = Buffer.from(await res.arrayBuffer());
-        fs.writeFileSync(imagePath, buffer);
-        console.log(`Image saved: ${filename}`);
-      } catch (imgErr) {
-        console.error(`Failed to save image for ${player_name}:`, imgErr.message);
+        if (!res.ok) {
+          console.warn(`⚠️ Failed to download image for ${player_name}: ${res.status}`);
+        } else {
+          const buffer = Buffer.from(await res.arrayBuffer());
+          fs.writeFileSync(imagePath, buffer);
+          console.log(`Image saved for ${player_name}`);
+        }
       }
 
       // 3️⃣ Trivia paragraphs
       const trivia = await page.$$eval('div.nfl-c-body-part--text p', ps => ps.map(p => p.textContent.trim()).join('\n\n'));
 
-      // 4️⃣ Extract tables
+      // 4️⃣ Tables: Personal Info, Career History, Career Highlights
       const tables = await page.$$eval('table.d3-o-table', tables =>
         tables.map(tbl => {
           const caption = tbl.querySelector('caption')?.textContent.trim() || '';
@@ -78,37 +82,40 @@ async function scrape() {
       let draft_year = '', draft_round = '', draft_overall = '', draft_team = '';
 
       tables.forEach(tbl => {
-        const caption = tbl.caption.toLowerCase();
-        // Personal Information
-        if (caption.includes('personal information')) {
-          tbl.rows.forEach((row, idx) => {
-            const key = row[0].toLowerCase();
-            if (key === 'position') position = row[1] || '';
-            else if (key === 'drafted') draft_year = row[1] || '';
-            else if (key === '' && draft_year && !draft_round) draft_round = row[1] || '';
-            else if (key === '' && draft_year && draft_round && !draft_team) draft_team = row[1] || '';
-          });
-          // fallback if undrafted
-          if (!draft_year) draft_year = 'undrafted';
+        // Personal Info
+        if (tbl.rows[0] && tbl.rows[0][0].toLowerCase().includes('position')) {
+          position = tbl.rows[0][1] || '';
         }
+
+        // Draft Info + Career History
+        if (tbl.rows[0] && tbl.rows[0][0].toLowerCase().includes('drafted')) {
+          draft_year = tbl.rows[0][1] || '';
+          draft_round = tbl.rows[1] ? tbl.rows[1][1] : '';
+          draft_overall = draft_round; // combined in same cell like "1st Round (1st Overall)"
+          draft_team = tbl.rows[2] ? tbl.rows[2][1] : '';
+        }
+
         // Career History
-        if (caption.includes('career history')) {
-          career_history = tbl.rows.map(r => `${r[0]}: ${r[1] || ''}`).join(' | ');
+        if (tbl.rows[0] && tbl.rows[0][0].toLowerCase().includes('career history')) {
+          career_history = tbl.rows.map(r => r[1] ? `${r[0]}: ${r[1]}` : r[0]).join(' | ');
         }
-        // Career Highlights
-        if (caption.includes('career highlights')) {
-          achievements = tbl.rows.map(r => `${r[0]}: ${r[1] || ''}`).join(' | ');
+
+        // Career Highlights / Achievements
+        if (tbl.rows[0] && tbl.rows[0][0].toLowerCase().includes('career highlights')) {
+          achievements = tbl.rows.map(r => r[1] ? `${r[0]}: ${r[1]}` : r[0]).join(' | ');
         }
       });
 
-      const info = `Draft: ${draft_year}${draft_round ? ' ' + draft_round : ''}${draft_team ? ' by ' + draft_team : ''}\nCareer History: ${career_history}`;
+      // Build info string with fallback for undrafted players
+      const draftInfo = draft_year ? `Draft: ${draft_year} ${draft_overall} by ${draft_team}` : 'Undrafted';
+      const info = `${draftInfo}\nCareer History: ${career_history}`;
 
       players.push({
         player_name,
-        number: null, // HOF page does not provide jersey numbers reliably
+        number: null,
         position,
         group: "HOF",
-        image: `fetchimages/hofimages/${filename}`,
+        image: imageUrl ? `fetchimages/hofimages/${sanitize(player_name.toLowerCase().replace(/\s+/g, '_')) + path.extname(new URL(imageUrl).pathname)}` : '',
         info,
         achievements,
         trivia,
