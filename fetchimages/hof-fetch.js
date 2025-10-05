@@ -110,7 +110,7 @@ let draft_year = 'Undrafted', draft_round = '', draft_team = '';
 let career_history = '';
 
 tables.forEach(tbl => {
-  const header = tbl.querySelector('thead th')?.textContent?.trim().toUpperCase() || '';
+  const header = (tbl.caption || '').toUpperCase();
 
   // PERSONAL INFORMATION table
   if (header.includes('PERSONAL INFORMATION')) {
@@ -120,8 +120,9 @@ tables.forEach(tbl => {
 
       if (label === 'position') position = value;
       if (label === 'drafted') draft_year = value;
-      // Draft round and team come after the drafted row
-      if (draft_year !== 'Undrafted') {
+
+      // Draft round and team come in the next two rows
+      if (label === 'drafted') {
         draft_round = tbl.rows[i + 1]?.[1]?.trim() || '';
         draft_team = tbl.rows[i + 2]?.[1]?.trim() || '';
       }
@@ -130,11 +131,13 @@ tables.forEach(tbl => {
 
   // CAREER HISTORY table
   if (header.includes('CAREER HISTORY')) {
-    career_history = tbl.rows.map(r => `${r[0]}: ${r[1]}`).join(' | ');
+    career_history = tbl.rows
+      .map(r => `${r[0]}: ${r[1]}`)
+      .join(' | ');
   }
 });
 
-// --- Build info string for draft only ---
+// Build info string for draft only
 const info = `Draft: ${draft_year} ${draft_round} by ${draft_team}`;
 
       // --- 6️⃣ Extract Career Highlights / Achievements ---
