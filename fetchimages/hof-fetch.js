@@ -3,7 +3,6 @@ import fs from 'fs';
 import path from 'path';
 import puppeteer from 'puppeteer';
 import sanitize from 'sanitize-filename';
-import fetch from 'node-fetch';
 
 const BASE_URL = 'https://www.steelers.com';
 const HOF_URL = `${BASE_URL}/history/hall-of-fame/`;
@@ -44,16 +43,32 @@ async function scrape() {
       // 1️⃣ Player name
       const player_name = await page.$eval('h1.nfl-o-page-title--visuallyhidden', el => el.textContent.split('|')[0].trim());
 
-      // 2️⃣ Image URL
-      const imageUrl = await page.$eval('img.img-responsive', img => img.dataset.src || img.src);
-      const ext = path.extname(new URL(imageUrl).pathname) || '.jpg';
-      const filename = sanitize(player_name.toLowerCase().replace(/\s+/g, '_')) + ext;
-      const imagePath = path.join(IMAGE_DIR, filename);
+      // 2️⃣ Image URL with logging
+      let imageUrl = '';
+      try {
+        imageUrl = await page.$eval('img.img-responsive', img => img.dataset.src || img.src);
+      } catch (imgErr) {
+        console.warn(`⚠️ No image found for ${player_name}`);
+      }
 
-      // Download image using fetch
-      const res = await fetch(imageUrl);
-      const buffer = Buffer.from(await res.arrayBuffer());
-      fs.writeFileSync(imagePath, buffer);
+      let imagePath = '';
+      if (imageUrl) {
+        try {
+          const ext = path.extname(new URL(imageUrl).pathname) || '.jpg';
+          const filename = sanitize(player_name.toLowerCase().replace(/\s+/g, '_')) + ext;
+          imagePath = path.join(IMAGE_DIR, filename);
+
+          const res = await fetch(imageUrl);
+          const buffer = Buffer.from(await res.arrayBuffer());
+          fs.writeFileSync(imagePath, buffer);
+
+          console.log(`🖼 Image saved for ${player_name}: ${filename}`);
+        } catch (saveErr) {
+          console.error(`❌ Failed to save image for ${player_name}:`, saveErr.message);
+        }
+      } else {
+        console.warn(`⚠️ Skipping image for ${player_name} (no URL)`);
+      }
 
       // 3️⃣ Trivia paragraphs
       const trivia = await page.$$eval('div.nfl-c-body-part--text p', ps => ps.map(p => p.textContent.trim()).join('\n\n'));
@@ -106,7 +121,7 @@ async function scrape() {
         number: null, // HOF page does not provide jersey numbers reliably
         position,
         group: "HOF",
-        image: `fetchimages/hofimages/${filename}`,
+        image: imagePath || "",
         info,
         achievements,
         trivia,
