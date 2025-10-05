@@ -325,7 +325,7 @@
   },
   {
     "player_name": "Mike Webster",
-    "number": null,
+    "number": 52,
     "position": "Center",
     "group": "HOF",
     "image": "fetchimages/hofimages/mike_webster.jpg",
@@ -337,7 +337,7 @@
   },
   {
     "player_name": "Rod Woodson",
-    "number": null,
+    "number": 26,
     "position": "Cornerback",
     "group": "HOF",
     "image": "fetchimages/hofimages/rod_woodson.jpg",
