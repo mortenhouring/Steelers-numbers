@@ -12,7 +12,21 @@ const IMAGE_DIR = path.join('./fetchimages/hofimages');
 if (!fs.existsSync(IMAGE_DIR)) fs.mkdirSync(IMAGE_DIR, { recursive: true });
 
 async function scrape() {
-  const browser = await puppeteer.launch({ headless: true });
+  let browser;
+try {
+  browser = await puppeteer.launch({
+    args: ['--no-sandbox', '--disable-setuid-sandbox']
+  });
+  console.log("✅ Puppeteer launched successfully");
+} catch (error) {
+  console.error("❌ Failed to launch Puppeteer:", error.message);
+  // Write a placeholder hof.json to avoid empty file commits
+  fs.writeFileSync("hof.json", JSON.stringify({
+    error: "Puppeteer launch failed",
+    message: error.message
+  }, null, 2));
+  process.exit(1);
+}
   const page = await browser.newPage();
 
   console.log('Navigating to HOF page...');
