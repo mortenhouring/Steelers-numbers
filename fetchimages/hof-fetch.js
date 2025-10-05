@@ -3,7 +3,6 @@ import fs from 'fs';
 import path from 'path';
 import puppeteer from 'puppeteer';
 import sanitize from 'sanitize-filename';
-import fetch from 'node-fetch';
 
 const BASE_URL = 'https://www.steelers.com';
 const HOF_URL = `${BASE_URL}/history/hall-of-fame/`;
