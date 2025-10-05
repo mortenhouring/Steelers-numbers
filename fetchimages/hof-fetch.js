@@ -2,9 +2,10 @@
 
 import fs from 'fs';
 import path from 'path';
-import https from 'https';  // ← added for image download
+import https from 'https';
 import puppeteer from 'puppeteer';
 import sanitize from 'sanitize-filename';
+
 // ------------------------
 //  Configuration
 // ------------------------
@@ -14,6 +15,25 @@ const OUTPUT_JSON = path.join('./hof.json');
 const IMAGE_DIR = path.join('./fetchimages/hofimages');
 
 if (!fs.existsSync(IMAGE_DIR)) fs.mkdirSync(IMAGE_DIR, { recursive: true });
+
+// ------------------------
+//  Helper: Download image
+// ------------------------
+function downloadImage(url, filepath) {
+  return new Promise((resolve, reject) => {
+    const file = fs.createWriteStream(filepath);
+    https.get(url, response => {
+      response.pipe(file);
+      file.on('finish', () => {
+        file.close();
+        resolve();
+      });
+    }).on('error', err => {
+      fs.unlink(filepath, () => {}); // delete partial file on error
+      reject(err);
+    });
+  });
+}
 
 // ------------------------
 //  Main Scrape Function
@@ -75,17 +95,12 @@ async function scrape() {
         filename = sanitize(player_name.toLowerCase().replace(/\s+/g, '_')) + ext;
         const imagePath = path.join(IMAGE_DIR, filename);
 
-        // --- 2️⃣a Download Image using Node https ---
-        const file = fs.createWriteStream(imagePath);
-        https.get(imageUrl, response => {
-          response.pipe(file);
-          file.on('finish', () => {
-            file.close();
-            console.log(`✅ Saved image for ${player_name}`);
-          });
-        }).on('error', err => {
+        try {
+          await downloadImage(imageUrl, imagePath);
+          console.log(`✅ Saved image for ${player_name}`);
+        } catch (err) {
           console.error(`❌ Failed to save image for ${player_name}:`, err.message);
-        });
+        }
       }
 
       // --- 3️⃣ Trivia Paragraphs ---
@@ -104,41 +119,37 @@ async function scrape() {
         })
       );
 
-      // --- 5️⃣ Extract Draft Info and Career History ---
-let position = '';
-let draft_year = 'Undrafted', draft_round = '', draft_team = '';
-let career_history = '';
+      // --- 5️⃣ Extract Draft Info & Career History ---
+      let position = '';
+      let draft_year = 'Undrafted', draft_round = '', draft_team = '';
+      let career_history = '';
 
-tables.forEach(tbl => {
-  const header = (tbl.caption || '').toUpperCase();
+      tables.forEach(tbl => {
+        const header = (tbl.caption || '').toUpperCase();
 
-  // PERSONAL INFORMATION table
-  if (header.includes('PERSONAL INFORMATION')) {
-    tbl.rows.forEach((row, i) => {
-      const label = row[0]?.trim().toLowerCase() || '';
-      const value = row[1]?.trim() || '';
+        // PERSONAL INFORMATION table
+        if (header.includes('PERSONAL INFORMATION')) {
+          tbl.rows.forEach((row, i) => {
+            const label = row[0]?.trim().toLowerCase() || '';
+            const value = row[1]?.trim() || '';
 
-      if (label === 'position') position = value;
-      if (label === 'drafted') draft_year = value;
+            if (label === 'position') position = value;
+            if (label === 'drafted') draft_year = value;
 
-      // Draft round and team come in the next two rows
-      if (label === 'drafted') {
-        draft_round = tbl.rows[i + 1]?.[1]?.trim() || '';
-        draft_team = tbl.rows[i + 2]?.[1]?.trim() || '';
-      }
-    });
-  }
+            if (label === 'drafted') {
+              draft_round = tbl.rows[i + 1]?.[1]?.trim() || '';
+              draft_team = tbl.rows[i + 2]?.[1]?.trim() || '';
+            }
+          });
+        }
 
-  // CAREER HISTORY table
-  if (header.includes('CAREER HISTORY')) {
-    career_history = tbl.rows
-      .map(r => `${r[0]}: ${r[1]}`)
-      .join(' | ');
-  }
-});
+        // CAREER HISTORY table
+        if (header.includes('CAREER HISTORY')) {
+          career_history = tbl.rows.map(r => `${r[0]}: ${r[1]}`).join(' | ');
+        }
+      });
 
-// Build info string for draft only
-const info = `Draft: ${draft_year} ${draft_round} by ${draft_team}`;
+      const info = `Draft: ${draft_year} ${draft_round} by ${draft_team}`;
 
       // --- 6️⃣ Extract Career Highlights / Achievements ---
       const achievements = await page.$$eval('table.d3-o-table', tables => {
