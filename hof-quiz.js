@@ -44,7 +44,7 @@ const CONFIG = {
 
   // Question phrases
   QUESTION_PHRASES: [
-    "What number is {player}?",
+    "What number did {player} wear?",
     "Which digits are on {player}'s jersey?",
     "Which number’s on {player}'s back?",
     "What’s {player}'s Steel Curtain number?",
