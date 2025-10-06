@@ -1,10 +1,15 @@
-// HOF quiz adapted from depth-quiz.js
+// HOF quiz
+// template from depth-quiz.js
+// Single-page quiz controller adapted for hof.json
+// All configurable paths, filenames, HTML IDs, and localStorage keys
+// are defined at the top for easy modification.
+
 ///////////////////////////
 // CONFIGURATION
 ///////////////////////////
 const CONFIG = {
-  // JSON source
-  ROSTER_JSON: 'hof.json',
+  // JSON
+  ROSTER_JSON: 'hof.json',          // hof roster source
 
   // HTML element IDs
   ELEMENT_IDS: {
@@ -37,12 +42,18 @@ const CONFIG = {
   // End page
   END_PAGE: 'hof-quiz-end.html',
 
-  // Question phrases (adapted if needed)
+  // Question phrases
   QUESTION_PHRASES: [
-    "Which jersey is associated with {player}?",
-    "Who is {player}?",
-    "Identify {player}.",
-    "Which Hall of Famer is {player}?"
+    "What number is {player}?",
+    "Which digits are on {player}'s jersey?",
+    "Which number’s on {player}'s back?",
+    "What’s {player}'s Steel Curtain number?",
+    "What jersey number is {player}?",
+    "Which digits does {player} rep for Steelers Nation?",
+    "What’s {player}'s jersey number?",
+    "What number’s on {player}'s helmet stripe?",
+    "Which jersey number does {player} wear?",
+    "What number’s stitched on {player}'s uniform?"
   ]
 };
 
@@ -126,59 +137,40 @@ async function init() {
     loadedRoster = await resp.json();
     if(!Array.isArray(loadedRoster)||loadedRoster.length===0) throw new Error('Roster not a non-empty array');
 
-    // Filter out entries without a number
+    // Filter out null-number entries
     loadedRoster = loadedRoster.filter(player => player.number !== null);
-    log(`Fetched roster — ${loadedRoster.length} players (only entries with number)`);
-
-    if(loadedRoster.length === 0) throw new Error('No players with numbers in roster');
+    log(`Fetched roster — ${loadedRoster.length} players`);
+    log('Players loaded:', loadedRoster.map(p => p.player_name));
   } catch(err){
     console.error('[hof-quiz] Could not fetch roster:',err);
     questionDisplay.textContent=`Error loading roster: ${err.message}`;
-    showView('quiz1'); 
-    return;
+    showView('quiz1'); return;
   }
 
   // Initialize working pool
   try {
     const rawSaved = localStorage.getItem(CONFIG.STORAGE_KEYS.CURRENT_ROSTER);
     let saved = safeParseJSON(rawSaved);
-    if(!Array.isArray(saved) || saved.length === 0){
+    if(!Array.isArray(saved)||saved.length===0){
       const fresh = [...loadedRoster];
       shuffleArray(fresh);
       localStorage.setItem(CONFIG.STORAGE_KEYS.CURRENT_ROSTER, JSON.stringify(fresh));
       log('Saved fresh shuffled currentRoster to localStorage');
-    } else {
-      log(`Found existing pool — ${saved.length} players remain`);
-    }
+    } else log(`Found existing pool — ${saved.length} players remain`);
 
-    let totalQ = parseInt(localStorage.getItem(CONFIG.STORAGE_KEYS.TOTAL_QUESTIONS), 10);
-    if(isNaN(totalQ)){
-      totalQ = loadedRoster.length;
-      localStorage.setItem(CONFIG.STORAGE_KEYS.TOTAL_QUESTIONS, String(totalQ));
-      log('Initialized totalQuestions', totalQ);
-    } else {
-      log('totalQuestions(from storage):', totalQ);
-    }
-    initialRosterCount = totalQ;
-  } catch(err){
-    console.error('[hof-quiz] Error init roster:',err);
-    questionDisplay.textContent=`Error initializing roster: ${err.message}`;
-    showView('quiz1'); 
-    return; 
-  }
+    let totalQ=parseInt(localStorage.getItem(CONFIG.STORAGE_KEYS.TOTAL_QUESTIONS),10);
+    if(isNaN(totalQ)){ totalQ=loadedRoster.length; localStorage.setItem(CONFIG.STORAGE_KEYS.TOTAL_QUESTIONS,String(totalQ)); log('Initialized totalQuestions',totalQ);}
+    else log('totalQuestions(from storage):',totalQ);
+    initialRosterCount=totalQ;
+  } catch(err){ console.error('[hof-quiz] Error init roster:',err); questionDisplay.textContent=`Error initializing roster: ${err.message}`; showView('quiz1'); return; }
 
   // Resume if lastPlayer & lastAnswer exist
   const lastPlayerRaw = localStorage.getItem(CONFIG.STORAGE_KEYS.LAST_PLAYER);
   const lastAnswerRaw = localStorage.getItem(CONFIG.STORAGE_KEYS.LAST_ANSWER);
   if(lastPlayerRaw && lastAnswerRaw !== null){
     log('Resuming lastPlayer and lastAnswer found');
-    try { 
-      currentPlayer = safeParseJSON(lastPlayerRaw) || null; 
-      showAnswerView(); 
-      return; 
-    } catch(err){ 
-      console.warn('[hof-quiz] Could not parse lastPlayer',err); 
-    }
+    try { currentPlayer = safeParseJSON(lastPlayerRaw) || null; showAnswerView(); return; }
+    catch(err){ console.warn('[hof-quiz] Could not parse lastPlayer',err); }
   }
 
   pickNextPlayer();
@@ -188,24 +180,26 @@ async function init() {
 // PICK NEXT PLAYER
 ///////////////////////////
 function pickNextPlayer(){
-  const raw=localStorage.getItem(CONFIG.STORAGE_KEYS.CURRENT_ROSTER);
-  const pool=Array.isArray(safeParseJSON(raw))?safeParseJSON(raw):[];
-  log('pickNextPlayer pool length before pick=',pool.length);
-  if(pool.length===0){ 
-    log('No players left; redirecting'); 
+  const raw = localStorage.getItem(CONFIG.STORAGE_KEYS.CURRENT_ROSTER);
+  const pool = Array.isArray(safeParseJSON(raw)) ? safeParseJSON(raw) : [];
+  log('pickNextPlayer pool length before pick=', pool.length);
+
+  if(pool.length === 0){
+    log('No players left; redirecting');
     const score = parseInt(localStorage.getItem(CONFIG.STORAGE_KEYS.SCORE), 10) || 0;
     const total = parseInt(localStorage.getItem(CONFIG.STORAGE_KEYS.TOTAL_QUESTIONS), 10) || 0;
     saveScore("hof", score, total);
-    window.location.href=CONFIG.END_PAGE; 
-    return; 
+    window.location.href = CONFIG.END_PAGE;
+    return;
   }
-  currentPlayer=pool.shift();
-  localStorage.setItem(CONFIG.STORAGE_KEYS.CURRENT_ROSTER,JSON.stringify(pool));
-  localStorage.setItem(CONFIG.STORAGE_KEYS.LAST_PLAYER,JSON.stringify(currentPlayer));
+
+  currentPlayer = pool.shift();
+  localStorage.setItem(CONFIG.STORAGE_KEYS.CURRENT_ROSTER, JSON.stringify(pool));
+  localStorage.setItem(CONFIG.STORAGE_KEYS.LAST_PLAYER, JSON.stringify(currentPlayer));
   answerDisplay.value='';
 
-  const phrase=chooseRandom(CONFIG.QUESTION_PHRASES).replace('{player}',currentPlayer.player_name);
-  questionDisplay.textContent=phrase;
+  const phrase = chooseRandom(CONFIG.QUESTION_PHRASES).replace('{player}', currentPlayer.player_name);
+  questionDisplay.textContent = phrase;
 
   showView('quiz1');
   log(`Picked player ${currentPlayer.player_name}, remaining=${pool.length}`);
@@ -215,19 +209,20 @@ function pickNextPlayer(){
 // SUBMIT
 ///////////////////////////
 function handleSubmit(){
-  const raw=answerDisplay.value.trim();
+  const raw = answerDisplay.value.trim();
   if(raw.length===0) return;
-  const userAnswer=parseInt(raw,10);
+  const userAnswer = parseInt(raw,10);
   if(isNaN(userAnswer)) return;
   localStorage.setItem(CONFIG.STORAGE_KEYS.LAST_ANSWER,String(userAnswer));
 
   let questionsAsked=parseInt(localStorage.getItem(CONFIG.STORAGE_KEYS.QUESTIONS_ASKED),10); if(isNaN(questionsAsked)) questionsAsked=0; questionsAsked+=1;
   let score=parseInt(localStorage.getItem(CONFIG.STORAGE_KEYS.SCORE),10); if(isNaN(score)) score=0;
-
+  const correctNumber=Number(currentPlayer?.number ?? NaN);
+  if(!isNaN(correctNumber) && correctNumber===userAnswer) score+=1;
   localStorage.setItem(CONFIG.STORAGE_KEYS.QUESTIONS_ASKED,String(questionsAsked));
   localStorage.setItem(CONFIG.STORAGE_KEYS.SCORE,String(score));
 
-  log(`Answer submitted for player ${currentPlayer?.player_name}`);
+  log(`Answer submitted for player ${currentPlayer?.player_name}: guess=${userAnswer} correct=${correctNumber===userAnswer}`);
   showAnswerView();
 }
 
@@ -235,6 +230,17 @@ function handleSubmit(){
 // SHOW ANSWER / TRIVIA
 ///////////////////////////
 function showAnswerView(){
-  const rawLast=localStorage.getItem(CONFIG.STORAGE_KEYS.LAST_PLAYER);
-  const last=safeParseJSON(rawLast)||currentPlayer;
-  if(!last){ feedbackEl.textContent='Player not found.'; showView('quiz1
+  const rawLast = localStorage.getItem(CONFIG.STORAGE_KEYS.LAST_PLAYER);
+  const last = safeParseJSON(rawLast) || currentPlayer;
+  if(!last){ feedbackEl.textContent='Player not found.'; showView('quiz1'); return; }
+  currentPlayer = last;
+
+  playerImageEl.src = currentPlayer.image || '';
+  playerInfoEl.textContent = `${currentPlayer.player_name} - ${currentPlayer.position ?? ''}`;
+
+  const storedAnswer = parseInt(localStorage.getItem(CONFIG.STORAGE_KEYS.LAST_ANSWER),10);
+  const correctNumber = Number(currentPlayer?.number ?? NaN);
+  if(!isNaN(correctNumber) && storedAnswer===correctNumber)
+    feedbackEl.textContent = chooseRandom(["Nice job!","That's right!","You got it!","Exactly!","Spot on!","Great work!","Correct!"]);
+  else
+    feedbackEl.textContent = chooseRandom(["Oops, try again.","Not quite.","Wrong number
