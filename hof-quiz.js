@@ -125,6 +125,10 @@ async function init() {
     if(!resp.ok) throw new Error(`HTTP ${resp.status}`);
     loadedRoster = await resp.json();
     if(!Array.isArray(loadedRoster)||loadedRoster.length===0) throw new Error('Roster not a non-empty array');
+   
+    // After fetching hof.json
+    loadedRoster = loadedRoster.filter(player => player.number !== null);
+     
     log(`Fetched roster — ${loadedRoster.length} players`);
   } catch(err){
     console.error('[hof-quiz] Could not fetch roster:',err);
