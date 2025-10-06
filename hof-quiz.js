@@ -125,41 +125,60 @@ async function init() {
     if(!resp.ok) throw new Error(`HTTP ${resp.status}`);
     loadedRoster = await resp.json();
     if(!Array.isArray(loadedRoster)||loadedRoster.length===0) throw new Error('Roster not a non-empty array');
-   
-    // After fetching hof.json
+
+    // Filter out entries without a number
     loadedRoster = loadedRoster.filter(player => player.number !== null);
-     
-    log(`Fetched roster — ${loadedRoster.length} players`);
+    log(`Fetched roster — ${loadedRoster.length} players (only entries with number)`);
+
+    if(loadedRoster.length === 0) throw new Error('No players with numbers in roster');
   } catch(err){
     console.error('[hof-quiz] Could not fetch roster:',err);
     questionDisplay.textContent=`Error loading roster: ${err.message}`;
-    showView('quiz1'); return;
+    showView('quiz1'); 
+    return;
   }
 
   // Initialize working pool
   try {
-    const rawSaved=localStorage.getItem(CONFIG.STORAGE_KEYS.CURRENT_ROSTER);
-    let saved=safeParseJSON(rawSaved);
-    if(!Array.isArray(saved)||saved.length===0){
-      const fresh=[...loadedRoster];
+    const rawSaved = localStorage.getItem(CONFIG.STORAGE_KEYS.CURRENT_ROSTER);
+    let saved = safeParseJSON(rawSaved);
+    if(!Array.isArray(saved) || saved.length === 0){
+      const fresh = [...loadedRoster];
       shuffleArray(fresh);
-      localStorage.setItem(CONFIG.STORAGE_KEYS.CURRENT_ROSTER,JSON.stringify(fresh));
+      localStorage.setItem(CONFIG.STORAGE_KEYS.CURRENT_ROSTER, JSON.stringify(fresh));
       log('Saved fresh shuffled currentRoster to localStorage');
-    } else log(`Found existing pool — ${saved.length} players remain`);
+    } else {
+      log(`Found existing pool — ${saved.length} players remain`);
+    }
 
-    let totalQ=parseInt(localStorage.getItem(CONFIG.STORAGE_KEYS.TOTAL_QUESTIONS),10);
-    if(isNaN(totalQ)){ totalQ=loadedRoster.length; localStorage.setItem(CONFIG.STORAGE_KEYS.TOTAL_QUESTIONS,String(totalQ)); log('Initialized totalQuestions',totalQ);}
-    else log('totalQuestions(from storage):',totalQ);
-    initialRosterCount=totalQ;
-  } catch(err){ console.error('[hof-quiz] Error init roster:',err); questionDisplay.textContent=`Error initializing roster: ${err.message}`; showView('quiz1'); return; }
+    let totalQ = parseInt(localStorage.getItem(CONFIG.STORAGE_KEYS.TOTAL_QUESTIONS), 10);
+    if(isNaN(totalQ)){
+      totalQ = loadedRoster.length;
+      localStorage.setItem(CONFIG.STORAGE_KEYS.TOTAL_QUESTIONS, String(totalQ));
+      log('Initialized totalQuestions', totalQ);
+    } else {
+      log('totalQuestions(from storage):', totalQ);
+    }
+    initialRosterCount = totalQ;
+  } catch(err){
+    console.error('[hof-quiz] Error init roster:',err);
+    questionDisplay.textContent=`Error initializing roster: ${err.message}`;
+    showView('quiz1'); 
+    return; 
+  }
 
   // Resume if lastPlayer & lastAnswer exist
   const lastPlayerRaw = localStorage.getItem(CONFIG.STORAGE_KEYS.LAST_PLAYER);
   const lastAnswerRaw = localStorage.getItem(CONFIG.STORAGE_KEYS.LAST_ANSWER);
   if(lastPlayerRaw && lastAnswerRaw !== null){
     log('Resuming lastPlayer and lastAnswer found');
-    try { currentPlayer=safeParseJSON(lastPlayerRaw)||null; showAnswerView(); return; }
-    catch(err){ console.warn('[hof-quiz] Could not parse lastPlayer',err); }
+    try { 
+      currentPlayer = safeParseJSON(lastPlayerRaw) || null; 
+      showAnswerView(); 
+      return; 
+    } catch(err){ 
+      console.warn('[hof-quiz] Could not parse lastPlayer',err); 
+    }
   }
 
   pickNextPlayer();
