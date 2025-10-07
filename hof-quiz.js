@@ -21,7 +21,7 @@ const CONFIG = {
     CLEAR_BUTTON: 'clear-button',
     NEXT_BUTTON: 'next-button',
     FEEDBACK: 'feedback',
-    PLAYER_IMAGE: 'hof-player-image',
+    PLAYER_IMAGE: 'player-image',
     PLAYER_INFO: 'player-info',
     PLAYER_TRIVIA: 'player-trivia',
     SCORE: 'score',
@@ -44,7 +44,7 @@ const CONFIG = {
 
   // Question phrases
   QUESTION_PHRASES: [
-    "What number did {player} wear?",
+    "What number is {player}?",
     "Which digits are on {player}'s jersey?",
     "Which number’s on {player}'s back?",
     "What’s {player}'s Steel Curtain number?",
@@ -242,7 +242,7 @@ function showAnswerView(){
   const correctNumber = Number(currentPlayer?.number ?? NaN);
   if(!isNaN(correctNumber) && storedAnswer===correctNumber)
     feedbackEl.textContent = chooseRandom(["Nice job!","That's right!","You got it!","Exactly!","Spot on!","Great work!","Correct!"]);
-    else {
+   else {
     feedbackEl.textContent = chooseRandom([
       "Oops, try again.",
       "Not quite.",
@@ -321,7 +321,4 @@ nextButton.addEventListener("click", () => {
 });
 
 // Initialize once DOM is ready
-document.addEventListener('DOMContentLoaded', async () => {
-  setupHandlers();
-  await init();
-});
+window.addEventListener("DOMContentLoaded", init);
