@@ -321,4 +321,7 @@ nextButton.addEventListener("click", () => {
 });
 
 // Initialize once DOM is ready
-window.addEventListener("DOMContentLoaded", init);
+document.addEventListener('DOMContentLoaded', async () => {
+  setupHandlers();
+  await init();
+});
