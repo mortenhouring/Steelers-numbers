@@ -297,28 +297,62 @@ function showAnswerView(){
 // EVENT LISTENERS
 ///////////////////////////
 
-// Keypad numeric input
+///////////////////////////
+// KEYPAD & INPUT LOGIC
+///////////////////////////
+
+// Unified input handler for numeric buttons
 keypadButtons.forEach(btn => {
   btn.addEventListener("click", () => {
     const val = btn.textContent.trim();
+    if(!val) return;
     answerDisplay.value += val;
+    console.log('[hof-quiz] Keypad input:', val, 'Current answer:', answerDisplay.value);
   });
 });
 
 // Clear button
 clearButton.addEventListener("click", () => {
   answerDisplay.value = "";
+  console.log('[hof-quiz] Cleared input');
 });
 
 // Go button
-goButton.addEventListener("click", handleSubmit);
+goButton.addEventListener("click", () => {
+  console.log('[hof-quiz] Go button clicked. Current player:', currentPlayer);
+  
+  if(!currentPlayer){
+    alert("No player loaded yet. Please wait.");
+    return;
+  }
 
-// Next button
-nextButton.addEventListener("click", () => {
-  localStorage.removeItem(CONFIG.STORAGE_KEYS.LAST_PLAYER);
-  localStorage.removeItem(CONFIG.STORAGE_KEYS.LAST_ANSWER);
-  pickNextPlayer();
+  const raw = answerDisplay.value.trim();
+  if(raw.length === 0){
+    alert("Please enter a number using the keypad.");
+    return;
+  }
+
+  const userAnswer = parseInt(raw, 10);
+  if(isNaN(userAnswer)){
+    alert("Invalid number. Please use the keypad.");
+    return;
+  }
+
+  // Save last answer before showing feedback
+  localStorage.setItem(CONFIG.STORAGE_KEYS.LAST_ANSWER, String(userAnswer));
+  console.log(`[hof-quiz] Submitted answer: ${userAnswer} for player ${currentPlayer.player_name}`);
+
+  // Increment counters
+  let questionsAsked = parseInt(localStorage.getItem(CONFIG.STORAGE_KEYS.QUESTIONS_ASKED),10) || 0;
+  questionsAsked += 1;
+  localStorage.setItem(CONFIG.STORAGE_KEYS.QUESTIONS_ASKED, String(questionsAsked));
+
+  let score = parseInt(localStorage.getItem(CONFIG.STORAGE_KEYS.SCORE),10) || 0;
+  const correctNumber = Number(currentPlayer?.number ?? NaN);
+  if(!isNaN(correctNumber) && userAnswer === correctNumber) score += 1;
+  localStorage.setItem(CONFIG.STORAGE_KEYS.SCORE, String(score));
+
+  showAnswerView();
 });
-
 // Initialize once DOM is ready
 window.addEventListener("DOMContentLoaded", init);
