@@ -241,84 +241,56 @@ function showAnswerView(){
   const storedAnswer = parseInt(localStorage.getItem(CONFIG.STORAGE_KEYS.LAST_ANSWER),10);
   const correctNumber = Number(currentPlayer?.number ?? NaN);
   if(!isNaN(correctNumber) && storedAnswer===correctNumber)
-    feedbackEl.textContent = chooseRandom(["Nice job!","That's right!","You got it!","Exactly!","Spot on!","Great work!","Correct!"]);
-   else {
-    feedbackEl.textContent = chooseRandom([
-      "Oops, try again.",
-      "Not quite.",
-      "Wrong number.",
-      "Close, but no.",
-      "Missed it.",
-      "Incorrect this time."
-    ]);
+    feedbackEl.textContent = chooseRandom(["Nice job!","That's right!","You got it!","Exactly!","Spot on!","Great!"
+    // fallback feedback if not set earlier
+  else
+    feedbackEl.textContent = chooseRandom(["Oops, try again.","Not quite.","Wrong number.","Almost, keep going.","Try once more.","Incorrect, keep going."]);
+
+  // For now show full trivia raw (will implement paragraph + Read More later)
+  if (playerTriviaEl) playerTriviaEl.textContent = (currentPlayer.trivia || '').trim();
+
+  let totalQuestions = parseInt(localStorage.getItem(CONFIG.STORAGE_KEYS.TOTAL_QUESTIONS), 10);
+  if (isNaN(totalQuestions)) {
+    totalQuestions = initialRosterCount || 0;
+    localStorage.setItem(CONFIG.STORAGE_KEYS.TOTAL_QUESTIONS, String(totalQuestions));
   }
+  const score = parseInt(localStorage.getItem(CONFIG.STORAGE_KEYS.SCORE) || '0', 10);
+  const questionsAsked = parseInt(localStorage.getItem(CONFIG.STORAGE_KEYS.QUESTIONS_ASKED) || '0', 10);
+  if (scoreEl) scoreEl.textContent = `Score: ${score} / ${questionsAsked}`;
 
-  // --- Trivia display logic ---
-  const triviaText = currentPlayer.trivia || "";
-  if (triviaText.trim().length > 0) {
-    // Split paragraphs by \n\n\
-    const paragraphs = triviaText.split("\\n\\n\\");
-    const first = paragraphs[0] || "";
-    const second = paragraphs[1] || "";
-    const firstTwo = [first, second].filter(Boolean).join("\n\n");
-    const shouldShowTwo = firstTwo.length <= 450;
-
-    let displayText = shouldShowTwo ? firstTwo : first;
-    playerTriviaEl.textContent = displayText;
-
-    // Add "read more" if there are extra paragraphs beyond shown ones
-    if (paragraphs.length > (shouldShowTwo ? 2 : 1)) {
-      const readMoreBtn = document.createElement("button");
-      readMoreBtn.textContent = "Read more";
-      readMoreBtn.className = "read-more-btn";
-      readMoreBtn.addEventListener("click", () => {
-        playerTriviaEl.textContent = paragraphs.join("\n\n");
-        readMoreBtn.remove();
-      });
-      playerTriviaEl.appendChild(readMoreBtn);
-    }
-  } else {
-    playerTriviaEl.textContent = "No trivia available.";
-  }
-
-  // Update score and remaining
-  const score = parseInt(localStorage.getItem(CONFIG.STORAGE_KEYS.SCORE), 10) || 0;
-  const total = parseInt(localStorage.getItem(CONFIG.STORAGE_KEYS.TOTAL_QUESTIONS), 10) || 0;
-  const pool = safeParseJSON(localStorage.getItem(CONFIG.STORAGE_KEYS.CURRENT_ROSTER)) || [];
+  const pool = Array.isArray(safeParseJSON(localStorage.getItem(CONFIG.STORAGE_KEYS.CURRENT_ROSTER)))
+    ? safeParseJSON(localStorage.getItem(CONFIG.STORAGE_KEYS.CURRENT_ROSTER))
+    : [];
   const remaining = pool.length;
+  if (remainingEl) remainingEl.textContent = `Remaining: ${remaining} / ${totalQuestions}`;
 
-  scoreEl.textContent = `Score: ${score}/${total}`;
-  remainingEl.textContent = `Remaining: ${remaining}`;
-
-  showView("quiz2");
+  showView('quiz2');
+  log(`Displayed quiz2 for player ${currentPlayer.player_name}. score=${score}, asked=${questionsAsked}, remaining=${remaining}`);
 }
 
-///////////////////////////
-// EVENT LISTENERS
-///////////////////////////
-
-// Keypad numeric input
-keypadButtons.forEach(btn => {
-  btn.addEventListener("click", () => {
-    const val = btn.textContent.trim();
-    answerDisplay.value += val;
-  });
-});
-
-// Clear button
-clearButton.addEventListener("click", () => {
-  answerDisplay.value = "";
-});
-
-// Go button
-goButton.addEventListener("click", handleSubmit);
-
-// Next button
-nextButton.addEventListener("click", () => {
+// NEXT
+function handleNext(){
   localStorage.removeItem(CONFIG.STORAGE_KEYS.LAST_PLAYER);
   localStorage.removeItem(CONFIG.STORAGE_KEYS.LAST_ANSWER);
   pickNextPlayer();
-});
+}
 
-// Initialize once DOM is ready
-window.addEventListener("DOMContentLoaded", init);
+// EVENT HANDLERS
+function setupHandlers(){
+  if (keypadButtons && keypadButtons.length) {
+    keypadButtons.forEach(btn => btn.addEventListener('click', () => {
+      if (!answerDisplay) return;
+      answerDisplay.value = (answerDisplay.value || '') + btn.textContent;
+    }));
+  }
+  if (clearButton) clearButton.addEventListener('click', () => { if (answerDisplay) answerDisplay.value = ''; });
+  if (goButton) goButton.addEventListener('click', handleSubmit);
+  if (answerDisplay) answerDisplay.addEventListener('keydown', ev => { if (ev.key === 'Enter') handleSubmit(); });
+  if (nextButton) nextButton.addEventListener('click', handleNext);
+}
+
+// DOM CONTENT LOADED
+document.addEventListener('DOMContentLoaded', async () => {
+  setupHandlers();
+  await init();
+});
