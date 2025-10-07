@@ -21,7 +21,7 @@ const CONFIG = {
     CLEAR_BUTTON: 'clear-button',
     NEXT_BUTTON: 'next-button',
     FEEDBACK: 'feedback',
-    PLAYER_IMAGE: 'player-image',
+    PLAYER_IMAGE: 'hof-player-image',
     PLAYER_INFO: 'player-info',
     PLAYER_TRIVIA: 'player-trivia',
     SCORE: 'score',
@@ -44,7 +44,7 @@ const CONFIG = {
 
   // Question phrases
   QUESTION_PHRASES: [
-    "What number is {player}?",
+    "What number did {player} wear?",
     "Which digits are on {player}'s jersey?",
     "Which number’s on {player}'s back?",
     "What’s {player}'s Steel Curtain number?",
@@ -242,5 +242,83 @@ function showAnswerView(){
   const correctNumber = Number(currentPlayer?.number ?? NaN);
   if(!isNaN(correctNumber) && storedAnswer===correctNumber)
     feedbackEl.textContent = chooseRandom(["Nice job!","That's right!","You got it!","Exactly!","Spot on!","Great work!","Correct!"]);
-  else
-    feedbackEl.textContent = chooseRandom(["Oops, try again.","Not quite.","Wrong number
+    else {
+    feedbackEl.textContent = chooseRandom([
+      "Oops, try again.",
+      "Not quite.",
+      "Wrong number.",
+      "Close, but no.",
+      "Missed it.",
+      "Incorrect this time."
+    ]);
+  }
+
+  // --- Trivia display logic ---
+  const triviaText = currentPlayer.trivia || "";
+  if (triviaText.trim().length > 0) {
+    // Split paragraphs by \n\n\
+    const paragraphs = triviaText.split("\\n\\n\\");
+    const first = paragraphs[0] || "";
+    const second = paragraphs[1] || "";
+    const firstTwo = [first, second].filter(Boolean).join("\n\n");
+    const shouldShowTwo = firstTwo.length <= 450;
+
+    let displayText = shouldShowTwo ? firstTwo : first;
+    playerTriviaEl.textContent = displayText;
+
+    // Add "read more" if there are extra paragraphs beyond shown ones
+    if (paragraphs.length > (shouldShowTwo ? 2 : 1)) {
+      const readMoreBtn = document.createElement("button");
+      readMoreBtn.textContent = "Read more";
+      readMoreBtn.className = "read-more-btn";
+      readMoreBtn.addEventListener("click", () => {
+        playerTriviaEl.textContent = paragraphs.join("\n\n");
+        readMoreBtn.remove();
+      });
+      playerTriviaEl.appendChild(readMoreBtn);
+    }
+  } else {
+    playerTriviaEl.textContent = "No trivia available.";
+  }
+
+  // Update score and remaining
+  const score = parseInt(localStorage.getItem(CONFIG.STORAGE_KEYS.SCORE), 10) || 0;
+  const total = parseInt(localStorage.getItem(CONFIG.STORAGE_KEYS.TOTAL_QUESTIONS), 10) || 0;
+  const pool = safeParseJSON(localStorage.getItem(CONFIG.STORAGE_KEYS.CURRENT_ROSTER)) || [];
+  const remaining = pool.length;
+
+  scoreEl.textContent = `Score: ${score}/${total}`;
+  remainingEl.textContent = `Remaining: ${remaining}`;
+
+  showView("quiz2");
+}
+
+///////////////////////////
+// EVENT LISTENERS
+///////////////////////////
+
+// Keypad numeric input
+keypadButtons.forEach(btn => {
+  btn.addEventListener("click", () => {
+    const val = btn.textContent.trim();
+    answerDisplay.value += val;
+  });
+});
+
+// Clear button
+clearButton.addEventListener("click", () => {
+  answerDisplay.value = "";
+});
+
+// Go button
+goButton.addEventListener("click", handleSubmit);
+
+// Next button
+nextButton.addEventListener("click", () => {
+  localStorage.removeItem(CONFIG.STORAGE_KEYS.LAST_PLAYER);
+  localStorage.removeItem(CONFIG.STORAGE_KEYS.LAST_ANSWER);
+  pickNextPlayer();
+});
+
+// Initialize once DOM is ready
+window.addEventListener("DOMContentLoaded", init);
