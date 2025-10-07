@@ -3,22 +3,95 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Steelers — Hall of Fame</title>
-  
-  <link rel="stylesheet" href="styles.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Steelers Hall of Fame Quiz</title>
   <style>
-  /* HOF quiz player image styling */
-  #hof-player-image {
-    width: 90%;       /* 90% of screen width */
-    max-width: 90%;   /* never exceed 90% */
-    height: auto;     /* maintain aspect ratio */
-    display: block;   /* center the image */
-    margin: 0 auto;   /* center horizontally */
-  }
+    /* Base */
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+    }
+
+    /* HOF container */
+    .hof-container {
+      width: 96%;
+      max-width: 100%;
+      margin: 2% auto;
+      background: white;
+      border-radius: 1%;
+      box-shadow: 0 0 2% rgba(0, 0, 0, 0.1);
+      padding: 2%;
+    }
+
+    /* Headings */
+    .hof-title {
+      text-align: center;
+      font-size: 200%;
+      margin-bottom: 2%;
+    }
+
+    /* Question */
+    .hof-question {
+      font-size: 150%;
+      margin-bottom: 2%;
+      text-align: center;
+    }
+
+    /* Answer buttons */
+    .hof-answers {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5%;
+      width: 80%;
+      margin: 0 auto;
+    }
+
+    .hof-answers button {
+      font-size: 120%;
+      padding: 2%;
+      border: none;
+      border-radius: 1%;
+      background-color: #ffcc00;
+      color: #000;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .hof-answers button:hover {
+      background-color: #e0b800;
+    }
+
+    /* Responsive scaling */
+    @media (min-width: 600px) {
+      .hof-answers {
+        width: 60%;
+      }
+    }
+
+    @media (min-width: 900px) {
+      .hof-answers {
+        width: 40%;
+      }
+    }
   </style>
 </head>
 <body>
+  <div class="hof-container">
+    <h1 class="hof-title">Steelers Hall of Fame Quiz</h1>
+    <div class="hof-question">Who was the first Steelers player inducted into the Hall of Fame?</div>
+    <div class="hof-answers">
+      <button>Joe Greene</button>
+      <button>Jack Ham</button>
+      <button>Ernie Stautner</button>
+      <button>Franco Harris</button>
+    </div>
+  </div>
+</body>
+</html>
   <!-- Header placeholder and script for dynamic menu -->
   <div id="header-placeholder"></div>
   <script src="headerscript.js" defer></script>
