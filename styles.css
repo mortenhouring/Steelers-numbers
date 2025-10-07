@@ -61,7 +61,7 @@ main > div:not(.end-buttons-container) {
   margin-top: 10px !important;
   margin-bottom: 10px !important;
   margin-left: 2em;
-  margin-right 2em;
+  margin-right: 2em;
 }
 
 .end-buttons {
@@ -143,7 +143,7 @@ main > div:not(.end-buttons-container) {
     text-align: center;
     font-weight: bold;
 }
-#score-remaining /* counters in quiz*/
+#score-remaining { /* counters in quiz*/
   font-size: 1.0em;
   font-weight: bold;
   margin:5px 20px 20px; 
