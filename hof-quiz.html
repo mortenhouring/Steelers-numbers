@@ -7,28 +7,6 @@
   <title>Steelers — Hall of Fame</title>
   
   <link rel="stylesheet" href="styles.css" />
-  <style>
-  /* HOF quiz player image styling */
-  #hof-player-image {
-    width: 99%;       /* 90% of screen width */
-    max-width: 99%;   /* never exceed 90% */
-    height: auto;     /* maintain aspect ratio */
-    display: block;   /* center the image */
-    margin: 0 auto;   /* center horizontally */
-  }
-  #hof-trivia-box {
-    width: 90%;
-    max-width: 90%;
-    max-height: 40vh;   /* limit box height to 40% of viewport */
-    overflow-y: auto;   /* enables vertical scrolling inside box */
-    background: rgba(0,0,0,0.05);  /* subtle background contrast */
-    border: 1px solid rgba(0,0,0,0.2);
-    border-radius: 8px;
-    padding: 1em;
-    margin: 1em auto 0;
-    color: #fff;        /* adjust to match your theme */
-  }
-</style>
 </head>
 <body>
   <!-- Header placeholder and script for dynamic menu -->
@@ -71,11 +49,11 @@
       <h1 id="feedback">Loading...</h1>
 
       
-        <img id="hof-player-image" src="" alt="Player Image" />
+        <img id="player-image" src="" alt="Player Image" />
       </div>
-      <div id="hof-trivia-box">
-        <div id="player-trivia"></div>
-      </div>
+
+      <div id="player-info"></div>
+      <div id="player-trivia"></div>
 
       <div id="score-remaining">
         <span id="score"></span> | <span id="remaining"></span>
