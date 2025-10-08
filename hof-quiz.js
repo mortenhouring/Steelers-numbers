@@ -85,6 +85,17 @@ let initialRosterCount = 0;
 ///////////////////////////
 // UTILITY FUNCTIONS
 ///////////////////////////
+function debugMsg(msg) {
+  let el = document.getElementById('debug-log');
+  if (!el) {
+    el = document.createElement('div');
+    el.id = 'debug-log';
+    el.style.cssText = 'position:fixed;bottom:0;left:0;width:100%;background:#111;color:#0f0;padding:5px;font-size:12px;z-index:9999;';
+    document.body.appendChild(el);
+  }
+  el.innerText = msg;
+}
+
 function log(...args) { console.log('[hof-quiz]', ...args); }
 function safeParseJSON(raw) { try { return JSON.parse(raw); } catch { return null; } }
 function shuffleArray(arr) { for (let i = arr.length-1; i>0; i--) { const j=Math.floor(Math.random()*(i+1)); [arr[i],arr[j]]=[arr[j],arr[i]]; } }
@@ -357,7 +368,10 @@ goButton.addEventListener("click", () => {
 ///////////////////////////
 // DOM CONTENT LOADED
 ///////////////////////////
-document.addEventListener('DOMContentLoaded',async()=>{
+document.addEventListener('DOMContentLoaded', async () => {
+  debugMsg('DOM ready → setupHandlers() starting...');
   setupHandlers();
+  debugMsg('setupHandlers() done → init() starting...');
   await init();
+  debugMsg('init() completed ✅');
 });
