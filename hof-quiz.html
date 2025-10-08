@@ -15,11 +15,13 @@
     display: block;   /* center the image */
     margin: 0 auto;   /* center horizontally */
   }
-  #hof-trivia-box {
+  .hof-trivia-box {
     width: 90%;
     max-width: 90%;
     max-height: 40vh;   /* limit box height to 40% of viewport */
-    overflow-y: auto;   /* enables vertical scrolling inside box */
+    overflow-y: auto;         /* enable vertical scrolling */
+    overflow-x: hidden;       /* prevent sideways scroll */
+    -webkit-overflow-scrolling: touch; /* smooth scrolling on iOS */   /* enables vertical scrolling inside box */
     background: rgba(0,0,0,0.05);  /* subtle background contrast */
     border: 1px solid rgba(0,0,0,0.2);
     border-radius: 8px;
@@ -69,12 +71,13 @@
     <div class="quiz2">
       <h1 id="feedback">Loading...</h1>
       
-      <div id="hof-trivia-box">
+      
         <img id="hof-player-image" src="" alt="Player Image" />
-      </div>
+      
       <div id="player-info"></div>
-      <div id="player-trivia"></div>
-
+      <div id="hof-trivia-box">
+        <div id="player-trivia"></div>
+      </div>
       <div id="score-remaining">
         <span id="score"></span> | <span id="remaining"></span>
       </div>
