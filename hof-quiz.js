@@ -1,4 +1,4 @@
-// HOF quiz
+// HOF quiz WORKING 8/10/25-15:03
 // template from depth-quiz.js
 // Single-page quiz controller adapted for hof.json
 // All configurable paths, filenames, HTML IDs, and localStorage keys
