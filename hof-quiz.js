@@ -175,18 +175,28 @@ async function init() {
     initialRosterCount=totalQ;
   } catch(err){ console.error('[hof-quiz] Error init roster:',err); questionDisplay.textContent=`Error initializing roster: ${err.message}`; showView('quiz1'); return; }
 
-  // Resume if lastPlayer & lastAnswer exist
+  // --- FIXED RESUME LOGIC ---
   const lastPlayerRaw = localStorage.getItem(CONFIG.STORAGE_KEYS.LAST_PLAYER);
   const lastAnswerRaw = localStorage.getItem(CONFIG.STORAGE_KEYS.LAST_ANSWER);
-  if(lastPlayerRaw && lastAnswerRaw !== null){
-    log('Resuming lastPlayer and lastAnswer found');
-    try { currentPlayer = safeParseJSON(lastPlayerRaw) || null; showAnswerView(); return; }
-    catch(err){ console.warn('[hof-quiz] Could not parse lastPlayer',err); }
+  if(lastPlayerRaw){
+    try {
+      currentPlayer = safeParseJSON(lastPlayerRaw) || null;
+    } catch(err){
+      console.warn('[hof-quiz] Could not parse lastPlayer',err);
+      currentPlayer = null;
+    }
   }
 
-  pickNextPlayer();
-}
+  // Always pick next player if currentPlayer is missing
+  if(!currentPlayer){
+    await pickNextPlayer();
+  }
 
+  // Load last answer if present
+  if(lastAnswerRaw !== null && lastAnswerRaw !== undefined){
+    answerDisplay.value = lastAnswerRaw;
+  }
+};
 ///////////////////////////
 // PICK NEXT PLAYER
 ///////////////////////////
