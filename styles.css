@@ -3,7 +3,7 @@ body {
     color: white;
     text-align: center;
     margin: 0;
-    padding: 20px;
+    padding: 3px;
     margin-top: 0px;
     min-height: 100vh; /* ensures the body is at least the height of the viewport */
     background-image: url('clean_background.PNG');
@@ -139,7 +139,7 @@ main > div:not(.end-buttons-container) {
 #player-info {
     font-size: 1.2em;
     font-weight: normal;
-    margin:0px 20px 20px; 
+    margin:0px 20px; 
     text-align: center;
     font-weight: bold;
 }
