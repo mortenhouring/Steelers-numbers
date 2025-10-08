@@ -366,12 +366,20 @@ goButton.addEventListener("click", () => {
   showAnswerView();
 });
 ///////////////////////////
-// DOM CONTENT LOADED
+// INIT QUIZ (IMMEDIATE, MODULE-SAFE)
 ///////////////////////////
-document.addEventListener('DOMContentLoaded', async () => {
-  debugMsg('DOM ready → setupHandlers() starting...');
-  setupHandlers();
-  debugMsg('setupHandlers() done → init() starting...');
-  await init();
-  debugMsg('init() completed ✅');
-});
+(async function() {
+  console.log('[hof-quiz] Module loaded, DOM should be ready');
+
+  try {
+    console.log('[hof-quiz] setupHandlers() starting...');
+    setupHandlers();
+    console.log('[hof-quiz] setupHandlers() done');
+
+    console.log('[hof-quiz] init() starting...');
+    await init();
+    console.log('[hof-quiz] init() done');
+  } catch (err) {
+    console.error('[hof-quiz] Initialization error:', err);
+  }
+})();
