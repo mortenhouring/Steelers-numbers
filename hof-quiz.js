@@ -21,7 +21,7 @@ const CONFIG = {
     CLEAR_BUTTON: 'clear-button',
     NEXT_BUTTON: 'next-button',
     FEEDBACK: 'feedback',
-    PLAYER_IMAGE: 'player-image',
+    PLAYER_IMAGE: 'hof-player-image',
     PLAYER_INFO: 'player-info',
     PLAYER_TRIVIA: 'player-trivia',
     SCORE: 'score',
