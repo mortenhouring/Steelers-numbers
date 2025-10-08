@@ -6,16 +6,6 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Steelers — Hall of Fame</title>
   <link rel="stylesheet" href="styles.css" />
-  <style>
-  /* HOF quiz player image styling */
-  #hof-player-image {
-    width: 99%;       /* 90% of screen width */
-    max-width: 99%;   /* never exceed 90% */
-    height: auto;     /* maintain aspect ratio */
-    display: block;   /* center the image */
-    margin: 0 auto;   /* center horizontally */
-  }
-  </style>
 </head>
 <body>
   <!-- Header placeholder and script for dynamic menu -->
@@ -57,11 +47,12 @@
     <div class="quiz2">
       <h1 id="feedback">Loading...</h1>
 
-      
-        <img id="hof-player-image" src="" alt="Player Image" />
+      <!-- Container for player image only -->
+      <div id="number-container">
+        <img id="player-image" src="" alt="Player Image" />
       </div>
 
-      
+      <div id="player-info"></div>
       <div id="player-trivia"></div>
 
       <div id="score-remaining">
