@@ -354,5 +354,10 @@ goButton.addEventListener("click", () => {
 
   showAnswerView();
 });
-// Initialize once DOM is ready
-window.addEventListener("DOMContentLoaded", init);
+///////////////////////////
+// DOM CONTENT LOADED
+///////////////////////////
+document.addEventListener('DOMContentLoaded',async()=>{
+  setupHandlers();
+  await init();
+});
