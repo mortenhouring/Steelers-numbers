@@ -44,11 +44,13 @@
   <div id="header-placeholder"></div>
   <script src="headerscript.js" defer></script>
 
+
+<div class="quiz-view">
   <!-- =======================
        QUIZ 1 VIEW (Question)
        Preserves original quiz1 layout/IDs
        ======================= -->
-  <main id="quiz1-view" class="quiz-view" aria-hidden="true">
+  <main id="quiz1-view" aria-hidden="true">
     <div class="quiz1">
       <h2 id="player-name">loading</h2>
 
@@ -75,7 +77,7 @@
        QUIZ 2 VIEW (Answer / Trivia)
        Adjusted for HOF quiz: no giant number
        ======================= -->
-  <main id="quiz2-view" class="quiz-view" aria-hidden="true" style="display:none;">
+  <main id="quiz2-view" aria-hidden="true" style="display:none;">
     <div class="quiz2">
       <h1 id="feedback">Loading...</h1>
       
@@ -92,6 +94,7 @@
 
       <button id="next-button" class="frontpage-btn">Next Player</button>
     </div>
+</div>
   </main>
 
   <!-- Module script: main single-page logic -->
