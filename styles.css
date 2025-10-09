@@ -9,51 +9,56 @@ html, body {
   overscroll-behavior: none; /* stop elastic overscroll on iOS/Safari */
   touch-action: manipulation;/* preserve button taps */
 }
+/* --- BODY AND MAIN CONTAINER --- 
+   - Ensure full viewport coverage without twitch/scroll
+   - Font sizes, padding, margin, min-height converted for mobile scaling
+*/
+
 body {
     font-family: 'Arial Narrow', Verdana, Tahoma, sans-serif;
     color: white;
     text-align: center;
     margin: 0;
-    padding: 3px;
-    margin-top: 0px;
-    min-height: 100vh; /* ensures the body is at least the height of the viewport */
+    padding: 0.12vw;             /* original 3px -> ~0.12vw */
+    min-height: 100vh;            /* keep full viewport height */
     background-image: url('clean_background.PNG');
-    background-size: cover;      /* fills the screen */
-    background-position: center; /* centers the image */
+    background-size: cover;      
+    background-position: center; 
     background-repeat: no-repeat;
 }
+
 main > div:not(.end-buttons-container) {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 10px;
+    margin-top: 0.39vw;           /* original 10px ~ 0.39vw */
 }
 
 .frontpage-btn {
     display: flex;
-    align-items: center;           /* vertical center */
-    justify-content: flex-start;   /* left align text + icon */
+    align-items: center;
+    justify-content: flex-start;
     width: 100%;
-    max-width: 400px;
-    padding: 16px 16px 16px 56px;  /* left padding = icon width + spacing */
-    margin-top: 20px;
-    border-radius: 30px;
+    max-width: 15.8vw;          /* original 400px -> 400/2532*100 = 15.8vw */
+    padding: 0.63vw 0.63vw 0.63vw 2.2vw; /* 16px vertical, 56px left icon spacing */
+    margin-top: 0.79vw;         /* 20px */
+    border-radius: 1.18vw;      /* 30px */
     border: none;
-    background-color: rgba(0, 0, 0, 0.7); /* 70% opaque black */
+    background-color: rgba(0, 0, 0, 0.7);
     color: var(--white) !important;
     font-weight: bold;
     text-transform: uppercase;
-    font-size: 16px;
+    font-size: 0.63vw;          /* 16px */
     cursor: pointer;
     
-    box-shadow: 0 4px 12px rgba(0,0,0,0.6);
+    box-shadow: 0 0.16vw 0.47vw rgba(0,0,0,0.6); /* 4px 12px */
     transition: transform 0.12s ease, box-shadow 0.12s ease, background-color 0.12s ease;
 
     /* Background image */
     background-image: url('white-logo.PNG');
     background-repeat: no-repeat;
-    background-size: 28px 28px;
-    background-position: 16px center;  /* left offset + vertical center */
+    background-size: 1.1vw 1.1vw; /* 28px 28px */
+    background-position: 0.63vw center; /* 16px left offset */
 }
 
 .frontpage-btn:active {
@@ -62,29 +67,29 @@ main > div:not(.end-buttons-container) {
     background-color: rgba(17,17,17,0.7);
 }
 
-/* Container */
+/* --- End Buttons Container --- */
 .end-buttons-container {
   display: flex !important;
   flex-direction: row !important;
   justify-content: center;
-  gap: 15px;
+  gap: 0.39vw;          /* 10px -> 10/2532*100 ≈ 0.39vw */
   flex-wrap: nowrap;
-  margin-top: 10px !important;
-  margin-bottom: 10px !important;
-  margin-left: 2em;
-  margin-right 2em;
+  margin-top: 0.39vw !important;   /* 10px */
+  margin-bottom: 0.39vw !important;/* 10px */
+  margin-left: 1.58vw;              /* 40px ~ 1.58vw */
+  margin-right: 1.58vw;             /* 40px */
 }
 
 .end-buttons {
   align-items: center;
-  justify-content: flex-start;  /* text left-aligned after logo */
+  justify-content: flex-start;
   text-align: left;
-  line-height: 60px;
-  width: 100px;          /* fixed width */
-  height: 100px;          /* fixed height */
-  padding-left: 56px;    /* space for background logo */
-  padding-top: 40px;
-  border-radius: 30px;
+  line-height: 2.37vw;      /* 60px → 60/2532*100 ≈ 2.37vw */
+  width: 3.95vw;             /* 100px → 3.95vw */
+  height: 3.95vw;            /* 100px → 3.95vw */
+  padding-left: 2.2vw;       /* 56px for logo */
+  padding-top: 1.58vw;       /* 40px */
+  border-radius: 1.18vw;     /* 30px */
   border: none;
   box-sizing: border-box;
 
@@ -92,16 +97,16 @@ main > div:not(.end-buttons-container) {
   color: var(--white) !important;
   font-weight: bold;
   text-transform: uppercase;
-  font-size: 13px;
+  font-size: 0.51vw;         /* 13px */
   cursor: pointer;
 
-  box-shadow: 0 4px 12px rgba(0,0,0,0.6);
+  box-shadow: 0 0.16vw 0.47vw rgba(0,0,0,0.6); /* 4px 12px */
   transition: transform 0.12s ease, box-shadow 0.12s ease, background-color 0.12s ease;
 
   background-image: url('white-logo.PNG');
   background-repeat: no-repeat;
-  background-size: 28px 28px;
-  background-position: 16px center;
+  background-size: 1.1vw 1.1vw;  /* 28px */
+  background-position: 0.63vw center; /* 16px left offset */
 
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -124,13 +129,16 @@ main > div:not(.end-buttons-container) {
   color: white;
 }
 
-/* Mobile tweaks */
 @media (max-width: 400px) {
   .end-buttons {
-    width: 140px;          /* narrower buttons for small screens */
-    padding-left: 48px;    /* adjust logo spacing proportionally */
-    font-size: 14px;       /* smaller text */
+    width: 5.53vw;         /* 140px */
+    padding-left: 1.89vw;  /* 48px logo spacing */
+    font-size: 0.55vw;     /* 14px */
   }
+  .end-buttons-container {
+    gap: 0.39vw;           /* keep same relative gap ~10px */
+  }
+}
   .end-buttons-container {
     gap: 10px;             /* less horizontal gap */
   }
@@ -169,24 +177,21 @@ main > div:not(.end-buttons-container) {
 /* quiz1 Button Styles */
 /* Keypad buttons */
 #keypad button {
-  background-color: rgba(0, 0, 0, 0.7); /* match frontpage-btn 70% black */
+  width: 2.76vw;            /* 70px → 70/2532*100 ≈ 2.76vw */
+  height: 2.76vw;           /* square */
+  margin: 0.20vw;            /* 5px */
+  border-radius: 1.18vw;     /* 30px */
+  font-size: 0.63vw;         /* 16px */
+  background-color: rgba(0, 0, 0, 0.7);
   color: white !important;
   font-family: 'Courier New', Courier, monospace;
-  font-size: 16px; /* prevents iOS zoom */
   font-weight: bold;
   text-transform: uppercase;
-
-  width: 70px;   /* mobile-friendly size */
-  height: 70px;
-  margin: 5px;
-  border: none;
-  border-radius: 30px; /* pill style like frontpage-btn */
-  cursor: pointer;
 
   align-items: center;
   justify-content: center;
 
-  box-shadow: 0 4px 12px rgba(0,0,0,0.6);
+  box-shadow: 0 0.16vw 0.47vw rgba(0,0,0,0.6); /* 4px 12px */
   transition: transform 0.12s ease,
               box-shadow 0.12s ease,
               background-color 0.12s ease;
@@ -195,8 +200,8 @@ main > div:not(.end-buttons-container) {
   -moz-appearance: none;
   appearance: none;
 
-  touch-action: manipulation; /* faster tap response */
-  user-select: none;          /* no accidental highlighting */
+  touch-action: manipulation;
+  user-select: none;
 }
 
 /* Pressed state */
