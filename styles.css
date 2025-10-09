@@ -300,5 +300,5 @@ color: #f0f0e0 !important;
   opacity: 1;
 }
 .quiz-view {
-  margin-top: var(--header-height, 3.75rem);
+  margin-top: var(--header-height, 5vh); /* fallback if variable not set */
 }
