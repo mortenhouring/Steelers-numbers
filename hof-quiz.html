@@ -6,59 +6,6 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Steelers — Hall of Fame</title>
   <link rel="stylesheet" href="styles.css" />
-<style>
-/* Prevent page from scrolling when inner scrollable boxes are swiped */
-html, body {
-  overscroll-behavior: contain;
-}
-  /* HOF quiz player image styling */
-  #hof-player-image {
-    width: 99%;       /* 90% of screen width */
-    max-width: 99%;   /* never exceed 90% */
-    height: auto;     /* maintain aspect ratio */
-    display: block;   /* center the image */
-    margin: 0 auto;   /* center horizontally */
-  }
-  #hof-trivia-box {
-    width: 90%;
-    max-width: 90%;
-    max-height: 40vh;   /* limit box height to 40% of viewport */
-    overflow-y: auto;         /* enable vertical scrolling */
-    overflow-x: hidden;       /* prevent sideways scroll */
-    -webkit-overflow-scrolling: touch; /* smooth scrolling on iOS */   /* enables vertical scrolling inside box */
-    background: rgba(0,0,0,0.05);  /* subtle background contrast */
-    border: 1px solid rgba(0,0,0,0.2);
-    border-radius: 8px;
-    padding: 1em;
-    margin: 1em auto 0;
-    color: #fff;        /* adjust to match your theme */
-    position: relative;         /* required for absolute pseudo-elements */
-}
-
-/* Bottom fade hint for scrolling */
-#hof-trivia-box::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 20px;
-  background: linear-gradient(to bottom, rgba(0,0,0,0), rgba(0,0,0,0.1));
-  pointer-events: none;       /* allows scrolling through the fade */
-}
-
-/* Minimalist pill handle at the bottom */
-.scroll-handle {
-  width: 40px;
-  height: 4px;
-  background: rgba(255,255,255,0.3);
-  border-radius: 2px;
-  margin: 8px auto 0 auto;     /* centered horizontally, some spacing from text */
-}
-.scroll-handle.hidden {
-  opacity: 0;
-}
-</style>
 </head>
 <body>
   <!-- Header placeholder and script for dynamic menu -->
@@ -99,14 +46,15 @@ html, body {
   <main id="quiz2-view" class="quiz-view" aria-hidden="true" style="display:none;">
     <div class="quiz2">
       <h1 id="feedback">Loading...</h1>
-      
-      
-        <img id="hof-player-image" src="" alt="Player Image" />
-      
-    <div id="hof-trivia-box">
+
+      <!-- Container for player image only -->
+      <div id="number-container">
+        <img id="player-image" src="" alt="Player Image" />
+      </div>
+
+      <div id="player-info"></div>
       <div id="player-trivia"></div>
-    </div>
-    <div class="scroll-handle"></div>
+
       <div id="score-remaining">
         <span id="score"></span> | <span id="remaining"></span>
       </div>
