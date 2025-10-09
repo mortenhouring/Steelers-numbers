@@ -1,71 +1,31 @@
-document.addEventListener("DOMContentLoaded", async () => {
-    const headerPlaceholder = document.getElementById("header-placeholder");
-    try {
-        const response = await fetch("header.html");
-        if (!response.ok) throw new Error("Failed to load header");
-        const headerContent = await response.text();
-        headerPlaceholder.innerHTML = headerContent;
+// ------------------------------
+// Mobile Header + Dynamic Quiz Offset
+// ------------------------------
 
-        // Attach event listeners after loading the header
-        const hamburgerButton = document.getElementById('hamburgerButton');
-        const dropdownMenu = document.getElementById('dropdownMenu');
-        const dropdownOverlay = document.getElementById('dropdownOverlay');
+document.addEventListener("DOMContentLoaded", () => {
+  const header = document.querySelector(".mobile-header");
+  const headerPlaceholder = document.getElementById("header-placeholder");
+  const root = document.documentElement; // for CSS variable
 
-        function toggleDropdown() {
-            const isOpen = dropdownMenu.classList.contains('show');
-            
-            if (isOpen) {
-                dropdownMenu.classList.remove('show');
-                dropdownOverlay.classList.remove('show');
-            } else {
-                dropdownMenu.classList.add('show');
-                dropdownOverlay.classList.add('show');
-            }
-        }
+  if (!header) return;
 
-        function closeDropdown() {
-            dropdownMenu.classList.remove('show');
-            dropdownOverlay.classList.remove('show');
-        }
+  // Set CSS variable for quiz offset
+  function updateHeaderHeight() {
+    const height = header.offsetHeight; // actual header height in px
+    const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
+    const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
 
-        // Add event listeners
-        hamburgerButton.addEventListener('click', toggleDropdown);
-        dropdownOverlay.addEventListener('click', closeDropdown);
+    // Convert px to vh as percentage of viewport height
+    const heightVh = (height / vh) * 100;
+    root.style.setProperty("--header-height", `${heightVh}vh`);
 
-        // Adjust padding below the header
-// === Header height → CSS variable (vh) + px fallback ===
-// Sets --header-height on :root in vh units so CSS can use var(--header-height).
-// Also keeps a px fallback on body.paddingTop for compatibility with existing pages.
+    // Optional: placeholder to avoid content jumping
+    headerPlaceholder.style.height = `${height}px`;
+  }
 
-const header = document.querySelector('.mobile-header');
+  // Initial calculation
+  updateHeaderHeight();
 
-if (header) {
-  const applyHeaderHeight = (px) => {
-    // Convert px to vh: 1vh == window.innerHeight / 100 px
-    const vhUnitPx = window.innerHeight / 100;
-    const headerVh = px / vhUnitPx;
-    // Set CSS custom property in vh units (use in CSS: margin-top: var(--header-height);)
-    document.documentElement.style.setProperty('--header-height', `${headerVh}vh`);
-    // Set px padding on body as a safe fallback for code/CSS still relying on px
-    document.body.style.paddingTop = `${px}px`;
-  };
-
-  const setHeaderHeight = () => {
-    const px = header.offsetHeight || Math.round(header.getBoundingClientRect().height);
-    if (!px) {
-      // If header height not ready (images/fonts), retry on next frame
-      requestAnimationFrame(setHeaderHeight);
-      return;
-    }
-    applyHeaderHeight(px);
-  };
-
-  // Initialize and update on viewport changes
-  setHeaderHeight();
-  window.addEventListener('resize', setHeaderHeight, { passive: true });
-  window.addEventListener('orientationchange', setHeaderHeight, { passive: true });
-}
-    } catch (error) {
-        console.error("Error loading header:", error);
-    }
+  // Recalculate on resize
+  window.addEventListener("resize", updateHeaderHeight);
 });
