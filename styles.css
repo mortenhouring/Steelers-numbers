@@ -165,6 +165,15 @@ main > div:not(.end-buttons-container) {
   text-align: center;
 }
 /* quiz1 Button Styles */
+/*quiz1 numeric keyboard container*/
+#keypad {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 columns for 1–9, then bottom row */
+    grid-auto-rows: 4rem;                  /* matches button height */
+    gap: 0.5vh;                            /* spacing between buttons */
+    justify-items: center;                  /* center buttons in cells */
+    margin: 1vh auto;                       /* center keypad horizontally */
+}
 /* Keypad buttons */
 #keypad button {
     width: 4rem;             /* ~64px, comfortable for touch */
