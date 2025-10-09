@@ -299,3 +299,6 @@ color: #f0f0e0 !important;
 #quiz2-content.visible {
   opacity: 1;
 }
+.quiz-view {
+  margin-top: var(--header-height, 3.75rem);
+}
