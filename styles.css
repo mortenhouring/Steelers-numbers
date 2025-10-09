@@ -38,27 +38,25 @@ main > div:not(.end-buttons-container) {
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    width: 100%;
-    max-width: 15.8vw;          /* original 400px -> 400/2532*100 = 15.8vw */
-    padding: 0.63vw 0.63vw 0.63vw 2.2vw; /* 16px vertical, 56px left icon spacing */
-    margin-top: 0.79vw;         /* 20px */
-    border-radius: 1.18vw;      /* 30px */
+    width: 90%;              /* nearly full width of container */
+    max-width: 400px;        /* base max size */
+    padding: 1rem 1rem 1rem 3.5rem; /* vertical + left for icon */
+    margin-top: 1rem;
+    border-radius: 1.5rem;
     border: none;
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: rgba(0,0,0,0.7);
     color: var(--white) !important;
     font-weight: bold;
     text-transform: uppercase;
-    font-size: 0.63vw;          /* 16px */
+    font-size: 1rem;
     cursor: pointer;
-    
-    box-shadow: 0 0.16vw 0.47vw rgba(0,0,0,0.6); /* 4px 12px */
-    transition: transform 0.12s ease, box-shadow 0.12s ease, background-color 0.12s ease;
 
-    /* Background image */
+    box-shadow: 0 0.25rem 0.75rem rgba(0,0,0,0.6);
+
     background-image: url('white-logo.PNG');
     background-repeat: no-repeat;
-    background-size: 1.1vw 1.1vw; /* 28px 28px */
-    background-position: 0.63vw center; /* 16px left offset */
+    background-size: 1.75rem 1.75rem; /* icon size */
+    background-position: 1rem center; 
 }
 
 .frontpage-btn:active {
@@ -81,39 +79,32 @@ main > div:not(.end-buttons-container) {
 }
 
 .end-buttons {
-  align-items: center;
-  justify-content: flex-start;
-  text-align: left;
-  line-height: 2.37vw;      /* 60px → 60/2532*100 ≈ 2.37vw */
-  width: 3.95vw;             /* 100px → 3.95vw */
-  height: 3.95vw;            /* 100px → 3.95vw */
-  padding-left: 2.2vw;       /* 56px for logo */
-  padding-top: 1.58vw;       /* 40px */
-  border-radius: 1.18vw;     /* 30px */
-  border: none;
-  box-sizing: border-box;
+    width: 5rem;           /* touch-friendly square */
+    height: 5rem;
+    padding-left: 3.5rem;  /* space for logo */
+    padding-top: 2.5rem;   /* vertical spacing inside button */
+    font-size: 0.85rem;
+    border-radius: 1.5rem;
+    background-color: rgba(0,0,0,0.7);
+    color: var(--white) !important;
+    font-weight: bold;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
 
-  background-color: rgba(0,0,0,0.7);
-  color: var(--white) !important;
-  font-weight: bold;
-  text-transform: uppercase;
-  font-size: 0.51vw;         /* 13px */
-  cursor: pointer;
+    box-shadow: 0 0.25rem 0.75rem rgba(0,0,0,0.6);
 
-  box-shadow: 0 0.16vw 0.47vw rgba(0,0,0,0.6); /* 4px 12px */
-  transition: transform 0.12s ease, box-shadow 0.12s ease, background-color 0.12s ease;
+    background-image: url('white-logo.PNG');
+    background-repeat: no-repeat;
+    background-size: 1.75rem 1.75rem;
+    background-position: 1rem center;
 
-  background-image: url('white-logo.PNG');
-  background-repeat: no-repeat;
-  background-size: 1.1vw 1.1vw;  /* 28px */
-  background-position: 0.63vw center; /* 16px left offset */
-
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-
-  touch-action: manipulation;
-  user-select: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    touch-action: manipulation;
+    user-select: none;
 }
 
 /* Pressed and focused states */
@@ -144,16 +135,15 @@ main > div:not(.end-buttons-container) {
   }
 }
 #answer-display {
-    font-size: 1.5em;
-    color: white;
-    font-weight: bold;
-    outline: var(--white);
-    width: 80px;
-    height: 70px;
+    width: min(80%, 80vw);   /* responsive width but never tiny */
+    height: 4rem;            /* comfortable touch height (~64px) */
+    font-size: 1.5rem;       /* readable number */
     text-align: center;
-    background-color: rgba(0, 0, 0, 0.4); /* 40% opaque black */
-    margin-top: 15px;
-    margin-bottom: 15px;
+    background-color: rgba(0,0,0,0.4);
+    margin: 1vh auto;        /* vertical spacing proportional to screen height */
+    border: none;
+    border-radius: 0.5rem;
+    box-sizing: border-box;
 }
 #player-info {
     font-size: 1.2em;
@@ -177,31 +167,32 @@ main > div:not(.end-buttons-container) {
 /* quiz1 Button Styles */
 /* Keypad buttons */
 #keypad button {
-  width: 2.76vw;            /* 70px → 70/2532*100 ≈ 2.76vw */
-  height: 2.76vw;           /* square */
-  margin: 0.20vw;            /* 5px */
-  border-radius: 1.18vw;     /* 30px */
-  font-size: 0.63vw;         /* 16px */
-  background-color: rgba(0, 0, 0, 0.7);
-  color: white !important;
-  font-family: 'Courier New', Courier, monospace;
-  font-weight: bold;
-  text-transform: uppercase;
+    width: 4rem;             /* ~64px, comfortable for touch */
+    height: 4rem;
+    margin: 0.5vh;           /* vertical & horizontal spacing proportional */
+    font-size: 1rem;         /* readable */
+    border-radius: 1rem;     /* pill style */
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white !important;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+    text-transform: uppercase;
 
-  align-items: center;
-  justify-content: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-  box-shadow: 0 0.16vw 0.47vw rgba(0,0,0,0.6); /* 4px 12px */
-  transition: transform 0.12s ease,
-              box-shadow 0.12s ease,
-              background-color 0.12s ease;
+    box-shadow: 0 0.16rem 0.47rem rgba(0,0,0,0.6); 
+    transition: transform 0.12s ease,
+                box-shadow 0.12s ease,
+                background-color 0.12s ease;
 
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
 
-  touch-action: manipulation;
-  user-select: none;
+    touch-action: manipulation;
+    user-select: none;
 }
 
 /* Pressed state */
