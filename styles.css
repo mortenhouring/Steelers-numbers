@@ -123,17 +123,18 @@ main > div:not(.end-buttons-container) {
 
 @media (max-width: 400px) {
   .end-buttons {
-    width: 5.53vw;         /* 140px */
-    padding-left: 1.89vw;  /* 48px logo spacing */
-    font-size: 0.55vw;     /* 14px */
+    width: 5.53vw;         /* already vw-based */
+    padding-left: 1.89vw;
+    font-size: 0.55vw;
   }
   .end-buttons-container {
-    gap: 0.39vw;           /* keep same relative gap ~10px */
+    gap: 0.39vw;           /* already correct for small screens */
   }
 }
-  .end-buttons-container {
-    gap: 10px;             /* less horizontal gap */
-  }
+
+/* Desktop / default gap */
+.end-buttons-container {
+  gap: 0.85vw;             /* replaces 10px for consistency */
 }
 #answer-display {
     width: min(80%, 80vw);   /* responsive width but never tiny */
@@ -153,10 +154,11 @@ main > div:not(.end-buttons-container) {
     text-align: center;
     font-weight: bold;
 }
-#score-remaining /* counters in quiz*/
-  font-size: 1.0em;
+/* counters in quiz */
+#score-remaining {
+  font-size: 1em;
   font-weight: bold;
-  margin:5px 20px 20px; 
+  margin: 0.2vh 1.7vw 1.7vw;  /* top:5px, sides/bottom:20px */
   text-align: center;
 }
 #info-text {
@@ -282,15 +284,15 @@ color: #f0f0e0 !important;
   /*outline: 2px solid green;  /* debug: image box */
 }
 #final-score-text {
-  margin:top 10px !important;
-  display: inline-flex !important;    /* inline so it doesn’t act like a full-width block */
-  flex-direction: row !important;     /* horizontal layout */
-  gap: 5px !important;                /* space between text and number */
+  margin-top: 0.4vh !important;
+  display: inline-flex !important;
+  flex-direction: row !important;
+  gap: 0.43vw !important;
   font-size: 1.2em;
   font-weight: bold;
-  white-space: nowrap !important;     /* prevent wrapping */
-  justify-content: center !important; /* center horizontally */
-  align-items: center !important;     /* vertical alignment */
+  white-space: nowrap !important;
+  justify-content: center !important;
+  align-items: center !important;
 }
 /* fading in on quiz2 */
 #quiz2-content {
