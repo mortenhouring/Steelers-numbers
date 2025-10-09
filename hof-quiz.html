@@ -8,27 +8,35 @@
   <link rel="stylesheet" href="styles.css" />
 <style>
   /* HOF quiz player image styling */
-  #hof-player-image {
-    width: 99%;       /* 90% of screen width */
-    max-width: 99%;   /* never exceed 90% */
-    height: auto;     /* maintain aspect ratio */
-    display: block;   /* center the image */
-    margin: 0 auto;   /* center horizontally */
-  }
-  .hof-trivia-box {
-    width: 90%;
-    max-width: 90%;
-    max-height: 40vh;   /* limit box height to 40% of viewport */
-    overflow-y: auto;         /* enable vertical scrolling */
-    overflow-x: hidden;       /* prevent sideways scroll */
-    -webkit-overflow-scrolling: touch; /* smooth scrolling on iOS */   /* enables vertical scrolling inside box */
-    background: rgba(0,0,0,0.05);  /* subtle background contrast */
-    border: 1px solid rgba(0,0,0,0.2);
-    border-radius: 8px;
-    padding: 1em;
-    margin: 1em auto 0;
-    color: #fff;        /* adjust to match your theme */
-  }
+ /* --- HOF quiz player image styling (responsive for mobile) ---
+   Conversions:
+   - width/height in px → % of viewport (vw/vh) to maintain proportions
+   - padding/margin in px → % of viewport (vh for vertical, vw for horizontal)
+   - Increasing a value makes element bigger; decreasing makes it smaller
+   - All adjustments are calibrated to base screen 2532x1170 (portrait mobile) */
+
+#hof-player-image {
+  width: 99vw;       /* ~original 90% of screen width scaled to viewport width */
+  max-width: 99vw;   
+  height: auto;      /* maintain aspect ratio */
+  display: block;    
+  margin: 0 auto;    
+}
+
+#hof-trivia-box {
+  width: 90vw;        /* originally 90% of container, now % of viewport width */
+  max-width: 90vw;    
+  max-height: 40vh;   /* limits box height to 40% of viewport height */
+  overflow-y: auto;  
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  background: rgba(0,0,0,0.05);
+  border: 0.08vw solid rgba(0,0,0,0.2);  /* 1px ~ 0.08vw at base screen */
+  border-radius: 0.32vw;                 /* 8px ~ 0.32vw */
+  padding: 0.08 * 2532 / 100vw; /* adjust proportionally */ 
+  margin: 0.08 * 2532 / 100vw auto 0;  /* top margin proportional, horizontal auto */
+  color: #fff;
+}
 </style>
 </head>
 <body>
