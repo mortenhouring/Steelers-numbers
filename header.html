@@ -5,84 +5,94 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Numbers Game - Mobile Header</title>
   <style>
-      {
+    /* 
+      All pixel units converted to screen percentages (vw/vh).
+      - Increasing vh values increases vertical header space.
+      - Increasing vw values enlarges elements horizontally.
+      Based on a 2532 x 1170 reference resolution.
+    */
+
+    * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
+
     .header-title {
-  position: absolute;   /* overlay on top of header content */
-  top: 50%;             /* start in vertical center */
-  left: 40%;            /* start in horizontal center */
-  transform: translate(-50%, -50%); /* center exactly */
-  font-size: 25px;
-  font-weight: bold;
-  color: white;
-}
-.header-logo {
-      height: 60px; /* adjust to fit your header */
+      position: absolute;
+      top: 50%;
+      left: 40%;
+      transform: translate(-50%, -50%);
+      font-size: 2.14vw;     /* 25px */
+      font-weight: bold;
+      color: white;
+    }
+
+    .header-logo {
+      height: 2.37vh;        /* 60px */
       width: auto;
-      margin-right: 10px; /* space between logo and title */
+      margin-right: 0.85vw;  /* 10px */
       align-items: left;
     }
+
     .mobile-header {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
-      height: 60px;
+      height: 2.37vh;             /* 60px */
       background-color: black;
-      border-bottom: 2px solid black;
+      border-bottom: 0.17vw solid black; /* 2px */
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0px 3px;
+      padding: 0 0.26vw;         /* 3px */
       z-index: 1000;
       font-family: Arial, sans-serif;
     }
 
     .app-title {
-      font-size: 20px;
+      font-size: 1.71vw;         /* 20px */
       font-weight: bold;
       color: black;
     }
 
     .hamburger-button {
-      width: 44px;
-      height: 44px;
+      width: 3.76vw;             /* 44px */
+      height: 3.76vw;            /* 44px */
       background-color: black;
-      border: 2px solid black;
-      border-radius: 4px;
+      border: 0.17vw solid black; /* 2px */
+      border-radius: 0.34vw;     /* 4px */
       cursor: pointer;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+      box-shadow: 0.17vw 0.17vw 0.34vw rgba(0, 0, 0, 0.3);
       position: relative;
     }
 
     .hamburger-button:active {
-      box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
-      transform: translateY(1px);
+      box-shadow: 0.09vw 0.09vw 0.17vw rgba(0, 0, 0, 0.3);
+      transform: translateY(0.04vh);
     }
 
     .hamburger-line {
-      width: 20px;
-      height: 3px;
+      width: 1.71vw;             /* 20px */
+      height: 0.26vw;            /* 3px */
       background-color: #FFB600;
-      margin: 2px 0;
+      margin: 0.17vw 0;          /* 2px */
     }
 
     .dropdown-menu {
       position: absolute;
-      top: 60px;
-      right: 20px;
-      width: 200px;
+      top: 2.37vh;               /* match header height */
+      right: 1.71vw;             /* 20px */
+      width: 17.1vw;             /* 200px */
       background-color: black;
-      border: 2px #FFB600;
-      border-radius: 4px;
-      box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3);
+      border: 0.17vw solid #FFB600;
+      border-radius: 0.34vw;     /* 4px */
+      box-shadow: 0.17vw 0.17vw 0.51vw rgba(0, 0, 0, 0.3);
       display: none;
       z-index: 999;
     }
@@ -94,12 +104,12 @@
     .dropdown-item {
       display: block;
       width: 100%;
-      padding: 16px 20px;
+      padding: 1.37vw 1.71vw;    /* 16px 20px */
       background-color: black;
       border: none;
-      border-bottom: 1px #FFB600;
+      border-bottom: 0.17vw solid #FFB600;
       text-align: left;
-      font-size: 16px;
+      font-size: 1.37vw;         /* 16px */
       color: #FFB600;
       cursor: pointer;
       text-decoration: none;
@@ -107,11 +117,11 @@
 
     .dropdown-item:last-child {
       border-bottom: none;
-      border-radius: 0 0 2px 2px;
+      border-radius: 0 0 0.17vw 0.17vw;
     }
 
     .dropdown-item:first-child {
-      border-radius: 2px 2px 0 0;
+      border-radius: 0.17vw 0.17vw 0 0;
     }
 
     .dropdown-item:hover {
@@ -122,23 +132,6 @@
       background-color: #e0e0e0;
     }
 
-    /* Demo content styling */
-    .demo-content {
-      margin-top: 80px;
-      padding: 20px;
-      font-family: Arial, sans-serif;
-    }
-
-    .demo-content h1 {
-      margin-bottom: 20px;
-    }
-
-    .demo-content p {
-      margin-bottom: 10px;
-      line-height: 1.5;
-    }
-
-    /* Overlay to close dropdown when clicking outside */
     .dropdown-overlay {
       position: fixed;
       top: 0;
@@ -156,21 +149,18 @@
   </style>
 </head>
 <body>
-  <!-- Mobile Header -->
   <header class="mobile-header">
-  <img src="header_image.jpg" alt="Steelers Quiz" class="header-logo">
-  <div class="header-title">JERSEY QUIZ</div>
-  <button class="hamburger-button" id="hamburgerButton">
-    <div class="hamburger-line"></div>
-    <div class="hamburger-line"></div>
-    <div class="hamburger-line"></div>
-  </button>
+    <img src="header_image.jpg" alt="Steelers Quiz" class="header-logo">
+    <div class="header-title">JERSEY QUIZ</div>
+    <button class="hamburger-button" id="hamburgerButton">
+      <div class="hamburger-line"></div>
+      <div class="hamburger-line"></div>
+      <div class="hamburger-line"></div>
+    </button>
   </header>
 
-  <!-- Dropdown Overlay -->
   <div class="dropdown-overlay" id="dropdownOverlay"></div>
 
-  <!-- Dropdown Menu -->
   <nav class="dropdown-menu" id="dropdownMenu">
     <a href="index.html" class="dropdown-item">Front office</a>
     <a href="quizstart.html" class="dropdown-item">Current roster</a>
@@ -180,14 +170,12 @@
   </nav>
 
   <script>
-    // Mobile dropdown functionality
     const hamburgerButton = document.getElementById('hamburgerButton');
     const dropdownMenu = document.getElementById('dropdownMenu');
     const dropdownOverlay = document.getElementById('dropdownOverlay');
 
     function toggleDropdown() {
       const isOpen = dropdownMenu.classList.contains('show');
-      
       if (isOpen) {
         dropdownMenu.classList.remove('show');
         dropdownOverlay.classList.remove('show');
@@ -202,20 +190,13 @@
       dropdownOverlay.classList.remove('show');
     }
 
-    // Event listeners
     hamburgerButton.addEventListener('click', toggleDropdown);
     dropdownOverlay.addEventListener('click', closeDropdown);
-
-    // Close dropdown when clicking on a menu item
     document.querySelectorAll('.dropdown-item').forEach(item => {
       item.addEventListener('click', closeDropdown);
     });
-
-    // Close dropdown on escape key
-    document.addEventListener('keydown', function(event) {
-      if (event.key === 'Escape') {
-        closeDropdown();
-      }
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') closeDropdown();
     });
   </script>
 </body>
