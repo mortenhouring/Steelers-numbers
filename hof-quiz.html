@@ -55,6 +55,9 @@ html, body {
   border-radius: 2px;
   margin: 8px auto 0 auto;     /* centered horizontally, some spacing from text */
 }
+.scroll-handle.hidden {
+  opacity: 0;
+}
 </style>
 </head>
 <body>
@@ -100,12 +103,10 @@ html, body {
       
         <img id="hof-player-image" src="" alt="Player Image" />
       
-      <div id="player-info"></div>
-      <div id="hof-trivia-box">
-        <div id="player-trivia">
-        </div>
-        <div class="scroll-handle"></div> <!-- minimalist pill at bottom -->
-        </div>
+    <div id="hof-trivia-box">
+      <div id="player-trivia"></div>
+    </div>
+    <div class="scroll-handle"></div>
       <div id="score-remaining">
         <span id="score"></span> | <span id="remaining"></span>
       </div>
