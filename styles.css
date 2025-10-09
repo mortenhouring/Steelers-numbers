@@ -20,19 +20,26 @@ html body {
    - Font sizes, padding, margins converted to vw/vh units for mobile scaling
 */
 body {
-  width: 100%;
-  min-height: 100%;
+  width: 100%;                 
+  height: 100%;                /* ensure body fills html exactly */
   margin: 0;
-  padding: 0; /* remove the 0.12vw padding to prevent overflow */
+  padding: 0;                  /* remove the 0.12vw padding to prevent overflow */
   font-family: 'Arial Narrow', Verdana, Tahoma, sans-serif;
   color: white;
   text-align: center;
+
+  display: flex;               
+  flex-direction: column;      /* stack children vertically */
+  
   background-image: url('clean_background.PNG');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  box-sizing: border-box; /* ensures no element exceeds body width */
-  overflow-x: hidden;      /* prevents horizontal scroll from small rounding errors */
+  
+  box-sizing: border-box;      /* ensures no element exceeds body width */
+  overflow-x: hidden;          /* prevents horizontal scroll from small rounding errors */
+  
+  flex: 1 1 auto;              /* allows body to expand fully if inside html/flex container */
 }
 
 main > div:not(.end-buttons-container) {
@@ -319,9 +326,10 @@ main > div:not(.end-buttons-container) {
 }
 
 .quiz-view {
+  flex: 1 1 auto;             /* fills remaining vertical space in body */
   display: flex;
   flex-direction: column;
-  min-height: 100%;      /* ensures it fills body without overflow */
+  height: 100%;               /* match body height exactly instead of min-height */
   box-sizing: border-box;
-  margin-top: var(--header-height, 8vh);
+  margin-top: var(--header-height, 8vh); /* optional header spacing */
 }
