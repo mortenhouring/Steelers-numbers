@@ -1,3 +1,14 @@
+/* --- Viewport lock: prevent scroll & fix background sizing --- */
+/* DO NOT MODIFY: required for full-viewport stable background */
+html, body {
+  width: 100vw;              /* full browser width */
+  height: 100dvh;            /* dynamic viewport height — adapts to mobile chrome */
+  margin: 0;
+  padding: 0;
+  overflow: hidden;          /* disable scroll/twitch */
+  overscroll-behavior: none; /* stop elastic overscroll on iOS/Safari */
+  touch-action: manipulation;/* preserve button taps */
+}
 body {
     font-family: 'Arial Narrow', Verdana, Tahoma, sans-serif;
     color: white;
