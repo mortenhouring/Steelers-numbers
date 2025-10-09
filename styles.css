@@ -2,45 +2,49 @@
    Viewport lock: prevent scroll & fix background sizing
    ------------------------------ */
 /* DO NOT MODIFY: required for full-viewport stable background */
-html body {
-  overflow-y: hidden;
-  width: 100%;
-  height: 100%;
+/* ------------------------------
+   HTML + BODY
+   ------------------------------ */
+html, body {
+  overflow-y: hidden;           /* prevent vertical scroll */
+  width: 100%;                  
+  height: 100dvh;               /* dynamic viewport height to prevent black bar */
   margin: 0;
   padding: 0;
-  overscroll-behavior: none;
-  touch-action: manipulation;
-  background-color: black;
+  overscroll-behavior: none;    /* disable iOS rubber-banding */
+  touch-action: manipulation;   /* improves touch responsiveness */
+  background-color: black;      /* fallback under body background */
 }
 
 /* ------------------------------
    BODY AND MAIN CONTAINER
    ------------------------------ */
 /* - Full viewport coverage
-   - Font sizes, padding, margins converted to vw/vh units for mobile scaling
+   - Stack children vertically
+   - Handles background image and global text styles
 */
 body {
   width: 100%;                 
-  height: 100%;                /* ensure body fills html exactly */
+  height: 100%;                 /* fills html exactly */
   margin: 0;
-  padding: 0;                  /* remove the 0.12vw padding to prevent overflow */
+  padding: 0;                    /* remove previous 0.12vw padding to avoid overflow */
   font-family: 'Arial Narrow', Verdana, Tahoma, sans-serif;
   color: white;
   text-align: center;
 
   display: flex;               
-  flex-direction: column;      /* stack children vertically */
+  flex-direction: column;        /* stack children vertically */
   
   background-image: url('clean_background.PNG');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   
-  box-sizing: border-box;      /* ensures no element exceeds body width */
-  overflow-x: hidden;          /* prevents horizontal scroll from small rounding errors */
-  
-  flex: 1 1 auto;              /* allows body to expand fully if inside html/flex container */
+  box-sizing: border-box;        /* prevents children from overflowing body */
+  overflow-x: hidden;            /* prevents horizontal scroll from rounding errors */
 }
+
+
 
 main > div:not(.end-buttons-container) {
   display: flex;
@@ -326,10 +330,10 @@ main > div:not(.end-buttons-container) {
 }
 
 .quiz-view {
-  flex: 1 1 auto;             /* fills remaining vertical space in body */
+  flex: 1 1 auto;                /* take all available vertical space */
   display: flex;
   flex-direction: column;
-  height: 100%;               /* match body height exactly instead of min-height */
+  height: 100%;                  /* fills body exactly */
   box-sizing: border-box;
-  margin-top: var(--header-height, 8vh); /* optional header spacing */
+  margin-top: var(--header-height, 8vh);
 }
