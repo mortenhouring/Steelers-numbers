@@ -16,26 +16,27 @@
    - All adjustments are calibrated to base screen 2532x1170 (portrait mobile) */
 
 #hof-player-image {
-  width: 99vw;       /* ~original 90% of screen width scaled to viewport width */
-  max-width: 99vw;   
-  height: auto;      /* maintain aspect ratio */
-  display: block;    
-  margin: 0 auto;    
+  max-width: 100%;      /* safe width */
+  width: auto;          /* let height scale automatically */
+  height: auto;
+  display: block;
+  margin: 0 auto;
 }
 
 #hof-trivia-box {
-  width: 90vw;        /* originally 90% of container, now % of viewport width */
-  max-width: 90vw;    
-  max-height: 40vh;   /* limits box height to 40% of viewport height */
-  overflow-y: auto;  
-  overflow-x: hidden;
-  -webkit-overflow-scrolling: touch;
-  background: rgba(0,0,0,0.05);
-  border: 0.08vw solid rgba(0,0,0,0.2);  /* 1px ~ 0.08vw at base screen */
-  border-radius: 0.32vw;                 /* 8px ~ 0.32vw */
-  padding: 0.08 * 2532 / 100vw; /* adjust proportionally */ 
-  margin: 0.08 * 2532 / 100vw auto 0;  /* top margin proportional, horizontal auto */
-  color: #fff;
+  width: 90vw;                     /* keeps your desired width */
+  max-width: 90vw;                  /* constrain width on larger screens */
+  max-height: 40vh;                 /* prevents box from growing too tall */
+  overflow-y: auto;                 /* scrollable if content exceeds max-height */
+  overflow-x: hidden;               /* prevents horizontal scroll */
+  -webkit-overflow-scrolling: touch;/* smooth scroll on iOS */
+  background: rgba(0,0,0,0.05);    /* semi-transparent background */
+  border: 1px solid rgba(0,0,0,0.2); /* fixed pixel border for reliability */
+  border-radius: 8px;               /* fixed radius in px */
+  padding: 8px;                     /* fixed padding in px to prevent fractional overflow */
+  margin: 8px auto 0;               /* top margin + auto horizontal centering */
+  color: #fff;                      /* text color */
+  box-sizing: border-box;           /* ensures padding + border stay inside max-height */
 }
 </style>
 </head>
