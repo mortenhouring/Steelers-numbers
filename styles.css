@@ -2,13 +2,13 @@
 /* --- Viewport lock: prevent scroll & fix background sizing --- */
 /* DO NOT MODIFY: required for full-viewport stable background */
 html, body {
-  width: 100vw;              /* full browser width */
-  height: 100dvh;            /* dynamic viewport height — adapts to mobile chrome */
+  width: 100vw;
+  height: 100dvh;
   margin: 0;
   padding: 0;
-  overflow: hidden;          /* disable scroll/twitch */
-  overscroll-behavior: none; /* stop elastic overscroll on iOS/Safari */
-  touch-action: manipulation;/* preserve button taps */
+  /* overflow: hidden;  <-- commented out so fixed header and page flow are visible */
+  overscroll-behavior: none;
+  touch-action: manipulation;
 }
 /* --- BODY AND MAIN CONTAINER --- 
    - Ensure full viewport coverage without twitch/scroll
@@ -301,5 +301,5 @@ color: #f0f0e0 !important;
   opacity: 1;
 }
 .quiz-view {
-  margin-top: var(--header-height, 5vh); /* fallback if variable not set */
+  margin-top: var(--header-height, 8vh); /* fallback if variable not set */
 }
