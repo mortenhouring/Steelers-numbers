@@ -1,5 +1,5 @@
 // ------------------------------
-// Mobile Header + Dynamic Quiz Offset
+// header.js Mobile Header + Dynamic Quiz Offset 
 // ------------------------------
 
 document.addEventListener("DOMContentLoaded", () => {
