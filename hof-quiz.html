@@ -25,32 +25,45 @@
   margin: 0;                    /* ensure no centering */
 }
 
+/* hof-trivia-box: scrollable box + persistent bottom fade */
 #hof-trivia-box {
-  position: relative;
-  width: 90vw;                     /* keeps your desired width */
-  max-width: 90vw;                  /* constrain width on larger screens */
-  max-height: 33vh;                 /* prevents box from growing too tall */
-  overflow-y: auto;                 /* scrollable if content exceeds max-height */
-  overflow-x: hidden;               /* prevents horizontal scroll */
-  -webkit-overflow-scrolling: touch;/* smooth scroll on iOS */
-  background: rgba(0,0,0,0.05);    /* semi-transparent background */
-  border: 1px solid rgba(0,0,0,0.2); /* fixed pixel border for reliability */
-  border-radius: 8px;               /* fixed radius in px */
-  padding: 8px;                     /* fixed padding in px to prevent fractional overflow */
-  margin-bottom: 5vh;               
-  color: #fff;                      /* text color */
-  box-sizing: border-box;           /* ensures padding + border stay inside max-height */
+  position: relative;            /* required so ::after is positioned inside the box */
+  width: 90vw;
+  max-width: 90vw;
+  max-height: 33vh;              /* keeps box limited in height */
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+
+  background: rgba(0,0,0,0.05);
+  border: 1px solid rgba(0,0,0,0.2);
+  border-radius: 8px;
+  padding: 8px;
+  margin-bottom: 5vh;
+  color: #fff;
+  box-sizing: border-box;
 }
+
+/* stationary bottom fade that sits on top of the box content */
 #hof-trivia-box::after {
-  content: '';
-  position: fixed;                /* ✅ this is the key */
-  bottom: 0;
+  content: "";
+  position: absolute;            /* anchor to the box (NOT to viewport) */
   left: 0;
-  width: 100%;
-  height: 1.5rem;
-  pointer-events: none;
-  background: linear-gradient(to bottom, rgba(0,0,0,0), rgba(0,0,0,0.6));
-  z-index: 2;                     /* sits above content but below scrollbars */
+  right: 0;
+  bottom: 0;
+  height: 1.6rem;                /* thickness of fade; adjust to taste */
+  pointer-events: none;          /* doesn't block scrolling/taps */
+  z-index: 8;                    /* high enough to sit above content */
+  border-bottom-left-radius: inherit;
+  border-bottom-right-radius: inherit;
+
+  /* dark-to-transparent fade: dark at the bottom, fades upward */
+  background: linear-gradient(
+    to top,
+    rgba(0,0,0,0.65),
+    rgba(0,0,0,0)
+  );
+  transition: opacity 180ms ease;
 }
 </style>
 </head>
