@@ -54,6 +54,14 @@ main > div:not(.end-buttons-container) {
   margin-top: 0.39vw;          /* 10px → 0.39vw */
 }
 
+/* ------------------------------ 
+Header placeholder must be same height as defined in height in header.html
+------------------------------ */
+#header-placeholder {
+  height: 8vh;
+  width: 100%;
+  margin-bottom: 2vh;  /* tweak vertical gap to #player-name */
+}
 /* ------------------------------
    Frontpage Buttons
    ------------------------------ */
@@ -345,5 +353,4 @@ main > div:not(.end-buttons-container) {
   flex-direction: column;
   height: 100%;                  /* fills body exactly */
   box-sizing: border-box;
-  margin-top: var(--header-height, 8vh);
 }
