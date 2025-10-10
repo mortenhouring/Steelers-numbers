@@ -213,7 +213,7 @@ main > div:not(.end-buttons-container) {
   margin: 0.5vh;
   font-size: 2em;
   border: none;
-  border-radius: 1rem;
+  border-radius: 0.1rem;
   background-color: rgba(0, 0, 0, 0.7);
   color: white !important;
     font-family: 'Helvetica Neue', Arial, sans-serif;
