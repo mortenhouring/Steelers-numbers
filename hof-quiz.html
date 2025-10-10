@@ -16,11 +16,13 @@
    - All adjustments are calibrated to base screen 2532x1170 (portrait mobile) */
 
 #hof-player-image {
-  height: 20vh;       /* taller image, adjust as needed */
-  width: auto;        /* maintain aspect ratio */
+  height: 20vh;                 /* taller image, adjust freely */
+  width: auto;                  /* maintain aspect ratio */
   display: block;
-  margin: 0;          /* left-aligned */
-  object-fit: cover;  /* scales image to fill height without stretching */
+  align-self: flex-start;       /* override parent centering */
+  object-fit: cover;            /* crop image instead of squishing */
+  overflow: hidden;             /* hide right-side overflow */
+  margin: 0;                    /* ensure no centering */
 }
 
 #hof-trivia-box {
