@@ -14,7 +14,15 @@
    - padding/margin in px → % of viewport (vh for vertical, vw for horizontal)
    - Increasing a value makes element bigger; decreasing makes it smaller
    - All adjustments are calibrated to base screen 2532x1170 (portrait mobile) */
-
+#hof-player-image {
+  height: 18vh;                 /* taller image, adjust freely */
+  width: auto;                  /* maintain aspect ratio */
+  display: block;
+  align-self: flex-start;       /* override parent centering */
+  object-fit: cover;            /* crop image instead of squishing */
+  overflow: hidden;             /* hide right-side overflow */
+  margin: 0;                    /* ensure no centering */
+}
 #hof-trivia-box {
   position: relative;
   width: 90vw;
