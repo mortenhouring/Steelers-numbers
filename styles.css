@@ -216,9 +216,8 @@ main > div:not(.end-buttons-container) {
   border-radius: 1rem;
   background-color: rgba(0, 0, 0, 0.7);
   color: white !important;
-  font-family: 'Courier New', Courier, monospace;
-  font-weight: bold;
-  text-transform: uppercase;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-weight: 700;
   display: flex;
   align-items: center;
   justify-content: center;
