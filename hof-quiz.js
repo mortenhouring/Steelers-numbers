@@ -319,36 +319,58 @@ nextButton.addEventListener("click", () => {
   localStorage.removeItem(CONFIG.STORAGE_KEYS.LAST_ANSWER);
   pickNextPlayer();
 });
-
-// Initialize once DOM is ready
-window.addEventListener("DOMContentLoaded", init);
-
-// --- SCROLL GRADIENT LOGIC ---
+// show/hide bottom gradient for the trivia scroll area
 window.addEventListener("DOMContentLoaded", () => {
-  const inner = document.getElementById('hof-trivia-inner');
-  const gradient = document.getElementById('scroll-gradient');
-  if (!inner || !gradient) return; // safety check
+  const inner = document.getElementById('hof-trivia-inner');   // scrollable content
+  const gradient = document.getElementById('scroll-gradient'); // the overlay gradient
+  if (!inner || !gradient) return; // nothing to do if either element missing
 
-  let scrollTimeout;
+  let scrollTimeout = null;
 
-  function updateGradient() {
-    const scrollBottom = inner.scrollHeight - inner.scrollTop - inner.clientHeight;
+  // small helper: is there vertical overflow (enough to scroll)?
+  const hasOverflow = () => inner.scrollHeight > inner.clientHeight + 1;
 
-    // hide immediately while scrolling
+  // initial state: show gradient only if content overflows
+  gradient.style.opacity = hasOverflow() ? '1' : '0';
+
+  function onScroll() {
+    // hide while the user is actively scrolling
     gradient.style.opacity = '0';
 
-    // clear previous timer
+    // reset debounce timer
     clearTimeout(scrollTimeout);
-
-    // after 300ms of no scroll, show gradient if content below
     scrollTimeout = setTimeout(() => {
-      gradient.style.opacity = scrollBottom > 1 ? '1' : '0';
-    }, 300);
+      // compute distance from bottom after scroll settles
+      const scrollBottom = inner.scrollHeight - inner.scrollTop - inner.clientHeight;
+
+      // show gradient only if there is content below (small threshold)
+      gradient.style.opacity = (scrollBottom > 2) ? '1' : '0';
+    }, 250); // 250ms after scroll stops -> adjust if you want faster/slower
   }
 
-  // attach scroll listener
-  inner.addEventListener('scroll', updateGradient);
+  // attach scroll listener (passive improves performance)
+  inner.addEventListener('scroll', onScroll, { passive: true });
 
-  // initial check
-  updateGradient();
+  // Observe size/content changes so the gradient updates if trivia is injected later.
+  // These are optional but make the behavior robust.
+  if (window.ResizeObserver) {
+    const ro = new ResizeObserver(() => {
+      gradient.style.opacity = hasOverflow() ? '1' : '0';
+    });
+    ro.observe(inner);
+  } else {
+    // fallback: re-check on window resize
+    window.addEventListener('resize', () => {
+      gradient.style.opacity = hasOverflow() ? '1' : '0';
+    }, { passive: true });
+  }
+
+  if (window.MutationObserver) {
+    const mo = new MutationObserver(() => {
+      gradient.style.opacity = hasOverflow() ? '1' : '0';
+    });
+    mo.observe(inner, { childList: true, subtree: true, characterData: true });
+  }
 });
+// Initialize once DOM is ready
+window.addEventListener("DOMContentLoaded", init);
