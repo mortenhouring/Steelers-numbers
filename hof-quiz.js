@@ -322,3 +322,33 @@ nextButton.addEventListener("click", () => {
 
 // Initialize once DOM is ready
 window.addEventListener("DOMContentLoaded", init);
+
+// --- SCROLL GRADIENT LOGIC ---
+window.addEventListener("DOMContentLoaded", () => {
+  const inner = document.getElementById('hof-trivia-inner');
+  const gradient = document.getElementById('scroll-gradient');
+  if (!inner || !gradient) return; // safety check
+
+  let scrollTimeout;
+
+  function updateGradient() {
+    const scrollBottom = inner.scrollHeight - inner.scrollTop - inner.clientHeight;
+
+    // hide immediately while scrolling
+    gradient.style.opacity = '0';
+
+    // clear previous timer
+    clearTimeout(scrollTimeout);
+
+    // after 300ms of no scroll, show gradient if content below
+    scrollTimeout = setTimeout(() => {
+      gradient.style.opacity = scrollBottom > 1 ? '1' : '0';
+    }, 300);
+  }
+
+  // attach scroll listener
+  inner.addEventListener('scroll', updateGradient);
+
+  // initial check
+  updateGradient();
+});
