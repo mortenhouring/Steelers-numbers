@@ -15,24 +15,14 @@
    - Increasing a value makes element bigger; decreasing makes it smaller
    - All adjustments are calibrated to base screen 2532x1170 (portrait mobile) */
 
-#hof-player-image {
-  height: 18vh;                 /* taller image, adjust freely */
-  width: auto;                  /* maintain aspect ratio */
-  display: block;
-  align-self: flex-start;       /* override parent centering */
-  object-fit: cover;            /* crop image instead of squishing */
-  overflow: hidden;             /* hide right-side overflow */
-  margin: 0;                    /* ensure no centering */
-}
-
 #hof-trivia-box {
   position: relative;
   width: 90vw;
   max-width: 90vw;
-  height: 33vh;           /* fixed frame height */
-  overflow: hidden;       /* hide inner overflow */
-  background: rgba(0,0,0,0.05);
-  border: 1px solid rgba(0,0,0,0.2);
+  height: 33vh;
+  overflow: hidden;                     /* hides gradient overflow */
+  background: rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(0, 0, 0, 0.2);
   border-radius: 8px;
   margin-bottom: 5vh;
   color: #fff;
@@ -46,6 +36,7 @@
   -webkit-overflow-scrolling: touch;
   padding: 8px;
   box-sizing: border-box;
+  scrollbar-width: thin;                /* optional: cleaner scrollbars */
 }
 
 #scroll-gradient {
@@ -55,9 +46,9 @@
   bottom: 0;
   height: 1.5rem;
   pointer-events: none;
-  background: linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0));
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0));
   transition: opacity 0.3s ease;
-  opacity: 1;
+  opacity: 1;                           /* visible by default */
   z-index: 2;
 }
 </style>
