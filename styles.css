@@ -152,15 +152,25 @@ main > div:not(.end-buttons-container) {
    Quiz Layout Elements
    ------------------------------ */
 #answer-display {
-  width: min(80%, 80vw);
-  height: 4rem;
-  font-size: 1.5rem;
-  text-align: center;
-  background-color: rgba(0,0,0,0.4);
-  margin: 1vh auto;
+  width: 8rem;                    /* exactly two keypad buttons wide */
+  height: 4rem;                   /* same as one keypad button */
+  background-color: rgba(0, 0, 0, 0.4);
   border: none;
   border-radius: 0.5rem;
   box-sizing: border-box;
+  margin: 1vh auto;
+
+  display: flex;                  /* centers digits cleanly */
+  align-items: center;
+  justify-content: center;
+
+  font-size: 2rem;                /* slightly larger than keypad buttons */
+  font-weight: bold;              /* makes it stand out */
+  color: white;                   /* ensures strong contrast */
+  text-align: center;
+
+  pointer-events: none;           /* keeps it non-interactive (read-only) */
+  user-select: none;              /* prevents text selection */
 }
 
 #player-info {
