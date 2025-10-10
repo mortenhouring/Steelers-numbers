@@ -366,11 +366,12 @@ window.addEventListener("DOMContentLoaded", () => {
   }
 
   if (window.MutationObserver) {
-    const mo = new MutationObserver(() => {
-      gradient.style.opacity = hasOverflow() ? '1' : '0';
-    });
-    mo.observe(inner, { childList: true, subtree: true, characterData: true });
-  }
+  const mo = new MutationObserver(() => {
+    inner.scrollTop = 0; // instantly jump to top
+    gradient.style.opacity = hasOverflow() ? '1' : '0';
+  });
+  mo.observe(inner, { childList: true, subtree: true, characterData: true });
+}
 });
 // Initialize once DOM is ready
 window.addEventListener("DOMContentLoaded", init);
