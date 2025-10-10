@@ -15,13 +15,14 @@
    - Increasing a value makes element bigger; decreasing makes it smaller
    - All adjustments are calibrated to base screen 2532x1170 (portrait mobile) */
 #hof-player-image {
-  height: 18vh;                 /* taller image, adjust freely */
+  height: 20vh;                 /* taller image, adjust freely */
   width: auto;                  /* maintain aspect ratio */
   display: block;
   align-self: flex-start;       /* override parent centering */
   object-fit: cover;            /* crop image instead of squishing */
   overflow: hidden;             /* hide right-side overflow */
   margin: 0;                    /* ensure no centering */
+  margin-bottom: 5vh;
 }
 #hof-trivia-box {
   position: relative;
