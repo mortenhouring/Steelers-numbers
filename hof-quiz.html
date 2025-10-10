@@ -25,48 +25,40 @@
   margin: 0;                    /* ensure no centering */
 }
 
-/* Scrollable box */
 #hof-trivia-box {
-  position: relative;            
+  position: relative;
   width: 90vw;
   max-width: 90vw;
-  max-height: 33vh;
-  overflow-y: auto;
-  overflow-x: hidden;
-  -webkit-overflow-scrolling: touch;
-
+  height: 33vh;       /* fixed frame height */
+  overflow: hidden;   /* hide inner scroll overflow */
   background: rgba(0,0,0,0.05);
   border: 1px solid rgba(0,0,0,0.2);
   border-radius: 8px;
-  padding: 8px;
   margin-bottom: 5vh;
   color: #fff;
   box-sizing: border-box;
-
-  /* 👇 this line is crucial */
-  overflow: hidden; /* hides ::after inside, but we'll re-enable inner scrolling separately */
 }
 
-/* Inner scroll layer */
 #hof-trivia-inner {
-  max-height: 33vh;              /* same height as box */
-  overflow-y: auto;              /* scrollable inner layer */
-  padding-right: 0.5rem;
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  padding: 8px;       /* inner spacing */
+  box-sizing: border-box;
 }
 
-/* Persistent bottom fade */
 #hof-trivia-box::after {
-  content: "";
+  content: '';
   position: absolute;
   left: 0;
   right: 0;
   bottom: 0;
   height: 1.5rem;
   pointer-events: none;
-  background: linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0));
-  z-index: 10;
+  background: linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0));
+  z-index: 2;
 }
-
 </style>
 </head>
 <body>
