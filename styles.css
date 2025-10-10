@@ -210,7 +210,6 @@ main > div:not(.end-buttons-container) {
 #keypad button {
   width: 4rem;
   height: 4rem;
-  margin: 0.5vh;
   font-size: 2em;
   border: none;
   border-radius: 0.1rem;
