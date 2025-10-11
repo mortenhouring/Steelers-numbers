@@ -221,7 +221,7 @@ Header placeholder must be same height as defined in height in header.html
   font-size: 2em;
   border: none;
   border-radius: 0.1rem;
-  background-color: rgba(255, 255, 255, 0.4); /* semi-transparent white */
+  background-color: rgba(255, 255, 255, 0.8); /* semi-transparent white */
   color: #fff !important; /* solid white text */
     font-family: 'Helvetica Neue', Arial, sans-serif;
     font-weight: 700;
