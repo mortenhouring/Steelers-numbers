@@ -36,7 +36,7 @@ body {
   display: flex;               
   flex-direction: column;        /* stack children vertically */
   
-  background-image: url('trim-blackgrey-background.jpg');
+  background-image: url('blackgrey-background.PNG');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -221,8 +221,8 @@ Header placeholder must be same height as defined in height in header.html
   font-size: 2em;
   border: none;
   border-radius: 0.1rem;
-  background-color: rgba(255, 182, 18, 0.9); /* semi-transparent white */
-  color:  rgba(0, 0, 0) !important; /* solid white text */
+  background-color: rgba(255, 255, 255, 0.8); /* semi-transparent white */
+  color: #fff !important; /* solid white text */
     font-family: 'Helvetica Neue', Arial, sans-serif;
     font-weight: 700;
   display: flex;
