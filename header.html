@@ -14,8 +14,8 @@
 
      {
       margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+      padding: 0;
+      box-sizing: border-box;
     }
 
     .header-title {
@@ -58,42 +58,48 @@
     }
 
     /* ------------------------------
-   Hamburger Button (square, white lines + tap animation)
+   Hamburger Button (matches header-logo height)
 ------------------------------ */
 .hamburger-button {
-  width: 8vmin;             /* square size based on smaller screen dimension */
-  height: 8vmin;            /* ensures 1:1 ratio */
+  height: 8vh;              /* match header-logo */
+  width: 8vh;               /* square button */
   background-color: black;
-  border: none;
-  border-radius: 0;
+  border: 0.17vw solid black; /* keeps subtle border */
+  border-radius: 0.5vh;       /* slightly rounded corners */
   cursor: pointer;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 0;
-  box-sizing: border-box;
+  box-shadow: 0.17vw 0.17vw 0.34vw rgba(0, 0, 0, 0.3);
   position: relative;
-  transition: transform 0.1s ease;
-  box-shadow: 0.17vw 0.17vw 0.34vw rgba(0,0,0,0.3);
-}
-
-.hamburger-line {
-  width: 50%;               /* line width relative to button */
-  height: 0.5vh;            /* line thickness */
-  background-color: white;  /* lines now white */
-  margin: 0.6vh 0;          /* spacing between lines */
-  border-radius: 0.25vh;    /* slightly rounded edges */
-  transition: all 0.15s ease; /* smooth tap animation */
+  padding: 0.5vh 0;         /* small vertical padding for spacing lines */
+  box-sizing: border-box;
 }
 
 .hamburger-button:active {
-  transform: scale(0.95); /* tap shrink effect */
+  box-shadow: 0.09vw 0.09vw 0.17vw rgba(0, 0, 0, 0.3);
+  transform: translateY(0.04vh);
 }
 
-.hamburger-button:active .hamburger-line {
-  background-color: #ccc; /* dim lines while pressed */
-  transform: scaleY(1.4); /* thicken lines on tap */
+/* Hamburger Lines */
+.hamburger-line {
+  width: 50%;               /* relative to button width */
+  height: 0.5vh;            /* proportional to button height */
+  background-color: #FFB600;
+  margin: 0.5vh 0;          /* vertical spacing between lines */
+  border-radius: 0.25vh;    /* slightly rounded ends for style */
+}
+
+/* Optional: scale for very small screens */
+@media (max-width: 400px) {
+  .hamburger-button {
+    height: 10vw;           /* scale down proportionally */
+    width: 10vw;
+  }
+  .hamburger-line {
+    height: 0.7vw;
+  }
 }
 
     .dropdown-menu {
