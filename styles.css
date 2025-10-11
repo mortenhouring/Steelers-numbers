@@ -36,7 +36,7 @@ body {
   display: flex;               
   flex-direction: column;        /* stack children vertically */
   
-  background-image: url('blackgrey-background.PNG');
+  background-image: url('trim-blackgrey-background.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
