@@ -57,32 +57,50 @@
       color: black;
     }
 
-    .hamburger-button {
-      width: 7vw;             
-      height: 7vw;            
-      background-color: black;
-      border: 0.17vw solid black; /* 2px */
-      border-radius: 0.34vw;     /* 4px */
-      cursor: pointer;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0.17vw 0.17vw 0.34vw rgba(0, 0, 0, 0.3);
-      position: relative;
-    }
+    /* ------------------------------
+   Hamburger Button (matches header-logo height)
+------------------------------ */
+.hamburger-button {
+  height: 8vh;              /* match header-logo */
+  width: 8vh;               /* square button */
+  background-color: black;
+  border: 0.17vw solid black; /* keeps subtle border */
+  border-radius: 0.5vh;       /* slightly rounded corners */
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0.17vw 0.17vw 0.34vw rgba(0, 0, 0, 0.3);
+  position: relative;
+  padding: 0.5vh 0;         /* small vertical padding for spacing lines */
+  box-sizing: border-box;
+}
 
-    .hamburger-button:active {
-      box-shadow: 0.09vw 0.09vw 0.17vw rgba(0, 0, 0, 0.3);
-      transform: translateY(0.04vh);
-    }
+.hamburger-button:active {
+  box-shadow: 0.09vw 0.09vw 0.17vw rgba(0, 0, 0, 0.3);
+  transform: translateY(0.04vh);
+}
 
-    .hamburger-line {
-      width: 1.71vw;             /* 20px */
-      height: 0.26vw;            /* 3px */
-      background-color: #FFB600;
-      margin: 0.17vw 0;          /* 2px */
-    }
+/* Hamburger Lines */
+.hamburger-line {
+  width: 50%;               /* relative to button width */
+  height: 0.5vh;            /* proportional to button height */
+  background-color: #FFB600;
+  margin: 0.5vh 0;          /* vertical spacing between lines */
+  border-radius: 0.25vh;    /* slightly rounded ends for style */
+}
+
+/* Optional: scale for very small screens */
+@media (max-width: 400px) {
+  .hamburger-button {
+    height: 10vw;           /* scale down proportionally */
+    width: 10vw;
+  }
+  .hamburger-line {
+    height: 0.7vw;
+  }
+}
 
     .dropdown-menu {
       position: absolute;
