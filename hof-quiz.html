@@ -48,9 +48,10 @@
   scrollbar-width: thin;                /* optional: cleaner scrollbars */
 }
 #player-trivia {
-  white-space: pre-line;
-  line-height: 1.4;
-  margin-bottom: 0.5em;
+  line-height: 1.4;   /* keeps line spacing inside paragraphs */
+  margin-bottom: 0;   /* optional: no extra bottom margin on the container itself */
+  text-align: left;   /* standard for mobile readability */
+  hyphens: auto;      /* optional: hyphenation for narrow mobile widths */
 }
 #scroll-gradient {
   position: absolute;
