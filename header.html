@@ -14,8 +14,8 @@
 
      {
       margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+    padding: 0;
+    box-sizing: border-box;
     }
 
     .header-title {
@@ -61,8 +61,8 @@
    Hamburger Button (square, white lines + tap animation)
 ------------------------------ */
 .hamburger-button {
-  height: 8vmin;            /* square — scales with smaller screen side */
-  width: 8vmin;             /* ensures 1:1 ratio */
+  width: 8vmin;             /* square size based on smaller screen dimension */
+  height: 8vmin;            /* ensures 1:1 ratio */
   background-color: black;
   border: none;
   border-radius: 0;
@@ -71,29 +71,29 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  box-shadow: 0.17vw 0.17vw 0.34vw rgba(0, 0, 0, 0.3);
-  position: relative;
   padding: 0;
   box-sizing: border-box;
+  position: relative;
   transition: transform 0.1s ease;
+  box-shadow: 0.17vw 0.17vw 0.34vw rgba(0,0,0,0.3);
 }
 
 .hamburger-line {
-  width: 50%;
-  height: 0.5vh;
-  background-color: white;
-  margin: 0.6vh 0;
-  border-radius: 0.25vh;
-  transition: all 0.15s ease; /* enables smooth animation on press */
+  width: 50%;               /* line width relative to button */
+  height: 0.5vh;            /* line thickness */
+  background-color: white;  /* lines now white */
+  margin: 0.6vh 0;          /* spacing between lines */
+  border-radius: 0.25vh;    /* slightly rounded edges */
+  transition: all 0.15s ease; /* smooth tap animation */
 }
 
 .hamburger-button:active {
-  transform: scale(0.95); /* slight shrink effect for tap feedback */
+  transform: scale(0.95); /* tap shrink effect */
 }
 
 .hamburger-button:active .hamburger-line {
-  background-color: #ccc; /* slightly dimmer while pressed */
-  transform: scaleY(1.4); /* make lines thicker on tap */
+  background-color: #ccc; /* dim lines while pressed */
+  transform: scaleY(1.4); /* thicken lines on tap */
 }
 
     .dropdown-menu {
