@@ -58,14 +58,14 @@
     }
 
     /* ------------------------------
-   Hamburger Button (matches header-logo height)
+   Hamburger Button (square, white lines + tap animation)
 ------------------------------ */
 .hamburger-button {
   height: 8vh;              /* match header-logo */
   width: 8vh;               /* square button */
   background-color: black;
-  border: 0.17vw solid black; /* keeps subtle border */
-  border-radius: 0.5vh;       /* slightly rounded corners */
+  border: none;
+  border-radius: 0;
   cursor: pointer;
   display: flex;
   flex-direction: column;
@@ -73,33 +73,27 @@
   justify-content: center;
   box-shadow: 0.17vw 0.17vw 0.34vw rgba(0, 0, 0, 0.3);
   position: relative;
-  padding: 0.5vh 0;         /* small vertical padding for spacing lines */
+  padding: 0;
   box-sizing: border-box;
+  transition: transform 0.1s ease;
+}
+
+.hamburger-line {
+  width: 50%;
+  height: 0.5vh;
+  background-color: white;
+  margin: 0.6vh 0;
+  border-radius: 0.25vh;
+  transition: all 0.15s ease; /* enables smooth animation on press */
 }
 
 .hamburger-button:active {
-  box-shadow: 0.09vw 0.09vw 0.17vw rgba(0, 0, 0, 0.3);
-  transform: translateY(0.04vh);
+  transform: scale(0.95); /* slight shrink effect for tap feedback */
 }
 
-/* Hamburger Lines */
-.hamburger-line {
-  width: 50%;               /* relative to button width */
-  height: 0.5vh;            /* proportional to button height */
-  background-color: #FFB600;
-  margin: 0.5vh 0;          /* vertical spacing between lines */
-  border-radius: 0.25vh;    /* slightly rounded ends for style */
-}
-
-/* Optional: scale for very small screens */
-@media (max-width: 400px) {
-  .hamburger-button {
-    height: 10vw;           /* scale down proportionally */
-    width: 10vw;
-  }
-  .hamburger-line {
-    height: 0.7vw;
-  }
+.hamburger-button:active .hamburger-line {
+  background-color: #ccc; /* slightly dimmer while pressed */
+  transform: scaleY(1.4); /* make lines thicker on tap */
 }
 
     .dropdown-menu {
