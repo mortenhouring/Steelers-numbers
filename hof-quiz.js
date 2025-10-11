@@ -254,32 +254,43 @@ function showAnswerView(){
   }
 
   // --- Trivia display logic ---
-  const triviaText = currentPlayer.trivia || "";
-  if (triviaText.trim().length > 0) {
-    // Split paragraphs by \n\n\
-    const paragraphs = triviaText.split("\\n\\n\\");
-    const first = paragraphs[0] || "";
-    const second = paragraphs[1] || "";
-    const firstTwo = [first, second].filter(Boolean).join("\n\n");
-    const shouldShowTwo = firstTwo.length <= 450;
+const triviaText = currentPlayer.trivia || "";
 
-    let displayText = shouldShowTwo ? firstTwo : first;
-    playerTriviaEl.textContent = displayText;
+if (triviaText.trim().length > 0) {
+  // Split paragraphs by actual double newlines
+  const paragraphs = triviaText.split(/\n\s*\n/);
 
-    // Add "read more" if there are extra paragraphs beyond shown ones
-    if (paragraphs.length > (shouldShowTwo ? 2 : 1)) {
-      const readMoreBtn = document.createElement("button");
-      readMoreBtn.textContent = "Read more";
-      readMoreBtn.className = "read-more-btn";
-      readMoreBtn.addEventListener("click", () => {
-        playerTriviaEl.textContent = paragraphs.join("\n\n");
-        readMoreBtn.remove();
-      });
-      playerTriviaEl.appendChild(readMoreBtn);
-    }
-  } else {
-    playerTriviaEl.textContent = "No trivia available.";
+  const first = paragraphs[0] || "";
+  const second = paragraphs[1] || "";
+  const firstTwo = [first, second].filter(Boolean).join("\n\n");
+  const shouldShowTwo = firstTwo.length <= 450;
+
+  // Pick which paragraphs to show initially
+  const shownParagraphs = shouldShowTwo
+    ? paragraphs.slice(0, 2)
+    : paragraphs.slice(0, 1);
+
+  // Convert to real <p> tags
+  const displayHTML = shownParagraphs.map(p => `<p>${p}</p>`).join("");
+
+  playerTriviaEl.innerHTML = displayHTML;
+
+  // Add "Read more" if there are extra paragraphs beyond the shown ones
+  if (paragraphs.length > shownParagraphs.length) {
+    const readMoreBtn = document.createElement("button");
+    readMoreBtn.textContent = "Read more";
+    readMoreBtn.className = "read-more-btn";
+
+    readMoreBtn.addEventListener("click", () => {
+      playerTriviaEl.innerHTML = paragraphs.map(p => `<p>${p}</p>`).join("");
+      readMoreBtn.remove();
+    });
+
+    playerTriviaEl.appendChild(readMoreBtn);
   }
+} else {
+  playerTriviaEl.textContent = "No trivia available.";
+}
 
   // Update score and remaining
   const score = parseInt(localStorage.getItem(CONFIG.STORAGE_KEYS.SCORE), 10) || 0;
