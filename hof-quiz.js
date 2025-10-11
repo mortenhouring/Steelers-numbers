@@ -253,41 +253,18 @@ function showAnswerView(){
     ]);
   }
 
-  // --- Trivia display logic ---
+// --- Trivia display logic ---
 const triviaText = currentPlayer.trivia || "";
 
 if (triviaText.trim().length > 0) {
   // Split paragraphs by actual double newlines
   const paragraphs = triviaText.split(/\n\s*\n/);
 
-  const first = paragraphs[0] || "";
-  const second = paragraphs[1] || "";
-  const firstTwo = [first, second].filter(Boolean).join("\n\n");
-  const shouldShowTwo = firstTwo.length <= 450;
+  // Convert all paragraphs to <p> elements
+  const displayHTML = paragraphs.map(p => `<p>${p}</p>`).join("");
 
-  // Pick which paragraphs to show initially
-  const shownParagraphs = shouldShowTwo
-    ? paragraphs.slice(0, 2)
-    : paragraphs.slice(0, 1);
-
-  // Convert to real <p> tags
-  const displayHTML = shownParagraphs.map(p => `<p>${p}</p>`).join("");
-
+  // Insert into the page
   playerTriviaEl.innerHTML = displayHTML;
-
-  // Add "Read more" if there are extra paragraphs beyond the shown ones
-  if (paragraphs.length > shownParagraphs.length) {
-    const readMoreBtn = document.createElement("button");
-    readMoreBtn.textContent = "Read more";
-    readMoreBtn.className = "read-more-btn";
-
-    readMoreBtn.addEventListener("click", () => {
-      playerTriviaEl.innerHTML = paragraphs.map(p => `<p>${p}</p>`).join("");
-      readMoreBtn.remove();
-    });
-
-    playerTriviaEl.appendChild(readMoreBtn);
-  }
 } else {
   playerTriviaEl.textContent = "No trivia available.";
 }
