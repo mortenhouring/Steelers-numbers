@@ -125,122 +125,67 @@ async function main() {
       await tryClickReadMore(page);
 
       const playerTrivia = await page.evaluate(() => {
-        const allowedSubsections = [
-          'PRO CAREER',
-          'PERSONAL',
-          'CAREER HIGHLIGHTS',
-          'AWARDS'
-        ];
+  const allowedSubsections = ['PRO CAREER', 'PERSONAL', 'CAREER HIGHLIGHTS', 'AWARDS'];
+  const ignoreSubsections = ['TRANSACTIONS', '2024', '2023', '2022', '2021', '2020', '2019', '2018', '2017', '2016', '2015', '2014', '2013', '2012', '2011'];
 
-        const ignoredSubsections = [
-          'COLLEGE',
-          'COLLEGE CAREER'
-        ];
+  const sections = {};
+  const paragraphs = Array.from(document.querySelectorAll('.nfl-c-biography .nfl-c-body-part--text'));
 
-        function headingAllowed(h) {
-          if (!h) return false;
-          const UH = h.toUpperCase();
-          for (const skip of ignoredSubsections) {
-            if (UH.includes(skip)) return false;
-          }
-          for (const s of allowedSubsections) {
-            if (UH.includes(s)) return true;
-          }
-          return false;
-        }
+  let currentSection = 'BIOGRAPHY';
+  let currentHTML = [];
 
-        const headingNodes = Array.from(document.querySelectorAll('p strong, h3, h4'));
-        const sections = {};
+  const flush = () => {
+    if (currentHTML.length) {
+      sections[currentSection] = currentHTML.join('\n').trim();
+      currentHTML = [];
+    }
+  };
 
-        for (const hn of headingNodes) {
-          const rawHeading = (hn.textContent || '').trim();
-          if (!rawHeading) continue;
-          if (/^\d{4}\s*\(/.test(rawHeading)) continue;
-          if (!headingAllowed(rawHeading)) continue;
+  for (const el of paragraphs) {
+    const strong = el.querySelector('strong');
+    const header = strong ? strong.textContent.trim().toUpperCase() : '';
 
-          let inBiography = false;
-          for (let anc = hn.parentElement; anc; anc = anc.parentElement) {
-            if (anc.classList && anc.classList.contains('nfl-c-biography')) {
-              inBiography = true;
-              break;
-            }
-            const h2 = anc.querySelector && anc.querySelector('h2');
-            if (h2 && (h2.textContent || '').toUpperCase().includes('BIOGRAPHY')) {
-              inBiography = true;
-              break;
-            }
-          }
-          if (!inBiography) continue;
+    if (allowedSubsections.includes(header)) {
+      flush();
+      currentSection = header;
+      continue;
+    }
 
-          let key = rawHeading.toUpperCase();
-          if (key.includes('CAREER HIGHLIGHT')) key = 'CAREER HIGHLIGHTS';
-          if (/\b2024\b/.test(key)) key = '2024';
+    if (ignoreSubsections.includes(header)) {
+      flush();
+      currentSection = 'IGNORE';
+      continue;
+    }
 
-          const bullets = [];
-          const container = hn.closest('.nfl-c-body-part') || hn.parentElement;
-          if (container) {
-            const innerUls = container.querySelectorAll('ul li');
-            innerUls.forEach(li => {
-              const t = (li.textContent || '').trim();
-              if (/^\d{4}\s*\(/.test(t)) return;
-              if (t) bullets.push(t);
-            });
-          }
+    if (currentSection === 'IGNORE') continue;
 
-          let next = (container && container.nextElementSibling) || hn.parentElement.nextElementSibling;
-          let guard = 0;
-          while (next && guard < 12) {
-            const nextHeading = next.querySelector && next.querySelector('p strong, h3, h4');
-            if (nextHeading && (nextHeading.textContent || '').trim()) break;
+    // collect inner HTML of <p> and <ul> to preserve formatting
+    const contentHTML = Array.from(el.children)
+      .filter(c => c.tagName === 'P' || c.tagName === 'UL')
+      .map(c => c.outerHTML)
+      .join('\n');
 
-            if (next.tagName === 'UL') {
-              const lis = next.querySelectorAll('li');
-              lis.forEach(li => {
-                const t = (li.textContent || '').trim();
-                if (/^\d{4}\s*\(/.test(t)) return;
-                if (t) bullets.push(t);
-              });
-            } else {
-              const innerLis = next.querySelectorAll && next.querySelectorAll('ul li');
-              if (innerLis && innerLis.length) {
-                innerLis.forEach(li => {
-                  const t = (li.textContent || '').trim();
-                  if (/^\d{4}\s*\(/.test(t)) return;
-                  if (t) bullets.push(t);
-                });
-              } else if (next.tagName === 'P') {
-                const txt = (next.textContent || '').trim();
-                if (txt && !/^\d{4}\s*\(/.test(txt)) {
-                  const UH = txt.toUpperCase();
-                  if (!UH.includes((rawHeading || '').toUpperCase())) bullets.push(txt);
-                }
-              }
-            }
-            next = next.nextElementSibling;
-            guard++;
-          }
+    if (contentHTML) currentHTML.push(contentHTML);
+  }
 
-          const unique = [];
-          bullets.forEach(b => {
-            const clean = (b || '').replace(/\s+/g, ' ').trim();
-            if (!clean) return;
-            if (!unique.includes(clean)) unique.push(clean);
-          });
+  flush();
 
-          if (unique.length) {
-            sections[key] = (sections[key] || []).concat(unique);
-          }
-        }
+  // fallback if nothing found
+  if (Object.keys(sections).length === 0 || !sections["BIOGRAPHY"]) {
+    const paras = Array.from(document.querySelectorAll('.nfl-c-biography .nfl-c-body-part--text p'));
+    const htmls = paras.map(p => p.outerHTML).filter(Boolean);
+    if (htmls.length) sections["BIOGRAPHY"] = htmls.join('\n');
+  }
 
-        // ✅ Fixed: fallback only if no sections at all
-        if (Object.keys(sections).length === 0) {
-          const paras = Array.from(document.querySelectorAll('.nfl-c-biography .nfl-c-body-part--text p'));
-          const texts = paras.map(p => (p.textContent || '').trim()).filter(Boolean);
-          if (texts.length) sections["BIOGRAPHY"] = texts;
-        }
+  if (Object.keys(sections).length === 0) return '';
 
-        return sections;
-      });
+  // combine all sections into one string
+  const combinedHTML = Object.entries(sections)
+    .map(([heading, html]) => `<strong>${heading}</strong>\n${html}`)
+    .join('\n\n');
+
+  return combinedHTML;
+});
 
       const keys = Object.keys(playerTrivia || {});
       if (keys.length === 0) {
