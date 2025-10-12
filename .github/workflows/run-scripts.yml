@@ -10,16 +10,18 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # Step 1: Checkout your repo
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      # Step 2: Setup Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
 
-      - name: Install dependencies
-        run: npm ci || npm install
-
+      # Step 3: Run your scripts in order
       - name: Run scripts sequentially
-        run: node run-scripts.js
+        run: |
+          echo "🚀 Starting sequential script run..."
+          node run-scripts.js
