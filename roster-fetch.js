@@ -1,6 +1,5 @@
 // roster-fetch.js
 import fs from 'fs/promises';
-import fetch from 'node-fetch';
 import { JSDOM } from 'jsdom';
 
 // ---------- CONFIG ----------
