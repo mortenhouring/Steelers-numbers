@@ -2,9 +2,7 @@
 name: Fetch Steelers Roster
 
 on:
-  workflow_dispatch:  # manual trigger
-  schedule:          # optional: run daily at 6am UTC
-    - cron: '0 6 * * *'
+  workflow_dispatch:  # manual trigger only
 
 jobs:
   fetch-roster:
@@ -18,10 +16,6 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '20'
-          cache: 'npm'
-
-      - name: Install dependencies
-        run: npm install node-fetch@3
 
       - name: Run roster fetch script
         run: node roster-fetch.js
