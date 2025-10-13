@@ -26,13 +26,35 @@ const position = positionEl ? positionEl.textContent.trim() : 'N/A';
 const numberEl = document.querySelector('.d3-o-media-object__secondary-subtitle');
 const numberText = numberEl ? numberEl.textContent.replace('#', '').trim() : '0';
 const number = Number(numberText);
-    return { player_name: name, number, position };
+
+// Image
+let imagePath = null;
+const ldJsonEl = document.querySelector('script[type="application/ld+json"]');
+if (ldJsonEl) {
+  try {
+    const ldJson = JSON.parse(ldJsonEl.textContent);
+    const imgUrl = ldJson.member?.member?.image?.contentUrl;
+    if (imgUrl) {
+      const nameParts = name.split(' ');
+      const firstName = nameParts[0].toLowerCase();
+      const lastName = nameParts.slice(1).join('_').toLowerCase();
+      const fileName = `${firstName}_${lastName}.jpeg`;
+      imagePath = `fetchimages/images/${fileName}`;
+
+      const response = await axios.get(imgUrl, { responseType: 'arraybuffer' });
+      fs.writeFileSync(imagePath, response.data);
+    }
+  } catch (err) {
+    console.error(`Error parsing LD+JSON for ${player.name}:`, err.message);
+  }
+}
+// Return IDs
+return { player_name: name, number, position, image: imagePath };
   } catch (err) {
     console.error(`Error fetching ${player.name}:`, err.message);
     return null;
   }
 }
-
 async function main() {
   const results = [];
   for (const player of players) {
