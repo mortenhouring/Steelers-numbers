@@ -2,11 +2,13 @@
   {
     "player_name": "Pat Freiermuth",
     "number": 88,
-    "position": "TE"
+    "position": "TE",
+    "image": "fetchimages/images/pat_freiermuth.jpeg"
   },
   {
     "player_name": "DK Metcalf",
     "number": 4,
-    "position": "WR"
+    "position": "WR",
+    "image": "fetchimages/images/dk_metcalf.jpeg"
   }
 ]
