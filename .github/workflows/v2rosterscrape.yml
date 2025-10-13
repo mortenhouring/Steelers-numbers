@@ -1,24 +1,35 @@
-name: Roster Fetch
+# .github/workflows/fetch-roster.yml
+name: Fetch Steelers Roster
 
 on:
-  workflow_dispatch: # Manual trigger only
+  workflow_dispatch:  # manual trigger
+  schedule:          # optional: run daily at 6am UTC
+    - cron: '0 6 * * *'
 
 jobs:
   fetch-roster:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
+      - name: Checkout repository
         uses: actions/checkout@v3
 
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 20
+          node-version: '20'
           cache: 'npm'
 
       - name: Install dependencies
-        run: npm install
+        run: npm install node-fetch@3
 
-      - name: Run roster fetch
+      - name: Run roster fetch script
         run: node roster-fetch.js
+
+      - name: Commit roster.json
+        run: |
+          git config --local user.name "github-actions[bot]"
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git add roster.json
+          git commit -m "Update roster.json [skip ci]" || echo "No changes to commit"
+          git push
