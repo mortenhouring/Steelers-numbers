@@ -28,7 +28,37 @@ const numberEl = document.querySelector('.d3-o-media-object__secondary-subtitle'
 const numberText = numberEl ? numberEl.textContent.replace('#', '').trim() : '0';
 const number = Number(numberText);
 
-// Image
+// Info (Experience, Height, Weight, Age)
+    const detailsEl = document.querySelector('.nfl-t-person-tile__stat-details');
+    let info = '-';
+
+    if (detailsEl) {
+      const pTags = detailsEl.querySelectorAll('p');
+      let exp = '-', ht = '-', wt = '-', age = '-';
+
+      pTags.forEach(p => {
+        const label = p.querySelector('strong')?.textContent?.trim().toLowerCase() || '';
+        const value = p.textContent.replace(/^\s*[^:]+:\s*/, '').trim();
+
+        if (label.includes('experience')) {
+          exp = value.replace('years', '').trim();
+          if (exp === '0' || exp === 'rookie') exp = 'rookie';
+        } else if (label.includes('height')) {
+          ht = value;
+        } else if (label.includes('weight')) {
+          wt = value;
+        } else if (label.includes('age')) {
+          age = value;
+        }
+      });
+
+      info = `EXP: ${exp} | HT/WT: ${ht}/${wt} | AGE: ${age}`;
+    }
+
+
+///////////
+// Image //
+///////////
 let imagePath = null;
 const ldJsonEl = document.querySelector('script[type="application/ld+json"]');
 if (ldJsonEl) {
