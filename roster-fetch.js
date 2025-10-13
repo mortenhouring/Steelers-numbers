@@ -5,7 +5,7 @@ import axios from 'axios';
 
 // ---------- CONFIG ----------
 const TEST_PLAYER_URL = 'https://www.steelers.com/team/players-roster/dk-metcalf/';
-const OUTPUT_JSON = './roster.json';
+const OUTPUT_JSON = 'roster.json';
 
 // ---------- HELPER FUNCTIONS ----------
 function parseTriviaSections(document) {
