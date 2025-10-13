@@ -8,25 +8,24 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repo
-      uses: actions/checkout@v3
+      - name: Checkout repo
+        uses: actions/checkout@v3
 
-    - name: Setup Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: 20
-        cache: npm
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
 
-    - name: Install dependencies
-      run: npm install
+      - name: Install dependencies
+        run: npm install --no-package-lock
 
-    - name: Run roster fetch
-      run: node roster-fetch.js
+      - name: Run roster fetch
+        run: node roster-fetch.js
 
-    - name: Commit roster.json
-      run: |
-        git config user.name "github-actions[bot]"
-        git config user.email "github-actions[bot]@users.noreply.github.com"
-        git add roster.json
-        git diff --cached --quiet || git commit -m "Update roster.json"
-        git push
+      - name: Commit roster.json if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add roster.json
+          git diff --cached --quiet || git commit -m "Update roster.json"
+          git push
