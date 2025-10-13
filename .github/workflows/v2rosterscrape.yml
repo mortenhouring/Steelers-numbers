@@ -1,7 +1,7 @@
-name: Fetch Roster
+name: Fetch Steelers Roster (Manual)
 
 on:
-  workflow_dispatch:  # allows manual trigger
+  workflow_dispatch:
 
 jobs:
   fetch-roster:
@@ -11,22 +11,28 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
-          node-version: '20'  # matches your runner
+          node-version: 20
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
-      - name: Run roster fetch script
+      - name: Run roster fetch
         run: node roster-fetch.js
 
-      - name: Verify JSON output
+      - name: Verify output
         run: |
-          if [ ! -f ./roster.json ]; then
-            echo "Error: roster.json not found!"
-            exit 1
-          fi
-          echo "roster.json exists. Contents:"
-          cat ./roster.json | head -n 20
+          echo "---- roster.json (first 60 lines) ----"
+          head -n 60 roster.json || true
+          echo "---- images dir listing ----"
+          ls -la fetchimages/images || true
+
+      - name: Commit and push updated files
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@users.noreply.github.com"
+          git add roster.json fetchimages/images || true
+          git commit -m "chore(roster): update roster.json and images" || echo "No changes to commit"
+          git push || echo "Push failed"
