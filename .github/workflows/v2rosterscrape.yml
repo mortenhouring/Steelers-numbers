@@ -1,28 +1,32 @@
-# .github/workflows/fetch-roster.yml
 name: Fetch Roster
 
 on:
-  workflow_dispatch:  # Only runs manually
+  workflow_dispatch:  # allows manual trigger
 
 jobs:
   fetch-roster:
-    name: Fetch Steelers Roster
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
-      - name: Setup Node.js
+      - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 20
+          node-version: '20'  # matches your runner
 
       - name: Install dependencies
         run: npm install
 
-      - name: Run roster-fetch script
+      - name: Run roster fetch script
         run: node roster-fetch.js
 
-      - name: Show updated roster.json
-        run: cat roster.json
+      - name: Verify JSON output
+        run: |
+          if [ ! -f ./roster.json ]; then
+            echo "Error: roster.json not found!"
+            exit 1
+          fi
+          echo "roster.json exists. Contents:"
+          cat ./roster.json | head -n 20
