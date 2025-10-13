@@ -1,51 +1,53 @@
 // roster-fetch.js
 const fs = require('fs');
+const fetch = require('node-fetch');
 
-// Replace these snippets with the actual HTML content for testing
-const playerSnippets = [
-  `<div class="player">
-      <span class="player-name">Pat Freiermuth</span>
-      <span class="player-number">88</span>
-      <span class="player-position">TE</span>
-  </div>`,
-  `<div class="player">
-      <span class="player-name">DK Metcalf</span>
-      <span class="player-number">14</span>
-      <span class="player-position">WR</span>
-  </div>`
+// Player pages to scrape
+const playerPages = [
+  'https://www.steelers.com/team/players-roster/pat-freiermuth/',
+  'https://www.steelers.com/team/players-roster/dk-metcalf/'
 ];
 
-// Function to parse a single player snippet
-function parsePlayer(html) {
+// Helper to fetch HTML and extract player info
+async function fetchPlayerData(url) {
   try {
-    const nameMatch = html.match(/<span class="player-name">([\s\S]*?)<\/span>/);
-    const numberMatch = html.match(/<span class="player-number">([\d]+)<\/span>/);
-    const positionMatch = html.match(/<span class="player-position">([\s\S]*?)<\/span>/);
+    const res = await fetch(url);
+    if (!res.ok) throw new Error(`Failed to fetch ${url}: ${res.status}`);
+    const html = await res.text();
 
-    if (!nameMatch || !numberMatch || !positionMatch) {
-      throw new Error('Failed to parse player snippet: ' + html);
-    }
+    // Extract player_name
+    const nameMatch = html.match(/<h1[^>]*class="PlayerHeader__Name[^"]*"[^>]*>([\s\S]*?)<\/h1>/);
+    if (!nameMatch) throw new Error('Player name not found for ' + url);
+    const player_name = nameMatch[1].trim();
 
-    return {
-      player_name: nameMatch[1].trim(),
-      number: parseInt(numberMatch[1], 10),
-      position: positionMatch[1].trim()
-    };
+    // Extract number
+    const numberMatch = html.match(/<span[^>]*class="PlayerHeader__Number[^"]*"[^>]*>(\d+)<\/span>/);
+    if (!numberMatch) throw new Error('Player number not found for ' + url);
+    const number = parseInt(numberMatch[1], 10);
+
+    // Extract position
+    const positionMatch = html.match(/<span[^>]*class="PlayerHeader__Position[^"]*"[^>]*>([\w\/]+)<\/span>/);
+    if (!positionMatch) throw new Error('Player position not found for ' + url);
+    const position = positionMatch[1].trim();
+
+    return { player_name, number, position };
   } catch (err) {
     console.error(err.message);
     return null;
   }
 }
 
-// Parse all players
-const roster = playerSnippets
-  .map(parsePlayer)
-  .filter(player => player !== null); // Remove any failed parses
+(async () => {
+  const roster = [];
+  for (const url of playerPages) {
+    const playerData = await fetchPlayerData(url);
+    if (playerData) roster.push(playerData);
+  }
 
-// Write to roster.json
-try {
-  fs.writeFileSync('roster.json', JSON.stringify(roster, null, 2), 'utf8');
-  console.log('Roster saved successfully to roster.json');
-} catch (err) {
-  console.error('Failed to write roster.json:', err);
-}
+  try {
+    fs.writeFileSync('roster.json', JSON.stringify(roster, null, 2), 'utf8');
+    console.log('Roster saved successfully to roster.json');
+  } catch (err) {
+    console.error('Failed to write roster.json:', err);
+  }
+})();
