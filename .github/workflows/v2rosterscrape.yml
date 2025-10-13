@@ -1,11 +1,12 @@
-# .github/workflows/fetch-roster.yml
-name: Fetch Roster
+name: Fetch Steelers Roster
 
+# Trigger only manually
 on:
-  workflow_dispatch: # run manually
+  workflow_dispatch:
 
 jobs:
-  build:
+  fetch-roster:
+    name: Fetch Roster
     runs-on: ubuntu-latest
 
     steps:
@@ -15,10 +16,10 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 20
+          node-version: '20.x'
 
       - name: Install dependencies
         run: npm install
 
-      - name: Run roster fetch
+      - name: Run roster fetch script
         run: node roster-fetch.js
