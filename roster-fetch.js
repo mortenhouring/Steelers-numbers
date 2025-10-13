@@ -44,21 +44,15 @@ if (ldJsonEl) {
       // Ensure directory exists
       const dir = path.resolve('fetchimages/images');
       if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
-
-      // Check write permission
-      try {
-        fs.accessSync(dir, fs.constants.W_OK);
-        console.log(`Write permission OK for directory: ${dir}`);
-      } catch (err) {
-        console.error(`No write permission for directory: ${dir}`, err.message);
-      }
-
       const filePath = path.join(dir, fileName);
 
       console.log('Fetching image URL:', imgUrl); // debug
       const response = await axios.get(imgUrl, {
         responseType: 'arraybuffer',
         maxRedirects: 5,
+        headers: {
+          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)' // mimics browser
+        }
       });
 
       const contentType = response.headers['content-type'];
