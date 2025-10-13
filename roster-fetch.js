@@ -1,8 +1,8 @@
+// roster-fetch.js
 import fs from 'fs';
 import axios from 'axios';
 import { JSDOM } from 'jsdom';
 
-// Players to scrape
 const players = [
   {
     name: 'Pat Freiermuth',
@@ -14,36 +14,46 @@ const players = [
   }
 ];
 
-async function fetchPlayerData(url) {
+async function fetchPlayer(player) {
   try {
-    const { data: html } = await axios.get(url);
-    const dom = new JSDOM(html);
-    const doc = dom.window.document;
+    const { data } = await axios.get(player.url);
+    const dom = new JSDOM(data);
+    const document = dom.window.document;
 
-    // These selectors work on current Steelers.com player pages
-    const name = doc.querySelector('h1.player-name')?.textContent.trim() || null;
-    const numberText = doc.querySelector('.player-jersey-number')?.textContent.trim() || null;
-    const position = doc.querySelector('.player-position')?.textContent.trim() || null;
+    // Find the script containing playerData
+    const scripts = Array.from(document.querySelectorAll('script'));
+    const targetScript = scripts.find(s => s.textContent.includes('window.__PLAYER_DATA__'));
 
-    const number = numberText ? parseInt(numberText.replace('#', ''), 10) : null;
+    if (!targetScript) throw new Error(`Player data not found for ${player.name}`);
 
-    return { player_name: name, number, position };
+    // Extract JSON
+    const match = targetScript.textContent.match(/window\.__PLAYER_DATA__\s*=\s*(\{.*\});/s);
+    if (!match) throw new Error(`Cannot parse player JSON for ${player.name}`);
+
+    const playerData = JSON.parse(match[1]);
+
+    // Map to required format
+    return {
+      player_name: playerData?.name || player.name,
+      number: Number(playerData?.jerseyNumber || 0),
+      position: playerData?.position || 'N/A'
+    };
   } catch (err) {
-    console.error(`Error fetching ${url}:`, err.message);
+    console.error(`Error fetching ${player.name}:`, err.message);
     return null;
   }
 }
 
 async function main() {
   const results = [];
-
   for (const player of players) {
-    const data = await fetchPlayerData(player.url);
+    const data = await fetchPlayer(player);
     if (data) results.push(data);
   }
 
+  // Write to roster.json
   fs.writeFileSync('roster.json', JSON.stringify(results, null, 2));
-  console.log('✅ roster.json created successfully');
+  console.log('Roster saved to roster.json');
 }
 
 main();
