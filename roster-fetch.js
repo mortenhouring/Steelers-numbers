@@ -40,7 +40,12 @@ if (ldJsonEl) {
       const firstName = nameParts[0].toLowerCase();
       const lastName = nameParts.slice(1).join('_').toLowerCase();
       const fileName = `${firstName}_${lastName}.jpeg`;
-      const filePath = path.resolve('fetchimages/images', fileName);
+
++      // Ensure directory exists
++      const dir = path.resolve('fetchimages/images');
++      if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+-      const filePath = path.resolve('fetchimages/images', fileName);
++      const filePath = path.join(dir, fileName);
 
       console.log('Fetching image URL:', imgUrl); // debug
       const response = await axios.get(imgUrl, {
@@ -58,6 +63,10 @@ if (ldJsonEl) {
         console.log(`Saved image for ${player.name} to ${imagePath}`);
       }
     }
+  } catch (err) {
+    console.error(`Error fetching image for ${player.name}:`, err.message);
+  }
+}
   } catch (err) {
     console.error(`Error fetching image for ${player.name}:`, err.message);
   }
