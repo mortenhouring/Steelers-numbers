@@ -60,7 +60,7 @@ if (ldJsonEl) {
         console.error(`Unexpected content type for ${player.name}: ${contentType}`);
       } else {
         fs.writeFileSync(filePath, response.data);
-        imagePath = filePath; // store absolute path
+        imagePath = `fetchimages/images/${fileName}`; // store relative path for JSON
         console.log(`Saved image for ${player.name} to ${imagePath}`);
       }
     }
