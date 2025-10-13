@@ -3,12 +3,12 @@
     "player_name": "Pat Freiermuth",
     "number": 88,
     "position": "TE",
-    "image": "/home/runner/work/Steelers-numbers/Steelers-numbers/fetchimages/images/pat_freiermuth.jpeg"
+    "image": "fetchimages/images/pat_freiermuth.jpeg"
   },
   {
     "player_name": "DK Metcalf",
     "number": 4,
     "position": "WR",
-    "image": "/home/runner/work/Steelers-numbers/Steelers-numbers/fetchimages/images/dk_metcalf.jpeg"
+    "image": "fetchimages/images/dk_metcalf.jpeg"
   }
 ]
