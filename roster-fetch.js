@@ -2,6 +2,7 @@
 import fs from 'fs';
 import axios from 'axios';
 import { JSDOM } from 'jsdom';
+import path from 'path';
 
 const players = [
   { name: 'Pat Freiermuth', url: 'https://www.steelers.com/team/players-roster/pat-freiermuth/' },
@@ -39,7 +40,7 @@ if (ldJsonEl) {
       const firstName = nameParts[0].toLowerCase();
       const lastName = nameParts.slice(1).join('_').toLowerCase();
       const fileName = `${firstName}_${lastName}.jpeg`;
-      imagePath = `fetchimages/images/${fileName}`;
+      const filePath = path.resolve('fetchimages/images', fileName);
 
       console.log('Fetching image URL:', imgUrl); // debug
       const response = await axios.get(imgUrl, {
@@ -52,7 +53,8 @@ if (ldJsonEl) {
       if (!contentType.startsWith('image')) {
         console.error(`Unexpected content type for ${player.name}: ${contentType}`);
       } else {
-        fs.writeFileSync(imagePath, response.data);
+        fs.writeFileSync(filePath, response.data);
+        imagePath = filePath; // optional, to store the absolute path in your JSON
         console.log(`Saved image for ${player.name} to ${imagePath}`);
       }
     }
