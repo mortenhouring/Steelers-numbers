@@ -7,7 +7,7 @@ import cheerio from 'cheerio';
 // ---------- CONFIG ----------
 const TEST_PLAYER_URL = 'https://www.steelers.com/team/players-roster/dk-metcalf/';
 const OUTPUT_JSON = './roster.json';
-const IMAGE_DIR = './fetchimages/active/';
+const IMAGE_DIR = './fetchimages/images/';
 
 // ---------- HELPERS ----------
 async function downloadImage(url, filepath) {
