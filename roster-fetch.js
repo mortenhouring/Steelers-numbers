@@ -14,19 +14,18 @@ async function fetchPlayer(player) {
     const dom = new JSDOM(data);
     const document = dom.window.document;
 
-    // Extract name
-    const nameEl = document.querySelector('.nfl-c-player-header__title h1');
-    const name = nameEl ? nameEl.textContent.trim() : player.name;
+// Name
+const nameEl = document.querySelector('.d3-o-media-object__title');
+const name = nameEl ? nameEl.textContent.trim() : player.name;
 
-    // Extract jersey number
-    const numberEl = document.querySelector('.nfl-c-player-header__number');
-    const numberText = numberEl ? numberEl.textContent.replace('#', '').trim() : '0';
-    const number = Number(numberText);
+// Position
+const positionEl = document.querySelector('.d3-o-media-object__primary-subtitle');
+const position = positionEl ? positionEl.textContent.trim() : 'N/A';
 
-    // Extract position
-    const positionEl = document.querySelector('.nfl-c-player-header__position');
-    const position = positionEl ? positionEl.textContent.trim() : 'N/A';
-
+// Number
+const numberEl = document.querySelector('.d3-o-media-object__secondary-subtitle');
+const numberText = numberEl ? numberEl.textContent.replace('#', '').trim() : '0';
+const number = Number(numberText);
     return { player_name: name, number, position };
   } catch (err) {
     console.error(`Error fetching ${player.name}:`, err.message);
