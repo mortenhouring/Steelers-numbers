@@ -1,6 +1,7 @@
 // roster-fetch.js
 import fs from 'fs/promises';
 import { JSDOM } from 'jsdom';
+import axios from 'axios';
 
 // ---------- CONFIG ----------
 const TEST_PLAYER_URL = 'https://www.steelers.com/team/players-roster/dk-metcalf/';
@@ -17,7 +18,8 @@ function parseTriviaSections(document) {
 
     if (sectionHeader) {
       let sectionContent = '';
-      const nextUL = sectionHeader.closest('div')?.querySelector('ul');
+      const nextUL = sectionHeader.parentElement.nextElementSibling?.querySelector('ul') ||
+                     sectionHeader.closest('div')?.querySelector('ul');
       if (nextUL) {
         const lis = [...nextUL.querySelectorAll('li')];
         sectionContent = lis.map(li => li.textContent.trim()).join('\n');
@@ -31,12 +33,6 @@ function parseTriviaSections(document) {
 }
 
 function parseInfo(document) {
-  const ageEl = document.querySelector('p strong:contains("Age")') || document.querySelector('p:contains("Age")');
-  const expEl = document.querySelector('p strong:contains("Experience")') || document.querySelector('p:contains("Experience")');
-  const heightEl = document.querySelector('p strong:contains("Height")') || document.querySelector('p:contains("Height")');
-  const weightEl = document.querySelector('p strong:contains("Weight")') || document.querySelector('p:contains("Weight")');
-
-  // fallback using textContent parsing if :contains doesn't work
   const summary = [...document.querySelectorAll('p')].reduce((acc, p) => {
     const text = p.textContent.trim();
     if (text.startsWith('Age:')) acc.age = text.replace('Age:', '').trim();
@@ -51,13 +47,13 @@ function parseInfo(document) {
 
 function parseStats(document) {
   const statsList = [...document.querySelectorAll('.nfl-t-stats-tile__list li')];
-  if (!statsList.length) return null;
+  if (!statsList.length) return {};
 
   const stats = {};
   statsList.forEach(li => {
     const labelEl = li.querySelector('.nfl-t-stats-tile__label-full');
     const valueEl = li.querySelector('.nfl-t-stats-tile__value');
-    if (labelEl && valueEl) stats[labelEl.textContent.trim()] = valueEl.textContent.trim();
+    if (labelEl && valueEl) stats[labelEl.textContent.trim()] = Number(valueEl.textContent.trim());
   });
 
   return stats;
@@ -65,17 +61,15 @@ function parseStats(document) {
 
 // ---------- MAIN ----------
 async function fetchPlayer(url) {
-  const res = await fetch(url);
-  if (!res.ok) throw new Error(`Failed to fetch: ${res.status}`);
-  const html = await res.text();
+  const res = await axios.get(url);
+  const html = res.data;
   const dom = new JSDOM(html);
   const doc = dom.window.document;
 
-  // Basic info
   const nameEl = doc.querySelector('h1.d3-o-media-object__title');
   const positionEl = doc.querySelector('h3.d3-o-media-object__primary-subtitle');
   const numberEl = doc.querySelector('h3.d3-o-media-object__secondary-subtitle');
-  const imageEl = doc.querySelector('img');
+  const imageEl = doc.querySelector('.nfl-t-person-tile__photo img');
 
   const player = {
     player_name: nameEl?.textContent.trim() || 'Unknown',
@@ -84,10 +78,10 @@ async function fetchPlayer(url) {
     group: 'Active Roster',
     image: imageEl?.src || '',
     info: parseInfo(doc),
-    career: '',        // optional, can populate later
+    career: '',        // optional
     achievements: '',  // optional
     trivia: parseTriviaSections(doc),
-    stats: parseStats(doc) || {}
+    stats: parseStats(doc)
   };
 
   return player;
@@ -96,7 +90,6 @@ async function fetchPlayer(url) {
 async function main() {
   let roster = [];
   try {
-    // load existing JSON if present
     const data = await fs.readFile(OUTPUT_JSON, 'utf-8');
     roster = JSON.parse(data);
   } catch {
@@ -105,7 +98,7 @@ async function main() {
 
   const player = await fetchPlayer(TEST_PLAYER_URL);
 
-  // For test, overwrite any existing single-player entry
+  // Overwrite roster for test
   roster = [player];
 
   await fs.writeFile(OUTPUT_JSON, JSON.stringify(roster, null, 2), 'utf-8');
