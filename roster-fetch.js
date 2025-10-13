@@ -1,52 +1,49 @@
-// roster-fetch.js
 import fs from 'fs';
+import axios from 'axios';
 import { JSDOM } from 'jsdom';
 
-// URLs of players
+// Players to scrape
 const players = [
-  { name: "Pat Freiermuth", url: "https://www.steelers.com/team/players-roster/pat-freiermuth/" },
-  { name: "DK Metcalf", url: "https://www.steelers.com/team/players-roster/dk-metcalf/" }
+  {
+    name: 'Pat Freiermuth',
+    url: 'https://www.steelers.com/team/players-roster/pat-freiermuth/'
+  },
+  {
+    name: 'DK Metcalf',
+    url: 'https://www.steelers.com/team/players-roster/dk-metcalf/'
+  }
 ];
 
-// Function to scrape player info
-async function scrapePlayer(url) {
-  const res = await fetch(url);
-  const html = await res.text();
-  const dom = new JSDOM(html);
-  const document = dom.window.document;
+async function fetchPlayerData(url) {
+  try {
+    const { data: html } = await axios.get(url);
+    const dom = new JSDOM(html);
+    const doc = dom.window.document;
 
-  // Extract JSON snippet from page
-  const scriptTag = [...document.querySelectorAll('script')].find(s => s.textContent.includes('window.__INITIAL_STATE__'));
-  if (!scriptTag) throw new Error('Player JSON snippet not found');
+    // These selectors work on current Steelers.com player pages
+    const name = doc.querySelector('h1.player-name')?.textContent.trim() || null;
+    const numberText = doc.querySelector('.player-jersey-number')?.textContent.trim() || null;
+    const position = doc.querySelector('.player-position')?.textContent.trim() || null;
 
-  const jsonText = scriptTag.textContent.match(/window\.__INITIAL_STATE__\s?=\s?({.*});/)[1];
-  const data = JSON.parse(jsonText);
+    const number = numberText ? parseInt(numberText.replace('#', ''), 10) : null;
 
-  // Example path to player data in the JSON
-  // ⚠ This may need adjusting if site structure changes
-  const playerData = data?.player?.rosterPlayer;
-
-  return {
-    player_name: playerData?.fullName || "Unknown",
-    number: Number(playerData?.jerseyNumber) || 0,
-    position: playerData?.position?.abbreviation || "Unknown"
-  };
+    return { player_name: name, number, position };
+  } catch (err) {
+    console.error(`Error fetching ${url}:`, err.message);
+    return null;
+  }
 }
 
 async function main() {
-  const roster = [];
+  const results = [];
 
   for (const player of players) {
-    try {
-      const data = await scrapePlayer(player.url);
-      roster.push(data);
-    } catch (err) {
-      console.error(`Failed to fetch ${player.name}:`, err.message);
-    }
+    const data = await fetchPlayerData(player.url);
+    if (data) results.push(data);
   }
 
-  fs.writeFileSync('roster.json', JSON.stringify(roster, null, 2));
-  console.log('Roster saved to roster.json');
+  fs.writeFileSync('roster.json', JSON.stringify(results, null, 2));
+  console.log('✅ roster.json created successfully');
 }
 
 main();
