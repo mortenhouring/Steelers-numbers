@@ -2,178 +2,115 @@
 import fs from 'fs/promises';
 import path from 'path';
 import axios from 'axios';
-import { load } from 'cheerio';
+import { JSDOM } from 'jsdom';
 
 // ---------- CONFIG ----------
 const TEST_PLAYER_URL = 'https://www.steelers.com/team/players-roster/dk-metcalf/';
 const OUTPUT_JSON = './roster.json';
-const IMAGE_FOLDER = './fetchimages/images/'; // <-- corrected to what you asked
+const IMAGE_DIR = './fetchimages/images/';
 
-// ---------- HELPERS ----------
-async function downloadImage(url, filepath) {
-  const res = await axios.get(url, { responseType: 'arraybuffer' });
-  await fs.mkdir(path.dirname(filepath), { recursive: true });
-  await fs.writeFile(filepath, res.data);
+// ---------- HELPER FUNCTIONS ----------
+function sanitizeName(name) {
+  return name.toLowerCase().replace(/[^a-z]/g, '_');
 }
 
-function normalizeText(s = '') {
-  return s.replace(/\s+/g, ' ').trim();
+function parseInfo(document) {
+  const summary = [...document.querySelectorAll('p')].reduce((acc, p) => {
+    const text = p.textContent.trim();
+    if (text.startsWith('Age:')) acc.age = text.replace('Age:', '').trim();
+    if (text.startsWith('Experience:')) acc.exp = text.replace('Experience:', '').trim();
+    if (text.startsWith('Height:')) acc.ht = text.replace('Height:', '').trim();
+    if (text.startsWith('Weight:')) acc.wt = text.replace('Weight:', '').trim();
+    return acc;
+  }, { age: '', exp: '', ht: '', wt: '' });
+
+  return `AGE ${summary.age} | EXP ${summary.exp} | HT/WT ${summary.ht}/${summary.wt}`;
 }
 
-/**
- * Build trivia as HTML:
- * <p><strong>SECTION</strong></p>
- * <ul> <li>...</li> </ul>
- */
-function parseTriviaSections($) {
+function parseTriviaSections(document) {
   const allowedSections = ['PRO CAREER', 'CAREER HIGHLIGHTS', 'AWARDS'];
-  let html = '';
+  let trivia = '';
 
-  allowedSections.forEach(sectionTitle => {
-    // find element whose text contains the section title (loose match)
-    const headerEl = $('strong, span').filter((i, el) => normalizeText($(el).text()).toUpperCase().includes(sectionTitle)).first();
-    if (!headerEl || !headerEl.length) return;
+  allowedSections.forEach((sectionTitle) => {
+    const sectionHeader = [...document.querySelectorAll('strong, span')]
+      .find(el => el.textContent.trim().toUpperCase() === sectionTitle);
 
-    // Try several ways to find the <ul> that contains the items:
-    let listEl = headerEl.closest('div').find('ul').first();
-    if (!listEl || !listEl.length) {
-      // check siblings / next ul
-      listEl = headerEl.parent().nextAll('ul').first();
-    }
-    if (!listEl || !listEl.length) {
-      // fallback: search within same section wrapper (some pages nest differently)
-      listEl = headerEl.parents().find('ul').first();
-    }
+    if (sectionHeader) {
+      let sectionContent = '';
+      const nextUL = sectionHeader.closest('div')?.querySelector('ul');
+      if (nextUL) {
+        const lis = [...nextUL.querySelectorAll('li')];
+        sectionContent = lis.map(li => li.textContent.trim()).join('\n');
+      }
 
-    if (listEl && listEl.length) {
-      // preserve the list markup exactly (but trimmed)
-      const items = listEl.find('li').toArray().map(li => `<li>${normalizeText($(li).text())}</li>`).join('');
-      html += `<p><strong>${sectionTitle}</strong></p>\n<ul>\n${items}\n</ul>\n`;
+      trivia += `\n\n**${sectionTitle}**\n${sectionContent}`;
     }
   });
 
-  return html.trim();
+  return trivia.trim();
 }
 
-// Info string: AGE X | EXP X | HT/WT X/Y
-function parseInfo($) {
-  const summary = { age: '', exp: '', ht: '', wt: '' };
+function parseStats(document) {
+  const statsList = [...document.querySelectorAll('.nfl-t-stats-tile__list li')];
+  if (!statsList.length) return {};
 
-  $('div.nfl-t-person-tile__stat-details p, div.nfl-t-person-tile__stat-details').each((i, el) => {
-    const text = normalizeText($(el).text() || '');
-    // sometimes the label is inside <strong>, sometimes not — do startsWith to be safe
-    if (/^age[:\s]/i.test(text) || text.toLowerCase().startsWith('age:')) {
-      summary.age = text.replace(/age[:\s]*/i, '').trim();
-    }
-    if (/^experience[:\s]/i.test(text) || text.toLowerCase().startsWith('experience:')) {
-      summary.exp = text.replace(/experience[:\s]*/i, '').trim();
-    }
-    if (/^height[:\s]/i.test(text) || text.toLowerCase().startsWith('height:')) {
-      summary.ht = text.replace(/height[:\s]*/i, '').trim();
-    }
-    if (/^weight[:\s]/i.test(text) || text.toLowerCase().startsWith('weight:')) {
-      summary.wt = text.replace(/weight[:\s]*/i, '').trim();
-    }
-  });
-
-  // final formatting (if a piece missing, it's left blank)
-  return `AGE ${summary.age || ''} | EXP ${summary.exp || ''} | HT/WT ${summary.ht || ''}/${summary.wt || ''}`.trim();
-}
-
-function parseStats($) {
   const stats = {};
-  const liList = $('.nfl-t-stats-tile__list li');
-  if (!liList.length) return stats;
-
-  liList.each((i, li) => {
-    const label = normalizeText($(li).find('.nfl-t-stats-tile__label-full').text() || '');
-    const value = normalizeText($(li).find('.nfl-t-stats-tile__value').text() || '');
-    if (label) stats[label] = value;
+  statsList.forEach(li => {
+    const labelEl = li.querySelector('.nfl-t-stats-tile__label-full');
+    const valueEl = li.querySelector('.nfl-t-stats-tile__value');
+    if (labelEl && valueEl) stats[labelEl.textContent.trim()] = valueEl.textContent.trim();
   });
 
   return stats;
 }
 
-// parse ld+json for image contentUrl; returns remote URL or empty string
-function findImageUrlFromLdJson($, playerName) {
-  let imageUrl = '';
-  $('script[type="application/ld+json"]').each((i, s) => {
-    const txt = $(s).html();
-    if (!txt) return;
-    try {
-      const data = JSON.parse(txt);
-      // handle nested structures robustly
-      const person = data?.member?.member || data?.member || data;
-      if (person && person.name && person.image) {
-        // sometimes image is object with contentUrl
-        const candidate = person.image.contentUrl || person.image['contentUrl'] || person.image.url || person.image;
-        if (candidate) {
-          // optional: only accept if person.name matches playerName (loose)
-          if (String(person.name).toLowerCase().includes(String(playerName).split(' ')[0].toLowerCase())) {
-            imageUrl = candidate;
-          } else if (!imageUrl) {
-            imageUrl = candidate; // fallback if no better match
-          }
-        }
-      }
-    } catch (e) {
-      // ignore JSON parse errors
-    }
-  });
-  return imageUrl || '';
+async function downloadImage(url, filepath) {
+  const response = await axios.get(url, { responseType: 'arraybuffer' });
+  await fs.mkdir(path.dirname(filepath), { recursive: true });
+  await fs.writeFile(filepath, response.data);
 }
 
 // ---------- MAIN ----------
 async function fetchPlayer(url) {
   const res = await axios.get(url);
-  const $ = load(res.data);
+  const dom = new JSDOM(res.data);
+  const doc = dom.window.document;
 
-  const name = normalizeText($('h1.d3-o-media-object__title').first().text() || 'Unknown');
-  const position = normalizeText($('h3.d3-o-media-object__primary-subtitle').first().text() || '');
-  const number = normalizeText($('h3.d3-o-media-object__secondary-subtitle').first().text() || '').replace('#', '');
+  // Basic info
+  const nameEl = doc.querySelector('h1.d3-o-media-object__title');
+  const positionEl = doc.querySelector('h3.d3-o-media-object__primary-subtitle');
+  const numberEl = doc.querySelector('h3.d3-o-media-object__secondary-subtitle');
 
-  // local image filename: firstname_lastname.jpg
-  const nameParts = name.toLowerCase().split(/\s+/).filter(Boolean);
-  const filename = nameParts.join('_') + '.jpg';
-  const localImagePath = path.join(IMAGE_FOLDER, filename);
-
-  // find remote image URL via ld+json (preferred)
-  const remoteImage = findImageUrlFromLdJson($, name);
-
-  // fallback: meta og:image or first player picture tag
-  let finalImageUrl = remoteImage;
-  if (!finalImageUrl) {
-    const og = $('meta[property="og:image"]').attr('content');
-    if (og) finalImageUrl = og;
-  }
-  if (!finalImageUrl) {
-    const actionshot = $('figure.d3-o-media-object__figure img').first().attr('data-src') || $('figure.d3-o-media-object__figure img').first().attr('src');
-    if (actionshot) finalImageUrl = actionshot;
-  }
-
-  // download the image if we have a URL
-  if (finalImageUrl) {
+  // Extract image URL from JSON-LD script
+  const jsonLdScript = [...doc.querySelectorAll('script[type="application/ld+json"]')]
+    .map(s => s.textContent)
+    .find(t => t.includes('"@type": "Person"'));
+  let imageUrl = '';
+  if (jsonLdScript) {
     try {
-      await downloadImage(finalImageUrl, localImagePath);
-    } catch (err) {
-      console.error('Image download failed:', err.message || err);
-    }
-  } else {
-    // ensure folder exists so path is consistent even if file missing
-    await fs.mkdir(IMAGE_FOLDER, { recursive: true });
+      const ld = JSON.parse(jsonLdScript);
+      imageUrl = ld?.member?.image?.contentUrl || '';
+    } catch {}
   }
+
+  const playerName = nameEl?.textContent.trim() || 'Unknown';
+  const imageFilename = sanitizeName(playerName) + '.jpg';
+  const imagePath = path.join(IMAGE_DIR, imageFilename);
+
+  // Download image locally
+  if (imageUrl) await downloadImage(imageUrl, imagePath);
 
   const player = {
-    player_name: name,
-    number: number || null,
-    position: position || null,
+    player_name: playerName,
+    number: numberEl?.textContent.replace('#', '').trim() || null,
+    position: positionEl?.textContent.trim() || null,
     group: 'Active Roster',
-    image: localImagePath, // local reference as you requested
-    info: parseInfo($),
+    image: imagePath,
+    info: parseInfo(doc),
     career: '',
     achievements: '',
-    trivia: parseTriviaSections($), // HTML string
-    stats: parseStats($)
+    trivia: parseTriviaSections(doc),
+    stats: parseStats(doc)
   };
 
   return player;
@@ -181,23 +118,21 @@ async function fetchPlayer(url) {
 
 async function main() {
   let roster = [];
+
   try {
-    const raw = await fs.readFile(OUTPUT_JSON, 'utf-8');
-    roster = JSON.parse(raw);
+    const data = await fs.readFile(OUTPUT_JSON, 'utf-8');
+    roster = JSON.parse(data);
   } catch {
     roster = [];
   }
 
   const player = await fetchPlayer(TEST_PLAYER_URL);
 
-  // For test, replace entire roster with single player entry
+  // Overwrite roster for single-player test
   roster = [player];
 
   await fs.writeFile(OUTPUT_JSON, JSON.stringify(roster, null, 2), 'utf-8');
-  console.log('Wrote roster.json and image (if available).');
+  console.log('Roster updated successfully.');
 }
 
-main().catch(err => {
-  console.error('Fatal error:', err);
-  process.exit(1);
-});
+main().catch(err => console.error(err));
