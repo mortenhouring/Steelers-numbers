@@ -41,11 +41,23 @@ if (ldJsonEl) {
       const fileName = `${firstName}_${lastName}.jpeg`;
       imagePath = `fetchimages/images/${fileName}`;
 
-      const response = await axios.get(imgUrl, { responseType: 'arraybuffer' });
-      fs.writeFileSync(imagePath, response.data);
+      console.log('Fetching image URL:', imgUrl); // debug
+      const response = await axios.get(imgUrl, {
+        responseType: 'arraybuffer',
+        maxRedirects: 5, // ensure it follows any redirects
+      });
+
+      // Optional: verify Content-Type
+      const contentType = response.headers['content-type'];
+      if (!contentType.startsWith('image')) {
+        console.error(`Unexpected content type for ${player.name}: ${contentType}`);
+      } else {
+        fs.writeFileSync(imagePath, response.data);
+        console.log(`Saved image for ${player.name} to ${imagePath}`);
+      }
     }
   } catch (err) {
-    console.error(`Error parsing LD+JSON for ${player.name}:`, err.message);
+    console.error(`Error fetching image for ${player.name}:`, err.message);
   }
 }
 // Return IDs
