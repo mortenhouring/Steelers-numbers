@@ -1,106 +1,109 @@
 // roster-fetch.js
 import fs from 'fs/promises';
 import axios from 'axios';
-import { load } from 'cheerio';
+import { JSDOM } from 'jsdom';
 
 // ---------- CONFIG ----------
 const TEST_PLAYER_URL = 'https://www.steelers.com/team/players-roster/dk-metcalf/';
 const OUTPUT_JSON = './roster.json';
-const IMAGE_FOLDER = 'fetchimages/active/'; // local image folder
 
-// ---------- HELPER FUNCTIONS ----------
+// ---------- HELPERS ----------
+function normalizeText(text) {
+  return text?.replace(/\s+/g, ' ').trim() || '';
+}
 
-/**
- * Parse allowed trivia sections
- */
-function parseTriviaSections($) {
+function parseInfo(document) {
+  const summary = [...document.querySelectorAll('p')].reduce((acc, p) => {
+    const txt = normalizeText(p.textContent);
+    if (txt.toLowerCase().startsWith('age:')) acc.age = txt.split(':')[1].trim();
+    if (txt.toLowerCase().startsWith('experience:')) acc.exp = txt.split(':')[1].trim();
+    if (txt.toLowerCase().startsWith('height:')) acc.ht = txt.split(':')[1].trim();
+    if (txt.toLowerCase().startsWith('weight:')) acc.wt = txt.split(':')[1].trim();
+    return acc;
+  }, { age: '', exp: '', ht: '', wt: '' });
+
+  return `AGE ${summary.age} | EXP ${summary.exp} | HT/WT ${summary.ht}/${summary.wt}`;
+}
+
+function parseTriviaSections(document) {
   const allowedSections = ['PRO CAREER', 'CAREER HIGHLIGHTS', 'AWARDS'];
   let trivia = '';
 
-  allowedSections.forEach((sectionTitle) => {
-    // Look for strong or span that matches the section title
-    const sectionHeader = $(`strong, span`).filter((_, el) =>
-      $(el).text().trim().toUpperCase() === sectionTitle
-    ).first();
+  allowedSections.forEach(sectionTitle => {
+    const sectionHeader = [...document.querySelectorAll('strong, span')]
+      .find(el => normalizeText(el.textContent).toUpperCase().includes(sectionTitle));
 
-    if (sectionHeader.length) {
-      let sectionContent = '';
-      const nextUL = sectionHeader.closest('div').find('ul').first();
-      if (nextUL.length) {
-        sectionContent = nextUL.find('li').toArray().map(li => $(li).text().trim()).join('\n');
+    if (sectionHeader) {
+      // look for first <ul> after header in parent nodes
+      let nextUL = sectionHeader.parentElement?.querySelector('ul') ||
+                   sectionHeader.closest('div')?.querySelector('ul');
+
+      if (nextUL) {
+        const lis = [...nextUL.querySelectorAll('li')];
+        const sectionContent = lis.map(li => normalizeText(li.textContent)).join('\n');
+        trivia += `\n\n**${sectionTitle}**\n${sectionContent}`;
       }
-      trivia += `\n\n**${sectionTitle}**\n${sectionContent}`;
     }
   });
 
   return trivia.trim();
 }
 
-/**
- * Parse info string
- */
-function parseInfo($) {
-  const summary = { age: '', exp: '', ht: '', wt: '' };
-
-  $('p').each((_, p) => {
-    const text = $(p).text().trim();
-    if (text.startsWith('Age:')) summary.age = text.replace('Age:', '').trim();
-    if (text.startsWith('Experience:')) summary.exp = text.replace('Experience:', '').trim();
-    if (text.startsWith('Height:')) summary.ht = text.replace('Height:', '').trim();
-    if (text.startsWith('Weight:')) summary.wt = text.replace('Weight:', '').trim();
-  });
-
-  return `AGE ${summary.age} | EXP ${summary.exp} | HT/WT ${summary.ht}/${summary.wt}`;
-}
-
-/**
- * Parse stats if present
- */
-function parseStats($) {
-  const statsList = $('.nfl-t-stats-tile__list li').toArray();
+function parseStats(document) {
+  const statsList = [...document.querySelectorAll('.nfl-t-stats-tile__list li')];
   if (!statsList.length) return {};
 
   const stats = {};
   statsList.forEach(li => {
-    const label = $(li).find('.nfl-t-stats-tile__label-full').text().trim();
-    const value = $(li).find('.nfl-t-stats-tile__value').text().trim();
-    if (label && value) stats[label] = value;
+    const labelEl = li.querySelector('.nfl-t-stats-tile__label-full');
+    const valueEl = li.querySelector('.nfl-t-stats-tile__value');
+    if (labelEl && valueEl) stats[normalizeText(labelEl.textContent)] = normalizeText(valueEl.textContent);
   });
 
   return stats;
 }
 
-/**
- * Format local image path
- */
-function formatImagePath(name) {
-  const formattedName = name.toLowerCase().replace(/\s+/g, '_');
-  return `${IMAGE_FOLDER}${formattedName}.jpg`;
+function parseImage(document) {
+  // Attempt to find image from ld+json
+  const ldJsonScript = document.querySelector('script[type="application/ld+json"]');
+  if (!ldJsonScript) return '';
+
+  try {
+    const data = JSON.parse(ldJsonScript.textContent);
+    const person = data.member?.member;
+    if (person?.image?.contentUrl) {
+      // Map to local path
+      const name = normalizeText(person.name).toLowerCase().replace(/ /g, '_');
+      return `fetchimages/active/${name}.jpg`;
+    }
+  } catch {
+    return '';
+  }
+
+  return '';
 }
 
 // ---------- MAIN ----------
-
 async function fetchPlayer(url) {
-  // Fetch HTML
   const res = await axios.get(url);
-  const $ = load(res.data);
+  const dom = new JSDOM(res.data);
+  const doc = dom.window.document;
 
-  // Basic info
-  const name = $('h1.d3-o-media-object__title').first().text().trim() || 'Unknown';
-  const position = $('h3.d3-o-media-object__primary-subtitle').first().text().trim() || null;
-  const number = $('h3.d3-o-media-object__secondary-subtitle').first().text().replace('#', '').trim() || null;
+  const nameEl = doc.querySelector('h1.d3-o-media-object__title');
+  const positionEl = doc.querySelector('h3.d3-o-media-object__primary-subtitle');
+  const numberEl = doc.querySelector('h3.d3-o-media-object__secondary-subtitle');
 
   const player = {
-    player_name: name,
-    number,
-    position,
+    player_name: normalizeText(nameEl?.textContent) || 'Unknown',
+    number: numberEl ? numberEl.textContent.replace('#','').trim() : null,
+    position: normalizeText(positionEl?.textContent) || null,
     group: 'Active Roster',
-    image: formatImagePath(name), // local reference
-    info: parseInfo($),
-    career: '',        // can populate later
-    achievements: '',  // optional
-    trivia: parseTriviaSections($),
-    stats: parseStats($)
+    image: parseImage(doc),
+    info: parseInfo(doc),
+    career: '',
+    achievements: '',
+    trivia: parseTriviaSections(doc),
+    stats: parseStats(doc)
   };
 
   return player;
@@ -117,14 +120,11 @@ async function main() {
 
   const player = await fetchPlayer(TEST_PLAYER_URL);
 
-  // Test: overwrite with single player
+  // Overwrite test roster with single player
   roster = [player];
 
   await fs.writeFile(OUTPUT_JSON, JSON.stringify(roster, null, 2), 'utf-8');
   console.log('Roster updated successfully.');
 }
 
-// Run
-main().catch(err => {
-  console.error('Error fetching player:', err);
-});
+main().catch(err => console.error(err));
