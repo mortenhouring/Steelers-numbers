@@ -41,32 +41,35 @@ if (ldJsonEl) {
       const lastName = nameParts.slice(1).join('_').toLowerCase();
       const fileName = `${firstName}_${lastName}.jpeg`;
 
-+      // Ensure directory exists
-+      const dir = path.resolve('fetchimages/images');
-+      if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
--      const filePath = path.resolve('fetchimages/images', fileName);
-+      const filePath = path.join(dir, fileName);
+      // Ensure directory exists
+      const dir = path.resolve('fetchimages/images');
+      if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+
+      // Check write permission
+      try {
+        fs.accessSync(dir, fs.constants.W_OK);
+        console.log(`Write permission OK for directory: ${dir}`);
+      } catch (err) {
+        console.error(`No write permission for directory: ${dir}`, err.message);
+      }
+
+      const filePath = path.join(dir, fileName);
 
       console.log('Fetching image URL:', imgUrl); // debug
       const response = await axios.get(imgUrl, {
         responseType: 'arraybuffer',
-        maxRedirects: 5, // ensure it follows any redirects
+        maxRedirects: 5,
       });
 
-      // Optional: verify Content-Type
       const contentType = response.headers['content-type'];
       if (!contentType.startsWith('image')) {
         console.error(`Unexpected content type for ${player.name}: ${contentType}`);
       } else {
         fs.writeFileSync(filePath, response.data);
-        imagePath = filePath; // optional, to store the absolute path in your JSON
+        imagePath = filePath; // store absolute path
         console.log(`Saved image for ${player.name} to ${imagePath}`);
       }
     }
-  } catch (err) {
-    console.error(`Error fetching image for ${player.name}:`, err.message);
-  }
-}
   } catch (err) {
     console.error(`Error fetching image for ${player.name}:`, err.message);
   }
