@@ -4,13 +4,49 @@
     "number": 88,
     "position": "TE",
     "image": "fetchimages/images/pat_freiermuth.jpeg",
-    "info": "EXP: 5 | HT/WT: 6-5/258 lbs | AGE: 26"
+    "info": "EXP: 5 | HT/WT: 6-5/258 lbs | AGE: 26",
+    "stats": [
+      {
+        "label": "REC",
+        "value": "8"
+      },
+      {
+        "label": "YDS",
+        "value": "76"
+      },
+      {
+        "label": "AVG",
+        "value": "9.5"
+      },
+      {
+        "label": "TDS",
+        "value": "0"
+      }
+    ]
   },
   {
     "player_name": "DK Metcalf",
     "number": 4,
     "position": "WR",
     "image": "fetchimages/images/dk_metcalf.jpeg",
-    "info": "EXP: 7 | HT/WT: 6-4/229 lbs | AGE: 27"
+    "info": "EXP: 7 | HT/WT: 6-4/229 lbs | AGE: 27",
+    "stats": [
+      {
+        "label": "REC",
+        "value": "19"
+      },
+      {
+        "label": "YDS",
+        "value": "356"
+      },
+      {
+        "label": "AVG",
+        "value": "18.74"
+      },
+      {
+        "label": "TDS",
+        "value": "4"
+      }
+    ]
   }
 ]
