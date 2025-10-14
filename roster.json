@@ -23,6 +23,7 @@
         "value": "0"
       }
     ],
+    "achievements": null,
     "trivia": {
       "pro_career": [
         "Has played in 61 career regular-season games (37 starts) in four-year NFL career (Pittsburgh 2021-24)",
@@ -67,6 +68,9 @@
         "label": "TDS",
         "value": "4"
       }
+    ],
+    "achievements": [
+      "2x Pro Bowl"
     ],
     "trivia": {
       "pro_career": [
