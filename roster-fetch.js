@@ -15,6 +15,10 @@ async function fetchPlayer(player) {
     const dom = new JSDOM(data);
     const document = dom.window.document;
 
+////////////////////////////
+// FETCH Functions ////////
+//////////////////////////
+
 // Name
 const nameEl = document.querySelector('.d3-o-media-object__title');
 const name = nameEl ? nameEl.textContent.trim() : player.name;
@@ -101,6 +105,41 @@ for (let i = 0; i < bioSections.length; i++) {
     trivia.career_highlights_post.push(...entries);
   }
 }
+//Achievements
+
+// Build PFR link
+const last = name.split(' ').slice(-1)[0];
+const first = name.split(' ')[0];
+const pfrId = `${last.slice(0, 4)}${first.slice(0, 2)}00`;
+const pfrLink = `https://www.pro-football-reference.com/players/${last[0]}/${pfrId}.htm`;
+
+let achievements = null;
+try {
+  const { data: pfrHtml } = await axios.get(pfrLink);
+  const domPFR = new JSDOM(pfrHtml);
+  const documentPFR = domPFR.window.document;
+
+  const awardEls = Array.from(documentPFR.querySelectorAll('#bling li a'));
+  const mainAwards = ['Pro Bowl', 'All-Pro', 'SB Champ', 'AP MVP', 'PFWA MVP', 'SB MVP', 'Off. PoY'];
+  const foundAwards = [];
+
+  awardEls.forEach(a => {
+    const text = a.textContent.trim();
+    mainAwards.forEach(ma => {
+      // Check if the award text contains the key string
+      if (text.includes(ma) && !foundAwards.includes(text)) {
+        foundAwards.push(text);
+      }
+    });
+  });
+
+  if (foundAwards.length > 0) {
+    achievements = foundAwards;
+  }
+} catch (err) {
+  console.error(`Error fetching awards for ${player.name} at ${pfrLink}:`, err.message);
+}
+
 ///////////////////////////////
 // Image /////////////////////
 /////////////////////////////
@@ -148,7 +187,7 @@ if (ldJsonEl) {
 ///////////////////////////////
 
 //Defines JSON strings //return { are the json  IDs//
-return { player_name: name, number, position, image: imagePath, info, stats, trivia };
+return { player_name: name, number, position, image: imagePath, info, stats, achievements,trivia };
   } catch (err) {
     console.error(`Error fetching ${player.name}:`, err.message);
     return null;
