@@ -4,10 +4,37 @@ import axios from 'axios';
 import { JSDOM } from 'jsdom';
 import path from 'path';
 
-const players = [
-  { name: 'Pat Freiermuth', url: 'https://www.steelers.com/team/players-roster/pat-freiermuth/' },
-  { name: 'DK Metcalf', url: 'https://www.steelers.com/team/players-roster/dk-metcalf/' }
-];
+///////////////////////////////////
+// Fetch active roster players///
+/////////////////////////////////
+async function fetchActiveRoster() {
+  const rosterUrl = 'https://www.steelers.com/team/players-roster/';
+  const { data } = await axios.get(rosterUrl);
+  const dom = new JSDOM(data);
+  const document = dom.window.document;
+
+  const activeRoster = [];
+
+  // Find the Active section
+  const activeHeader = [...document.querySelectorAll('h4.nfl-o-roster__title')].find(h4 =>
+    h4.querySelector('span.nfl-o-roster__title-status')?.textContent.trim() === 'Active'
+  );
+
+  if (!activeHeader) return activeRoster; // no active roster found
+
+  // Get the table below the header
+  const table = activeHeader.parentElement.querySelector('table');
+  if (!table) return activeRoster;
+
+  // Collect each player
+  table.querySelectorAll('span.nfl-o-roster__player-name a').forEach(a => {
+    const name = a.textContent.trim();
+    const url = 'https://www.steelers.com' + a.getAttribute('href');
+    activeRoster.push({ name, url });
+  });
+
+  return activeRoster;
+}
 
 async function fetchPlayer(player) {
   try {
@@ -193,12 +220,16 @@ return { player_name: name, number, position, image: imagePath, info, stats, ach
     return null;
   }
 }
+/////////////////////////////////
+// Main ////////////////////////
+///////////////////////////////
 async function main() {
   const results = [];
-  for (const player of players) {
-    const data = await fetchPlayer(player);
-    if (data) results.push(data);
-  }
+  const players = await fetchActiveRoster();
+for (const player of players) {
+  const data = await fetchPlayer(player);
+  if (data) results.push(data);
+}
 
   fs.writeFileSync('roster.json', JSON.stringify(results, null, 2));
   console.log('Roster saved to roster.json');
