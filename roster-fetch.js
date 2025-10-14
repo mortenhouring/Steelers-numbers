@@ -220,6 +220,7 @@ return { player_name: name, number, position, image: imagePath, info, stats, ach
     return null;
   }
 }
+
 /////////////////////////////////
 // Main ////////////////////////
 ///////////////////////////////
@@ -231,7 +232,14 @@ for (const player of players) {
   if (data) results.push(data);
 }
 
-  fs.writeFileSync('roster.json', JSON.stringify(results, null, 2));
+// Create the final object with timestamp at the top
+  const output = {
+    last_updated: new Date().toISOString(), // ISO 8601 timestamp
+    roster: results
+  };
+  
+// Write json
+  fs.writeFileSync('roster.json', JSON.stringify(output, null, 2));
   console.log('Roster saved to roster.json');
 }
 
