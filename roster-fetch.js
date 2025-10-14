@@ -29,31 +29,23 @@ const numberText = numberEl ? numberEl.textContent.replace('#', '').trim() : '0'
 const number = Number(numberText);
 
 // Info (Experience, Height, Weight, Age)
-    const detailsEl = document.querySelector('.nfl-t-person-tile__stat-details');
-    let info = '-';
+const summaryEl = document.querySelector('.d3-o-media-object__summary');
+let info = '-';
+if (summaryEl) {
+  const stats = {};
+  summaryEl.querySelectorAll('p').forEach(p => {
+    const label = p.querySelector('strong')?.textContent.replace(':', '').trim().toLowerCase();
+    const value = p.textContent.replace(p.querySelector('strong')?.textContent || '', '').trim();
+    if (label && value) stats[label] = value;
+  });
 
-    if (detailsEl) {
-      const pTags = detailsEl.querySelectorAll('p');
-      let exp = '-', ht = '-', wt = '-', age = '-';
+  const exp = stats['experience'] ? (stats['experience'].includes('0') ? 'rookie' : stats['experience'].replace('years', '').trim()) : '-';
+  const height = stats['height'] || '-';
+  const weight = stats['weight'] || '-';
+  const age = stats['age'] || '-';
 
-      pTags.forEach(p => {
-        const label = p.querySelector('strong')?.textContent?.trim().toLowerCase() || '';
-        const value = p.textContent.replace(/^\s*[^:]+:\s*/, '').trim();
-
-        if (label.includes('experience')) {
-          exp = value.replace('years', '').trim();
-          if (exp === '0' || exp === 'rookie') exp = 'rookie';
-        } else if (label.includes('height')) {
-          ht = value;
-        } else if (label.includes('weight')) {
-          wt = value;
-        } else if (label.includes('age')) {
-          age = value;
-        }
-      });
-
-      info = `EXP: ${exp} | HT/WT: ${ht}/${wt} | AGE: ${age}`;
-    }
+  info = `EXP: ${exp} | HT/WT: ${height}/${weight} | AGE: ${age}`;
+}
 
 
 ///////////
@@ -99,7 +91,7 @@ if (ldJsonEl) {
   }
 }
 // Return IDs
-return { player_name: name, number, position, image: imagePath };
+return { player_name: name, number, position, image: imagePath, info };
   } catch (err) {
     console.error(`Error fetching ${player.name}:`, err.message);
     return null;
