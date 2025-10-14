@@ -62,7 +62,31 @@ if (statsSection) {
 } else {
   stats = [];
 }
+// --- Trivia (Biography Sections) ---
+const trivia = {
+  pro_career: [],
+  career_highlights_regular: [],
+  career_highlights_post: []
+};
 
+const bioSections = [...document.querySelectorAll('.nfl-c-body-part.nfl-c-body-part--text')];
+
+for (const section of bioSections) {
+  const headingEl = section.querySelector('p strong');
+  if (!headingEl) continue;
+  const heading = headingEl.textContent.trim().toUpperCase();
+
+  // Collect all <p> tags after the heading in the same section
+  const paragraphs = [...section.querySelectorAll('p')].slice(1).map(p => p.textContent.trim());
+
+  if (heading.startsWith('PRO CAREER')) {
+    trivia.pro_career.push(...paragraphs);
+  } else if (heading.startsWith('CAREER HIGHLIGHTS (REGULAR SEASON)')) {
+    trivia.career_highlights_regular.push(...paragraphs);
+  } else if (heading.startsWith('CAREER HIGHLIGHTS (POSTSEASON)')) {
+    trivia.career_highlights_post.push(...paragraphs);
+  }
+}
 ///////////////////////////////
 // Image /////////////////////
 /////////////////////////////
@@ -109,8 +133,8 @@ if (ldJsonEl) {
 // Return IDs - Write data /////
 ///////////////////////////////
 
-//Defines JSON strings
-return { player_name: name, number, position, image: imagePath, info, stats};
+//Defines JSON strings //return { are the json  IDs//
+return { player_name: name, number, position, image: imagePath, info, stats, trivia };
   } catch (err) {
     console.error(`Error fetching ${player.name}:`, err.message);
     return null;
