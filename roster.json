@@ -22,7 +22,12 @@
         "label": "TDS",
         "value": "0"
       }
-    ]
+    ],
+    "trivia": {
+      "pro_career": [],
+      "career_highlights_regular": [],
+      "career_highlights_post": []
+    }
   },
   {
     "player_name": "DK Metcalf",
@@ -47,6 +52,11 @@
         "label": "TDS",
         "value": "4"
       }
-    ]
+    ],
+    "trivia": {
+      "pro_career": [],
+      "career_highlights_regular": [],
+      "career_highlights_post": []
+    }
   }
 ]
