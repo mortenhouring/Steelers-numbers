@@ -69,22 +69,36 @@ const trivia = {
   career_highlights_post: []
 };
 
+// Find all biography text blocks
 const bioSections = [...document.querySelectorAll('.nfl-c-body-part.nfl-c-body-part--text')];
 
-for (const section of bioSections) {
+for (let i = 0; i < bioSections.length; i++) {
+  const section = bioSections[i];
   const headingEl = section.querySelector('p strong');
   if (!headingEl) continue;
   const heading = headingEl.textContent.trim().toUpperCase();
 
-  // Collect all <p> tags after the heading in the same section
-  const paragraphs = [...section.querySelectorAll('p')].slice(1).map(p => p.textContent.trim());
+  // Skip if already filled
+  if (heading.startsWith('PRO CAREER') && trivia.pro_career.length > 0) continue;
+  if (heading.startsWith('CAREER HIGHLIGHTS (REGULAR SEASON)') && trivia.career_highlights_regular.length > 0) continue;
+  if (heading.startsWith('CAREER HIGHLIGHTS (POSTSEASON)') && trivia.career_highlights_post.length > 0) continue;
+
+  // Look for next sibling with content (<ul> or <p>)
+  let contentSection = section.nextElementSibling;
+  let entries = [];
+
+  if (contentSection) {
+    const listItems = [...contentSection.querySelectorAll('li')].map(li => li.textContent.trim());
+    const paragraphs = [...contentSection.querySelectorAll('p')].map(p => p.textContent.trim());
+    entries = listItems.length ? listItems : paragraphs;
+  }
 
   if (heading.startsWith('PRO CAREER')) {
-    trivia.pro_career.push(...paragraphs);
+    trivia.pro_career.push(...entries);
   } else if (heading.startsWith('CAREER HIGHLIGHTS (REGULAR SEASON)')) {
-    trivia.career_highlights_regular.push(...paragraphs);
+    trivia.career_highlights_regular.push(...entries);
   } else if (heading.startsWith('CAREER HIGHLIGHTS (POSTSEASON)')) {
-    trivia.career_highlights_post.push(...paragraphs);
+    trivia.career_highlights_post.push(...entries);
   }
 }
 ///////////////////////////////
