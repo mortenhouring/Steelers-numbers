@@ -47,10 +47,25 @@ if (summaryEl) {
   info = `EXP: ${exp} | HT/WT: ${height}/${weight} | AGE: ${age}`;
 }
 
+// --- Stats ---
+const statsSection = document.querySelector('.nfl-t-stats-tile--player');
+let stats = [];
 
-///////////
-// Image //
-///////////
+if (statsSection) {
+  const labels = [...statsSection.querySelectorAll('.nfl-t-stats-tile__label-full')];
+  const values = [...statsSection.querySelectorAll('.nfl-t-stats-tile__value')];
+
+  stats = labels.map((label, i) => ({
+    label: label.textContent.trim(),
+    value: values[i] ? values[i].textContent.trim() : "-"
+  }));
+} else {
+  stats = [];
+}
+
+///////////////////////////////
+// Image /////////////////////
+/////////////////////////////
 let imagePath = null;
 const ldJsonEl = document.querySelector('script[type="application/ld+json"]');
 if (ldJsonEl) {
@@ -90,8 +105,12 @@ if (ldJsonEl) {
     console.error(`Error fetching image for ${player.name}:`, err.message);
   }
 }
-// Return IDs
-return { player_name: name, number, position, image: imagePath, info };
+/////////////////////////////////
+// Return IDs - Write data /////
+///////////////////////////////
+
+//Defines JSON strings
+return { player_name: name, number, position, image: imagePath, info, stats};
   } catch (err) {
     console.error(`Error fetching ${player.name}:`, err.message);
     return null;
