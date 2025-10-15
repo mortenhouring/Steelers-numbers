@@ -9,7 +9,7 @@
 ///////////////////////////
 const CONFIG = {
   // JSON
-  ROSTER_JSON: 'hof.json',          // hof roster source
+  ROSTER_JSON: 'roster.json',          // hof roster source
 
   // HTML element IDs
   ELEMENT_IDS: {
@@ -21,7 +21,7 @@ const CONFIG = {
     CLEAR_BUTTON: 'clear-button',
     NEXT_BUTTON: 'next-button',
     FEEDBACK: 'feedback',
-    PLAYER_IMAGE: 'hof-player-image',
+    PLAYER_IMAGE: 'roster-player-image',
     PLAYER_INFO: 'player-info',
     PLAYER_TRIVIA: 'player-trivia',
     SCORE: 'score',
@@ -31,16 +31,16 @@ const CONFIG = {
 
   // LocalStorage keys
   STORAGE_KEYS: {
-    CURRENT_ROSTER: 'hof-currentRoster',
-    TOTAL_QUESTIONS: 'hof-totalQuestions',
-    LAST_PLAYER: 'hof-lastPlayer',
-    LAST_ANSWER: 'hof-lastAnswer',
-    QUESTIONS_ASKED: 'hof-questionsAsked',
-    SCORE: 'hof-score'
+    CURRENT_ROSTER: 'roster-currentRoster',
+    TOTAL_QUESTIONS: 'roster-totalQuestions',
+    LAST_PLAYER: 'roster-lastPlayer',
+    LAST_ANSWER: 'roster-lastAnswer',
+    QUESTIONS_ASKED: 'roster-questionsAsked',
+    SCORE: 'roster-score'
   },
 
   // End page
-  END_PAGE: 'hof-quiz-end.html',
+  END_PAGE: 'roster-quiz-end.html',
 
   // Question phrases
   QUESTION_PHRASES: [
