@@ -235,8 +235,19 @@ function showAnswerView(){
   if(!last){ feedbackEl.textContent='Player not found.'; showView('quiz1'); return; }
   currentPlayer = last;
 
-  playerImageEl.src = currentPlayer.image || '';
+  // --- Player image and info ---
+playerImageEl.src = currentPlayer.image || '';
+
+if (currentPlayer.info) {
+  // Format the pipe-delimited info into line breaks
+  playerInfoEl.innerHTML = currentPlayer.info
+    .split('|')
+    .map(item => item.trim())
+    .join('<br>');
+} else {
+  // Fallback if no info available
   playerInfoEl.textContent = `${currentPlayer.player_name} - ${currentPlayer.position ?? ''}`;
+}
 
   const storedAnswer = parseInt(localStorage.getItem(CONFIG.STORAGE_KEYS.LAST_ANSWER),10);
   const correctNumber = Number(currentPlayer?.number ?? NaN);
