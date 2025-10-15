@@ -309,7 +309,7 @@ nextButton.addEventListener("click", () => {
 });
 // show/hide bottom gradient for the trivia scroll area
 window.addEventListener("DOMContentLoaded", () => {
-  const inner = document.getElementById('hof-trivia-inner');   // scrollable content
+  const inner = document.getElementById('trivia-inner');   // scrollable content
   const gradient = document.getElementById('scroll-gradient'); // the overlay gradient
   if (!inner || !gradient) return; // nothing to do if either element missing
 
