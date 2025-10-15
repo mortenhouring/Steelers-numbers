@@ -132,26 +132,37 @@ for (let i = 0; i < bioSections.length; i++) {
     trivia.career_highlights_post.push(...entries);
   }
 }
-// --- Achievements (reliable PFR fetch) ---
+// --- Achievements (robust PFR fetch) ---
 let achievements = [];
 try {
+  const normalizeName = (name) => {
+    return name
+      .toLowerCase()
+      .replace(/[.'’]/g, '')               // remove punctuation
+      .replace(/\b(jr|ii|iii|iv)\b/g, '')  // remove suffixes
+      .trim();
+  };
+
   const last = name.split(' ').slice(-1)[0];
   const initial = last[0].toUpperCase();
   const pfrListUrl = `https://www.pro-football-reference.com/players/${initial}/`;
 
+  // Fetch the players list for the initial letter
   const { data: listHtml } = await axios.get(pfrListUrl);
   const domList = new JSDOM(listHtml);
   const docList = domList.window.document;
 
+  // Find the correct player link by matching normalized name
   const playerLinkEl = [...docList.querySelectorAll('#players tbody tr th a')].find(a => {
     const [lastName, firstName] = a.textContent.split(',').map(s => s.trim());
     const fullName = `${firstName} ${lastName}`;
-    return fullName.toLowerCase() === name.toLowerCase();
+    return normalizeName(fullName) === normalizeName(name);
   });
 
   if (playerLinkEl) {
     const pfrLink = 'https://www.pro-football-reference.com' + playerLinkEl.getAttribute('href');
 
+    // Fetch the player's PFR page
     const { data: playerHtml } = await axios.get(pfrLink);
     const domPlayer = new JSDOM(playerHtml);
     const docPlayer = domPlayer.window.document;
@@ -176,8 +187,6 @@ try {
 } catch (err) {
   console.error(`Error fetching awards for ${name}:`, err.message);
 }
-
-
 ///////////////////////////////
 // Image /////////////////////
 /////////////////////////////
