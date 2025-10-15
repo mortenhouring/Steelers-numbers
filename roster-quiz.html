@@ -7,122 +7,126 @@
   <title>Steelers — Hall of Fame</title>
   <link rel="stylesheet" href="styles.css" />
 <style>
-/* NEW roster-quiz specific styling */
-  body {
-    background-image: url('trim-blackgrey-background.jpg');
-    background-repeat: no-repeat;   /* prevent repeating */
-    background-size: cover;         /* cover entire page */
-    background-position: center;    /* center the image */
-  }
-#player-image-wrapper {
-  position: relative;
-  display: inline-block; /* ensures height wraps image */
+/* Full viewport body and flex container */
+html, body {
+  width: 100%;
+  height: 100dvh;          /* dynamic viewport height on mobile */
+  margin: 0;
+  padding: 0;
+  overflow-y: hidden;      /* prevents page scroll */
+  font-family: 'Arial Narrow', Verdana, Tahoma, sans-serif;
+  background-color: black; /* fallback */
 }
+
+/* Main container */
+.quiz-view {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Quiz2 view container */
+#quiz2-view {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Inner quiz2 content */
+.quiz2 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+/* Player + info container */
 #roster-info-container {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
   width: 90vw;
   margin: 2vh auto;
-  gap: 2vw;
+  gap: 4vw;
 }
 
+/* Player info text */
 #player-info {
-  color: white;
-  font-size: 1.1rem;
-  line-height: 1.4;
   color: rgb(255, 182, 18);
-  text-align: right;
-  white-space: pre-line; /* keeps line breaks */
+  font-size: 4vw;          /* scales with screen width */
+  line-height: 1.2;
+  text-align: center;
   flex: 1;
 }
 
+/* Image wrapper and overlay */
+#player-image-wrapper {
+  position: relative;
+  flex-shrink: 0;
+}
 #roster-player-image {
-  height: 15vh;
+  height: 20vh;           /* scales with screen height */
   width: auto;
   object-fit: cover;
-  border-radius: 8px;
+  border-radius: 1vw;
+  display: block;
 }
-
 #player-overlay {
   position: absolute;
-  bottom: 4%;       /* distance from bottom of image */
-  left: 4%;         /* distance from left of image */
-  z-index: 5;
-  background-color: rgba(0, 0, 0, 0.6); /* semi-transparent black */
+  bottom: 2%;
+  left: 2%;
+  background-color: rgba(0,0,0,0.6);
   color: #fff;
-  padding: 0.2em 0.4em;
-  border-radius: 4px;
-  font-size: 0.9rem;
+  padding: 0.5vh 1vw;
+  border-radius: 0.5vw;
+  font-size: 3vw;
   font-weight: 600;
   white-space: nowrap;
-  pointer-events: none; /* overlay doesn’t block clicks */
+  pointer-events: none;
 }
 
-  /*  player image styling */
- /* ---  player image styling (responsive for mobile) ---
-   Conversions:
-   - width/height in px → % of viewport (vw/vh) to maintain proportions
-   - padding/margin in px → % of viewport (vh for vertical, vw for horizontal)
-   - Increasing a value makes element bigger; decreasing makes it smaller
-   - All adjustments are calibrated to base screen 2532x1170 (portrait mobile) */
-#hof-player-image {
-  height: 20vh;                 /* taller image, adjust freely */
-  width: auto;                  /* maintain aspect ratio */
-  display: block;
-  align-self: flex-start;       /* override parent centering */
-  object-fit: cover;            /* crop image instead of squishing */
-  overflow: hidden;             /* hide right-side overflow */
-  margin: 0;                    /* ensure no centering */
-  margin-bottom: 2vh;
-  margin-top: 2vh;
-}
+/* Trivia box — scrollable internally */
 #hof-trivia-box {
-  position: relative;
   width: 90vw;
   max-width: 90vw;
-  height: 33vh;
-  overflow: hidden;                     /* hides gradient overflow */
-  
-  border: 1px solid rgba(0, 0, 0, 0.2);
-  border-radius: 8px;
-  margin-bottom: 3vh;
-  color: #fff;
-  box-sizing: border-box;
+  height: 30vh;            /* smaller for mobile */
+  margin-top: 2vh;
+  border-radius: 1vw;
+  border: 0.1vw solid rgba(255,255,255,0.2);
+  overflow: hidden;
+  position: relative;
 }
-
 #hof-trivia-inner {
   height: 100%;
   overflow-y: auto;
-  overflow-x: hidden;
-  -webkit-overflow-scrolling: touch;
-  padding: 8px;
+  padding: 2vw;
   box-sizing: border-box;
-  scrollbar-width: thin;                /* optional: cleaner scrollbars */
+  -webkit-overflow-scrolling: touch; /* smooth scrolling on iOS */
 }
 #player-trivia {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif; /* system & fallback fonts */
-  font-size: 0.875rem;      /* ~14px equivalent, scalable */
-  font-weight: 400;          /* normal weight for clarity */
-  line-height: 1.5;          /* slightly more than 1.4 for mobile readability */
-  letter-spacing: 0.02em;    /* improves clarity at small sizes */
-  color: rgba(255, 255, 255, 0.85); /* high contrast on dark background */
-  margin-bottom: 0;          /* no extra spacing at the bottom */
-  text-align: left;          /* standard for mobile */
-  hyphens: auto;             /* automatic hyphenation for narrow widths */
-  -webkit-font-smoothing: antialiased; /* smooth font rendering on iOS */
-  -moz-osx-font-smoothing: grayscale;  /* smooth font rendering on macOS/Firefox */
+  font-size: 3.5vw;
+  line-height: 1.4;
+  color: rgba(255,255,255,0.9);
 }
+
+/* Scroll gradient at bottom of trivia box */
 #scroll-gradient {
   position: absolute;
+  bottom: 0;
   left: 0;
   right: 0;
-  bottom: 0;
-  height: 1.5rem;
+  height: 2.5vh;
+  background: linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0));
   pointer-events: none;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0));
-  transition: opacity 0.3s ease;
-  opacity: 1;                           /* visible by default */
   z-index: 2;
 }
 </style>
@@ -165,33 +169,30 @@
        QUIZ 2 VIEW (Answer / Trivia)
        Adjusted for HOF quiz: no giant number
        ======================= -->
-  <main id="quiz2-view" aria-hidden="true" style="display:none;">
-    <div class="quiz2">
-      <h1 id="feedback">Loading...</h1>
-      
-      
-        <div id="roster-info-container">
-        <div id="player-info"></div>
-        <div id="player-image-wrapper" style="position: relative; flex-shrink: 0;">
-        <img id="roster-player-image" src="" alt="Player Image" />
-        <div id="player-overlay"></div> <!-- this will hold number & position -->
-    </div>
-    </div>
-    </div>
-<div id="hof-trivia-box">
-  <div id="hof-trivia-inner">
-    <div id="player-trivia"></div>
-  </div>
-  <div id="scroll-gradient"></div>
-</div>
-      <div id="score-remaining">
-        <span id="score"></span> | <span id="remaining"></span>
+<main id="quiz2-view">
+  <div class="quiz2">
+    <div id="roster-info-container">
+      <div id="player-info">Steelers WR</div>
+      <div id="player-image-wrapper">
+        <img id="roster-player-image" src="https://via.placeholder.com/150x100" alt="Player Image" />
+        <div id="player-overlay">#99 WR</div>
       </div>
-
-      <button id="next-button" class="frontpage-btn">Next Player</button>
     </div>
-</div>
-  </main>
+
+    <div id="hof-trivia-box">
+      <div id="hof-trivia-inner">
+        <div id="player-trivia">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor.
+        </div>
+      </div>
+      <div id="scroll-gradient"></div>
+    </div>
+
+    <div id="score-remaining">
+      <span id="score">0</span> | <span id="remaining">5</span>
+    </div>
+  </div>
+</main>
 
   <!-- Module script: main single-page logic -->
   <script type="module" src="roster-quiz.js"></script>
