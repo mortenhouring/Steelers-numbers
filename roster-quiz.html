@@ -14,10 +14,7 @@
     background-size: cover;         /* cover entire page */
     background-position: center;    /* center the image */
   }
-#player-image-wrapper {
-  position: relative;
-  display: inline-block; /* ensures height wraps image */
-}
+  
 #roster-info-container {
   display: flex;
   align-items: flex-start;
@@ -37,17 +34,26 @@
   flex: 1;
 }
 
+#player-image-wrapper {
+  position: relative;
+  display: inline-block;
+  flex-shrink: 0;
+  border-radius: 8px;
+  overflow: hidden; /* ensures overlay stays within rounded image bounds */
+}
+
 #roster-player-image {
-  height: 15vh;
+  height: 15vh;           /* your new preferred size */
   width: auto;
   object-fit: cover;
   border-radius: 8px;
+  display: block;
 }
 
 #player-overlay {
   position: absolute;
-  bottom: 4%;       /* distance from bottom of image */
-  left: 4%;         /* distance from left of image */
+  bottom: 4%;
+  left: 4%;
   z-index: 5;
   background-color: rgba(0, 0, 0, 0.6); /* semi-transparent black */
   color: #fff;
@@ -56,7 +62,7 @@
   font-size: 0.9rem;
   font-weight: 600;
   white-space: nowrap;
-  pointer-events: none; /* overlay doesn’t block clicks */
+  pointer-events: none; /* ensures clicks pass through */
 }
 /*------ HOF styling --------------*/
   /*  player image styling */
@@ -173,14 +179,10 @@
        <div id="roster-info-container">
   <div id="player-info"></div>
 
-  <div id="player-image-wrapper" style="flex-shrink:0;">
-   <img id="roster-player-image" src="" alt="Player Image" />
-
-    <!-- Move overlay below image for testing -->
-    <div id="player-overlay" style="position: static; min-height: 2rem; margin-top:0.5rem; background-color:rgba(255,0,0,0.6); color:white; padding:0.2em 0.4em; border-radius:4px; text-align:center;">
-      <!-- JS should populate this -->
-    </div>
-  </div>
+  <div id="player-image-wrapper">
+  <img id="roster-player-image" src="" alt="Player Image" />
+  <div id="player-overlay"></div>
+</div>
 </div>
 <div id="hof-trivia-box">
   <div id="hof-trivia-inner">
