@@ -1,34 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Steelers Quiz 2</title>
-  <link rel="stylesheet" href="styles.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Test Quiz2</title>
+<style>
+html, body {
+  width: 100%; height: 100dvh; margin: 0; padding: 0; overflow-y: hidden;
+}
+#quiz2-view { display: block; height: 100%; width: 100%; background: #222; }
+#player-image-wrapper { background: red; position: relative; display: inline-block; }
+#roster-player-image { height: 20vh; width: auto; }
+#player-overlay { position: absolute; bottom: 0; left: 0; color: #fff; background: rgba(0,0,0,0.6); }
+#hof-trivia-box { width: 90vw; height: 30vh; background: blue; margin-top: 2vh; }
+</style>
 </head>
-<body class="quiz2">
-  <!-- Header placeholder and script for dynamic menu -->
-<div id="header-placeholder"></div>
-<script src="headerscript.js" defer></script>
-    
-<!-- All quiz content goes inside page-content -->
-  <main id="page-content">
-    <h1 id="feedback">Loading...</h1>
-<!-- Container for giant number + player image -->
-<div id="number-container">
-  <div id="giant-number"></div>
-  <img id="player-image" src="" alt="Player Image">
-</div>
-
-  <div id="player-info"></div>
-  <div id="player-trivia"></div>
-
-  <div id="score-remaining">
-    <span id="score"></span> | <span id="remaining"></span>
+<body>
+<main id="quiz2-view">
+  <div id="player-image-wrapper">
+    <img id="roster-player-image" src="https://via.placeholder.com/150x100">
+    <div id="player-overlay">#99 WR</div>
   </div>
-
-  <button id="next-button" class="frontpage-btn">Next Player</button>
-<!-- SCRIPT -->
-  <script src="script.js"></script>
-  
+  <div id="hof-trivia-box">Trivia goes here</div>
+</main>
 </body>
 </html>
