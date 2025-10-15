@@ -8,13 +8,15 @@
   <link rel="stylesheet" href="styles.css" />
 <style>
 /* NEW roster-quiz specific styling */
-  
+  body {
+    background-image: url('trim-blackgrey-background.jpg');
+    background-repeat: no-repeat;   /* prevent repeating */
+    background-size: cover;         /* cover entire page */
+    background-position: center;    /* center the image */
+  }
 #player-image-wrapper {
   position: relative;
-  display: inline-flex;      /* instead of inline-block */
-  align-items: flex-end;     /* ensure overlay sticks to bottom */
-  justify-content: flex-start;
-  height: 15vh;              /* same as image or slightly taller */
+  display: inline-block; /* ensures height wraps image */
 }
 #roster-info-container {
   display: flex;
@@ -43,11 +45,10 @@
 }
 
 #player-overlay {
-  background-color: rgba(255,0,0,0.6);
   position: absolute;
   bottom: 4%;       /* distance from bottom of image */
   left: 4%;         /* distance from left of image */
-  z-index: 10;
+  z-index: 5;
   background-color: rgba(0, 0, 0, 0.6); /* semi-transparent black */
   color: #fff;
   padding: 0.2em 0.4em;
@@ -171,10 +172,9 @@
       
         <div id="roster-info-container">
         <div id="player-info"></div>
-        <div id="player-image-wrapper">
+        <div id="player-image-wrapper" style="position: relative; flex-shrink: 0;">
         <img id="roster-player-image" src="" alt="Player Image" />
-        <div id="player-overlay"></div>
-</div>
+        <div id="player-overlay"></div> <!-- this will hold number & position -->
     </div>
     </div>
     </div>
