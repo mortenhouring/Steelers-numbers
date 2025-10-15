@@ -1,4 +1,4 @@
-// roster-quiz.js WORKING 15/10/25 17:28
+//  roster-quiz.js WORKING 15/10/25 17:28
 // template from depth-quiz.js
 // Single-page quiz controller adapted for hof.json
 // All configurable paths, filenames, HTML IDs, and localStorage keys
