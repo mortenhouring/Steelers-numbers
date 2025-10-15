@@ -1,5 +1,4 @@
-// roster-quiz.js 
-// template from hof-quiz.js
+// roster-quiz.js
 // Single-page quiz controller adapted for hof.json
 // All configurable paths, filenames, HTML IDs, and localStorage keys
 // are defined at the top for easy modification.
@@ -21,7 +20,7 @@ const CONFIG = {
     CLEAR_BUTTON: 'clear-button',
     NEXT_BUTTON: 'next-button',
     FEEDBACK: 'feedback',
-    PLAYER_IMAGE: 'player-image',
+    PLAYER_IMAGE: 'hof-player-image',
     PLAYER_INFO: 'player-info',
     PLAYER_TRIVIA: 'player-trivia',
     SCORE: 'score',
@@ -40,7 +39,7 @@ const CONFIG = {
   },
 
   // End page
-  END_PAGE: 'roster-quiz-end.html',
+  END_PAGE: 'hof-quiz-end.html',
 
   // Question phrases
   QUESTION_PHRASES: [
@@ -309,7 +308,7 @@ nextButton.addEventListener("click", () => {
 });
 // show/hide bottom gradient for the trivia scroll area
 window.addEventListener("DOMContentLoaded", () => {
-  const inner = document.getElementById('trivia-inner');   // scrollable content
+  const inner = document.getElementById('hof-trivia-inner');   // scrollable content
   const gradient = document.getElementById('scroll-gradient'); // the overlay gradient
   if (!inner || !gradient) return; // nothing to do if either element missing
 
