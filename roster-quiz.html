@@ -14,7 +14,7 @@
    - padding/margin in px → % of viewport (vh for vertical, vw for horizontal)
    - Increasing a value makes element bigger; decreasing makes it smaller
    - All adjustments are calibrated to base screen 2532x1170 (portrait mobile) */
-#player-image {
+#hof-player-image {
   height: 20vh;                 /* taller image, adjust freely */
   width: auto;                  /* maintain aspect ratio */
   display: block;
@@ -25,7 +25,7 @@
   margin-bottom: 2vh;
   margin-top: 2vh;
 }
-#trivia-box {
+#hof-trivia-box {
   position: relative;
   width: 90vw;
   max-width: 90vw;
@@ -39,7 +39,7 @@
   box-sizing: border-box;
 }
 
-#trivia-inner {
+#hof-trivia-inner {
   height: 100%;
   overflow-y: auto;
   overflow-x: hidden;
@@ -118,12 +118,12 @@
       <h1 id="feedback">Loading...</h1>
       
       
-        <img id="player-image" src="" alt="Player Image" />
+        <img id="hof-player-image" src="" alt="Player Image" />
       
       <div id="player-info" style="display:none;"></div>
 
-<div id="trivia-box">
-  <div id="trivia-inner">
+<div id="hof-trivia-box">
+  <div id="hof-trivia-inner">
     <div id="player-trivia"></div>
   </div>
   <div id="scroll-gradient"></div>
@@ -138,6 +138,6 @@
   </main>
 
   <!-- Module script: main single-page logic -->
-  <script type="module" src="roster-quiz.js"></script>
+  <script type="module" src="hof-quiz.js"></script>
 </body>
 </html>
