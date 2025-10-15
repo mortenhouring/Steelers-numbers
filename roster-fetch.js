@@ -5,7 +5,7 @@ import { JSDOM } from 'jsdom';
 import path from 'path';
 
 ///////////////////////////////////
-// Fetch active roster players ///
+// Fetch active roster players///
 /////////////////////////////////
 async function fetchActiveRoster() {
   const rosterUrl = 'https://www.steelers.com/team/players-roster/';
@@ -42,132 +42,179 @@ async function fetchPlayer(player) {
     const dom = new JSDOM(data);
     const document = dom.window.document;
 
-    // Name
-    const nameEl = document.querySelector('.d3-o-media-object__title');
-    const name = nameEl ? nameEl.textContent.trim() : player.name;
+////////////////////////////
+// FETCH Functions ////////
+//////////////////////////
 
-    // Position
-    const positionEl = document.querySelector('.d3-o-media-object__primary-subtitle');
-    const position = positionEl ? positionEl.textContent.trim() : 'N/A';
+// Name
+const nameEl = document.querySelector('.d3-o-media-object__title');
+const name = nameEl ? nameEl.textContent.trim() : player.name;
 
-    // Number
-    const numberEl = document.querySelector('.d3-o-media-object__secondary-subtitle');
-    const numberText = numberEl ? numberEl.textContent.replace('#', '').trim() : null;
-    const number = numberText ? Number(numberText) : null;
+// Position
+const positionEl = document.querySelector('.d3-o-media-object__primary-subtitle');
+const position = positionEl ? positionEl.textContent.trim() : 'N/A';
 
-    // Info (Experience, Height, Weight, Age)
-    const summaryEl = document.querySelector('.d3-o-media-object__summary');
-    let info = '';
-    if (summaryEl) {
-      const stats = {};
-      summaryEl.querySelectorAll('p').forEach(p => {
-        const label = p.querySelector('strong')?.textContent.replace(':', '').trim().toLowerCase();
-        const value = p.textContent.replace(p.querySelector('strong')?.textContent || '', '').trim();
-        if (label && value) stats[label] = value;
-      });
+// Number
+const numberEl = document.querySelector('.d3-o-media-object__secondary-subtitle');
+const numberText = numberEl ? numberEl.textContent.replace('#', '').trim() : '0';
+const number = Number(numberText);
 
-      const exp = stats['experience'] ? (stats['experience'].includes('0') ? 'rookie' : stats['experience'].replace('years', '').trim()) : '';
-      const height = stats['height'] || '';
-      const weight = stats['weight'] || '';
-      const age = stats['age'] || '';
+// Info (Experience, Height, Weight, Age)
+const summaryEl = document.querySelector('.d3-o-media-object__summary');
+let info = '-';
+if (summaryEl) {
+  const stats = {};
+  summaryEl.querySelectorAll('p').forEach(p => {
+    const label = p.querySelector('strong')?.textContent.replace(':', '').trim().toLowerCase();
+    const value = p.textContent.replace(p.querySelector('strong')?.textContent || '', '').trim();
+    if (label && value) stats[label] = value;
+  });
 
-      info = `EXP: ${exp} | HT/WT: ${height}/${weight} | AGE: ${age}`;
-    }
+  const exp = stats['experience'] ? (stats['experience'].includes('0') ? 'rookie' : stats['experience'].replace('years', '').trim()) : '-';
+  const height = stats['height'] || '-';
+  const weight = stats['weight'] || '-';
+  const age = stats['age'] || '-';
 
-    // Trivia
-    const bioSections = [...document.querySelectorAll('.nfl-c-body-part.nfl-c-body-part--text')];
-    let triviaStr = '';
-    for (let i = 0; i < bioSections.length; i++) {
-      const section = bioSections[i];
-      const headingEl = section.querySelector('p strong');
-      if (!headingEl) continue;
-      const heading = headingEl.textContent.trim().toUpperCase();
+  info = `EXP: ${exp} | HT/WT: ${height}/${weight} | AGE: ${age}`;
+}
 
-      let contentSection = section.nextElementSibling;
-      let entries = [];
+// --- Stats ---
+const statsSection = document.querySelector('.nfl-t-stats-tile--player');
+let stats = [];
 
-      if (contentSection) {
-        const listItems = [...contentSection.querySelectorAll('li')].map(li => li.textContent.trim());
-        const paragraphs = [...contentSection.querySelectorAll('p')].map(p => p.textContent.trim());
-        entries = listItems.length ? listItems : paragraphs;
+if (statsSection) {
+  const labels = [...statsSection.querySelectorAll('.nfl-t-stats-tile__label-full')];
+  const values = [...statsSection.querySelectorAll('.nfl-t-stats-tile__value')];
+
+  stats = labels.map((label, i) => ({
+    label: label.textContent.trim(),
+    value: values[i] ? values[i].textContent.trim() : "-"
+  }));
+} else {
+  stats = [];
+}
+// --- Trivia (Biography Sections) ---
+const trivia = {
+  pro_career: [],
+  career_highlights_regular: [],
+  career_highlights_post: []
+};
+
+// Find all biography text blocks
+const bioSections = [...document.querySelectorAll('.nfl-c-body-part.nfl-c-body-part--text')];
+
+for (let i = 0; i < bioSections.length; i++) {
+  const section = bioSections[i];
+  const headingEl = section.querySelector('p strong');
+  if (!headingEl) continue;
+  const heading = headingEl.textContent.trim().toUpperCase();
+
+  // Skip if already filled
+  if (heading.startsWith('PRO CAREER') && trivia.pro_career.length > 0) continue;
+  if (heading.startsWith('CAREER HIGHLIGHTS (REGULAR SEASON)') && trivia.career_highlights_regular.length > 0) continue;
+  if (heading.startsWith('CAREER HIGHLIGHTS (POSTSEASON)') && trivia.career_highlights_post.length > 0) continue;
+
+  // Look for next sibling with content (<ul> or <p>)
+  let contentSection = section.nextElementSibling;
+  let entries = [];
+
+  if (contentSection) {
+    const listItems = [...contentSection.querySelectorAll('li')].map(li => li.textContent.trim());
+    const paragraphs = [...contentSection.querySelectorAll('p')].map(p => p.textContent.trim());
+    entries = listItems.length ? listItems : paragraphs;
+  }
+
+  if (heading.startsWith('PRO CAREER')) {
+    trivia.pro_career.push(...entries);
+  } else if (heading.startsWith('CAREER HIGHLIGHTS (REGULAR SEASON)')) {
+    trivia.career_highlights_regular.push(...entries);
+  } else if (heading.startsWith('CAREER HIGHLIGHTS (POSTSEASON)')) {
+    trivia.career_highlights_post.push(...entries);
+  }
+}
+//Achievements
+
+// Build PFR link
+const last = name.split(' ').slice(-1)[0];
+const first = name.split(' ')[0];
+const pfrId = `${last.slice(0, 4)}${first.slice(0, 2)}00`;
+const pfrLink = `https://www.pro-football-reference.com/players/${last[0]}/${pfrId}.htm`;
+
+let achievements = null;
+try {
+  const { data: pfrHtml } = await axios.get(pfrLink);
+  const domPFR = new JSDOM(pfrHtml);
+  const documentPFR = domPFR.window.document;
+
+  const awardEls = Array.from(documentPFR.querySelectorAll('#bling li a'));
+  const mainAwards = ['Pro Bowl', 'All-Pro', 'SB Champ', 'AP MVP', 'PFWA MVP', 'SB MVP', 'Off. PoY'];
+  const foundAwards = [];
+
+  awardEls.forEach(a => {
+    const text = a.textContent.trim();
+    mainAwards.forEach(ma => {
+      // Check if the award text contains the key string
+      if (text.includes(ma) && !foundAwards.includes(text)) {
+        foundAwards.push(text);
       }
+    });
+  });
 
-      if (entries.length) {
-        triviaStr += entries.join(' | ') + ' ';
-      }
-    }
-    triviaStr = triviaStr.trim();
+  if (foundAwards.length > 0) {
+    achievements = foundAwards;
+  }
+} catch (err) {
+  console.error(`Error fetching awards for ${player.name} at ${pfrLink}:`, err.message);
+}
 
-    // Achievements
-    let achievementsStr = '';
-    try {
-      const last = name.split(' ').slice(-1)[0];
-      const first = name.split(' ')[0];
-      const pfrId = `${last.slice(0, 4)}${first.slice(0, 2)}00`;
-      const pfrLink = `https://www.pro-football-reference.com/players/${last[0]}/${pfrId}.htm`;
+///////////////////////////////
+// Image /////////////////////
+/////////////////////////////
+let imagePath = null;
+const ldJsonEl = document.querySelector('script[type="application/ld+json"]');
+if (ldJsonEl) {
+  try {
+    const ldJson = JSON.parse(ldJsonEl.textContent);
+    const imgUrl = ldJson.member?.member?.image?.contentUrl;
+    if (imgUrl) {
+      const nameParts = name.split(' ');
+      const firstName = nameParts[0].toLowerCase();
+      const lastName = nameParts.slice(1).join('_').toLowerCase();
+      const fileName = `${firstName}_${lastName}.jpeg`;
 
-      const { data: pfrHtml } = await axios.get(pfrLink);
-      const domPFR = new JSDOM(pfrHtml);
-      const documentPFR = domPFR.window.document;
+      // Ensure directory exists
+      const dir = path.resolve('fetchimages/images');
+      if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+      const filePath = path.join(dir, fileName);
 
-      const awardEls = Array.from(documentPFR.querySelectorAll('#bling li a'));
-      const mainAwards = ['Pro Bowl', 'All-Pro', 'SB Champ', 'AP MVP', 'PFWA MVP', 'SB MVP', 'Off. PoY'];
-      const foundAwards = [];
-
-      awardEls.forEach(a => {
-        const text = a.textContent.trim();
-        mainAwards.forEach(ma => {
-          if (text.includes(ma) && !foundAwards.includes(text)) {
-            foundAwards.push(text);
-          }
-        });
-      });
-
-      if (foundAwards.length) achievementsStr = foundAwards.join(' | ');
-    } catch (err) {
-      console.error(`Error fetching awards for ${player.name}:`, err.message);
-    }
-
-    // Image
-    let imagePath = '';
-    const ldJsonEl = document.querySelector('script[type="application/ld+json"]');
-    if (ldJsonEl) {
-      try {
-        const ldJson = JSON.parse(ldJsonEl.textContent);
-        const imgUrl = ldJson.member?.member?.image?.contentUrl;
-        if (imgUrl) {
-          const nameParts = name.split(' ');
-          const firstName = nameParts[0].toLowerCase();
-          const lastName = nameParts.slice(1).join('_').toLowerCase();
-          const fileName = `${firstName}_${lastName}.jpeg`;
-
-          const dir = path.resolve('fetchimages/images');
-          if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
-          const filePath = path.join(dir, fileName);
-
-          const response = await axios.get(imgUrl, { responseType: 'arraybuffer', maxRedirects: 5 });
-          fs.writeFileSync(filePath, response.data);
-          imagePath = `fetchimages/images/${fileName}`;
+      console.log('Fetching image URL:', imgUrl); // debug
+      const response = await axios.get(imgUrl, {
+        responseType: 'arraybuffer',
+        maxRedirects: 5,
+        headers: {
+          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)' // mimics browser
         }
-      } catch (err) {
-        console.error(`Error fetching image for ${player.name}:`, err.message);
+      });
+
+      const contentType = response.headers['content-type'];
+      if (!contentType.startsWith('image')) {
+        console.error(`Unexpected content type for ${player.name}: ${contentType}`);
+      } else {
+        fs.writeFileSync(filePath, response.data);
+        imagePath = `fetchimages/images/${fileName}`; // store relative path for JSON
+        console.log(`Saved image for ${player.name} to ${imagePath}`);
       }
     }
+  } catch (err) {
+    console.error(`Error fetching image for ${player.name}:`, err.message);
+  }
+}
+/////////////////////////////////
+// Return IDs - Write data /////
+///////////////////////////////
 
-    // Build final flat player object
-    return {
-      player_name: name,
-      number,
-      position,
-      group: 'ROSTER',
-      image: imagePath,
-      info,
-      career: '',
-      achievements: achievementsStr,
-      trivia: triviaStr,
-      stats: ''
-    };
-
+//Defines JSON strings //return { are the json  IDs//
+return { player_name: name, number, position, image: imagePath, info, stats, achievements,trivia };
   } catch (err) {
     console.error(`Error fetching ${player.name}:`, err.message);
     return null;
@@ -186,9 +233,17 @@ async function main() {
     if (data) results.push(data);
   }
 
-  // Write JSON as array of flat objects
-  fs.writeFileSync('roster.json', JSON.stringify(results, null, 2));
-  console.log('Roster saved to roster.json');
+  // Insert timestamp as a "virtual" first object
+  const timestampEntry = {
+    last_updated: new Date().toISOString()
+  };
+
+  // Prepend timestamp to the beginning of the array
+  const output = [timestampEntry, ...results];
+
+  // Write JSON file
+  fs.writeFileSync('roster.json', JSON.stringify(output, null, 2));
+  console.log('Roster saved to roster.json with timestamp entry at top.');
 }
 
 main();
