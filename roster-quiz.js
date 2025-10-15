@@ -21,7 +21,7 @@ const CONFIG = {
     CLEAR_BUTTON: 'clear-button',
     NEXT_BUTTON: 'next-button',
     FEEDBACK: 'feedback',
-    PLAYER_IMAGE: 'hof-player-image',
+    PLAYER_IMAGE: 'roster-player-image',
     PLAYER_INFO: 'player-info',
     PLAYER_TRIVIA: 'player-trivia',
     SCORE: 'score',
@@ -70,8 +70,8 @@ const clearButton = document.getElementById(ids.CLEAR_BUTTON);
 const nextButton = document.getElementById(ids.NEXT_BUTTON);
 const keypadButtons = document.querySelectorAll(`.${ids.KEYPAD_BUTTONS_CLASS}`);
 const feedbackEl = document.getElementById(ids.FEEDBACK);
-const playerImageEl = document.getElementById(ids.PLAYER_IMAGE);
-const playerInfoEl = document.getElementById(ids.PLAYER_INFO);
+const playerImageEl = document.getElementById(ids.PLAYER_IMAGE) || null;
+const playerInfoEl = document.getElementById(ids.PLAYER_INFO) || null;
 const playerTriviaEl = document.getElementById(ids.PLAYER_TRIVIA);
 const scoreEl = document.getElementById(ids.SCORE);
 const remainingEl = document.getElementById(ids.REMAINING);
@@ -236,17 +236,21 @@ function showAnswerView(){
   currentPlayer = last;
 
   // --- Player image and info ---
-playerImageEl.src = currentPlayer.image || '';
+if (playerImageEl) {
+  playerImageEl.src = currentPlayer.image || '';
+}
 
-if (currentPlayer.info) {
-  // Format the pipe-delimited info into line breaks
-  playerInfoEl.innerHTML = currentPlayer.info
-    .split('|')
-    .map(item => item.trim())
-    .join('<br>');
-} else {
-  // Fallback if no info available
-  playerInfoEl.textContent = `${currentPlayer.player_name} - ${currentPlayer.position ?? ''}`;
+if (playerInfoEl) {
+  if (currentPlayer.info) {
+    // Format the pipe-delimited info into line breaks
+    playerInfoEl.innerHTML = currentPlayer.info
+      .split('|')
+      .map(item => item.trim())
+      .join('<br>');
+  } else {
+    // Fallback if no info available
+    playerInfoEl.textContent = `${currentPlayer.player_name} - ${currentPlayer.position ?? ''}`;
+  }
 }
 
   const storedAnswer = parseInt(localStorage.getItem(CONFIG.STORAGE_KEYS.LAST_ANSWER),10);
