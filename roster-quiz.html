@@ -170,14 +170,18 @@
       <h1 id="feedback">Loading...</h1>
       
       
-        <div id="roster-info-container">
-        <div id="player-info"></div>
-        <div id="player-image-wrapper" style="position: relative; flex-shrink: 0;">
-        <img id="roster-player-image" src="" alt="Player Image" />
-        <div id="player-overlay"></div> <!-- this will hold number & position -->
+       <div id="roster-info-container">
+  <div id="player-info"></div>
+
+  <div id="player-image-wrapper" style="flex-shrink:0;">
+    <img id="roster-player-image" src="" alt="Player Image" style="display:block; width:100%; height:auto; border-radius:8px;" />
+
+    <!-- Move overlay below image for testing -->
+    <div id="player-overlay" style="position: static; margin-top:0.5rem; background-color:rgba(255,0,0,0.6); color:white; padding:0.2em 0.4em; border-radius:4px; text-align:center;">
+      <!-- JS should populate this -->
     </div>
-    </div>
-    </div>
+  </div>
+</div>
 <div id="hof-trivia-box">
   <div id="hof-trivia-inner">
     <div id="player-trivia"></div>
