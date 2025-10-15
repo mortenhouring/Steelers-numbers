@@ -1,4 +1,5 @@
-// roster-quiz.js
+// hof-quiz.js WORKING 10/10/25 10:28
+// template from depth-quiz.js
 // Single-page quiz controller adapted for hof.json
 // All configurable paths, filenames, HTML IDs, and localStorage keys
 // are defined at the top for easy modification.
@@ -39,7 +40,7 @@ const CONFIG = {
   },
 
   // End page
-  END_PAGE: 'hof-quiz-end.html',
+  END_PAGE: 'roster-quiz-end.html',
 
   // Question phrases
   QUESTION_PHRASES: [
