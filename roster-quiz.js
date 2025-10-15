@@ -254,20 +254,31 @@ function showAnswerView(){
   }
 
 // --- Trivia display logic ---
-const triviaText = currentPlayer.trivia || "";
+const triviaObj = currentPlayer.trivia || {};
+let triviaHTML = "";
 
-if (triviaText.trim().length > 0) {
-  // Split paragraphs by actual double newlines
-  const paragraphs = triviaText.split(/\n\s*\n/);
-
-  // Convert all paragraphs to <p> elements
-  const displayHTML = paragraphs.map(p => `<p>${p}</p>`).join("");
-
-  // Insert into the page
-  playerTriviaEl.innerHTML = displayHTML;
-} else {
-  playerTriviaEl.textContent = "No trivia available.";
+// Helper to render an array of strings as <p> paragraphs
+function renderParagraphs(arr) {
+  return arr.map(p => `<p>${p}</p>`).join("");
 }
+
+// Order: pro_career, career_highlights_regular, career_highlights_post
+if (Array.isArray(triviaObj.pro_career) && triviaObj.pro_career.length > 0) {
+  triviaHTML += `<h3>Pro Career</h3>` + renderParagraphs(triviaObj.pro_career);
+}
+
+if (Array.isArray(triviaObj.career_highlights_regular) && triviaObj.career_highlights_regular.length > 0) {
+  triviaHTML += `<h3>Career Highlights (Regular)</h3>` + renderParagraphs(triviaObj.career_highlights_regular);
+}
+
+if (Array.isArray(triviaObj.career_highlights_post) && triviaObj.career_highlights_post.length > 0) {
+  triviaHTML += `<h3>Career Highlights (Postseason)</h3>` + renderParagraphs(triviaObj.career_highlights_post);
+}
+
+// Fallback if no trivia
+if (!triviaHTML) triviaHTML = "<p>No trivia available.</p>";
+
+playerTriviaEl.innerHTML = triviaHTML;
 
   // Update score and remaining
   const score = parseInt(localStorage.getItem(CONFIG.STORAGE_KEYS.SCORE), 10) || 0;
