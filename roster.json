@@ -1,6 +1,6 @@
 [
   {
-    "last_updated": "2025-10-15T22:38:30.006Z"
+    "last_updated": "2025-10-15T23:41:11.938Z"
   },
   {
     "player_name": "Calvin Anderson",
@@ -176,7 +176,10 @@
         "value": "60"
       }
     ],
-    "achievements": [],
+    "achievements": [
+      "2x Pro Bowl",
+      "1x All-Pro"
+    ],
     "trivia": {
       "pro_career": [
         "Earned Pro Bowl selections in 2017 and 2024",
@@ -526,7 +529,9 @@
         "value": "3"
       }
     ],
-    "achievements": [],
+    "achievements": [
+      "1x SB Champ"
+    ],
     "trivia": {
       "pro_career": [
         "Has played in 66 regular-season games (4 starts) over his four-year NFL career (Philadelphia 2021-24)",
@@ -633,7 +638,10 @@
         "value": "--"
       }
     ],
-    "achievements": [],
+    "achievements": [
+      "7x Pro Bowl",
+      "4x All-Pro"
+    ],
     "trivia": {
       "pro_career": [
         "Ten-time team captain (2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024)",
@@ -867,7 +875,10 @@
         "value": "--"
       }
     ],
-    "achievements": [],
+    "achievements": [
+      "2x Pro Bowl",
+      "1x All-Pro"
+    ],
     "trivia": {
       "pro_career": [
         "Has played in 146 games (five starts) over his nine-year NFL career (Detroit 2016-20; Steelers 2021-24)",
