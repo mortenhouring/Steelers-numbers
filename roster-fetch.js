@@ -227,20 +227,23 @@ return { player_name: name, number, position, image: imagePath, info, stats, ach
 async function main() {
   const results = [];
   const players = await fetchActiveRoster();
-for (const player of players) {
-  const data = await fetchPlayer(player);
-  if (data) results.push(data);
-}
 
-// Create the final object with timestamp at the top
-  const output = {
-    last_updated: new Date().toISOString(), // ISO 8601 timestamp
-    roster: results
+  for (const player of players) {
+    const data = await fetchPlayer(player);
+    if (data) results.push(data);
+  }
+
+  // Insert timestamp as a "virtual" first object
+  const timestampEntry = {
+    last_updated: new Date().toISOString()
   };
-  
-// Write json
+
+  // Prepend timestamp to the beginning of the array
+  const output = [timestampEntry, ...results];
+
+  // Write JSON file
   fs.writeFileSync('roster.json', JSON.stringify(output, null, 2));
-  console.log('Roster saved to roster.json');
+  console.log('Roster saved to roster.json with timestamp entry at top.');
 }
 
 main();
