@@ -16,7 +16,10 @@
   }
 #player-image-wrapper {
   position: relative;
-  display: inline-block; /* ensures height wraps image */
+  display: inline-flex;      /* instead of inline-block */
+  align-items: flex-end;     /* ensure overlay sticks to bottom */
+  justify-content: flex-start;
+  height: 15vh;              /* same as image or slightly taller */
 }
 #roster-info-container {
   display: flex;
@@ -49,7 +52,7 @@
   position: absolute;
   bottom: 4%;       /* distance from bottom of image */
   left: 4%;         /* distance from left of image */
-  z-index: 5;
+  z-index: 10;
   background-color: rgba(0, 0, 0, 0.6); /* semi-transparent black */
   color: #fff;
   padding: 0.2em 0.4em;
