@@ -41,6 +41,21 @@
   object-fit: cover;
   border-radius: 8px;
 }
+
+#player-overlay {
+  position: absolute;
+  bottom: 4%;       /* distance from bottom of image */
+  left: 4%;         /* distance from left of image */
+  background-color: rgba(0, 0, 0, 0.6); /* semi-transparent black */
+  color: #fff;
+  padding: 0.2em 0.4em;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  white-space: nowrap;
+  pointer-events: none; /* overlay doesn’t block clicks */
+}
+
   /*  player image styling */
  /* ---  player image styling (responsive for mobile) ---
    Conversions:
@@ -154,7 +169,10 @@
       
         <div id="roster-info-container">
         <div id="player-info"></div>
+        <div id="player-image-wrapper" style="position: relative; flex-shrink: 0;">
         <img id="roster-player-image" src="" alt="Player Image" />
+        <div id="player-overlay"></div> <!-- this will hold number & position -->
+    </div>
     </div>
     </div>
 <div id="hof-trivia-box">
