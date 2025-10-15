@@ -35,8 +35,45 @@ async function fetchActiveRoster() {
 
   return activeRoster;
 }
+//////////////////////////////////////
+// Fetch PFR roster to map achievements
+//////////////////////////////////////
+async function fetchPFRRoster() {
+  const url = 'https://www.pro-football-reference.com/teams/pit/2025_roster.htm';
+  const { data } = await axios.get(url);
+  const dom = new JSDOM(data);
+  const document = dom.window.document;
 
-async function fetchPlayer(player) {
+  const pfrPlayers = {};
+
+  // The roster table is inside the commented HTML
+  const commentedHtml = [...document.querySelectorAll('div#all_roster')][0]?.innerHTML;
+  if (!commentedHtml) return pfrPlayers;
+
+  // Remove HTML comments
+  const cleanHtml = commentedHtml.replace(/<!--|-->/g, '');
+  const domClean = new JSDOM(cleanHtml);
+  const docClean = domClean.window.document;
+
+  // Select all player rows
+  docClean.querySelectorAll('table#roster tbody tr').forEach(tr => {
+    const playerLink = tr.querySelector('td[data-stat="player"] a');
+    if (!playerLink) return;
+    const name = playerLink.textContent.trim(); // full name including suffixes/initials
+    const href = playerLink.getAttribute('href');
+    const pfrUrl = 'https://www.pro-football-reference.com' + href;
+
+    pfrPlayers[name] = {
+      url: pfrUrl
+    };
+  });
+
+  return pfrPlayers;
+}
+////////////////////////////
+// FETCH player init ////////
+//////////////////////////
+async function fetchPlayer(player, pfrRoster) {
   try {
     const { data } = await axios.get(player.url);
     const dom = new JSDOM(data);
@@ -132,38 +169,12 @@ for (let i = 0; i < bioSections.length; i++) {
     trivia.career_highlights_post.push(...entries);
   }
 }
-// --- Achievements (robust PFR fetch) ---
+// --- Achievements using PFR roster ---
 let achievements = [];
 try {
-  const normalizeName = (name) => {
-    return name
-      .toLowerCase()
-      .replace(/[.'’]/g, '')               // remove punctuation
-      .replace(/\b(jr|ii|iii|iv)\b/g, '')  // remove suffixes
-      .trim();
-  };
-
-  const last = name.split(' ').slice(-1)[0];
-  const initial = last[0].toUpperCase();
-  const pfrListUrl = `https://www.pro-football-reference.com/players/${initial}/`;
-
-  // Fetch the players list for the initial letter
-  const { data: listHtml } = await axios.get(pfrListUrl);
-  const domList = new JSDOM(listHtml);
-  const docList = domList.window.document;
-
-  // Find the correct player link by matching normalized name
-  const playerLinkEl = [...docList.querySelectorAll('#players tbody tr th a')].find(a => {
-    const [lastName, firstName] = a.textContent.split(',').map(s => s.trim());
-    const fullName = `${firstName} ${lastName}`;
-    return normalizeName(fullName) === normalizeName(name);
-  });
-
-  if (playerLinkEl) {
-    const pfrLink = 'https://www.pro-football-reference.com' + playerLinkEl.getAttribute('href');
-
-    // Fetch the player's PFR page
-    const { data: playerHtml } = await axios.get(pfrLink);
+  // Only attempt if player exists in PFR
+  if (pfrRoster[player.name]) {
+    const { data: playerHtml } = await axios.get(pfrRoster[player.name].url);
     const domPlayer = new JSDOM(playerHtml);
     const docPlayer = domPlayer.window.document;
 
@@ -181,11 +192,10 @@ try {
     });
 
     achievements = foundAwards;
-  } else {
-    console.warn(`PFR link not found for ${name}`);
   }
+  // If no match, achievements remain empty (ignore players only on PFR)
 } catch (err) {
-  console.error(`Error fetching awards for ${name}:`, err.message);
+  console.error(`Error fetching PFR achievements for ${player.name}:`, err.message);
 }
 ///////////////////////////////
 // Image /////////////////////
@@ -247,9 +257,10 @@ return { player_name: name, number, position, image: imagePath, info, stats, ach
 async function main() {
   const results = [];
   const players = await fetchActiveRoster();
+  const pfrRoster = await fetchPFRRoster(); // fetch once
 
   for (const player of players) {
-    const data = await fetchPlayer(player);
+    const data = await fetchPlayer(player, pfrRoster);
     if (data) results.push(data);
   }
 
