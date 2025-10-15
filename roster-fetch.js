@@ -75,7 +75,7 @@ if (summaryEl) {
   const weight = stats['weight'] || '-';
   const age = stats['age'] || '-';
 
-  info = `EXP: ${exp} | HT/WT: ${height}/${weight} | AGE: ${age}`;
+  info = `EXP: ${exp} | HT: ${height} | WT: ${weight} | AGE: ${age}`;
 }
 
 // --- Stats ---
