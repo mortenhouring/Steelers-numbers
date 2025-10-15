@@ -132,27 +132,26 @@ for (let i = 0; i < bioSections.length; i++) {
     trivia.career_highlights_post.push(...entries);
   }
 }
-// --- Achievements (inlined reliable PFR fetch) ---
+// --- Achievements (reliable PFR fetch) ---
 let achievements = [];
 try {
   const last = name.split(' ').slice(-1)[0];
   const initial = last[0].toUpperCase();
   const pfrListUrl = `https://www.pro-football-reference.com/players/${initial}/`;
 
-  // Get the players list for the initial letter
   const { data: listHtml } = await axios.get(pfrListUrl);
   const domList = new JSDOM(listHtml);
   const docList = domList.window.document;
 
-  // Find the correct player link by matching full name (case-insensitive)
   const playerLinkEl = [...docList.querySelectorAll('#players tbody tr th a')].find(a => {
-    return a.textContent.trim().toLowerCase() === name.toLowerCase();
+    const [lastName, firstName] = a.textContent.split(',').map(s => s.trim());
+    const fullName = `${firstName} ${lastName}`;
+    return fullName.toLowerCase() === name.toLowerCase();
   });
 
   if (playerLinkEl) {
     const pfrLink = 'https://www.pro-football-reference.com' + playerLinkEl.getAttribute('href');
 
-    // Fetch the player's PFR page
     const { data: playerHtml } = await axios.get(pfrLink);
     const domPlayer = new JSDOM(playerHtml);
     const docPlayer = domPlayer.window.document;
