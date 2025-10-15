@@ -239,7 +239,13 @@ function showAnswerView(){
 if (playerImageEl) {
   playerImageEl.src = currentPlayer.image || '';
 }
-
+// --- Player overlay (number & position) ---
+const overlayEl = document.getElementById('player-overlay');
+if (overlayEl && currentPlayer) {
+  const num = currentPlayer.number ?? '';
+  const pos = currentPlayer.position ?? '';
+  overlayEl.textContent = `#${num || '—'} ${pos || ''}`;
+}
 if (playerInfoEl) {
   if (currentPlayer.info) {
     // Format the pipe-delimited info into line breaks
