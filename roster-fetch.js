@@ -3,13 +3,6 @@ import fs from 'fs';
 import axios from 'axios';
 import { JSDOM } from 'jsdom';
 import path from 'path';
-
-// define espn images directory
-const ESPN_IMAGES_DIR = path.resolve('fetchimages/images/espn-images');
-if (!fs.existsSync(ESPN_IMAGES_DIR)) {
-  fs.mkdirSync(ESPN_IMAGES_DIR, { recursive: true });
-}
-
 ///////////////////////////////////
 // HELPERS///
 /////////////////////////////////
@@ -271,71 +264,12 @@ if (ldJsonEl) {
     console.error(`Error fetching image for ${player.name}:`, err.message);
   }
 }
-// Ensure ESPN images directory exists
-const ESPN_IMAGES_DIR = path.resolve('fetchimages/images/espn-images');
-if (!fs.existsSync(ESPN_IMAGES_DIR)) {
-  fs.mkdirSync(ESPN_IMAGES_DIR, { recursive: true });
-}
-
-async function fetchEspnImages(masterRoster) {
-  try {
-    const espnUrl = 'https://www.espn.com/nfl/team/roster/_/name/pit';
-    const { data: html } = await axios.get(espnUrl, {
-      headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)' }
-    });
-
-    // Find the start of the athletes section
-    const startIndex = html.indexOf(',"groups":[{"name":"Offense","key":"offense","athletes":');
-    if (startIndex === -1) {
-      console.error('Could not find ESPN athletes section in HTML.');
-      return;
-    }
-    const athletesHtml = html.slice(startIndex);
-
-    // Regex to match each player's "name" and "headshot"
-    const regex = /"name":"(.*?)".*?"headshot":"(.*?)"/g;
-    let match;
-    const espnImages = {};
-
-    while ((match = regex.exec(athletesHtml)) !== null) {
-      const playerName = match[1];      // e.g., "Ke'Shawn Williams"
-      const headshotUrl = match[2];     // image URL
-
-      // Skip players not in master roster
-      if (!masterRoster.includes(playerName)) continue;
-
-      // Build filename
-      const [firstName, ...lastParts] = playerName.split(' ');
-      const lastName = lastParts.join('_');
-      const safeFirst = firstName.replace(/'/g, '-');
-      const safeLast = lastName.replace(/'/g, '-');
-      const fileName = `espn_${safeFirst}_${safeLast}.jpeg`;
-
-      const filePath = path.join(ESPN_IMAGES_DIR, fileName);
-
-      // Fetch and save image
-      try {
-        const response = await axios.get(headshotUrl, { responseType: 'arraybuffer' });
-        fs.writeFileSync(filePath, response.data);
-        espnImages[playerName] = `fetchimages/images/espn-images/${fileName}`;
-        console.log(`Saved ESPN image for ${playerName} -> ${fileName}`);
-      } catch (err) {
-        console.error(`Failed to fetch ESPN image for ${playerName}: ${err.message}`);
-      }
-    }
-
-    return espnImages; // Map of playerName -> local path
-  } catch (err) {
-    console.error('Error fetching ESPN roster page:', err.message);
-  }
-}
-
 /////////////////////////////////
 // Return IDs - Write data /////
 ///////////////////////////////
 
 //Defines JSON strings //return { are the json  IDs//
-return { player_name: name, number, position, image: imagePath, "espn-image": espnImagePath, info, stats, achievements, trivia };
+return { player_name: name, number, position, image: imagePath, info, stats, achievements, trivia };
   } catch (err) {
     console.error(`Error fetching ${player.name}:`, err.message);
     return null;
