@@ -95,6 +95,81 @@ async function fetchPFRRoster() {
 
   return pfrPlayers;
 }
+/////////////////////////////////
+// FETCH ESPN HEADSHOTS ////////
+/////////////////////////////////
+async function fetchEspnImages(players) {
+  const rosterUrl = 'https://www.espn.com/nfl/team/roster/_/name/pit/pittsburgh-steelers';
+
+  console.log('Fetching ESPN roster HTML...');
+  let html;
+  try {
+    const res = await axios.get(rosterUrl, {
+      headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)' }
+    });
+    html = res.data;
+  } catch (err) {
+    console.error('Error fetching ESPN roster page:', err.message);
+    return players;
+  }
+
+  // Locate the embedded objects for athletes
+  const athleteRegex = /{"shortName":".+?","name":".+?","href":".+?","uid":".+?","guid":".+?","id":\d+,"height":".+?","weight":".+?","age":\d+,"position":".+?","jersey":".+?","birthDate":".+?","headshot":".+?","lastName":".+?","experience":".+?","college":".+?"}/g;
+
+  const matches = html.match(athleteRegex) || [];
+
+  console.log(`Found ${matches.length} player entries in ESPN HTML.`);
+
+  // Ensure target directory exists
+  const dir = path.resolve('fetchimages/images/espn-images');
+  if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+
+  for (const match of matches) {
+    let athlete;
+    try {
+      athlete = JSON.parse(match); // parse the pseudo-JSON object
+    } catch (err) {
+      console.warn('Skipping malformed athlete object:', err.message);
+      continue;
+    }
+
+    const name = athlete.name;
+    const headshotUrl = athlete.headshot;
+    if (!headshotUrl) continue;
+
+    // Sanitize name for filename: replace symbols with _
+    const nameSanitized = name
+      .toLowerCase()
+      .replace(/[^a-z0-9]/gi, '_')
+      .replace(/_+/g, '_'); // collapse multiple underscores
+    const fileName = `espn-${nameSanitized}.png`;
+    const filePath = path.join(dir, fileName);
+    const relativePath = `fetchimages/images/espn-images/${fileName}`;
+
+    // Download image with retry logic
+    let attempts = 0;
+    let success = false;
+    while (attempts < 3 && !success) {
+      try {
+        const res = await axios.get(headshotUrl, { responseType: 'arraybuffer' });
+        fs.writeFileSync(filePath, res.data);
+        console.log(`Saved ESPN image for ${name} → ${relativePath}`);
+        success = true;
+      } catch (err) {
+        attempts++;
+        console.warn(`Failed to fetch image for ${name} (attempt ${attempts}): ${err.message}`);
+        if (attempts < 3) await new Promise(r => setTimeout(r, 2000 * attempts)); // exponential backoff
+      }
+    }
+    if (!success) console.error(`Failed to save image for ${name} after 3 attempts.`);
+
+    // Update player in roster array if name matches
+    const playerObj = players.find(p => p.player_name === name);
+    if (playerObj) playerObj['espn-image'] = relativePath;
+  }
+
+  return players;
+}
 ////////////////////////////
 // FETCH player init ////////
 //////////////////////////
@@ -280,22 +355,21 @@ return { player_name: name, number, position, image: imagePath, info, stats, ach
 // Main ////////////////////////
 ///////////////////////////////
 async function main() {
-  const results = [];
+  let results = []; // <-- changed to let
   const players = await fetchActiveRoster();
   const pfrRoster = await fetchPFRRoster(); // fetch once
-
+  
   for (const player of players) {
     const data = await fetchPlayer(player, pfrRoster);
     if (data) results.push(data);
     await delay(750); // 750ms pause between each player
   }
+  
+  // step 4: fetch ESPN headshots for all players after results exist
+  results = await fetchEspnImages(results);
 
-  // Insert timestamp as a "virtual" first object
-  const timestampEntry = {
-    last_updated: new Date().toISOString()
-  };
-
-  // Prepend timestamp to the beginning of the array
+  // Prepend timestamp
+  const timestampEntry = { last_updated: new Date().toISOString() };
   const output = [timestampEntry, ...results];
 
   // Write JSON file
