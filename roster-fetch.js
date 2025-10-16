@@ -331,11 +331,55 @@ if (ldJsonEl) {
   }
 }
 /////////////////////////////////
+// Lazy Image (action shot) ////
+///////////////////////////////
+let lazyImagePath = null;
+const lazyEl = document.querySelector(
+  'figure.nfl-t-person-tile__actionshot picture source[data-srcset]'
+);
+
+if (lazyEl) {
+  const srcset = lazyEl.getAttribute('data-srcset');
+  if (srcset) {
+    const urls = srcset.split(',');
+    const lazyImageUrl = urls[urls.length - 1].split(' ')[0].trim();
+
+    const nameParts = name.split(' ');
+    const firstName = nameParts[0].toLowerCase();
+    const lastName = nameParts.slice(1).join('_').toLowerCase();
+    const lazyFileName = `${firstName}_${lastName}_lazy.jpg`;
+
+    // Ensure lazy directory exists
+    const lazyDir = path.resolve('fetchimages/images/lazy-images');
+    if (!fs.existsSync(lazyDir)) fs.mkdirSync(lazyDir, { recursive: true });
+    const lazyFilePath = path.join(lazyDir, lazyFileName);
+
+    console.log('Fetching lazy image URL:', lazyImageUrl); // debug
+    try {
+      const lazyResponse = await axios.get(lazyImageUrl, {
+        responseType: 'arraybuffer',
+        maxRedirects: 5,
+        headers: {
+          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'
+        }
+      });
+
+      fs.writeFileSync(lazyFilePath, lazyResponse.data);
+      lazyImagePath = `fetchimages/images/lazy-images/${lazyFileName}`;
+      console.log(`✅ Saved lazy image for ${player.name} to ${lazyImagePath}`);
+    } catch (err) {
+      console.error(`Error fetching lazy image for ${player.name}:`, err.message);
+    }
+  }
+} else {
+  console.warn(`⚠️ No lazy image found for ${player.name}`);
+}
+/////////////////////////////////
 // Return IDs - Write data /////
 ///////////////////////////////
 
 //Defines JSON strings //return { are the json  IDs//
-return { player_name: name, number, position, image: imagePath, "espn-image": null, info, stats, achievements, trivia };
+return { player_name: name, number, position, image: imagePath, "espn-image": null, lazyimage: lazyImagePath, info, stats, achievements, trivia };
   } catch (err) {
     console.error(`Error fetching ${player.name}:`, err.message);
     return null;
