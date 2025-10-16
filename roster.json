@@ -1,12 +1,13 @@
 [
   {
-    "last_updated": "2025-10-16T20:02:36.650Z"
+    "last_updated": "2025-10-16T20:36:33.980Z"
   },
   {
     "player_name": "Calvin Anderson",
     "number": 67,
     "position": "OT",
     "image": "fetchimages/images/calvin_anderson.jpeg",
+    "espn-image": "fetchimages/images/espn-images/espn-calvin_anderson.png",
     "info": "EXP: 7 | HT: 6-5 | WT: 300 lbs | AGE: 29",
     "stats": [],
     "achievements": [],
@@ -16,14 +17,14 @@
       ],
       "career_highlights_regular": [],
       "career_highlights_post": []
-    },
-    "espn-image": "fetchimages/images/espn-images/espn-calvin_anderson.png"
+    }
   },
   {
     "player_name": "Spencer Anderson",
     "number": 74,
     "position": "OL",
     "image": "fetchimages/images/spencer_anderson.jpeg",
+    "espn-image": "fetchimages/images/espn-images/espn-spencer_anderson.png",
     "info": "EXP: 3 | HT: 6-5 | WT: 305 lbs | AGE: 25",
     "stats": [],
     "achievements": [],
@@ -34,14 +35,14 @@
       ],
       "career_highlights_regular": [],
       "career_highlights_post": []
-    },
-    "espn-image": "fetchimages/images/espn-images/espn-spencer_anderson.png"
+    }
   },
   {
     "player_name": "Calvin Austin III",
     "number": 19,
     "position": "WR",
     "image": "fetchimages/images/calvin_austin_iii.jpeg",
+    "espn-image": "fetchimages/images/espn-images/espn-calvin_austin_iii.png",
     "info": "EXP: 4 | HT: 5-9 | WT: 162 lbs | AGE: 26",
     "stats": [
       {
@@ -82,14 +83,14 @@
       ],
       "career_highlights_regular": [],
       "career_highlights_post": []
-    },
-    "espn-image": "fetchimages/images/espn-images/espn-calvin_austin_iii.png"
+    }
   },
   {
     "player_name": "Keeanu Benton",
     "number": 95,
     "position": "DL",
     "image": "fetchimages/images/keeanu_benton.jpeg",
+    "espn-image": "fetchimages/images/espn-images/espn-keeanu_benton.png",
     "info": "EXP: 3 | HT: 6-4 | WT: 309 lbs | AGE: 24",
     "stats": [
       {
@@ -120,14 +121,14 @@
       ],
       "career_highlights_regular": [],
       "career_highlights_post": []
-    },
-    "espn-image": "fetchimages/images/espn-images/espn-keeanu_benton.png"
+    }
   },
   {
     "player_name": "Yahya Black",
     "number": 94,
     "position": "DE",
     "image": "fetchimages/images/yahya_black.jpeg",
+    "espn-image": "fetchimages/images/espn-images/espn-yahya_black.png",
     "info": "EXP: R | HT: 6-5 | WT: 336 lbs | AGE: 23",
     "stats": [
       {
@@ -154,14 +155,14 @@
       ],
       "career_highlights_regular": [],
       "career_highlights_post": []
-    },
-    "espn-image": "fetchimages/images/espn-images/espn-yahya_black.png"
+    }
   },
   {
     "player_name": "Chris Boswell",
     "number": 9,
     "position": "K",
     "image": "fetchimages/images/chris_boswell.jpeg",
+    "espn-image": "fetchimages/images/espn-images/espn-chris_boswell.png",
     "info": "EXP: 11 | HT: 6-2 | WT: 185 lbs | AGE: 34",
     "stats": [
       {
@@ -252,14 +253,14 @@
         "Set the NFL and Steelers' record for most field goals made and points by a kicker in a single postseason game (6 and 18, AFC Divisional Playoff 1/15 at Kansas City) during the 2016 postseason",
         "Set the team record for most field goals made (eight) in a single postseason in team history during the 2016 postseason"
       ]
-    },
-    "espn-image": "fetchimages/images/espn-images/espn-chris_boswell.png"
+    }
   },
   {
     "player_name": "Carson Bruener",
     "number": 44,
     "position": "LB",
     "image": "fetchimages/images/carson_bruener.jpeg",
+    "espn-image": "fetchimages/images/espn-images/espn-carson_bruener.png",
     "info": "EXP: R | HT: 6-1 | WT: 227 lbs | AGE: 24",
     "stats": [
       {
@@ -286,14 +287,14 @@
       ],
       "career_highlights_regular": [],
       "career_highlights_post": []
-    },
-    "espn-image": "fetchimages/images/espn-images/espn-carson_bruener.png"
+    }
   },
   {
     "player_name": "Chuck Clark",
     "number": 21,
     "position": "DB",
     "image": "fetchimages/images/chuck_clark.jpeg",
+    "espn-image": "fetchimages/images/espn-images/espn-chuck_clark.png",
     "info": "EXP: 9 | HT: 6-0 | WT: 210 lbs | AGE: 30",
     "stats": [
       {
@@ -318,14 +319,14 @@
       "pro_career": [],
       "career_highlights_regular": [],
       "career_highlights_post": []
-    },
-    "espn-image": "fetchimages/images/espn-images/espn-chuck_clark.png"
+    }
   },
   {
     "player_name": "Brandin Echols",
     "number": 26,
     "position": "CB",
     "image": "fetchimages/images/brandin_echols.jpeg",
+    "espn-image": "fetchimages/images/espn-images/espn-brandin_echols.png",
     "info": "EXP: 5 | HT: 5-10 | WT: 179 lbs | AGE: 28",
     "stats": [
       {
@@ -356,14 +357,14 @@
       ],
       "career_highlights_regular": [],
       "career_highlights_post": []
-    },
-    "espn-image": "fetchimages/images/espn-images/espn-brandin_echols.png"
+    }
   },
   {
     "player_name": "Daniel Ekuale",
     "number": 96,
     "position": "DT",
     "image": "fetchimages/images/daniel_ekuale.jpeg",
+    "espn-image": "fetchimages/images/espn-images/espn-daniel_ekuale.png",
     "info": "EXP: 7 | HT: 6-3 | WT: 300 lbs | AGE: 31",
     "stats": [
       {
@@ -393,14 +394,14 @@
       ],
       "career_highlights_regular": [],
       "career_highlights_post": []
-    },
-    "espn-image": "fetchimages/images/espn-images/espn-daniel_ekuale.png"
+    }
   },
   {
     "player_name": "DeShon Elliott",
     "number": 25,
     "position": "S",
     "image": "fetchimages/images/deshon_elliott.jpeg",
+    "espn-image": "fetchimages/images/espn-images/espn-deshon_elliott.png",
     "info": "EXP: 8 | HT: 6-0 | WT: 210 lbs | AGE: 28",
     "stats": [
       {
@@ -430,14 +431,14 @@
       ],
       "career_highlights_regular": [],
       "career_highlights_post": []
-    },
-    "espn-image": "fetchimages/images/espn-images/espn-deshon_elliott.png"
+    }
   },
   {
     "player_name": "Troy Fautanu",
     "number": 76,
     "position": "OT",
     "image": "fetchimages/images/troy_fautanu.jpeg",
+    "espn-image": "fetchimages/images/espn-images/espn-troy_fautanu.png",
     "info": "EXP: 2 | HT: 6-4 | WT: 317 lbs | AGE: 25",
     "stats": [],
     "achievements": [],
@@ -449,14 +450,14 @@
       ],
       "career_highlights_regular": [],
       "career_highlights_post": []
-    },
-    "espn-image": "fetchimages/images/espn-images/espn-troy_fautanu.png"
+    }
   },
   {
     "player_name": "Zach Frazier",
     "number": 54,
     "position": "C",
     "image": "fetchimages/images/zach_frazier.jpeg",
+    "espn-image": "fetchimages/images/espn-images/espn-zach_frazier.png",
     "info": "EXP: 2 | HT: 6-3 | WT: 310 lbs | AGE: 24",
     "stats": [],
     "achievements": [],
@@ -469,14 +470,14 @@
       ],
       "career_highlights_regular": [],
       "career_highlights_post": []
-    },
-    "espn-image": "fetchimages/images/espn-images/espn-zach_frazier.png"
+    }
   },
   {
     "player_name": "Pat Freiermuth",
     "number": 88,
     "position": "TE",
     "image": "fetchimages/images/pat_freiermuth.jpeg",
+    "espn-image": "fetchimages/images/espn-images/espn-pat_freiermuth.png",
     "info": "EXP: 5 | HT: 6-5 | WT: 258 lbs | AGE: 26",
     "stats": [
       {
@@ -516,14 +517,14 @@
       ],
       "career_highlights_regular": [],
       "career_highlights_post": []
-    },
-    "espn-image": "fetchimages/images/espn-images/espn-pat_freiermuth.png"
+    }
   },
   {
     "player_name": "Kenneth Gainwell",
     "number": 14,
     "position": "RB",
     "image": "fetchimages/images/kenneth_gainwell.jpeg",
+    "espn-image": "fetchimages/images/espn-images/espn-kenneth_gainwell.png",
     "info": "EXP: 5 | HT: 5-9 | WT: 200 lbs | AGE: 26",
     "stats": [
       {
@@ -556,14 +557,14 @@
       ],
       "career_highlights_regular": [],
       "career_highlights_post": []
-    },
-    "espn-image": "fetchimages/images/espn-images/espn-kenneth_gainwell.png"
+    }
   },
   {
     "player_name": "Derrick Harmon",
     "number": 99,
     "position": "DT",
     "image": "fetchimages/images/derrick_harmon.jpeg",
+    "espn-image": "fetchimages/images/espn-images/espn-derrick_harmon.png",
     "info": "EXP: R | HT: 6-4 | WT: 313 lbs | AGE: 22",
     "stats": [
       {
@@ -590,14 +591,14 @@
       ],
       "career_highlights_regular": [],
       "career_highlights_post": []
-    },
-    "espn-image": "fetchimages/images/espn-images/espn-derrick_harmon.png"
+    }
   },
   {
     "player_name": "Nick Herbig",
     "number": 51,
     "position": "LB",
     "image": "fetchimages/images/nick_herbig.jpeg",
+    "espn-image": "fetchimages/images/espn-images/espn-nick_herbig.png",
     "info": "EXP: 3 | HT: 6-2 | WT: 240 lbs | AGE: 23",
     "stats": [
       {
@@ -628,14 +629,14 @@
       ],
       "career_highlights_regular": [],
       "career_highlights_post": []
-    },
-    "espn-image": "fetchimages/images/espn-images/espn-nick_herbig.png"
+    }
   },
   {
     "player_name": "Cameron Heyward",
     "number": 97,
     "position": "DT",
     "image": "fetchimages/images/cameron_heyward.jpeg",
+    "espn-image": "fetchimages/images/espn-images/espn-cameron_heyward.png",
     "info": "EXP: 15 | HT: 6-5 | WT: 295 lbs | AGE: 36",
     "stats": [
       {
@@ -691,14 +692,14 @@
       ],
       "career_highlights_regular": [],
       "career_highlights_post": []
-    },
-    "espn-image": "fetchimages/images/espn-images/espn-cameron_heyward.png"
+    }
   },
   {
     "player_name": "Connor Heyward",
     "number": 83,
     "position": "TE/FB",
     "image": "fetchimages/images/connor_heyward.jpeg",
+    "espn-image": "fetchimages/images/espn-images/espn-connor_heyward.png",
     "info": "EXP: 4 | HT: 6-0 | WT: 230 lbs | AGE: 26",
     "stats": [
       {
@@ -729,14 +730,14 @@
       ],
       "career_highlights_regular": [],
       "career_highlights_post": []
-    },
-    "espn-image": "fetchimages/images/espn-images/espn-connor_heyward.png"
+    }
   },
   {
     "player_name": "Alex Highsmith",
     "number": 56,
     "position": "LB",
     "image": "fetchimages/images/alex_highsmith.jpeg",
+    "espn-image": "fetchimages/images/espn-images/espn-alex_highsmith.png",
     "info": "EXP: 6 | HT: 6-4 | WT: 242 lbs | AGE: 28",
     "stats": [
       {
@@ -780,14 +781,14 @@
       ],
       "career_highlights_regular": [],
       "career_highlights_post": []
-    },
-    "espn-image": "fetchimages/images/espn-images/espn-alex_highsmith.png"
+    }
   },
   {
     "player_name": "Cole Holcomb",
     "number": 55,
     "position": "LB",
     "image": "fetchimages/images/cole_holcomb.jpeg",
+    "espn-image": "fetchimages/images/espn-images/espn-cole_holcomb.png",
     "info": "EXP: 7 | HT: 6-1 | WT: 240 lbs | AGE: 29",
     "stats": [
       {
@@ -818,14 +819,14 @@
       ],
       "career_highlights_regular": [],
       "career_highlights_post": []
-    },
-    "espn-image": "fetchimages/images/espn-images/espn-cole_holcomb.png"
+    }
   },
   {
     "player_name": "Kaleb Johnson",
     "number": 20,
     "position": "RB",
     "image": "fetchimages/images/kaleb_johnson.jpeg",
+    "espn-image": "fetchimages/images/espn-images/espn-kaleb_johnson.png",
     "info": "EXP: R | HT: 6-1 | WT: 224 lbs | AGE: 22",
     "stats": [
       {
@@ -852,14 +853,14 @@
       ],
       "career_highlights_regular": [],
       "career_highlights_post": []
-    },
-    "espn-image": "fetchimages/images/espn-images/espn-kaleb_johnson.png"
+    }
   },
   {
     "player_name": "Broderick Jones",
     "number": 77,
     "position": "OT",
     "image": "fetchimages/images/broderick_jones.jpeg",
+    "espn-image": "fetchimages/images/espn-images/espn-broderick_jones.png",
     "info": "EXP: 3 | HT: 6-5 | WT: 311 lbs | AGE: 24",
     "stats": [],
     "achievements": [],
@@ -871,14 +872,14 @@
       ],
       "career_highlights_regular": [],
       "career_highlights_post": []
-    },
-    "espn-image": "fetchimages/images/espn-images/espn-broderick_jones.png"
+    }
   },
   {
     "player_name": "Christian Kuntz",
     "number": 46,
     "position": "LS",
     "image": "fetchimages/images/christian_kuntz.jpeg",
+    "espn-image": "fetchimages/images/espn-images/espn-christian_kuntz.png",
     "info": "EXP: 5 | HT: 6-1 | WT: 228 lbs | AGE: 31",
     "stats": [],
     "achievements": [],
@@ -889,14 +890,14 @@
       ],
       "career_highlights_regular": [],
       "career_highlights_post": []
-    },
-    "espn-image": "fetchimages/images/espn-images/espn-christian_kuntz.png"
+    }
   },
   {
     "player_name": "DeMarvin Leal",
     "number": 98,
     "position": "DE",
     "image": "fetchimages/images/demarvin_leal.jpeg",
+    "espn-image": "fetchimages/images/espn-images/espn-demarvin_leal.png",
     "info": "EXP: 4 | HT: 6-4 | WT: 290 lbs | AGE: 25",
     "stats": [
       {
@@ -926,14 +927,14 @@
       ],
       "career_highlights_regular": [],
       "career_highlights_post": []
-    },
-    "espn-image": "fetchimages/images/espn-images/espn-demarvin_leal.png"
+    }
   },
   {
     "player_name": "Logan Lee",
     "number": 91,
     "position": "DT",
     "image": "fetchimages/images/logan_lee.jpeg",
+    "espn-image": "fetchimages/images/espn-images/espn-logan_lee.png",
     "info": "EXP: 2 | HT: 6-5 | WT: 286 lbs | AGE: 25",
     "stats": [
       {
@@ -960,14 +961,14 @@
       ],
       "career_highlights_regular": [],
       "career_highlights_post": []
-    },
-    "espn-image": "fetchimages/images/espn-images/espn-logan_lee.png"
+    }
   },
   {
     "player_name": "Ryan McCollum",
     "number": 62,
     "position": "C",
     "image": "fetchimages/images/ryan_mccollum.jpeg",
+    "espn-image": "fetchimages/images/espn-images/espn-ryan_mccollum.png",
     "info": "EXP: 3 | HT: 6-5 | WT: 300 lbs | AGE: 27",
     "stats": [],
     "achievements": [],
@@ -979,14 +980,14 @@
       ],
       "career_highlights_regular": [],
       "career_highlights_post": []
-    },
-    "espn-image": "fetchimages/images/espn-images/espn-ryan_mccollum.png"
+    }
   },
   {
     "player_name": "Mason McCormick",
     "number": 66,
     "position": "G",
     "image": "fetchimages/images/mason_mccormick.jpeg",
+    "espn-image": "fetchimages/images/espn-images/espn-mason_mccormick.png",
     "info": "EXP: 2 | HT: 6-5 | WT: 315 lbs | AGE: 25",
     "stats": [],
     "achievements": [],
@@ -999,14 +1000,14 @@
       ],
       "career_highlights_regular": [],
       "career_highlights_post": []
-    },
-    "espn-image": "fetchimages/images/espn-images/espn-mason_mccormick.png"
+    }
   },
   {
     "player_name": "DK Metcalf",
     "number": 4,
     "position": "WR",
     "image": "fetchimages/images/dk_metcalf.jpeg",
+    "espn-image": "fetchimages/images/espn-images/espn-dk_metcalf.png",
     "info": "EXP: 7 | HT: 6-4 | WT: 229 lbs | AGE: 27",
     "stats": [
       {
@@ -1057,14 +1058,14 @@
       ],
       "career_highlights_regular": [],
       "career_highlights_post": []
-    },
-    "espn-image": "fetchimages/images/espn-images/espn-dk_metcalf.png"
+    }
   },
   {
     "player_name": "Scott Miller",
     "number": 13,
     "position": "WR",
     "image": "fetchimages/images/scott_miller.jpeg",
+    "espn-image": null,
     "info": "EXP: 7 | HT: 5-9 | WT: 174 lbs | AGE: 28",
     "stats": [
       {
@@ -1096,6 +1097,7 @@
     "number": 93,
     "position": "DE",
     "image": "fetchimages/images/esezi_otomewo.jpeg",
+    "espn-image": "fetchimages/images/espn-images/espn-esezi_otomewo.png",
     "info": "EXP: 3 | HT: 6-5 | WT: 282 lbs | AGE: 26",
     "stats": [
       {
@@ -1123,14 +1125,14 @@
       ],
       "career_highlights_regular": [],
       "career_highlights_post": []
-    },
-    "espn-image": "fetchimages/images/espn-images/espn-esezi_otomewo.png"
+    }
   },
   {
     "player_name": "Andrus Peat",
     "number": 71,
     "position": "G",
     "image": "fetchimages/images/andrus_peat.jpeg",
+    "espn-image": "fetchimages/images/espn-images/espn-andrus_peat.png",
     "info": "EXP: 11 | HT: 6-7 | WT: 316 lbs | AGE: 31",
     "stats": [],
     "achievements": [
@@ -1145,14 +1147,14 @@
       ],
       "career_highlights_regular": [],
       "career_highlights_post": []
-    },
-    "espn-image": "fetchimages/images/espn-images/espn-andrus_peat.png"
+    }
   },
   {
     "player_name": "Jabrill Peppers",
     "number": 40,
     "position": "S",
     "image": "fetchimages/images/jabrill_peppers.jpeg",
+    "espn-image": "fetchimages/images/espn-images/espn-jabrill_peppers.png",
     "info": "EXP: 9 | HT: 5-11 | WT: 213 lbs | AGE: 30",
     "stats": [
       {
@@ -1177,14 +1179,14 @@
       "pro_career": [],
       "career_highlights_regular": [],
       "career_highlights_post": []
-    },
-    "espn-image": "fetchimages/images/espn-images/espn-jabrill_peppers.png"
+    }
   },
   {
     "player_name": "James Pierre",
     "number": 42,
     "position": "CB",
     "image": "fetchimages/images/james_pierre.jpeg",
+    "espn-image": "fetchimages/images/espn-images/espn-james_pierre.png",
     "info": "EXP: 6 | HT: 6-2 | WT: 185 lbs | AGE: 29",
     "stats": [
       {
@@ -1215,14 +1217,14 @@
       ],
       "career_highlights_regular": [],
       "career_highlights_post": []
-    },
-    "espn-image": "fetchimages/images/espn-images/espn-james_pierre.png"
+    }
   },
   {
     "player_name": "Joey Porter Jr.",
     "number": 24,
     "position": "CB",
     "image": "fetchimages/images/joey_porter_jr..jpeg",
+    "espn-image": "fetchimages/images/espn-images/espn-joey_porter_jr_.png",
     "info": "EXP: 3 | HT: 6-2 | WT: 193 lbs | AGE: 25",
     "stats": [
       {
@@ -1255,14 +1257,14 @@
       ],
       "career_highlights_regular": [],
       "career_highlights_post": []
-    },
-    "espn-image": "fetchimages/images/espn-images/espn-joey_porter_jr_.png"
+    }
   },
   {
     "player_name": "Patrick Queen",
     "number": 6,
     "position": "LB",
     "image": "fetchimages/images/patrick_queen.jpeg",
+    "espn-image": "fetchimages/images/espn-images/espn-patrick_queen.png",
     "info": "EXP: 6 | HT: 6-0 | WT: 232 lbs | AGE: 26",
     "stats": [
       {
@@ -1303,14 +1305,14 @@
       ],
       "career_highlights_regular": [],
       "career_highlights_post": []
-    },
-    "espn-image": "fetchimages/images/espn-images/espn-patrick_queen.png"
+    }
   },
   {
     "player_name": "Jalen Ramsey",
     "number": 5,
     "position": "CB",
     "image": "fetchimages/images/jalen_ramsey.jpeg",
+    "espn-image": "fetchimages/images/espn-images/espn-jalen_ramsey.png",
     "info": "EXP: rookie | HT: 6-1 | WT: 211 lbs | AGE: 30",
     "stats": [
       {
@@ -1357,14 +1359,14 @@
       ],
       "career_highlights_regular": [],
       "career_highlights_post": []
-    },
-    "espn-image": "fetchimages/images/espn-images/espn-jalen_ramsey.png"
+    }
   },
   {
     "player_name": "Aaron Rodgers",
     "number": 8,
     "position": "QB",
     "image": "fetchimages/images/aaron_rodgers.jpeg",
+    "espn-image": null,
     "info": "EXP: 21 | HT: 6-2 | WT: 223 lbs | AGE: 41",
     "stats": [
       {
@@ -1412,6 +1414,7 @@
     "number": 2,
     "position": "QB",
     "image": "fetchimages/images/mason_rudolph.jpeg",
+    "espn-image": "fetchimages/images/espn-images/espn-mason_rudolph.png",
     "info": "EXP: 8 | HT: 6-5 | WT: 235 lbs | AGE: 30",
     "stats": [
       {
@@ -1454,14 +1457,14 @@
       ],
       "career_highlights_regular": [],
       "career_highlights_post": []
-    },
-    "espn-image": "fetchimages/images/espn-images/espn-mason_rudolph.png"
+    }
   },
   {
     "player_name": "Jack Sawyer",
     "number": 33,
     "position": "LB",
     "image": "fetchimages/images/jack_sawyer.jpeg",
+    "espn-image": "fetchimages/images/espn-images/espn-jack_sawyer.png",
     "info": "EXP: R | HT: 6-4 | WT: 260 lbs | AGE: 23",
     "stats": [
       {
@@ -1488,14 +1491,14 @@
       ],
       "career_highlights_regular": [],
       "career_highlights_post": []
-    },
-    "espn-image": "fetchimages/images/espn-images/espn-jack_sawyer.png"
+    }
   },
   {
     "player_name": "Isaac Seumalo",
     "number": 73,
     "position": "G",
     "image": "fetchimages/images/isaac_seumalo.jpeg",
+    "espn-image": "fetchimages/images/espn-images/espn-isaac_seumalo.png",
     "info": "EXP: rookie | HT: 6-4 | WT: 303 lbs | AGE: 31",
     "stats": [],
     "achievements": [
@@ -1512,14 +1515,14 @@
       ],
       "career_highlights_regular": [],
       "career_highlights_post": []
-    },
-    "espn-image": "fetchimages/images/espn-images/espn-isaac_seumalo.png"
+    }
   },
   {
     "player_name": "Ben Skowronek",
     "number": 15,
     "position": "WR",
     "image": "fetchimages/images/ben_skowronek.jpeg",
+    "espn-image": "fetchimages/images/espn-images/espn-ben_skowronek.png",
     "info": "EXP: 5 | HT: 6-3 | WT: 224 lbs | AGE: 28",
     "stats": [
       {
@@ -1555,14 +1558,14 @@
       ],
       "career_highlights_regular": [],
       "career_highlights_post": []
-    },
-    "espn-image": "fetchimages/images/espn-images/espn-ben_skowronek.png"
+    }
   },
   {
     "player_name": "Darius Slay",
     "number": 23,
     "position": "CB",
     "image": "fetchimages/images/darius_slay.jpeg",
+    "espn-image": "fetchimages/images/espn-images/espn-darius_slay.png",
     "info": "EXP: 13 | HT: 6-0 | WT: 192 lbs | AGE: 34",
     "stats": [
       {
@@ -1602,14 +1605,14 @@
       ],
       "career_highlights_regular": [],
       "career_highlights_post": []
-    },
-    "espn-image": "fetchimages/images/espn-images/espn-darius_slay.png"
+    }
   },
   {
     "player_name": "Jonnu Smith",
     "number": 81,
     "position": "TE",
     "image": "fetchimages/images/jonnu_smith.jpeg",
+    "espn-image": "fetchimages/images/espn-images/espn-jonnu_smith.png",
     "info": "EXP: 9 | HT: 6-3 | WT: 248 lbs | AGE: 30",
     "stats": [
       {
@@ -1647,14 +1650,14 @@
       ],
       "career_highlights_regular": [],
       "career_highlights_post": []
-    },
-    "espn-image": "fetchimages/images/espn-images/espn-jonnu_smith.png"
+    }
   },
   {
     "player_name": "Juan Thornhill",
     "number": 22,
     "position": "S",
     "image": "fetchimages/images/juan_thornhill.jpeg",
+    "espn-image": "fetchimages/images/espn-images/espn-juan_thornhill.png",
     "info": "EXP: 7 | HT: 6-0 | WT: 205 lbs | AGE: 29",
     "stats": [
       {
@@ -1691,14 +1694,14 @@
       ],
       "career_highlights_regular": [],
       "career_highlights_post": []
-    },
-    "espn-image": "fetchimages/images/espn-images/espn-juan_thornhill.png"
+    }
   },
   {
     "player_name": "Corliss Waitman",
     "number": 3,
     "position": "P",
     "image": "fetchimages/images/corliss_waitman.jpeg",
+    "espn-image": "fetchimages/images/espn-images/espn-corliss_waitman.png",
     "info": "EXP: 3 | HT: 6-2 | WT: 210 lbs | AGE: 30",
     "stats": [
       {
@@ -1727,14 +1730,14 @@
       ],
       "career_highlights_regular": [],
       "career_highlights_post": []
-    },
-    "espn-image": "fetchimages/images/espn-images/espn-corliss_waitman.png"
+    }
   },
   {
     "player_name": "Jaylen Warren",
     "number": 30,
     "position": "RB",
     "image": "fetchimages/images/jaylen_warren.jpeg",
+    "espn-image": "fetchimages/images/espn-images/espn-jaylen_warren.png",
     "info": "EXP: 4 | HT: 5-8 | WT: 215 lbs | AGE: 26",
     "stats": [
       {
@@ -1767,14 +1770,14 @@
       ],
       "career_highlights_regular": [],
       "career_highlights_post": []
-    },
-    "espn-image": "fetchimages/images/espn-images/espn-jaylen_warren.png"
+    }
   },
   {
     "player_name": "Darnell Washington",
     "number": 80,
     "position": "TE",
     "image": "fetchimages/images/darnell_washington.jpeg",
+    "espn-image": "fetchimages/images/espn-images/espn-darnell_washington.png",
     "info": "EXP: 3 | HT: 6-7 | WT: 264 lbs | AGE: 24",
     "stats": [
       {
@@ -1805,14 +1808,14 @@
       ],
       "career_highlights_regular": [],
       "career_highlights_post": []
-    },
-    "espn-image": "fetchimages/images/espn-images/espn-darnell_washington.png"
+    }
   },
   {
     "player_name": "T.J. Watt",
     "number": 90,
     "position": "LB",
     "image": "fetchimages/images/t.j._watt.jpeg",
+    "espn-image": "fetchimages/images/espn-images/espn-t_j_watt.png",
     "info": "EXP: 9 | HT: 6-4 | WT: 252 lbs | AGE: 31",
     "stats": [
       {
@@ -1842,14 +1845,14 @@
       ],
       "career_highlights_regular": [],
       "career_highlights_post": []
-    },
-    "espn-image": "fetchimages/images/espn-images/espn-t_j_watt.png"
+    }
   },
   {
     "player_name": "Ke'Shawn Williams",
     "number": 85,
     "position": "WR",
     "image": "fetchimages/images/ke'shawn_williams.jpeg",
+    "espn-image": "fetchimages/images/espn-images/espn-ke_shawn_williams.png",
     "info": "EXP: R | HT: 5-9 | WT: 188 lbs | AGE: 23",
     "stats": [
       {
@@ -1876,14 +1879,14 @@
       ],
       "career_highlights_regular": [],
       "career_highlights_post": []
-    },
-    "espn-image": "fetchimages/images/espn-images/espn-ke_shawn_williams.png"
+    }
   },
   {
     "player_name": "Payton Wilson",
     "number": 41,
     "position": "LB",
     "image": "fetchimages/images/payton_wilson.jpeg",
+    "espn-image": "fetchimages/images/espn-images/espn-payton_wilson.png",
     "info": "EXP: 2 | HT: 6-4 | WT: 242 lbs | AGE: 25",
     "stats": [
       {
@@ -1914,14 +1917,14 @@
       ],
       "career_highlights_regular": [],
       "career_highlights_post": []
-    },
-    "espn-image": "fetchimages/images/espn-images/espn-payton_wilson.png"
+    }
   },
   {
     "player_name": "Roman Wilson",
     "number": 10,
     "position": "WR",
     "image": "fetchimages/images/roman_wilson.jpeg",
+    "espn-image": "fetchimages/images/espn-images/espn-roman_wilson.png",
     "info": "EXP: 2 | HT: 5-10 | WT: 186 lbs | AGE: 24",
     "stats": [
       {
@@ -1951,7 +1954,6 @@
       ],
       "career_highlights_regular": [],
       "career_highlights_post": []
-    },
-    "espn-image": "fetchimages/images/espn-images/espn-roman_wilson.png"
+    }
   }
 ]
