@@ -243,7 +243,7 @@ if (playerImageEl) {
 // Lazy image
 const lazyImageEl = document.getElementById('lazy-image');
 if (lazyImageEl) {
-  lazyImageEl.src = currentPlayer['lazy-image'] || '';
+  lazyImageEl.src = currentPlayer['lazyimage'] || '';
 }
 // --- Player overlay (number & position) ---
 const overlayEl = document.getElementById('player-overlay');
