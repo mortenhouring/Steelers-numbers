@@ -1,3 +1,4 @@
+//working with espn png images
 // roster-fetch.js
 import fs from 'fs';
 import axios from 'axios';
@@ -334,7 +335,7 @@ if (ldJsonEl) {
 ///////////////////////////////
 
 //Defines JSON strings //return { are the json  IDs//
-return { player_name: name, number, position, image: imagePath, info, stats, achievements, trivia };
+return { player_name: name, number, position, image: imagePath, "espn-image": null, info, stats, achievements, trivia };
   } catch (err) {
     console.error(`Error fetching ${player.name}:`, err.message);
     return null;
