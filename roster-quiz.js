@@ -236,8 +236,14 @@ function showAnswerView(){
   currentPlayer = last;
 
   // --- Player image and info ---
+// profile image
 if (playerImageEl) {
   playerImageEl.src = currentPlayer['espn-image'] || currentPlayer.image || '';
+}
+// Lazy image
+const lazyImageEl = document.getElementById('lazy-image');
+if (lazyImageEl) {
+  lazyImageEl.src = currentPlayer['lazy-image'] || '';
 }
 // --- Player overlay (number & position) ---
 const overlayEl = document.getElementById('player-overlay');
