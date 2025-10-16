@@ -276,12 +276,12 @@ if (playerInfoEl) {
 // --- Achievements box logic ---
 const achievementsBox = document.getElementById('player-achievements');
 if (achievementsBox) {
-  if (currentPlayer.achievements && currentPlayer.achievements.trim() !== '') {
-    // Show achievements if they exist
-    achievementsBox.textContent = currentPlayer.achievements;
+  const achArr = Array.isArray(currentPlayer?.achievements) ? currentPlayer.achievements : [];
+  if (achArr.length > 0) {
+    // Join array items with line breaks
+    achievementsBox.innerHTML = achArr.map(a => a.trim()).join('<br>');
     achievementsBox.style.display = 'block';
   } else {
-    // Hide achievements box if no achievements
     achievementsBox.style.display = 'none';
   }
 }
