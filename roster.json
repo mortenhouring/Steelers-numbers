@@ -1,6 +1,6 @@
 [
   {
-    "last_updated": "2025-10-15T23:41:11.938Z"
+    "last_updated": "2025-10-16T00:31:58.102Z"
   },
   {
     "player_name": "Calvin Anderson",
@@ -318,7 +318,7 @@
     "number": 26,
     "position": "CB",
     "image": "fetchimages/images/brandin_echols.jpeg",
-    "info": "EXP: 5 | HT: 5-10 | WT: 179 lbs | AGE: 27",
+    "info": "EXP: 5 | HT: 5-10 | WT: 179 lbs | AGE: 28",
     "stats": [
       {
         "label": "Solo",
@@ -1151,7 +1151,9 @@
     "image": "fetchimages/images/andrus_peat.jpeg",
     "info": "EXP: 11 | HT: 6-7 | WT: 316 lbs | AGE: 31",
     "stats": [],
-    "achievements": [],
+    "achievements": [
+      "3x Pro Bowl"
+    ],
     "trivia": {
       "pro_career": [
         "Has played in 111 regular-season games (102 starts) in his 10-year NFL career with New Orleans (2015-23) and Las Vegas (2024)",
@@ -1294,7 +1296,9 @@
         "value": "--"
       }
     ],
-    "achievements": [],
+    "achievements": [
+      "2x Pro Bowl"
+    ],
     "trivia": {
       "pro_career": [
         "Has played in 84 games (84 starts) in his five-year career with Baltimore (2020-23) and Pittsburgh (2024)",
@@ -1339,7 +1343,11 @@
         "value": "1"
       }
     ],
-    "achievements": [],
+    "achievements": [
+      "7x Pro Bowl",
+      "3x All-Pro",
+      "1x SB Champ"
+    ],
     "trivia": {
       "pro_career": [
         "Seven-time Pro Bowler (2017, 2018, 2019, 2020, 2021, 2022, 2023)",
@@ -1388,7 +1396,15 @@
         "value": "105.37"
       }
     ],
-    "achievements": [],
+    "achievements": [
+      "10x Pro Bowl",
+      "4x All-Pro",
+      "1x SB Champ",
+      "4x AP MVP",
+      "4x PFWA MVP",
+      "2011 PFWA Off. PoY",
+      "2x SN Off. PoY"
+    ],
     "trivia": {
       "pro_career": [
         "Career Regular-Season Record as a Starter: 153-87-1 (.637): 0-0 (.000) in '05, 0-0 (.000) in '06, 0-0 (.000) in '07, 6-10 (.375) in '08, 11-5 (.688) in '09, 10-5 (.667) in '10, 14-1 (.933) in '11, 11-5 (.688) in '12, 6-3 (.667) in '13, 12-4 (.750) in '14, 10-6 (.625) in '15, 10-6 (.625) in '16, 4-3 (.571) in '17, 6-9-1 (.406) in '18, 13-3 (.813) in '19, 13-3 (.813) in '20, 13-3 (.813) in '21, 8-9 (.471) in '22, 1-0 (1.000) in '23 and 5-12 (.294) in '24",
@@ -1492,7 +1508,10 @@
     "image": "fetchimages/images/isaac_seumalo.jpeg",
     "info": "EXP: rookie | HT: 6-4 | WT: 303 lbs | AGE: 31",
     "stats": [],
-    "achievements": [],
+    "achievements": [
+      "1x Pro Bowl",
+      "1x SB Champ"
+    ],
     "trivia": {
       "pro_career": [
         "Has played in 111 games (90 starts) in his nine-year NFL career with Philadelphia (2016-22) and Pittsburgh (2023-24)",
@@ -1529,7 +1548,9 @@
         "value": "1"
       }
     ],
-    "achievements": [],
+    "achievements": [
+      "1x SB Champ"
+    ],
     "trivia": {
       "pro_career": [
         "Has played in 55 regular-season games (13 starts) over four-year NFL career (L.A. Rams 2021-23; Pittsburgh 2024)",
@@ -1569,7 +1590,11 @@
         "value": "--"
       }
     ],
-    "achievements": [],
+    "achievements": [
+      "6x Pro Bowl",
+      "1x All-Pro",
+      "1x SB Champ"
+    ],
     "trivia": {
       "pro_career": [
         "Has played in 177 regular-season games (167 starts) over his 12-year NFL career (Detroit 2013-19; Phildelphia 2020-24)",
@@ -1611,7 +1636,9 @@
         "value": "1"
       }
     ],
-    "achievements": [],
+    "achievements": [
+      "1x Pro Bowl"
+    ],
     "trivia": {
       "pro_career": [
         "Has played in 124 career regular-season games (84 starts) in nine-year NFL career (Tennessee 2017-20; New England 2021-22; Atlanta 2023; Miami 2024)",
@@ -1653,7 +1680,9 @@
         "value": "--"
       }
     ],
-    "achievements": [],
+    "achievements": [
+      "2x SB Champ"
+    ],
     "trivia": {
       "pro_career": [
         "Has played in 87 regular-season games (74 starts) over his six-year NFL career (Kansas City 2019-22; Cleveland 2023-24)",
@@ -1805,7 +1834,10 @@
         "value": "1"
       }
     ],
-    "achievements": [],
+    "achievements": [
+      "7x Pro Bowl",
+      "4x All-Pro"
+    ],
     "trivia": {
       "pro_career": [
         "AWARDS"
