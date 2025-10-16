@@ -237,7 +237,7 @@ function showAnswerView(){
 
   // --- Player image and info ---
 if (playerImageEl) {
-  playerImageEl.src = currentPlayer.image || '';
+  playerImageEl.src = currentPlayer['espn-image'] || currentPlayer.image || '';
 }
 // --- Player overlay (number & position) ---
 const overlayEl = document.getElementById('player-overlay');
