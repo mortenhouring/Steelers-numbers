@@ -69,10 +69,21 @@
 }
 #player-achievements {
   display: none; /* hidden by default */
-  margin-top: 1rem;
+  
+  /* Match the size/layout of #roster-info-container */
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  width: 96vw;
+  height: 20vh;
+  margin: 2vh auto;
+  gap: 2vw;
+
+  /* Styling */
   padding: 0.8rem 1rem;
   border-radius: 0.4rem;
-  background-color: rgba(255, 255, 255, 0.08);
+  background-color: rgba(0, 0, 0, 0.5); /* semi-transparent black */
+  color: rgba(255, 182, 18); /* gold-ish text */
   font-size: 0.95rem;
   line-height: 1.5;
   white-space: pre-line; /* preserve line breaks from JSON text */
