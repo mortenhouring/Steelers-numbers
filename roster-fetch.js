@@ -3,6 +3,31 @@ import fs from 'fs';
 import axios from 'axios';
 import { JSDOM } from 'jsdom';
 import path from 'path';
+///////////////////////////////////
+// HELPERS///
+/////////////////////////////////
+
+//Prevent 429 rate limit error
+function delay(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+//Retry if 429 error occurs
+async function fetchWithRetry(url, retries = 3, delayMs = 2000) {
+  for (let i = 0; i < retries; i++) {
+    try {
+      return await axios.get(url);
+    } catch (err) {
+      if (err.response && err.response.status === 429) {
+        console.warn(`429 detected for ${url}, retrying in ${delayMs}ms...`);
+        await new Promise(res => setTimeout(res, delayMs));
+        delayMs *= 2; // exponential backoff
+      } else {
+        throw err;
+      }
+    }
+  }
+  throw new Error(`Failed to fetch ${url} after ${retries} retries due to 429`);
+}
 
 ///////////////////////////////////
 // Fetch active roster players///
@@ -174,7 +199,7 @@ let achievements = [];
 try {
   // Only attempt if player exists in PFR
   if (pfrRoster[player.name]) {
-    const { data: playerHtml } = await axios.get(pfrRoster[player.name].url);
+    const { data: playerHtml } = await fetchWithRetry(pfrRoster[player.name].url);
     const domPlayer = new JSDOM(playerHtml);
     const docPlayer = domPlayer.window.document;
 
@@ -262,6 +287,7 @@ async function main() {
   for (const player of players) {
     const data = await fetchPlayer(player, pfrRoster);
     if (data) results.push(data);
+    await delay(750); // 750ms pause between each player
   }
 
   // Insert timestamp as a "virtual" first object
