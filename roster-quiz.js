@@ -274,13 +274,13 @@ if (playerInfoEl) {
     ]);
   }
 // Achievements box logic
-  const achievementsBox = document.getElementById('player-achievements');
-  if (achievementsBox) {
-    if (currentPlayer.achievements && currentPlayer.achievements.trim() !== '') {
-      achievementsBox.textContent = currentPlayer.achievements;
-      achievementsBox.style.display = 'block';
-    } else {
-      achievementsBox.style.display = 'none';
+const achievementsBox = document.getElementById('player-achievements');
+if (achievementsBox) {
+  if (currentPlayer.achievements && currentPlayer.achievements.trim() !== '') {
+    achievementsBox.textContent = currentPlayer.achievements;
+    achievementsBox.style.display = 'block';
+  } else {
+    achievementsBox.style.display = 'none';
   }
 }
 // --- Trivia display logic ---
