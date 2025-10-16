@@ -271,42 +271,63 @@ if (ldJsonEl) {
     console.error(`Error fetching image for ${player.name}:`, err.message);
   }
 }
-// --- ESPN live page image (simplified) ---
-let espnImagePath = null;
-try {
-  const espnUrl = "https://www.espn.com/nfl/team/roster/_/name/pit";
-  const { data: html } = await axios.get(espnUrl, {
-    headers: { "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)" }
-  });
+// Ensure ESPN images directory exists
+const ESPN_IMAGES_DIR = path.resolve('fetchimages/images/espn-images');
+if (!fs.existsSync(ESPN_IMAGES_DIR)) {
+  fs.mkdirSync(ESPN_IMAGES_DIR, { recursive: true });
+}
 
-  // Extract everything after the "groups" array marker
-  const start = html.indexOf('"groups":[');
-  if (start === -1) throw new Error('Could not find "groups" array in ESPN HTML');
+async function fetchEspnImages(masterRoster) {
+  try {
+    const espnUrl = 'https://www.espn.com/nfl/team/roster/_/name/pit';
+    const { data: html } = await axios.get(espnUrl, {
+      headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)' }
+    });
 
-  // Grab just the JSON array text (until the closing ]})
-  const groupsText = html.slice(start + 9, html.indexOf(']},window', start)); 
-  const groupsJson = JSON.parse(groupsText + ']}'); // add the closing braces
+    // Find the start of the athletes section
+    const startIndex = html.indexOf(',"groups":[{"name":"Offense","key":"offense","athletes":');
+    if (startIndex === -1) {
+      console.error('Could not find ESPN athletes section in HTML.');
+      return;
+    }
+    const athletesHtml = html.slice(startIndex);
 
-  // Flatten all athletes
-  const athletes = groupsJson.flatMap(g => g.athletes || []);
-  const espnPlayer = athletes.find(a => a.name === player.name);
+    // Regex to match each player's "name" and "headshot"
+    const regex = /"name":"(.*?)".*?"headshot":"(.*?)"/g;
+    let match;
+    const espnImages = {};
 
-  if (espnPlayer && espnPlayer.headshot) {
-    const imgUrl = espnPlayer.headshot;
-    const first = player.name.split(" ")[0].toLowerCase();
-    const last = player.name.split(" ").slice(1).join("_").toLowerCase();
-    const fileName = `espn_${first}_${last}.jpeg`;
-    const filePath = path.join(ESPN_IMAGES_DIR, fileName);
+    while ((match = regex.exec(athletesHtml)) !== null) {
+      const playerName = match[1];      // e.g., "Ke'Shawn Williams"
+      const headshotUrl = match[2];     // image URL
 
-    const response = await axios.get(imgUrl, { responseType: "arraybuffer" });
-    fs.writeFileSync(filePath, response.data);
-    espnImagePath = `fetchimages/images/espn-images/${fileName}`;
-    console.log(`✅ Saved ESPN image for ${player.name}`);
-  } else {
-    console.log(`⚠️ No ESPN image found for ${player.name}`);
+      // Skip players not in master roster
+      if (!masterRoster.includes(playerName)) continue;
+
+      // Build filename
+      const [firstName, ...lastParts] = playerName.split(' ');
+      const lastName = lastParts.join('_');
+      const safeFirst = firstName.replace(/'/g, '-');
+      const safeLast = lastName.replace(/'/g, '-');
+      const fileName = `espn_${safeFirst}_${safeLast}.jpeg`;
+
+      const filePath = path.join(ESPN_IMAGES_DIR, fileName);
+
+      // Fetch and save image
+      try {
+        const response = await axios.get(headshotUrl, { responseType: 'arraybuffer' });
+        fs.writeFileSync(filePath, response.data);
+        espnImages[playerName] = `fetchimages/images/espn-images/${fileName}`;
+        console.log(`Saved ESPN image for ${playerName} -> ${fileName}`);
+      } catch (err) {
+        console.error(`Failed to fetch ESPN image for ${playerName}: ${err.message}`);
+      }
+    }
+
+    return espnImages; // Map of playerName -> local path
+  } catch (err) {
+    console.error('Error fetching ESPN roster page:', err.message);
   }
-} catch (err) {
-  console.error(`Error fetching ESPN image for ${player.name}:`, err.message);
 }
 
 /////////////////////////////////
