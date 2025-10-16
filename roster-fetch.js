@@ -3,6 +3,13 @@ import fs from 'fs';
 import axios from 'axios';
 import { JSDOM } from 'jsdom';
 import path from 'path';
+
+// define espn images directory
+const ESPN_IMAGES_DIR = path.resolve('fetchimages/images/espn-images');
+if (!fs.existsSync(ESPN_IMAGES_DIR)) {
+  fs.mkdirSync(ESPN_IMAGES_DIR, { recursive: true });
+}
+
 ///////////////////////////////////
 // HELPERS///
 /////////////////////////////////
@@ -264,12 +271,51 @@ if (ldJsonEl) {
     console.error(`Error fetching image for ${player.name}:`, err.message);
   }
 }
+// ESPN images
+let espnImagePath = null;
+
+// Build ESPN image URL from ESPN player ID
+// This uses the same logic as images-fetch-steelers.js
+// We will fetch the Steelers.com player page to find the ESPN link
+
+try {
+  const playerPageResponse = await axios.get(player.url, {
+    headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)' }
+  });
+  const domPlayerPage = new JSDOM(playerPageResponse.data);
+  const docPlayerPage = domPlayerPage.window.document;
+
+  // Look for ESPN link (usually in "d3-o-media-object__cta" a[href*="espn.com/nfl/player"])
+  const espnLinkEl = docPlayerPage.querySelector('a[href*="espn.com/nfl/player"]');
+  if (espnLinkEl) {
+    const espnUrl = espnLinkEl.href;
+    const espnIdMatch = espnUrl.match(/\/(\d+)\/$/); // extract numeric ID at the end
+    const espnId = espnIdMatch ? espnIdMatch[1] : null;
+
+    if (espnId) {
+      const espnImgUrl = `https://a.espncdn.com/combiner/i?img=/i/headshots/nfl/players/full/${espnId}.png`;
+      const nameParts = name.split(' ');
+      const firstName = nameParts[0].toLowerCase();
+      const lastName = nameParts.slice(1).join('_').toLowerCase();
+      const fileName = `espn_${firstName}_${lastName}.jpeg`;
+      const filePath = path.join(ESPN_IMAGES_DIR, fileName);
+
+      const response = await axios.get(espnImgUrl, { responseType: 'arraybuffer' });
+      fs.writeFileSync(filePath, response.data);
+      espnImagePath = `fetchimages/images/espn-images/${fileName}`;
+      console.log(`Saved ESPN image for ${player.name} to ${espnImagePath}`);
+    }
+  }
+} catch (err) {
+  console.error(`Error fetching ESPN image for ${player.name}:`, err.message);
+}
+
 /////////////////////////////////
 // Return IDs - Write data /////
 ///////////////////////////////
 
 //Defines JSON strings //return { are the json  IDs//
-return { player_name: name, number, position, image: imagePath, info, stats, achievements, trivia };
+return { player_name: name, number, position, image: imagePath, "espn-image": espnImagePath, info, stats, achievements, trivia };
   } catch (err) {
     console.error(`Error fetching ${player.name}:`, err.message);
     return null;
