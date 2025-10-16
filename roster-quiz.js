@@ -273,13 +273,15 @@ if (playerInfoEl) {
       "Incorrect this time."
     ]);
   }
-// Achievements box logic
+// --- Achievements box logic ---
 const achievementsBox = document.getElementById('player-achievements');
 if (achievementsBox) {
   if (currentPlayer.achievements && currentPlayer.achievements.trim() !== '') {
+    // Show achievements if they exist
     achievementsBox.textContent = currentPlayer.achievements;
     achievementsBox.style.display = 'block';
   } else {
+    // Hide achievements box if no achievements
     achievementsBox.style.display = 'none';
   }
 }
