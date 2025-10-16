@@ -29,6 +29,7 @@ jobs:
           git add fetchimages/images/*.jpeg || true
           git add fetchimages/images/espn-images/*.png || true
           git add fetchimages/images/lazy-images/*.jpg || true
+          git add fetchimages/images/lazy-images/*.png || true
           if ! git diff --cached --quiet; then
             git commit -m "Add fetched images"
             git push
