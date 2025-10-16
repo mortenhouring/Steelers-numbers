@@ -67,6 +67,19 @@
   white-space: nowrap;
   pointer-events: none; /* ensures clicks pass through */
 }
+/* Lazy image layer behind everything */
+.lazy-image {
+  position: absolute;
+  top: 0;           /* adjustable */
+  left: 0;          /* adjustable */
+  width: 100%;      /* can override per image */
+  height: 100%;     /* can override per image */
+  object-fit: cover; /* adjust how it fills container */
+  opacity: 0.15;    /* subtle, can change */
+  z-index: 0;       /* behind other elements */
+  pointer-events: none; /* allows clicks to pass through */
+}
+
 #player-achievements {
   display: none; /* hidden by default */
   
