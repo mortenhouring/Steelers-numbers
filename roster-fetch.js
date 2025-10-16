@@ -334,45 +334,49 @@ if (ldJsonEl) {
 // Lazy Image (action shot) ////
 ///////////////////////////////
 let lazyImagePath = null;
-const lazyEl = document.querySelector(
-  'figure.nfl-t-person-tile__actionshot picture source[data-srcset]'
-);
 
-if (lazyEl) {
-  const srcset = lazyEl.getAttribute('data-srcset');
-  if (srcset) {
-    const urls = srcset.split(',');
-    const lazyImageUrl = urls[urls.length - 1].split(' ')[0].trim();
+const actionShotFigure = document.querySelector('figure.nfl-t-person-tile__actionshot');
+if (actionShotFigure) {
+  const sourceEl = actionShotFigure.querySelector('source[data-srcset]');
+  if (sourceEl) {
+    const srcset = sourceEl.getAttribute('data-srcset');
+    if (srcset) {
+      // Split URLs by comma, pick last one (highest-res)
+      const urls = srcset.split(',');
+      const lazyImageUrl = urls[urls.length - 1].trim().split(' ')[0];
 
-    const nameParts = name.split(' ');
-    const firstName = nameParts[0].toLowerCase();
-    const lastName = nameParts.slice(1).join('_').toLowerCase();
-    const lazyFileName = `${firstName}_${lastName}_lazy.jpg`;
+      // Extract extension
+      const extMatch = lazyImageUrl.match(/\.(png|jpg|jpeg)(\?|$)/i);
+      const ext = extMatch ? extMatch[1] : 'jpg';
 
-    // Ensure lazy directory exists
-    const lazyDir = path.resolve('fetchimages/images/lazy-images');
-    if (!fs.existsSync(lazyDir)) fs.mkdirSync(lazyDir, { recursive: true });
-    const lazyFilePath = path.join(lazyDir, lazyFileName);
+      const nameParts = name.split(' ');
+      const firstName = nameParts[0].toLowerCase();
+      const lastName = nameParts.slice(1).join('_').toLowerCase();
+      const lazyFileName = `${firstName}_${lastName}_lazy.${ext}`;
 
-    console.log('Fetching lazy image URL:', lazyImageUrl); // debug
-    try {
-      const lazyResponse = await axios.get(lazyImageUrl, {
-        responseType: 'arraybuffer',
-        maxRedirects: 5,
-        headers: {
-          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'
-        }
-      });
+      const lazyDir = path.resolve('fetchimages/images/lazy-images');
+      if (!fs.existsSync(lazyDir)) fs.mkdirSync(lazyDir, { recursive: true });
+      const lazyFilePath = path.join(lazyDir, lazyFileName);
 
-      fs.writeFileSync(lazyFilePath, lazyResponse.data);
-      lazyImagePath = `fetchimages/images/lazy-images/${lazyFileName}`;
-      console.log(`✅ Saved lazy image for ${player.name} to ${lazyImagePath}`);
-    } catch (err) {
-      console.error(`Error fetching lazy image for ${player.name}:`, err.message);
+      console.log('Fetching lazy image URL:', lazyImageUrl);
+      try {
+        const lazyResponse = await axios.get(lazyImageUrl, {
+          responseType: 'arraybuffer',
+          maxRedirects: 5,
+          headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)' }
+        });
+        fs.writeFileSync(lazyFilePath, lazyResponse.data);
+        lazyImagePath = `fetchimages/images/lazy-images/${lazyFileName}`;
+        console.log(`✅ Saved lazy image for ${player.name} to ${lazyImagePath}`);
+      } catch (err) {
+        console.error(`Error fetching lazy image for ${player.name}:`, err.message);
+      }
     }
+  } else {
+    console.warn(`⚠️ No <source> with data-srcset found for ${name}`);
   }
 } else {
-  console.warn(`⚠️ No lazy image found for ${player.name}`);
+  console.warn(`⚠️ No action shot figure found for ${name}`);
 }
 /////////////////////////////////
 // Return IDs - Write data /////
