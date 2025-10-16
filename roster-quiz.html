@@ -67,6 +67,16 @@
   white-space: nowrap;
   pointer-events: none; /* ensures clicks pass through */
 }
+#player-achievements {
+  display: none; /* hidden by default */
+  margin-top: 1rem;
+  padding: 0.8rem 1rem;
+  border-radius: 0.4rem;
+  background-color: rgba(255, 255, 255, 0.08);
+  font-size: 0.95rem;
+  line-height: 1.5;
+  white-space: pre-line; /* preserve line breaks from JSON text */
+}
 /*------ HOF styling --------------*/
   /*  player image styling */
  /* ---  player image styling (responsive for mobile) ---
@@ -187,6 +197,9 @@
   <div id="player-overlay"></div>
 </div>
 </div>
+
+<div id="player-achievements"></div>
+
 <div id="hof-trivia-box">
   <div id="hof-trivia-inner">
     <div id="player-trivia"></div>
