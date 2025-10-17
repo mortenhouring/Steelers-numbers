@@ -60,7 +60,7 @@
   bottom: 4%;
   left: 4%;
   z-index: 5;
-  background-color: rgba(255, 182, 18); 
+  background-color: rgba(255, 182, 18); /* semi-transparent black */
   color: black;
   padding: 0.2em 0.4em;
   border-radius: 4px;
@@ -75,26 +75,13 @@
   bottom: 0;           /* stick to bottom */
   left: 0;             /* align left */
   width: auto;         /* keep original width ratio */
-  height: 65%;         /* fill half the container height */
+  height: 50%;         /* fill half the container height */
   object-fit: cover;   /* crop excess so it fills the height without stretching */
   object-position: left bottom; /* align visible portion to bottom-left */
   opacity: 1;       /* subtle background effect */
   z-index: 0;          /* behind other elements */
   pointer-events: none;
 }
-#player-name {
-  position: absolute;          /* position relative to parent */
-  top: 0;                      /* align to top */
-  left: 0;                     /* align to left */
-  background-color: rgba(255, 182, 18, 0.9); /* Steelers gold with slight transparency */
-  color: black;
-  padding: 0.2em 0.4em;
-  border-radius: 4px;
-  font-size: 0.9rem;
-  font-weight: 600;
-  white-space: nowrap;
-  pointer-events: none;        /* clicks pass through */
-  z-index: 10;                 /* above lazy image */
 
 #player-achievements {
   display: none; /* hidden by default */
@@ -104,7 +91,7 @@
   align-items: flex-start;
   justify-content: space-between;
   width: 96vw;
-  height: 8vh;
+  height: 20vh;
   margin: 2vh auto;
   gap: 2vw;
 
@@ -230,7 +217,6 @@
       
       
        <div id="roster-info-container">
-          <div id="player-name"></div>
           <img id="lazy-image" class="lazy-image" src="" alt="Background lazy image">
           <div id="player-info"></div>
 
