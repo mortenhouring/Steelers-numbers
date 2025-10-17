@@ -16,15 +16,11 @@
   }
   
 #roster-info-container {
-  display: flex;
-  flex-direction: column; /* stack elements vertically */
-  align-items: flex-start; /* left-align */
-  justify-content: flex-start; /* no forced spacing */
-  width: 96vw;
-  height: 20vh;
+  position: relative;       /* keep overlay positioning relative */
+  width: 100%;              /* full width */
+  height: auto;             /* let content (images) determine height */
   margin: 2vh auto;
-  gap: 1vh;
-  position: relative;
+  display: block;           /* not flex, we don’t need flex stacking here */
 }
   
 #quiz2-player-name {
