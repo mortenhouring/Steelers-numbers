@@ -245,6 +245,11 @@ const lazyImageEl = document.getElementById('lazy-image');
 if (lazyImageEl) {
   lazyImageEl.src = currentPlayer['lazyimage'] || '';
 }
+// --- Quiz2 player name ---
+const quiz2PlayerNameEl = document.getElementById('quiz2-player-name');
+if (quiz2PlayerNameEl) {
+  quiz2PlayerNameEl.textContent = currentPlayer.player_name || '';
+
 // --- Player overlay (number & position) ---
 const overlayEl = document.getElementById('player-overlay');
 if (overlayEl && currentPlayer) {
