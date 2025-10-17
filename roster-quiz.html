@@ -25,6 +25,15 @@
   gap: 2vw;
   position: relative;
 }
+#player-name {
+  background-color: rgba(255, 182, 18, 0.9);
+  color: black;
+  padding: 0.2em 0.4em;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
 
 #player-info {
   flex: 1;
@@ -217,8 +226,10 @@
       
       
        <div id="roster-info-container">
+          <div id="player-name">Player Name</div>
+          
           <img id="lazy-image" class="lazy-image" src="" alt="Background lazy image">
-          <div id="player-info"></div>
+          <!-- disabled: <div id="player-info"></div> -->
 
           <div id="player-image-wrapper">
             <img id="roster-player-image" src="" alt="Player Image" />
