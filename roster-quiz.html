@@ -14,31 +14,83 @@
     background-size: cover;         /* cover entire page */
     background-position: center;    /* center the image */
   }
-  
+/* quiz2 top image+number box */
+/* Container holding player image + lazy background + overlays */
 #roster-info-container {
-  position: relative;       /* keep overlay positioning relative */
-  width: 100%;              /* full width */
-  height: auto;             /* let content (images) determine height */
-  margin: 2vh auto;
-  display: block;           /* not flex, we don’t need flex stacking here */
+  position: relative;       /* anchor for absolute children */
+  width: 96vw;              /* nearly full page width */
+  height: 20vh;             /* fixed vertical space */
+  margin: 2vh auto;         /* center horizontally */
+  overflow: hidden;         /* clip any overflow (e.g., lazy image) */
 }
-  
+
+/* Wrapper inside container */
+#player-image-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;             /* scale children to container height */
+  border-radius: 8px;
+  overflow: visible;        /* allow labels to overflow */
+}
+
+/* Lazy background image layer */
+.lazy-image {
+  position: absolute;
+  bottom: 0;                /* stick to bottom of wrapper */
+  left: 0;
+  height: 50%;              /* adjustable height */
+  width: auto;              /* scale width proportionally */
+  max-width: none;          /* allow it to stretch beyond container */
+  object-fit: cover;        /* crop if needed */
+  object-position: left bottom;
+  z-index: 0;
+  pointer-events: none;
+  display: block;
+}
+
+/* Main player image */
+#roster-player-image {
+  position: relative;
+  z-index: 1;
+  width: auto;              /* maintain aspect ratio */
+  height: 100%;             /* fill wrapper height */
+  object-fit: cover;
+  border-radius: 8px;
+  display: block;
+}
+
+/* Player name label */
 #quiz2-player-name {
   position: absolute;
   left: 0;
-  bottom: 100%;
-  margin-bottom: 0.5em; /* gap between label and image */
-  background-color: rgba(255, 182, 18);
+  bottom: 100%;             /* sit above the wrapper */
+  margin-bottom: 0.5em;
+  background-color: rgba(255,182,18,1);
   color: black;
   padding: 0.2em 0.4em;
   border-radius: 4px;
   font-size: 0.9rem;
   font-weight: 600;
   white-space: nowrap;
-  pointer-events: none;
   z-index: 2;
+  pointer-events: none;
 }
 
+/* Player overlay: number & position */
+#player-overlay {
+  position: absolute;
+  bottom: 4%;
+  left: 4%;
+  z-index: 3;
+  background-color: rgba(255,182,18,1);
+  color: black;
+  padding: 0.2em 0.4em;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+/*other elements*/
 #player-info {
   flex: 1;
   color: #ffb612;        /* Steelers gold */
@@ -49,53 +101,6 @@
   align-items: flex-end; /* push text to bottom of container */
   justify-content: flex-end;
   padding: 0.5vh 0.5vw;  /* small padding for breathing room */
-}
-
-#player-image-wrapper {
-  position: relative;
-  display: block;
-  border-radius: 8px;
-  overflow: visible; /* allow label to sit above without clipping */
-}
-
-
-#roster-player-image {
-  position: relative; /* keeps it in normal flow inside wrapper */
-  z-index: 1;
-  height: 20vh; /* your desired size */
-  width: auto;
-  object-fit: cover;
-  border-radius: 8px;
-  display: block;
-}
-
-#player-overlay {
-  position: absolute;
-  bottom: 4%;
-  left: 4%;
-  z-index: 5;
-  background-color: rgba(255, 182, 18); /* semi-transparent black */
-  color: black;
-  padding: 0.2em 0.4em;
-  border-radius: 4px;
-  font-size: 0.9rem;
-  font-weight: 600;
-  white-space: nowrap;
-  pointer-events: none; /* ensures clicks pass through */
-}
-/* Lazy image layer behind everything */
-.lazy-image {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 50%;
-  object-fit: cover;
-  object-position: left bottom;
-  opacity: 1;
-  z-index: 0;
-  pointer-events: none;
-  display: block;
 }
 
 #player-achievements {
