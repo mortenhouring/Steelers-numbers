@@ -27,10 +27,11 @@
 /* Wrapper inside container */
 #player-image-wrapper {
   position: relative;
-  width: 100%;
-  height: 100%;             /* scale children to container height */
+  width: auto;          /* shrink to fit contents */
+  height: 100%;
+  margin-left: auto;    /* push to the right */
   border-radius: 8px;
-  overflow: visible;        /* allow labels to overflow */
+  overflow: visible;    /* allow overlay to overflow */
 }
 
 /* Lazy background image layer */
@@ -50,14 +51,18 @@
 
 /* Main player image */
 #roster-player-image {
-  position: relative;
-  z-index: 1;
-  width: auto;              /* maintain aspect ratio */
-  height: 100%;             /* fill wrapper height */
+  position: absolute;  /* position relative to wrapper */
+  right: 0;            /* stick to the right */
+  bottom: 0;           /* stick to bottom */
+  height: 100%;        /* fill container height */
+  width: auto;         /* maintain aspect ratio */
   object-fit: cover;
   border-radius: 8px;
+  z-index: 1;
   display: block;
 }
+
+
 
 /* Player name label */
 #quiz2-player-name {
