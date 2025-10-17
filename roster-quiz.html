@@ -17,12 +17,13 @@
   
 #roster-info-container {
   display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
+  flex-direction: column; /* stack elements vertically */
+  align-items: flex-start; /* left-align */
+  justify-content: flex-start; /* no forced spacing */
   width: 96vw;
   height: 20vh;
   margin: 2vh auto;
-  gap: 2vw;
+  gap: 1vh;
   position: relative;
 }
   
