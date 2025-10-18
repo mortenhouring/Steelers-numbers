@@ -18,8 +18,8 @@
 /* Container holding player image + lazy background + overlays */
 #roster-info-container {
   position: relative;       /* anchor for absolute children */
-  width: 96vw;              /* nearly full page width */
-  height: 20vh;             /* fixed vertical space */
+  width: 100vw;              /* nearly full page width */
+  height: 240vh;             /* fixed vertical space */
   margin: 2vh auto;         /* center horizontally */
   overflow: hidden;         /* clip any overflow (e.g., lazy image) */
 }
@@ -39,7 +39,7 @@
   position: absolute;
   bottom: 0;                /* stick to bottom of wrapper */
   left: 0;
-  height: 40%;              /* adjustable height */
+  height: 70%;              /* adjustable height */
   width: auto;              /* scale width proportionally */
   max-width: none;          /* allow it to stretch beyond container */
   object-fit: cover;        /* crop if needed */
