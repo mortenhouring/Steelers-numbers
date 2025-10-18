@@ -121,7 +121,20 @@ if (playerStatsEl) {
     achievementsBox.innerHTML = achArr.length ? achArr.map(a => a.trim()).join('<br>') : '';
     achievementsBox.style.display = achArr.length ? 'block' : 'none';
   }
-
+  // --- Player stats ---
+const statsEl = document.getElementById('player-stats');
+if (statsEl) {
+  const statsArr = Array.isArray(player.stats) ? player.stats : [];
+  if (statsArr.length > 0) {
+    statsEl.innerHTML = statsArr
+      .map(s => `<span>${(s.label||'').trim()}: ${(s.value||'').trim()}</span>`)
+      .join('');
+    statsEl.style.display = 'flex'; // show container
+  } else {
+    statsEl.innerHTML = '';
+    statsEl.style.display = 'none'; // hide container if no stats
+  }
+}
   // --- Score / Remaining ---
   const score = parseInt(localStorage.getItem(CONFIG.STORAGE_KEYS.SCORE), 10) || 0;
   const total = parseInt(localStorage.getItem(CONFIG.STORAGE_KEYS.TOTAL_QUESTIONS), 10) || 0;
