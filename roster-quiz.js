@@ -1,4 +1,4 @@
-//  roster-quiz.js WORKING 15/10/25 17:28
+//  roster-quiz.js WORKING 19/10/25 00:28
 // template from depth-quiz.js
 // Single-page quiz controller adapted for hof.json
 // All configurable paths, filenames, HTML IDs, and localStorage keys
@@ -57,6 +57,68 @@ const CONFIG = {
   ]
 };
 
+///////////////////////////
+// PREFILL QUIZ2 ELEMENTS (WITHOUT FEEDBACK)
+///////////////////////////
+function prefillQuiz2Elements(player) {
+  if (!player) return;
+
+  // --- Player image ---
+  if (playerImageEl) playerImageEl.src = player['espn-image'] || player.image || '';
+  
+  const lazyImageEl = document.getElementById('lazy-image');
+  if (lazyImageEl) lazyImageEl.src = player['lazyimage'] || '';
+
+  // --- Quiz2 player name ---
+  const quiz2PlayerNameEl = document.getElementById('quiz2-player-name');
+  if (quiz2PlayerNameEl) quiz2PlayerNameEl.textContent = player.player_name || '';
+
+  // --- Player overlay ---
+  const overlayEl = document.getElementById('player-overlay');
+  if (overlayEl) {
+    const num = player.number ?? '';
+    const pos = player.position ?? '';
+    overlayEl.textContent = `#${num || '—'} ${pos || ''}`;
+  }
+
+  // --- Player info ---
+  if (playerInfoEl) {
+    if (player.info) {
+      playerInfoEl.innerHTML = player.info
+        .split('|')
+        .map(item => item.trim())
+        .join('<br>');
+    } else {
+      playerInfoEl.textContent = `${player.player_name} - ${player.position ?? ''}`;
+    }
+  }
+
+  // --- Trivia ---
+  const triviaObj = player.trivia || {};
+  let triviaHTML = "";
+  const renderParagraphs = arr => arr.map(p => `<p>${p}</p>`).join("");
+
+  if (Array.isArray(triviaObj.pro_career)) triviaHTML += `<h3>Pro Career</h3>` + renderParagraphs(triviaObj.pro_career);
+  if (Array.isArray(triviaObj.career_highlights_regular)) triviaHTML += `<h3>Career Highlights (Regular)</h3>` + renderParagraphs(triviaObj.career_highlights_regular);
+  if (Array.isArray(triviaObj.career_highlights_post)) triviaHTML += `<h3>Career Highlights (Postseason)</h3>` + renderParagraphs(triviaObj.career_highlights_post);
+  if (!triviaHTML) triviaHTML = "<p>No trivia available.</p>";
+  playerTriviaEl.innerHTML = triviaHTML;
+
+  // --- Achievements ---
+  const achievementsBox = document.getElementById('player-achievements');
+  if (achievementsBox) {
+    const achArr = Array.isArray(player?.achievements) ? player.achievements : [];
+    achievementsBox.innerHTML = achArr.length ? achArr.map(a => a.trim()).join('<br>') : '';
+    achievementsBox.style.display = achArr.length ? 'block' : 'none';
+  }
+
+  // --- Score / Remaining ---
+  const score = parseInt(localStorage.getItem(CONFIG.STORAGE_KEYS.SCORE), 10) || 0;
+  const total = parseInt(localStorage.getItem(CONFIG.STORAGE_KEYS.TOTAL_QUESTIONS), 10) || 0;
+  const pool = safeParseJSON(localStorage.getItem(CONFIG.STORAGE_KEYS.CURRENT_ROSTER)) || [];
+  scoreEl.textContent = `Score: ${score}/${total}`;
+  remainingEl.textContent = `Remaining: ${pool.length}`;
+}
 ///////////////////////////
 // ELEMENTS
 ///////////////////////////
@@ -200,7 +262,9 @@ function pickNextPlayer(){
 
   const phrase = chooseRandom(CONFIG.QUESTION_PHRASES).replace('{player}', currentPlayer.player_name);
   questionDisplay.textContent = phrase;
-
+  //new line for quiz2 preload:
+prefillQuiz2Elements(currentPlayer)
+  //
   showView('quiz1');
   log(`Picked player ${currentPlayer.player_name}, remaining=${pool.length}`);
 }
@@ -229,52 +293,38 @@ function handleSubmit(){
 ///////////////////////////
 // SHOW ANSWER / TRIVIA
 ///////////////////////////
+///////////////////////////
+// SHOW ANSWER / TRIVIA
+///////////////////////////
 function showAnswerView(){
   const rawLast = localStorage.getItem(CONFIG.STORAGE_KEYS.LAST_PLAYER);
   const last = safeParseJSON(rawLast) || currentPlayer;
-  if(!last){ feedbackEl.textContent='Player not found.'; showView('quiz1'); return; }
+  if(!last){ 
+    feedbackEl.textContent='Player not found.'; 
+    showView('quiz1'); 
+    return; 
+  }
+
   currentPlayer = last;
 
-  // --- Player image and info ---
-// profile image
-if (playerImageEl) {
-  playerImageEl.src = currentPlayer['espn-image'] || currentPlayer.image || '';
-}
-// Lazy image
-const lazyImageEl = document.getElementById('lazy-image');
-if (lazyImageEl) {
-  lazyImageEl.src = currentPlayer['lazyimage'] || '';
-}
-// --- Quiz2 player name ---
-const quiz2PlayerNameEl = document.getElementById('quiz2-player-name');
-if (quiz2PlayerNameEl) {
-  quiz2PlayerNameEl.textContent = currentPlayer.player_name || '';
-}
-// --- Player overlay (number & position) ---
-const overlayEl = document.getElementById('player-overlay');
-if (overlayEl && currentPlayer) {
-  const num = currentPlayer.number ?? '';
-  const pos = currentPlayer.position ?? '';
-  overlayEl.textContent = `#${num || '—'} ${pos || ''}`;
-}
-if (playerInfoEl) {
-  if (currentPlayer.info) {
-    // Format the pipe-delimited info into line breaks
-    playerInfoEl.innerHTML = currentPlayer.info
-      .split('|')
-      .map(item => item.trim())
-      .join('<br>');
-  } else {
-    // Fallback if no info available
-    playerInfoEl.textContent = `${currentPlayer.player_name} - ${currentPlayer.position ?? ''}`;
-  }
-}
+  // --- Populate quiz2 elements (images, name, overlay, info, trivia, achievements, score/remaining) ---
+  prefillQuiz2Elements(currentPlayer);
 
+  // --- Feedback based on stored answer ---
   const storedAnswer = parseInt(localStorage.getItem(CONFIG.STORAGE_KEYS.LAST_ANSWER),10);
   const correctNumber = Number(currentPlayer?.number ?? NaN);
-  if(!isNaN(correctNumber) && storedAnswer===correctNumber)
-    feedbackEl.textContent = chooseRandom(["Nice job!","That's right!","You got it!","Exactly!","Spot on!","Great work!","Correct!"]);
-    else {
+
+  if(!isNaN(correctNumber) && storedAnswer === correctNumber) {
+    feedbackEl.textContent = chooseRandom([
+      "Nice job!",
+      "That's right!",
+      "You got it!",
+      "Exactly!",
+      "Spot on!",
+      "Great work!",
+      "Correct!"
+    ]);
+  } else {
     feedbackEl.textContent = chooseRandom([
       "Oops, try again.",
       "Not quite.",
@@ -284,54 +334,8 @@ if (playerInfoEl) {
       "Incorrect this time."
     ]);
   }
-// --- Achievements box logic ---
-const achievementsBox = document.getElementById('player-achievements');
-if (achievementsBox) {
-  const achArr = Array.isArray(currentPlayer?.achievements) ? currentPlayer.achievements : [];
-  if (achArr.length > 0) {
-    // Join array items with line breaks
-    achievementsBox.innerHTML = achArr.map(a => a.trim()).join('<br>');
-    achievementsBox.style.display = 'block';
-  } else {
-    achievementsBox.style.display = 'none';
-  }
-}
-// --- Trivia display logic ---
-const triviaObj = currentPlayer.trivia || {};
-let triviaHTML = "";
 
-// Helper to render an array of strings as <p> paragraphs
-function renderParagraphs(arr) {
-  return arr.map(p => `<p>${p}</p>`).join("");
-}
-
-// Order: pro_career, career_highlights_regular, career_highlights_post
-if (Array.isArray(triviaObj.pro_career) && triviaObj.pro_career.length > 0) {
-  triviaHTML += `<h3>Pro Career</h3>` + renderParagraphs(triviaObj.pro_career);
-}
-
-if (Array.isArray(triviaObj.career_highlights_regular) && triviaObj.career_highlights_regular.length > 0) {
-  triviaHTML += `<h3>Career Highlights (Regular)</h3>` + renderParagraphs(triviaObj.career_highlights_regular);
-}
-
-if (Array.isArray(triviaObj.career_highlights_post) && triviaObj.career_highlights_post.length > 0) {
-  triviaHTML += `<h3>Career Highlights (Postseason)</h3>` + renderParagraphs(triviaObj.career_highlights_post);
-}
-
-// Fallback if no trivia
-if (!triviaHTML) triviaHTML = "<p>No trivia available.</p>";
-
-playerTriviaEl.innerHTML = triviaHTML;
-
-  // Update score and remaining
-  const score = parseInt(localStorage.getItem(CONFIG.STORAGE_KEYS.SCORE), 10) || 0;
-  const total = parseInt(localStorage.getItem(CONFIG.STORAGE_KEYS.TOTAL_QUESTIONS), 10) || 0;
-  const pool = safeParseJSON(localStorage.getItem(CONFIG.STORAGE_KEYS.CURRENT_ROSTER)) || [];
-  const remaining = pool.length;
-
-  scoreEl.textContent = `Score: ${score}/${total}`;
-  remainingEl.textContent = `Remaining: ${remaining}`;
-
+  // --- Show quiz2 view ---
   showView("quiz2");
 }
 
