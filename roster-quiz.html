@@ -18,123 +18,131 @@
    BASE CSS FOR ROSTER INFO
    =========================== */
 
-/* Container holds everything */
+
+/* Container */
 #roster-info-container {
   position: relative;
-  width: 100vw;       /* full width, adjustable */
-  height: 25vh;      /* full height, adjustable */
-  margin: 0 auto;
-  overflow: hidden;   /* clip anything outside container */
-  background-color: rgb(30, 30, 30); /* container background */
-}
-
-/* ===========================
-   ELEMENTS FRONT TO BACK
-   =========================== */
-
-/* Player Name */
-#quiz2-player-name {
-  position: absolute;
-  top: 5vh;           /* adjustable vertical position */
-  left: 5vw;          /* adjustable horizontal position */
-  width: auto;
-  height: auto;
-  z-index: 5;         /* front-most */
-  font-size: 3vh;
-  font-weight: bold;
-  color: rgb(255, 255, 255);
-  /*background-color: rgba(255, 182, 18, 0.8); */
-  opacity: 1;
-  outline: 2px red;   /* testing outline */
-  padding: 0.5vh 1vw;
-}
-
-/* Number & Position */
-#player-overlay {
-  position: absolute;
-  top: 12vh;          /* adjust as needed */
-  left: 5vw;
-  z-index: 4;
-  font-size: 2.5vh;
-  font-weight: 600;
-  color: rgb(0, 0, 0);
-  /*background-color: rgba(0, 255, 0, 0.6); */
-  opacity: 1;
-  outline: 2px green;  /* testing */
-  padding: 0.5vh 1vw;
-}
-
-/* Player Info */
-#player-info {
-  position: absolute;
-  top: 20vh;
-  left: 5vw;
-  z-index: 3;
-  font-size: 2vh;
-  color: rgb(255, 255, 255);
-   /*background-color: rgba(0, 0, 255, 0.5); */
-  opacity: 1;
-  outline: 2px blue;  /* testing */
-  padding: 0.5vh 1vw;
-}
-
-/* Main Player Image */
-#roster-player-image {
-  position: absolute;
-  bottom: 5vh;        /* adjustable */
-  right: 5vw;         /* adjustable */
-  z-index: 2;
-  width: 40vw;        /* adjustable size */
-  height: auto;
-  object-fit: cover;
- /* background-color: rgba(255, 0, 255, 0.5); */
-  outline: 2px magenta;  /* testing */
-  opacity: 1;
+  width: 390px;
+  height: 169px; /* scales with viewport height */
+  margin: 5vh auto;
+  overflow: hidden;
+  background-color: rgb(30, 30, 30, 0.7);
 }
 
 /* Lazy Background Image */
 #lazy-image {
   position: absolute;
-  bottom: 0;
-  left: 0;
-  z-index: 1;         /* back-most */
-  width: 100%;
-  height: 100%;
+  bottom: 0%;
+  left: 0%;
+  height: 70.5%; /* relative to container */
+  width: auto;
   object-fit: cover;
-  /*background-color: rgba(0, 255, 255, 0.3); */
-  outline: 2px cyan;  /* testing */
-  opacity: 1;
+  object-position: left bottom;
+  background-color: rgba(0, 255, 255);
+  opacity: 0.7;
+  z-index: 1;
 }
 
-#player-achievements {
-  display: none; /* hidden by default */
+/* Player Image */
+#roster-player-image {
+  position: absolute;
+  bottom: 0;
+  right: -3%;
+  height: 108%; /* relative to container */
+  width: auto;
+  object-fit: cover;
+  background-color: rgba(255, 0, 255, 0);
+  opacity: 1;
+  z-index: 2;
   
-  /* Match the size/layout of #roster-info-container */
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  width: 96vw;
-  height:7vh;
-  margin: 2vh auto;
-  gap: 2vw;
+}
+#quiz2-player-name {
+  position: absolute;
+  left: 1.8%;                       /* distance from left edge */
+  bottom: 64.6%;                   /* distance from bottom of container */
+  width: 60%;                       /* container width for the text */
+  height: auto;
+  font-size: 235%;
+  font-family: 'Teko', sans-serif;
+  font-weight: 200;
+  color: rgb(255, 182, 18);
+  background-color: rgba(255, 182, 18, 0);
+  opacity: 1;
+  z-index: 5;
+  padding: 0.5% 1%;
+  border-radius: 0.5em;
+  white-space: nowrap;               /* keep text on one line */
+  width, max 3em */
+  overflow: hidden;
+  transform: scaleY(1.2);
+  display: inline-block;
+}
 
-  /* Styling */
-  padding: 0.8rem 1rem;
-  border-radius: 0.4rem;
-  background-color: rgba(0, 0, 0, 0.5); /* semi-transparent black */
-  color: rgba(255, 182, 18); /* gold-ish text */
-  font-size: 0.95rem;
-  line-height: 1.5;
-  white-space: pre-line; /* preserve line breaks from JSON text */
+/* Number/Position Overlay */
+#player-overlay {
+  position: absolute;
+  right: 3%;                       /* distance from left edge */
+  bottom: 72.4%;                   /* distance from bottom of container */
+  width: 15%;                       /* container width for the text */
+  height: auto;
+  font-size: 210%;
+  font-family: 'Graduate', sans-serif;
+  font-weight: 500;
+  color: rgb(255, 182, 18);
+  background-color: rgba(255, 182, 18, 0);
+  opacity: 1;
+  z-index: 5;
+  transform: scaleY(1.3);
+  display: inline-block;
+ 
+  padding: 0.5% 1%;
+  border-radius: 0.5em;
+
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+/* Player Info */
+#player-info {
+  position: absolute;
+  top: 31%;
+  left: 1.8%;
+  font-size: 3.3;
+  color: rgb(255, 182, 18, 1);
+  background-color: rgba();
+  opacity: 1;
+  z-index: 3;
+  padding: 0.5% 1%;
+  border-radius: 0.5em;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 550;
+}
+
+/* Player Stats */
+#player-stats {
+  position: absolute;
+  bottom: 5%;
+  text-align: center;
+  background-color: rgba(255, 182, 18, 1);
+  color: black;
+  padding: 0.5% 1%;
+  font-size: 3.3;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 550;
+  opacity: 1;
+  z-index: 6;
+  border-radius: 0.5em;
+  display: flex;
+  gap: 1em;
+  align-items: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  left: 50%;
+transform: translateX(-50%);
 }
 /*------ HOF styling --------------*/
-  /*  player image styling */
- /* ---  player image styling (responsive for mobile) ---
-   Conversions:
-   - width/height in px → % of viewport (vw/vh) to maintain proportions
-   - padding/margin in px → % of viewport (vh for vertical, vw for horizontal)
-   - Increasing a value makes element bigger; decreasing makes it smaller
-   - All adjustments are calibrated to base screen 2532x1170 (portrait mobile) */
+
 #hof-player-image {
   height: 20vh;                 /* taller image, adjust freely */
   width: auto;                  /* maintain aspect ratio */
