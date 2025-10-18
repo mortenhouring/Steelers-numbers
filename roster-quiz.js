@@ -102,7 +102,18 @@ function prefillQuiz2Elements(player) {
   if (Array.isArray(triviaObj.career_highlights_post)) triviaHTML += `<h3>Career Highlights (Postseason)</h3>` + renderParagraphs(triviaObj.career_highlights_post);
   if (!triviaHTML) triviaHTML = "<p>No trivia available.</p>";
   playerTriviaEl.innerHTML = triviaHTML;
-
+  // --- Stats
+  const playerStatsEl = document.getElementById('player-stats');
+if (playerStatsEl) {
+  const statsArr = Array.isArray(player.stats) ? player.stats : [];
+  if (statsArr.length) {
+    playerStatsEl.innerHTML = statsArr.map(s => (s+'').trim()).join('<br>');
+    playerStatsEl.style.display = 'block';
+  } else {
+    playerStatsEl.innerHTML = '';
+    playerStatsEl.style.display = 'none';
+  }
+}
   // --- Achievements ---
   const achievementsBox = document.getElementById('player-achievements');
   if (achievementsBox) {
@@ -121,6 +132,7 @@ function prefillQuiz2Elements(player) {
 ///////////////////////////
 // ELEMENTS
 ///////////////////////////
+const playerStatsEl = document.getElementById('player-stats'); //#player-stats
 const ids = CONFIG.ELEMENT_IDS;
 const quiz1View = document.getElementById(ids.QUIZ1_VIEW);
 const quiz2View = document.getElementById(ids.QUIZ2_VIEW);
@@ -289,9 +301,6 @@ function handleSubmit(){
   showAnswerView();
 }
 
-///////////////////////////
-// SHOW ANSWER / TRIVIA
-///////////////////////////
 ///////////////////////////
 // SHOW ANSWER / TRIVIA
 ///////////////////////////
