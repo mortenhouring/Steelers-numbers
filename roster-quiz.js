@@ -125,14 +125,18 @@ if (playerStatsEl) {
 const statsEl = document.getElementById('player-stats');
 if (statsEl) {
   const statsArr = Array.isArray(player.stats) ? player.stats : [];
-  if (statsArr.length > 0) {
-    statsEl.innerHTML = statsArr
-      .map(s => `<span>${(s.label||'').trim()}: ${(s.value||'').trim()}</span>`)
+
+  // Keep only stats with a label and a non-zero/non-- value
+  const visibleStats = statsArr.filter(s => s.label && s.value && s.value !== "0" && s.value !== "--");
+
+  if (visibleStats.length) {
+    statsEl.innerHTML = visibleStats
+      .map(s => `<span>${s.label.trim()}: ${s.value.trim()}</span>`)
       .join('');
-    statsEl.style.display = 'flex'; // show container
+    statsEl.style.display = 'flex';
   } else {
     statsEl.innerHTML = '';
-    statsEl.style.display = 'none'; // hide container if no stats
+    statsEl.style.display = 'none';
   }
 }
   // --- Score / Remaining ---
