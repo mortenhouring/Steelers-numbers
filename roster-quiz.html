@@ -1,4 +1,4 @@
-<!-- roster-quiz.html WORKING 15/10/25-2245 -->
+<!-- roster-quiz.html rework-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,98 +14,96 @@
     background-size: cover;         /* cover entire page */
     background-position: center;    /* center the image */
   }
-/* quiz2 top image+number box */
-/* Container holding player image + lazy background + overlays */
+/* ===========================
+   BASE CSS FOR ROSTER INFO
+   =========================== */
+
+/* Container holds everything */
 #roster-info-container {
-  position: relative;       /* anchor for absolute children */
-  width: 100vw;              /* nearly full page width */
-  height: 240vh;             /* fixed vertical space */
-  margin: 2vh auto;         /* center horizontally */
-  overflow: hidden;         /* clip any overflow (e.g., lazy image) */
-}
-
-/* Wrapper inside container */
-#player-image-wrapper {
   position: relative;
-  width: auto;          /* shrink to fit contents */
-  height: 100%;
-  margin-left: auto;    /* push to the right */
-  border-radius: 8px;
-  overflow: visible;    /* allow overlay to overflow */
+  width: 100vw;       /* full width, adjustable */
+  height: 25vh;      /* full height, adjustable */
+  margin: 0 auto;
+  overflow: hidden;   /* clip anything outside container */
+  background-color: rgb(30, 30, 30); /* container background */
 }
 
-/* Lazy background image layer */
-.lazy-image {
-  position: absolute;
-  bottom: 0;                /* stick to bottom of wrapper */
-  left: 0;
-  height: 100%;              /* adjustable height */
-  width: auto;              /* scale width proportionally */
-  max-width: none;          /* allow it to stretch beyond container */
-  object-fit: cover;        /* crop if needed */
-  object-position: left bottom;
-  z-index: 0;
-  pointer-events: none;
-  display: block;
-}
+/* ===========================
+   ELEMENTS FRONT TO BACK
+   =========================== */
 
-/* Main player image */
-#roster-player-image {
-  position: absolute;  /* position relative to wrapper */
-  right: 0;            /* stick to the right */
-  bottom: 0;           /* stick to bottom */
-  height: 100%;        /* fill container height */
-  width: auto;         /* maintain aspect ratio */
-  object-fit: cover;
-  border-radius: 8px;
-  z-index: 1;
-  display: block;
-}
-
-
-
-/* Player name label */
+/* Player Name */
 #quiz2-player-name {
   position: absolute;
-  left: 0;
-  bottom: 100%;             /* sit above the wrapper */
-  margin-bottom: 0.5em;
-  background-color: rgba(255,182,18,1);
-  color: black;
-  padding: 0.2em 0.4em;
-  border-radius: 4px;
-  font-size: 0.9rem;
-  font-weight: 600;
-  white-space: nowrap;
-  z-index: 10;
-  pointer-events: none;
+  top: 5vh;           /* adjustable vertical position */
+  left: 5vw;          /* adjustable horizontal position */
+  width: auto;
+  height: auto;
+  z-index: 5;         /* front-most */
+  font-size: 3vh;
+  font-weight: bold;
+  color: rgb(255, 255, 255);
+  background-color: rgba(255, 182, 18, 0.8);
+  opacity: 1;
+  outline: 2px red;   /* testing outline */
+  padding: 0.5vh 1vw;
 }
 
-/* Player overlay: number & position */
+/* Number & Position */
 #player-overlay {
   position: absolute;
-  bottom: 4%;
-  left: 4%;
-  z-index: 3;
-  background-color: rgba(255,182,18,1);
-  color: black;
-  padding: 0.2em 0.4em;
-  border-radius: 4px;
-  font-size: 0.9rem;
+  top: 12vh;          /* adjust as needed */
+  left: 5vw;
+  z-index: 4;
+  font-size: 2.5vh;
   font-weight: 600;
-  white-space: nowrap;
+  color: rgb(0, 0, 0);
+  background-color: rgba(0, 255, 0, 0.6);
+  opacity: 1;
+  outline: 2px green;  /* testing */
+  padding: 0.5vh 1vw;
 }
-/*other elements*/
+
+/* Player Info */
 #player-info {
-  flex: 1;
-  color: #ffb612;        /* Steelers gold */
-  font-size: 1.2vh;      /* smaller responsive text size */
-  text-align: right;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end; /* push text to bottom of container */
-  justify-content: flex-end;
-  padding: 0.5vh 0.5vw;  /* small padding for breathing room */
+  position: absolute;
+  top: 20vh;
+  left: 5vw;
+  z-index: 3;
+  font-size: 2vh;
+  color: rgb(255, 255, 255);
+  background-color: rgba(0, 0, 255, 0.5);
+  opacity: 1;
+  outline: 2px blue;  /* testing */
+  padding: 0.5vh 1vw;
+}
+
+/* Main Player Image */
+#roster-player-image {
+  position: absolute;
+  bottom: 5vh;        /* adjustable */
+  right: 5vw;         /* adjustable */
+  z-index: 2;
+  width: 40vw;        /* adjustable size */
+  height: auto;
+  object-fit: cover;
+  background-color: rgba(255, 0, 255, 0.5);
+  outline: 2px magenta;  /* testing */
+  opacity: 1;
+}
+
+/* Lazy Background Image */
+#lazy-image {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: 1;         /* back-most */
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background-color: rgba(0, 255, 255, 0.3);
+  outline: 2px cyan;  /* testing */
+  opacity: 1;
 }
 
 #player-achievements {
@@ -240,14 +238,12 @@
     <div class="quiz2">
       <h1 id="feedback">Loading...</h1>
       
-      
-       <div id="roster-info-container">
-  <div id="player-image-wrapper">
-    <div id="quiz2-player-name">Player Name</div>
-    <img id="lazy-image" class="lazy-image" src="" alt="Background lazy image">
-    <img id="roster-player-image" src="" alt="Player Image" />
-    <div id="player-overlay"></div>
-  </div>
+<div id="roster-info-container">
+  <div id="quiz2-player-name">Player Name</div>
+  <div id="player-overlay"></div>
+  <div id="player-info"></div>
+  <img id="roster-player-image" src="" alt="Player Image" />
+  <img id="lazy-image" class="lazy-image" src="" alt="Background lazy image">
 </div>
           <!-- disabled: <div id="player-info"></div> -->
           
