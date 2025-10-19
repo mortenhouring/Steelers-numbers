@@ -1,0 +1,3 @@
+img id="roster-player-image" src="https://raw.githubusercontent.com/mortenhouring/Steelers-numbers/9e12dca686f8436daf86dc134bcbf6cfadbf5838/fetchimages/images/espn-images/espn-alex_highsmith.png" alt="Player Image" />
+  <img id="lazy-image" class="lazy-image" src="https://raw.githubusercontent.com/mortenhouring/Steelers-numbers/9e12dca686f8436daf86dc134bcbf6cfadbf5838/fetchimages/images/lazy-images/alex_highsmith_lazy.jpg" alt="Background lazy image" />
+</div>
