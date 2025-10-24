@@ -188,6 +188,17 @@ let initialRosterCount = 0;
 ///////////////////////////
 // UTILITY FUNCTIONS
 ///////////////////////////
+
+//Scoreboard//
+function updateScoreboard() {
+  if(scoreboardcorrectvalue) {
+    scoreboardcorrectvalue.textContent = parseInt(localStorage.getItem('correctAnswers'), 10) || 0;
+  }
+  if(scoreboardincorrectvalue) {
+    scoreboardincorrectvalue.textContent = parseInt(localStorage.getItem('incorrectAnswers'), 10) || 0;
+  }
+}
+
 function log(...args) { console.log('[hof-quiz]', ...args); }
 function safeParseJSON(raw) { try { return JSON.parse(raw); } catch { return null; } }
 function shuffleArray(arr) { for (let i = arr.length-1; i>0; i--) { const j=Math.floor(Math.random()*(i+1)); [arr[i],arr[j]]=[arr[j],arr[i]]; } }
@@ -343,10 +354,8 @@ function handleSubmit() {
     localStorage.setItem('incorrectAnswers', String(wrong));
   }
 
-  // update the scoreboard elements
-  if (scoreboardcorrectvalue) scoreboardcorrectvalue.textContent = correct;
-  if (scoreboardincorrectvalue) scoreboardincorrectvalue.textContent = wrong;
-
+  // refresh scoreboard
+  updateScoreboard();
   log(`Answer submitted for player ${currentPlayer?.player_name}: guess=${userAnswer} correct=${correctNumber === userAnswer}`);
   showAnswerView();
 }
