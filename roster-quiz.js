@@ -62,8 +62,8 @@ const CONFIG = {
 function prefillQuiz2Elements(player) {
   if (!player) return;
 
-  // --- Player image ---
-  if (playerImageEl) playerImageEl.src = player['espn-image'] || player.image || '';
+  // --- Player image (sync both quiz1/quiz2 views) ---
+updatePlayerImages(player['espn-image'] || player.image || '');
   
   const lazyImageEl = document.getElementById('lazy-image');
   if (lazyImageEl) lazyImageEl.src = player['lazyimage'] || '';
