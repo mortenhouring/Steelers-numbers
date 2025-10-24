@@ -139,12 +139,15 @@ if (statsEl) {
     statsEl.style.display = 'none';
   }
 }
-  // --- Score / Remaining ---
-  const score = parseInt(localStorage.getItem(CONFIG.STORAGE_KEYS.SCORE), 10) || 0;
-  const total = parseInt(localStorage.getItem(CONFIG.STORAGE_KEYS.TOTAL_QUESTIONS), 10) || 0;
-  const pool = safeParseJSON(localStorage.getItem(CONFIG.STORAGE_KEYS.CURRENT_ROSTER)) || [];
-  scoreEl.textContent = `Score: ${score}/${total}`;
-  remainingEl.textContent = `Remaining: ${pool.length}`;
+  // --- Scoreboard (correct / incorrect) ---
+const scoreboardcorrectvalue = document.getElementById('scoreboardcorrectvalue');
+const scoreboardincorrectvalue = document.getElementById('scoreboardincorrectvalue');
+// Populate values from localStorage (or 0 if not set)
+if (scoreboardcorrectvalue) {
+  scoreboardcorrectvalue.textContent = parseInt(localStorage.getItem('correctAnswers'), 10) || 0;
+}
+if (scoreboardincorrectvalue) {
+  scoreboardincorrectvalue.textContent = parseInt(localStorage.getItem('incorrectAnswers'), 10) || 0;
 }
 ///////////////////////////
 // ELEMENTS
@@ -172,7 +175,10 @@ const playerInfoEl = document.getElementById(ids.PLAYER_INFO) || null;
 const playerTriviaEl = document.getElementById(ids.PLAYER_TRIVIA);
 const scoreEl = document.getElementById(ids.SCORE);
 const remainingEl = document.getElementById(ids.REMAINING);
-
+// scoreboard
+const scoreboardcorrectvalue = document.getElementById('scoreboardcorrectvalue');   // correct answers
+const scoreboardincorrectvalue = document.getElementById('scoreboardincorrectvalue'); // incorrect answers
+const scoreboardMiddle = document.getElementById('scoreboard-middle');               // NEXT button
 ///////////////////////////
 // STATE
 ///////////////////////////
@@ -307,21 +313,41 @@ prefillQuiz2Elements(currentPlayer)
 ///////////////////////////
 // SUBMIT
 ///////////////////////////
-function handleSubmit(){
+function handleSubmit() {
   const raw = answerDisplay.value.trim();
-  if(raw.length===0) return;
-  const userAnswer = parseInt(raw,10);
-  if(isNaN(userAnswer)) return;
-  localStorage.setItem(CONFIG.STORAGE_KEYS.LAST_ANSWER,String(userAnswer));
+  if (raw.length === 0) return;
+  const userAnswer = parseInt(raw, 10);
+  if (isNaN(userAnswer)) return;
 
-  let questionsAsked=parseInt(localStorage.getItem(CONFIG.STORAGE_KEYS.QUESTIONS_ASKED),10); if(isNaN(questionsAsked)) questionsAsked=0; questionsAsked+=1;
-  let score=parseInt(localStorage.getItem(CONFIG.STORAGE_KEYS.SCORE),10); if(isNaN(score)) score=0;
-  const correctNumber=Number(currentPlayer?.number ?? NaN);
-  if(!isNaN(correctNumber) && correctNumber===userAnswer) score+=1;
-  localStorage.setItem(CONFIG.STORAGE_KEYS.QUESTIONS_ASKED,String(questionsAsked));
-  localStorage.setItem(CONFIG.STORAGE_KEYS.SCORE,String(score));
+  localStorage.setItem(CONFIG.STORAGE_KEYS.LAST_ANSWER, String(userAnswer));
 
-  log(`Answer submitted for player ${currentPlayer?.player_name}: guess=${userAnswer} correct=${correctNumber===userAnswer}`);
+  // total questions answered
+  let questionsAsked = parseInt(localStorage.getItem(CONFIG.STORAGE_KEYS.QUESTIONS_ASKED), 10);
+  if (isNaN(questionsAsked)) questionsAsked = 0;
+  questionsAsked += 1;
+  localStorage.setItem(CONFIG.STORAGE_KEYS.QUESTIONS_ASKED, String(questionsAsked));
+
+  const correctNumber = Number(currentPlayer?.number ?? NaN);
+
+  // read previous counts
+  let correct = parseInt(localStorage.getItem('correctAnswers'), 10);
+  if (isNaN(correct)) correct = 0;
+  let wrong = parseInt(localStorage.getItem('incorrectAnswers'), 10);
+  if (isNaN(wrong)) wrong = 0;
+
+  if (!isNaN(correctNumber) && correctNumber === userAnswer) {
+    correct += 1;
+    localStorage.setItem('correctAnswers', String(correct));
+  } else {
+    wrong += 1;
+    localStorage.setItem('incorrectAnswers', String(wrong));
+  }
+
+  // update the scoreboard elements
+  if (scoreboardcorrectvalue) scoreboardcorrectvalue.textContent = correct;
+  if (scoreboardincorrectvalue) scoreboardincorrectvalue.textContent = wrong;
+
+  log(`Answer submitted for player ${currentPlayer?.player_name}: guess=${userAnswer} correct=${correctNumber === userAnswer}`);
   showAnswerView();
 }
 
