@@ -160,7 +160,14 @@ const clearButton = document.getElementById(ids.CLEAR_BUTTON);
 const nextButton = document.getElementById(ids.NEXT_BUTTON);
 const keypadButtons = document.querySelectorAll(`.${ids.KEYPAD_BUTTONS_CLASS}`);
 const feedbackEl = document.getElementById(ids.FEEDBACK);
-const playerImageEl = document.getElementById(ids.PLAYER_IMAGE) || null;
+// Both quiz1 and quiz2 have roster-player-image — keep them synced
+const playerImageEls = document.querySelectorAll(`#${ids.PLAYER_IMAGE}`);
+
+function updatePlayerImages(src) {
+  playerImageEls.forEach(img => {
+    if (img && src && img.src !== src) img.src = src;
+  });
+}
 const playerInfoEl = document.getElementById(ids.PLAYER_INFO) || null;
 const playerTriviaEl = document.getElementById(ids.PLAYER_TRIVIA);
 const scoreEl = document.getElementById(ids.SCORE);
