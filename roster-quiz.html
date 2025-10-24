@@ -531,29 +531,18 @@ text-align: center;
 <div id="chrome-viewport">
 
 <div id="roster-info-container">
-  <div id="quiz2-player-name">Johnson Highsmith</div>
+  <div id="quiz2-player-name"></div>
 <!--  <div id="player-overlay">#56</div> -->
   <div id="player-info">
-  <div>EXP: 3</div>
-  <div>HT: 6-5</div>
-  <div>WT: 305 lbs</div>
-  <div>AGE: 25</div>
 </div>
   <div id="player-stats-wrapper">
   <div id="player-stats-header">2025 stats</div>
   <div id="player-stats">
-    <div>SCK: 1.5</div>
-    <div>FF: 0</div>
-    <div>INT: 0</div>
+    
   </div>
 </div>
   <img id="roster-player-image" src="" />
 </div>
-
-<!-- <div id="player-achievements-wrapper">
-  <div id="player-achievements-header">Career achievements</div>
-  <div id="player-achievements"></div>
-</div> -->
 <input type="text" id="answer-display" readonly inputmode="numeric" aria-label="Answer" />
 
 <div id="keypad">
@@ -605,7 +594,10 @@ text-align: center;
   <img id="roster-player-image" src="https://raw.githubusercontent.com/mortenhouring/Steelers-numbers/9e12dca686f8436daf86dc134bcbf6cfadbf5838/fetchimages/images/espn-images/espn-alex_highsmith.png" alt="Player Image" />
   <img id="lazy-image" class="lazy-image" src="https://raw.githubusercontent.com/mortenhouring/Steelers-numbers/9e12dca686f8436daf86dc134bcbf6cfadbf5838/fetchimages/images/lazy-images/alex_highsmith_lazy.jpg" alt="Background lazy image" />
 </div>
-
+<div id="player-achievements-wrapper">
+  <div id="player-achievements-header">Career achievements</div>
+  <div id="player-achievements"></div>
+</div>
 <div id="hof-trivia-box">
   <div id="hof-trivia-inner">
     <div id="player-trivia"></div>
@@ -624,71 +616,4 @@ text-align: center;
   <!-- Module script: main single-page logic -->
   <script type="module" src="roster-quiz.js"></script>
 </body>
-</html>
-
-<div id="chrome-viewport">
-
-<div id="roster-info-container">
-  <div id="quiz2-player-name">Johnson Highsmith</div>
-<!--  <div id="player-overlay">#56</div> -->
-  <div id="player-info">
-  <div>EXP: 3</div>
-  <div>HT: 6-5</div>
-  <div>WT: 305 lbs</div>
-  <div>AGE: 25</div>
-</div>
-  <div id="player-stats-wrapper">
-  <div id="player-stats-header">2025 stats</div>
-  <div id="player-stats">
-    <div>SCK: 1.5</div>
-    <div>FF: 0</div>
-    <div>INT: 0</div>
-  </div>
-</div>
-  <img id="roster-player-image" src="" alt="Player Image" />
-  <img id="lazy-image" class="lazy-image" src="" alt="Background lazy image" />
-</div>
-
-<!-- <div id="player-achievements-wrapper">
-  <div id="player-achievements-header">Career achievements</div>
-  <div id="player-achievements"> 7× Pro Bowl • 4× All-Pro
-  </div>
-</div> -->
-<input type="text" id="answer-display" readonly inputmode="numeric" aria-label="Answer" />
-
-<div id="keypad">
-  <button class="num">1</button>
-  <button class="num">2</button>
-  <button class="num">3</button>
-  <button class="num">4</button>
-  <button class="num">5</button>
-  <button class="num">6</button>
-  <button class="num">7</button>
-  <button class="num">8</button>
-  <button class="num">9</button>
-  <button id="clear-button">&#9003;</button>
-  <button class="num">0</button>
-  <button id="go-button">Go</button>
-</div>
-  
-
-<div class="scoreboard-container">
-  <div class="scoreboard-board"></div>
-  <div class="scoreboard-left">
-    <div class="scoreboard-label">right</div>
-    <div class="scoreboard-value">5</div>
-  </div>
-  <div class="scoreboard-right">
-    <div class="scoreboard-label">wrong</div>
-    <div class="scoreboard-value">5</div>
-  </div>
-  <div class="scoreboard-middle">NEXT</div>
-
-</div>
-
-  <div id="ios-safe-bottom"></div>
-</div>
-    
-  </body>
-  
 </html>
