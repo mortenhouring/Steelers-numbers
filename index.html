@@ -1,29 +1,582 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Front office</title>
-  <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-    <!-- Placeholder for the Header -->
-  <div id="header-placeholder"></div>
-  <main>
-    <h1>Steelers Jersey Quiz</h1>
-   <div>
-  <button class="frontpage-btn" onclick="window.location.href='currentquiz.html'">All players</button>
-  <p id="info-text">Full roster. Top to bottom. Are you ready for the ultimate challenge?</p>
-  <button class="frontpage-btn" onclick="window.location.href='short-quiz.html'">Two minute drill</button>
-  <p id="info-text">Don't have a lot of time? Try a random selection of ten players.</p>
-  <button class="frontpage-btn" onclick="window.location.href='depth-quiz.html'">Starters</button>  
-  <p id="info-text">Get ready for sunday. All the starter (and the subs you'll see a lot).</p>
-  </div>
-  </main>
-  <!-- Load the header -->
-<script src="headerscript.js"></script>
 
-<!-- Your main page script -->
-<script src="script.js"></script>
-</body>
+  <head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <title>Quiz2 box</title>
+    <link rel="stylesheet" href="./style.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Teko:wght@200;400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Graduate&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+
+<link href="https://fonts.googleapis.com/css2?family=Teko:wght@200;400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Graduate&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden; /* prevents extra scroll */
+  box-sizing: border-box;
+  background: #000; /* fallback background */
+}
+
+#chrome-viewport {
+  position: fixed;                 /* stays locked to screen */
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  width: 100vw;
+  height: 100dvh;
+  border: 1px solid blueviolet;
+  border-radius: 0px;
+  overflow: hidden;
+  position: relative;
+  background-color: #rgba(255, 182, 18, 1);          /* fallback color */
+  background-image: url('https://raw.githubusercontent.com/mortenhouring/Steelers-numbers/37280e6a4b801173bcb689537460e2a8eb73a89f/grey-background.jpg'); /* container background image */
+  background-repeat: no-repeat;        /* prevent tiling */
+  background-size: cover;            /* fit inside container */
+  background-position: center;
+  
+  box-shadow: 0 0 20px rgba(0,0,0,0.0);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* content stacks from top */
+z-index: 0;
+
+}
+
+/*/////////////////////////////////////////
+/////////MAIN CSS//////////////////////////
+/////////////////////////////////////////*/
+
+  /*QUIZ1-View*/
+  /* ------------------------------
+   Numeric Keypad
+   ------------------------------ */
+#keypad {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: 4rem;
+  gap: 0.5vh;
+  justify-items: center;
+  margin: 1vh auto;
+}
+
+#keypad button {
+  width: 4rem;
+  height: 4rem;
+  font-size: 2em;
+  border-radius: 1.5rem;
+  border: 1px solid rgba(255, 182, 18, 1);
+  background-color: rgba(0,0,0,0.7);
+  color: rgba(255, 182, 18, 0.7);
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0.16rem 0.47rem rgba(0,0,0,0.6);
+  transition: transform 0.12s ease,
+              box-shadow 0.12s ease,
+              background-color 0.12s ease;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  touch-action: manipulation;
+  user-select: none;
+}
+
+#keypad button:active {
+  transform: scale(1.03);
+  box-shadow: 0 0 10px white;
+  background-color: #111;
+}
+
+#keypad button:focus {
+  outline: none !important;
+  background-color: #111;
+  color: white;
+}
+  #answer-display {
+  width: 8rem;                    /* exactly two keypad buttons wide */
+  height: 4rem;                   /* same as one keypad button */
+  background-color: rgba(0, 0, 0, 0.4);
+  border: none;
+  border-radius: 0.5rem;
+  box-sizing: border-box;
+  margin: 1vh auto;
+
+  display: flex;                  /* centers digits cleanly */
+  align-items: center;
+  justify-content: center;
+
+  font-size: 2rem;                /* slightly larger than keypad buttons */
+  font-weight: bold;              /* makes it stand out */
+  color: rgba(255, 182, 18, 1)                  /* ensures strong contrast */
+  text-align: center;
+
+  pointer-events: none;           /* keeps it non-interactive (read-only) */
+  user-select: none;              /* prevents text selection */
+}
+
+/*QUIZ2-view*/
+/* ACHIEVEMENTS Wrapper to contain both bars */
+#player-achievements-wrapper {
+  position: relative;          
+  margin: 2vh auto 0 auto;    /* pulls wrapper closer to info container */
+  padding: 0;                  /* no extra spacing */
+  display: flex;
+  flex-direction: column;
+  align-items: center;         /* center children horizontally */
+  z-index: 6;
+}
+
+/* Smaller header bar (flush with main bar) */
+#player-achievements-header {
+  background-color: rgba(255, 182, 18, 0.7);
+  color: black;
+  padding: 0.3% 1%;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 550;
+  font-size: 11px;
+  text-align: center;
+  white-space: nowrap;
+  display: inline-block;       /* width matches text */
+  line-height: 1.1;
+
+  /* rounded top corners only */
+  border-top-left-radius: 0.5em;
+  border-top-right-radius: 0.5em;
+
+  /* flush join with main bar */
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  box-shadow: none;
+  margin-bottom: 0;            /* flush with main bar */
+}
+
+/* Main achievements bar (flush with header) */
+#player-achievements {
+  background-color: rgba(255, 182, 18, 0.7);
+  color: black;
+  padding: 0.5% 3%;
+  font-size: 19px;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 550;
+  text-align: center;
+  display: flex;
+  gap: 1em;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  /* rounded bottom corners only */
+  border-bottom-left-radius: 0.2em;
+  border-bottom-right-radius: 0.2em;
+  border-top-left-radius: 0.2rem;
+  border-top-right-radius: 0.2rem;
+
+  margin: 0;                   /* flush with header */
+  max-width: 100%;
+}
+
+/* TOP DISPLAY Container */
+#roster-info-container {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 390 / 169;
+ 
+  overflow: hidden;
+  background-color: rgb(30, 30, 30, 0.6);
+
+border: 15x yellow;
+
+}
+
+/* Lazy Background Image */
+#lazy-image {
+  position: absolute;
+  bottom: 0%;
+  left: 0%;
+  height: 70.5%; /* relative to container */
+  width: auto;
+  object-fit: cover;
+  object-position: left bottom;
+  background-color: rgba(0, 255, 255);
+  opacity: 0.7;
+  z-index: 1;
+}
+
+/* Player Image */
+#roster-player-image {
+  position: absolute;
+  bottom: 0;
+  right: -2.3%;
+  height: 108%; /* relative to container */
+  width: auto;
+  object-fit: cover;
+  background-color: rgba(255, 0, 255, 0);
+  opacity: 1;
+  z-index: 2;
+  
+}
+#quiz2-player-name {
+  position: absolute;
+  left: 1.8%;                       /* distance from left edge */
+  bottom: 64.6%;                   /* distance from bottom of container */
+  width: 60%;                       /* container width for the text */
+  height: auto;
+  font-size: 235%;
+  font-family: 'Teko', sans-serif;
+  font-weight: 200;
+  color: rgb(255, 182, 18);
+  background-color: rgba(255, 182, 18, 0);
+  opacity: 1;
+  z-index: 5;
+  padding: 0.5% 1%;
+  border-radius: 0.5em;
+  white-space: nowrap;               /* keep text on one line */
+  width, max 3em */
+  overflow: hidden;
+  transform: scaleY(1.2);
+  display: inline-block;
+}
+
+/* Number/Position Overlay */
+#player-overlay {
+  position: absolute;
+  right: 2%;                       /* distance from left edge */
+  bottom: 72.4%;                   /* distance from bottom of container */
+  width: 19%;                       /* container width for the text */
+  height: auto;
+  font-size: 210%;
+  font-family: 'Graduate', sans-serif;
+  font-weight: 500;
+  color: rgb(255, 182, 18);
+  background-color: rgba(255, 182, 18, 0);
+  opacity: 1;
+  z-index: 5;
+  transform: scaleY(1.3);
+  display: inline-block;
+
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+/* Player Info */
+#player-info {
+  position: absolute;
+  top: 31%;
+  left: 1.8%;
+  font-size: 13px;
+  color: rgb(255, 182, 18, 0.7);
+  background-color: rgba();
+  opacity: 1;
+  z-index: 3;
+  padding: 0.5% 1%;
+  border-radius: 0.5em;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 550;
+}
+
+
+/* Wrapper to contain both bars */
+#player-stats-wrapper {
+  position: absolute;
+  bottom: 2%;          /* distance from container bottom */
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* center everything horizontally */
+  z-index: 6;
+}
+
+/* Smaller header bar */
+#player-stats-header {
+  background-color: rgba(255, 182, 18, 0.7);
+  color: black;
+  padding: 0.3% 1%;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 550;
+  font-size: 10px;
+  text-align: center;
+  white-space: nowrap;
+  display: inline-block; /* width matches text */
+  line-height: 1.1;
+
+  /* rounded top corners only */
+  border-top-left-radius: 0.5em;
+  border-top-right-radius: 0.5em;
+
+  /* flush join with main bar */
+  border-bottom-left-radius:  0;
+  border-bottom-right-radius: 0;
+  box-shadow: none;
+    /* tiny overlap to eliminate rendering gap */
+  margin-bottom: 0px;
+}
+
+/* Main stats bar */
+#player-stats {
+  background-color: rgba(255, 182, 18, 0.7);
+  color: black;
+  padding: 0.5% 3%;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 550;
+  text-align: center;
+  display: flex;
+  gap: 1em;
+  align-items: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  /* rounded bottom corners only */
+  border-bottom-left-radius: 0.2em;
+  border-bottom-right-radius: 0.2em;
+  border-top-left-radius: 0.2rem;
+  border-top-right-radius: 0.2rem;
+}
+
+/*////////////////////////////////////////
+Trivia scroll ////////////////////////
+////////////////////////////////////////*/
+
+#hof-trivia-box {
+  position: relative;
+  width: 98vw;
+  max-width: 98vw;
+  height: 30vh;
+  overflow: hidden;                     /* hides gradient overflow */
+  
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  margin-bottom: 3vh;
+  margin-top: 7vh;
+  color: #fff;
+  box-sizing: border-box;
+}
+
+#hof-trivia-inner {
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  padding: 8px;
+  box-sizing: border-box;
+  scrollbar-width: thin;                /* optional: cleaner scrollbars */
+}
+#player-trivia {
+  font-family: 'Roboto', sans-serif;
+  font-size: 15px;      /* ~14px equivalent, scalable */
+  font-weight: 400;          /* normal weight for clarity */
+  line-height: 1.5;          /* slightly more than 1.4 for mobile readability */
+  letter-spacing: 0.02em;    /* improves clarity at small sizes */
+  color: rgba(255, 255, 255, 0.85); /* high contrast on dark background */
+  margin-bottom: 0;          /* no extra spacing at the bottom */
+  text-align: left;          /* standard for mobile */
+  hyphens: auto;             /* automatic hyphenation for narrow widths */
+  -webkit-font-smoothing: antialiased; /* smooth font rendering on iOS */
+  -moz-osx-font-smoothing: grayscale;  /* smooth font rendering on macOS/Firefox */
+}
+#scroll-gradient {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 5.1rem;
+  pointer-events: none;
+  background: linear-gradient(
+    to top,
+    rgba(255, 182, 18, 0.75) 0%,   /* strong gold at the bottom edge */
+    rgba(255, 182, 18, 0.08) 40%,  /* gentle yellow tone extending upward */
+    rgba(255, 182, 18, 0.03) 75%,  /* barely noticeable mid fade */
+    rgba(255, 182, 18, 0) 100%     /* transparent near the top */
+  );
+
+
+
+  transition: opacity 0.3s ease;
+  opacity: 1;                           /* visible by default */
+  z-index: 2;
+}
+
+/*////////////////////////////////////////
+Scoreboard button ////////////////////////
+////////////////////////////////////////*/
+
+.scoreboard-container {
+  position: absolute;
+  bottom: 12%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  max-width: 400px;
+  height: 60px;        /* mobile button height */
+  z-index: 10;
+ 
+}
+
+/* Background board shape */
+.scoreboard-board {
+  position: absolute;  /* relative to container */
+  bottom: 0;           /* stick to bottom of container */
+  width: 100%;
+  height: 100%;        /* fill container height */
+
+  border-radius: 0.25em;
+  border: 1px solid rgba(255, 182, 18, 0.9);
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 1;
+}
+
+.scoreboard-left {
+  position: absolute;  /* relative to container */
+  left: 0;
+  bottom: 0;           /* stick to bottom of container */
+  width: 31%;
+  height: 100%;        /* match container height */
+ 
+  z-index: 5;
+}
+
+.scoreboard-right {
+  position: absolute;  /* relative to container */
+  right: 0;
+  bottom: 0;           /* stick to bottom of container */
+  width: 31%;
+  height: 100%;        /* match container height */
+  z-index: 5;
+
+background-color: #rgba(255, 182, 18, 0.6);      
+  background-image: url('https://raw.githubusercontent.com/mortenhouring/Steelers-numbers/37280e6a4b801173bcb689537460e2a8eb73a89f/black-yellowoutline-hypocycloid.PNG');
+  background-repeat: no-repeat;       
+  background-size: contain;           
+  background-position: center;
+
+}
+
+.scoreboard-middle {
+  position: absolute;  /* relative to container */
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 1%;           /* stick to bottom of container */
+  width: 37%;
+  height: 101%;       
+  border-radius: 0.4rem;
+  color: rgb(255, 182, 18);
+  background-color: rgba(255, 182, 18, 0.9);
+  font-size: 24px;
+
+box-shadow: 0 0.25rem 0.75rem rgba(0,0,0,0.6);
+font-family: 'Roboto', sans-serif;
+color: black;
+letter-spacing: 0.5px;
+text-align: center;
+z-index: 6;
+}
+
+.scoreboard-label {
+font-size: 12px;
+font-family: 'Roboto', sans-serif;
+color: white;
+text-align: center;
+
+}
+.scoreboard-value {
+font-size: 39px;
+font-family: 'Graduate', sans-serif;
+
+font-weight: 700;
+
+-webkit-text-stroke-width: 1px;  /* outline thickness */
+  -webkit-text-stroke-color: white; /* outline color */
+
+color: rgb(255, 182, 18);
+opacity: 1;
+letter-spacing: 0.5px;
+text-align: center;
+}
+
+</style>
+  </head>
+    
+  <body>
+
+<link href="https://fonts.googleapis.com/css2?family=Teko:wght@200;400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Graduate&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<div id="chrome-viewport">
+
+<div id="roster-info-container">
+  <div id="quiz2-player-name">Johnson Highsmith</div>
+<!--  <div id="player-overlay">#56</div> -->
+  <div id="player-info">
+  <div>EXP: 3</div>
+  <div>HT: 6-5</div>
+  <div>WT: 305 lbs</div>
+  <div>AGE: 25</div>
+</div>
+  <div id="player-stats-wrapper">
+  <div id="player-stats-header">2025 stats</div>
+  <div id="player-stats">
+    <div>SCK: 1.5</div>
+    <div>FF: 0</div>
+    <div>INT: 0</div>
+  </div>
+</div>
+  <img id="roster-player-image" src="https://raw.githubusercontent.com/mortenhouring/Steelers-numbers/9e12dca686f8436daf86dc134bcbf6cfadbf5838/fetchimages/images/espn-images/espn-alex_highsmith.png" alt="Player Image" />
+  <img id="lazy-image" class="lazy-image" src="https://raw.githubusercontent.com/mortenhouring/Steelers-numbers/9e12dca686f8436daf86dc134bcbf6cfadbf5838/fetchimages/images/lazy-images/alex_highsmith_lazy.jpg" alt="Background lazy image" />
+</div>
+
+<!-- <div id="player-achievements-wrapper">
+  <div id="player-achievements-header">Career achievements</div>
+  <div id="player-achievements"> 7× Pro Bowl • 4× All-Pro
+  </div>
+</div> -->
+<input type="text" id="answer-display" readonly inputmode="numeric" aria-label="Answer" />
+
+<div id="keypad">
+  <button class="num">1</button>
+  <button class="num">2</button>
+  <button class="num">3</button>
+  <button class="num">4</button>
+  <button class="num">5</button>
+  <button class="num">6</button>
+  <button class="num">7</button>
+  <button class="num">8</button>
+  <button class="num">9</button>
+  <button id="clear-button">&#9003;</button>
+  <button class="num">0</button>
+  <button id="go-button">Go</button>
+</div>
+  
+
+<div class="scoreboard-container">
+  <div class="scoreboard-board"></div>
+  <div class="scoreboard-left">
+    <div class="scoreboard-label">right</div>
+    <div class="scoreboard-value">5</div>
+  </div>
+  <div class="scoreboard-right">
+    <div class="scoreboard-label">wrong</div>
+    <div class="scoreboard-value">5</div>
+  </div>
+  <div class="scoreboard-middle">NEXT</div>
+
+</div>
+
+  <div id="ios-safe-bottom"></div>
+</div>
+    
+  </body>
+  
 </html>
