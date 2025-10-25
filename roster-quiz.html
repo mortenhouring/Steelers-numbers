@@ -180,12 +180,14 @@
   border-top-left-radius: 0.2rem;
   border-top-right-radius: 0.2rem;
 }
-/* ACHIEVEMENTS Wrapper to contain both bars */
+/* ------------------------- ACHIEVEMENTS ------------------------- */
+
+/* Wrapper to contain both header and main achievements bar */
 #player-achievements-wrapper {
   position: relative;          
-  width: 90vw;                /* match trivia width */
+  width: 90vw;                 /* match trivia width */
   max-width: 90vw;
-  margin: 1vh auto 0 auto;    /* pulls wrapper closer to info container */
+  margin: 1vh auto 0 auto;     /* pulls wrapper closer to info container */
   padding: 0;                  /* no extra spacing */
   display: flex;
   flex-direction: column;
@@ -203,7 +205,12 @@
   font-size: 13px;
   text-align: center;
   white-space: nowrap;
-  display: inline-block;       /* width matches text */
+
+  display: inline-flex;        /* match main achievements bar width naturally */
+  justify-content: center;
+  width: auto;
+  max-width: 100%;             /* never overflow container */
+  
   line-height: 1.1;
 
   /* rounded top corners only */
@@ -217,7 +224,7 @@
   margin-bottom: 0;            /* flush with main bar */
 }
 
-/* Main achievements bar (flush with header) */
+/* Main achievements bar */
 #player-achievements {
   background-color: rgba(255, 182, 18, 0.7);
   color: black;
@@ -226,12 +233,13 @@
   font-family: 'Roboto', sans-serif;
   font-weight: 550;
   text-align: center;
-  display: inline-flex;          /* inline so it wraps naturally */
-  flex-wrap: wrap;               /* allow line breaks */
-  gap: 0.5em;                    /* spacing between achievements */
+
+  display: inline-flex;        /* inline so it wraps naturally */
+  flex-wrap: wrap;             /* allow line breaks */
+  gap: 0.5em;                  /* spacing between achievements */
   align-items: center;
-  justify-content: center;
-  white-space: normal;           /* allow wrapping */
+  justify-content: center;     /* center content horizontally */
+  white-space: normal;         /* allow wrapping */
   overflow: visible;
   text-overflow: unset;
 
