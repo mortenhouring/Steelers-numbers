@@ -242,6 +242,17 @@
   margin: 0;
   max-width: 100%;
 }
+
+/* Each achievement item */
+.achievement-item {
+  position: relative;
+}
+
+/* Add bullet after each item except the last one */
+.achievement-item:not(:last-child)::after {
+  content: ' •';
+  margin-left: 0.4em;
+}
 /*------ HOF styling --------------*/
 
 #hof-player-image {
