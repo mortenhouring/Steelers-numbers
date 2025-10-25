@@ -303,8 +303,6 @@ async function init() {
 
 // Call init
 init();
-
-  pickNextPlayer();
 }
 
 ///////////////////////////
