@@ -240,52 +240,71 @@ function saveScore(mode, correctAnswers, totalQuestions) {
 // INIT
 ///////////////////////////
 async function init() {
-  log('init() start');
-  // show loading message immediately
-  questionDisplay.textContent = 'Loading roster...';
-  // Load roster JSON
-  let loadedRoster = [];
-  try {
-    const resp = await fetch(CONFIG.ROSTER_JSON,{cache:'no-store'});
-    if(!resp.ok) throw new Error(`HTTP ${resp.status}`);
-    loadedRoster = await resp.json();
-    if(!Array.isArray(loadedRoster)||loadedRoster.length===0) throw new Error('Roster not a non-empty array');
+    console.log('Quiz init started');
 
-    // Filter out null-number entries
-    loadedRoster = loadedRoster.filter(player => player.number !== null);
-    log(`Fetched roster — ${loadedRoster.length} players`);
-    log('Players loaded:', loadedRoster.map(p => p.player_name));
-  } catch(err){
-    console.error('[hof-quiz] Could not fetch roster:',err);
-    questionDisplay.textContent=`Error loading roster: ${err.message}`;
-    showView('quiz1'); return;
-  }
+    // Wait for DOM to be fully loaded
+    if (document.readyState === 'loading') {
+        await new Promise(resolve => {
+            document.addEventListener('DOMContentLoaded', resolve);
+        });
+        console.log('DOM fully loaded');
+    }
 
-  // Initialize working pool
-  try {
-    const rawSaved = localStorage.getItem(CONFIG.STORAGE_KEYS.CURRENT_ROSTER);
-    let saved = safeParseJSON(rawSaved);
-    if(!Array.isArray(saved)||saved.length===0){
-      const fresh = [...loadedRoster];
-      shuffleArray(fresh);
-      localStorage.setItem(CONFIG.STORAGE_KEYS.CURRENT_ROSTER, JSON.stringify(fresh));
-      log('Saved fresh shuffled currentRoster to localStorage');
-    } else log(`Found existing pool — ${saved.length} players remain`);
+    // Load roster.json safely
+    try {
+        const resp = await fetch('roster.json', { cache: 'no-store' });
+        if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+        const data = await resp.json();
+        window.loadedRoster = data;
+        console.log('Roster loaded:', loadedRoster.length, 'players');
+    } catch (e) {
+        console.error('Failed to load roster.json:', e);
+        // Show user-friendly message
+        const el = document.getElementById('quiz1-view');
+        if (el) el.innerHTML = '<p style="color:red">Failed to load roster. Please reload the page.</p>';
+        return; // Stop further execution
+    }
 
-    let totalQ=parseInt(localStorage.getItem(CONFIG.STORAGE_KEYS.TOTAL_QUESTIONS),10);
-    if(isNaN(totalQ)){ totalQ=loadedRoster.length; localStorage.setItem(CONFIG.STORAGE_KEYS.TOTAL_QUESTIONS,String(totalQ)); log('Initialized totalQuestions',totalQ);}
-    else log('totalQuestions(from storage):',totalQ);
-    initialRosterCount=totalQ;
-  } catch(err){ console.error('[hof-quiz] Error init roster:',err); questionDisplay.textContent=`Error initializing roster: ${err.message}`; showView('quiz1'); return; }
+    // LocalStorage fallback
+    try {
+        const saved = localStorage.getItem('currentRoster');
+        window.currentRoster = saved ? JSON.parse(saved) : [...loadedRoster];
+        console.log('Current roster loaded from localStorage or default:', currentRoster.length);
+    } catch (e) {
+        console.warn('localStorage error, using default roster:', e);
+        window.currentRoster = [...loadedRoster];
+    }
 
-  // Resume if lastPlayer & lastAnswer exist
-  const lastPlayerRaw = localStorage.getItem(CONFIG.STORAGE_KEYS.LAST_PLAYER);
-  const lastAnswerRaw = localStorage.getItem(CONFIG.STORAGE_KEYS.LAST_ANSWER);
-  if(lastPlayerRaw && lastAnswerRaw !== null){
-    log('Resuming lastPlayer and lastAnswer found');
-    try { currentPlayer = safeParseJSON(lastPlayerRaw) || null; showAnswerView(); return; }
-    catch(err){ console.warn('[hof-quiz] Could not parse lastPlayer',err); }
-  }
+    // Ensure we have players to show
+    if (!currentRoster || currentRoster.length === 0) {
+        console.error('No players available to start the quiz');
+        const el = document.getElementById('quiz1-view');
+        if (el) el.innerHTML = '<p style="color:red">No players available. Check roster.json.</p>';
+        return;
+    }
+
+    // Pick the first player safely
+    try {
+        window.currentPlayer = pickNextPlayer();
+        console.log('First player selected:', currentPlayer?.name || '(name missing)');
+    } catch (e) {
+        console.error('Error picking first player:', e);
+        return;
+    }
+
+    // Update UI
+    try {
+        prefillQuizElements(currentPlayer);
+        console.log('UI initialized successfully');
+    } catch (e) {
+        console.error('Error updating UI:', e);
+    }
+
+    console.log('Quiz init complete ✅');
+}
+
+// Call init
+init();
 
   pickNextPlayer();
 }
