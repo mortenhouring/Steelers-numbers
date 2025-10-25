@@ -221,25 +221,24 @@
   background-color: rgba(255, 182, 18, 0.7);
   color: black;
   padding: 0.5% 3%;
+  font-size: 19px;
   font-family: 'Roboto', sans-serif;
-  font-size: 15px;
   font-weight: 550;
   text-align: center;
-  display: flex;
-  gap: 1em;
+  display: inline-flex;          /* inline so it wraps naturally */
+  flex-wrap: wrap;               /* allow line breaks */
+  gap: 0.5em;                    /* spacing between achievements */
   align-items: center;
   justify-content: center;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  white-space: normal;           /* allow wrapping */
+  overflow: visible;
+  text-overflow: unset;
 
-  /* rounded bottom corners only */
   border-bottom-left-radius: 0.2em;
   border-bottom-right-radius: 0.2em;
   border-top-left-radius: 0.2rem;
   border-top-right-radius: 0.2rem;
-
-  margin: 0;                   /* flush with header */
+  margin: 0;
   max-width: 100%;
 }
 /*------ HOF styling --------------*/
