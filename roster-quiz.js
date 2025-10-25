@@ -164,13 +164,7 @@ const nextButton = document.getElementById(ids.NEXT_BUTTON);
 const keypadButtons = document.querySelectorAll(`.${ids.KEYPAD_BUTTONS_CLASS}`);
 const feedbackEl = document.getElementById(ids.FEEDBACK);
 // Both quiz1 and quiz2 have roster-player-image — keep them synced
-const playerImageEls = document.querySelectorAll(`#${ids.PLAYER_IMAGE}`);
-
-function updatePlayerImages(src) {
-  playerImageEls.forEach(img => {
-    if (img && src && img.src !== src) img.src = src;
-  });
-}
+const playerImageEls = document.querySelectorAll(`#${ids.PLAYER_IMAGE}`)
 const playerInfoEl = document.getElementById(ids.PLAYER_INFO) || null;
 const playerTriviaEl = document.getElementById(ids.PLAYER_TRIVIA);
 const scoreEl = document.getElementById(ids.SCORE);
@@ -188,7 +182,11 @@ let initialRosterCount = 0;
 ///////////////////////////
 // UTILITY FUNCTIONS
 ///////////////////////////
-
+function updatePlayerImages(src) {
+  playerImageEls.forEach(img => {
+    if (img && src && img.src !== src) img.src = src;
+  });
+}
 //Scoreboard//
 function updateScoreboard() {
   const correct = parseInt(localStorage.getItem('correctAnswers'), 10) || 0;
@@ -197,7 +195,7 @@ function updateScoreboard() {
   correctEls.forEach(el => el.textContent = correct);
   incorrectEls.forEach(el => el.textContent = wrong);
 }
-
+// ---------//
 function log(...args) { console.log('[hof-quiz]', ...args); }
 function safeParseJSON(raw) { try { return JSON.parse(raw); } catch { return null; } }
 function shuffleArray(arr) { for (let i = arr.length-1; i>0; i--) { const j=Math.floor(Math.random()*(i+1)); [arr[i],arr[j]]=[arr[j],arr[i]]; } }
