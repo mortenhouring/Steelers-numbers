@@ -1,4 +1,4 @@
-//  roster-quiz.js v2 WORKING 19/10/25 00:36
+ //  roster-quiz.js v2 WORKING 19/10/25 00:36
 // Single-page quiz controller adapted for hof.json
 // All configurable paths, filenames, HTML IDs, and localStorage keys
 // are defined at the top for easy modification.
@@ -62,8 +62,8 @@ const CONFIG = {
 function prefillQuiz2Elements(player) {
   if (!player) return;
 
-  // --- Player image (sync both quiz1/quiz2 views) ---
-updatePlayerImages(player['espn-image'] || player.image || '');
+  // --- Player image ---
+  if (playerImageEl) playerImageEl.src = player['espn-image'] || player.image || '';
   
   const lazyImageEl = document.getElementById('lazy-image');
   if (lazyImageEl) lazyImageEl.src = player['lazyimage'] || '';
@@ -139,15 +139,12 @@ if (statsEl) {
     statsEl.style.display = 'none';
   }
 }
-  // --- Scoreboard (correct / incorrect) ---
-const scoreboardcorrectvalue = document.getElementById('scoreboardcorrectvalue');
-const scoreboardincorrectvalue = document.getElementById('scoreboardincorrectvalue');
-// Populate values from localStorage (or 0 if not set)
-if (scoreboardcorrectvalue) {
-  scoreboardcorrectvalue.textContent = parseInt(localStorage.getItem('correctAnswers'), 10) || 0;
-}
-if (scoreboardincorrectvalue) {
-  scoreboardincorrectvalue.textContent = parseInt(localStorage.getItem('incorrectAnswers'), 10) || 0;
+  // --- Score / Remaining ---
+  const score = parseInt(localStorage.getItem(CONFIG.STORAGE_KEYS.SCORE), 10) || 0;
+  const total = parseInt(localStorage.getItem(CONFIG.STORAGE_KEYS.TOTAL_QUESTIONS), 10) || 0;
+  const pool = safeParseJSON(localStorage.getItem(CONFIG.STORAGE_KEYS.CURRENT_ROSTER)) || [];
+  scoreEl.textContent = `Score: ${score}/${total}`;
+  remainingEl.textContent = `Remaining: ${pool.length}`;
 }
 ///////////////////////////
 // ELEMENTS
@@ -163,17 +160,13 @@ const clearButton = document.getElementById(ids.CLEAR_BUTTON);
 const nextButton = document.getElementById(ids.NEXT_BUTTON);
 const keypadButtons = document.querySelectorAll(`.${ids.KEYPAD_BUTTONS_CLASS}`);
 const feedbackEl = document.getElementById(ids.FEEDBACK);
-// Both quiz1 and quiz2 have roster-player-image — keep them synced
-const playerImageEls = document.querySelectorAll(`#${ids.PLAYER_IMAGE}`)
+const playerImageEl = document.getElementById(ids.PLAYER_IMAGE) || null;
 const playerInfoEl = document.getElementById(ids.PLAYER_INFO) || null;
 const playerTriviaEl = document.getElementById(ids.PLAYER_TRIVIA);
 const scoreEl = document.getElementById(ids.SCORE);
 const remainingEl = document.getElementById(ids.REMAINING);
-// scoreboard
-const correctEls = document.querySelectorAll('.scoreboard-value.correct');
-const incorrectEls = document.querySelectorAll('.scoreboard-value.incorrect');
-const scoreboardMiddle = document.querySelector('.scoreboard-middle'); // optional
-//////////////////////////
+
+///////////////////////////
 // STATE
 ///////////////////////////
 let currentPlayer = null;
@@ -182,20 +175,6 @@ let initialRosterCount = 0;
 ///////////////////////////
 // UTILITY FUNCTIONS
 ///////////////////////////
-function updatePlayerImages(src) {
-  playerImageEls.forEach(img => {
-    if (img && src && img.src !== src) img.src = src;
-  });
-}
-//Scoreboard//
-function updateScoreboard() {
-  const correct = parseInt(localStorage.getItem('correctAnswers'), 10) || 0;
-  const wrong = parseInt(localStorage.getItem('incorrectAnswers'), 10) || 0;
-
-  correctEls.forEach(el => el.textContent = correct);
-  incorrectEls.forEach(el => el.textContent = wrong);
-}
-// ---------//
 function log(...args) { console.log('[hof-quiz]', ...args); }
 function safeParseJSON(raw) { try { return JSON.parse(raw); } catch { return null; } }
 function shuffleArray(arr) { for (let i = arr.length-1; i>0; i--) { const j=Math.floor(Math.random()*(i+1)); [arr[i],arr[j]]=[arr[j],arr[i]]; } }
@@ -238,64 +217,54 @@ function saveScore(mode, correctAnswers, totalQuestions) {
 // INIT
 ///////////////////////////
 async function init() {
-    console.log('Quiz init started');
+  log('init() start');
 
-    // Wait for DOM
-    if (document.readyState === 'loading') {
-        await new Promise(resolve => {
-            document.addEventListener('DOMContentLoaded', resolve);
-        });
-        console.log('DOM fully loaded');
-    }
+  // Load roster JSON
+  let loadedRoster = [];
+  try {
+    const resp = await fetch(CONFIG.ROSTER_JSON,{cache:'no-store'});
+    if(!resp.ok) throw new Error(`HTTP ${resp.status}`);
+    loadedRoster = await resp.json();
+    if(!Array.isArray(loadedRoster)||loadedRoster.length===0) throw new Error('Roster not a non-empty array');
 
-    // Load roster.json
-    try {
-        const resp = await fetch(CONFIG.ROSTER_JSON, { cache: 'no-store' });
-        if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
-        const data = await resp.json();
-        window.loadedRoster = data;
-        console.log('Roster loaded:', loadedRoster.length, 'players');
-    } catch (e) {
-        console.error('Failed to load roster.json:', e);
-        const el = document.getElementById('quiz1-view');
-        if (el) el.innerHTML = '<p style="color:red">Failed to load roster. Please reload the page.</p>';
-        return;
-    }
+    // Filter out null-number entries
+    loadedRoster = loadedRoster.filter(player => player.number !== null);
+    log(`Fetched roster — ${loadedRoster.length} players`);
+    log('Players loaded:', loadedRoster.map(p => p.player_name));
+  } catch(err){
+    console.error('[hof-quiz] Could not fetch roster:',err);
+    questionDisplay.textContent=`Error loading roster: ${err.message}`;
+    showView('quiz1'); return;
+  }
 
-    // ✅ Initialize localStorage roster if empty or invalid
-    let storedRoster = safeParseJSON(localStorage.getItem(CONFIG.STORAGE_KEYS.CURRENT_ROSTER));
-    if (!Array.isArray(storedRoster) || storedRoster.length === 0) {
-        console.log('Initializing roster-currentRoster from loadedRoster');
-        localStorage.setItem(CONFIG.STORAGE_KEYS.CURRENT_ROSTER, JSON.stringify([...loadedRoster]));
-        storedRoster = [...loadedRoster];
-    }
+  // Initialize working pool
+  try {
+    const rawSaved = localStorage.getItem(CONFIG.STORAGE_KEYS.CURRENT_ROSTER);
+    let saved = safeParseJSON(rawSaved);
+    if(!Array.isArray(saved)||saved.length===0){
+      const fresh = [...loadedRoster];
+      shuffleArray(fresh);
+      localStorage.setItem(CONFIG.STORAGE_KEYS.CURRENT_ROSTER, JSON.stringify(fresh));
+      log('Saved fresh shuffled currentRoster to localStorage');
+    } else log(`Found existing pool — ${saved.length} players remain`);
 
-    window.currentRoster = storedRoster;
-    console.log('Current roster ready, length:', currentRoster.length);
+    let totalQ=parseInt(localStorage.getItem(CONFIG.STORAGE_KEYS.TOTAL_QUESTIONS),10);
+    if(isNaN(totalQ)){ totalQ=loadedRoster.length; localStorage.setItem(CONFIG.STORAGE_KEYS.TOTAL_QUESTIONS,String(totalQ)); log('Initialized totalQuestions',totalQ);}
+    else log('totalQuestions(from storage):',totalQ);
+    initialRosterCount=totalQ;
+  } catch(err){ console.error('[hof-quiz] Error init roster:',err); questionDisplay.textContent=`Error initializing roster: ${err.message}`; showView('quiz1'); return; }
 
-    // Pick first player
-    try {
-        pickNextPlayer();
-        console.log('First player selected:', currentPlayer?.player_name || '(name missing)');
-    } catch (e) {
-        console.error('Error picking first player:', e);
-        return;
-    }
+  // Resume if lastPlayer & lastAnswer exist
+  const lastPlayerRaw = localStorage.getItem(CONFIG.STORAGE_KEYS.LAST_PLAYER);
+  const lastAnswerRaw = localStorage.getItem(CONFIG.STORAGE_KEYS.LAST_ANSWER);
+  if(lastPlayerRaw && lastAnswerRaw !== null){
+    log('Resuming lastPlayer and lastAnswer found');
+    try { currentPlayer = safeParseJSON(lastPlayerRaw) || null; showAnswerView(); return; }
+    catch(err){ console.warn('[hof-quiz] Could not parse lastPlayer',err); }
+  }
 
-    // Update UI
-    try {
-        prefillQuiz2Elements(currentPlayer);
-        console.log('UI initialized successfully');
-    } catch (e) {
-        console.error('Error updating UI:', e);
-    }
-
-    updateScoreboard();
-    console.log('Quiz init complete ✅');
+  pickNextPlayer();
 }
-
-// Call init
-init();
 
 ///////////////////////////
 // PICK NEXT PLAYER
@@ -331,40 +300,21 @@ prefillQuiz2Elements(currentPlayer)
 ///////////////////////////
 // SUBMIT
 ///////////////////////////
-function handleSubmit() {
+function handleSubmit(){
   const raw = answerDisplay.value.trim();
-  if (raw.length === 0) return;
-  const userAnswer = parseInt(raw, 10);
-  if (isNaN(userAnswer)) return;
+  if(raw.length===0) return;
+  const userAnswer = parseInt(raw,10);
+  if(isNaN(userAnswer)) return;
+  localStorage.setItem(CONFIG.STORAGE_KEYS.LAST_ANSWER,String(userAnswer));
 
-  localStorage.setItem(CONFIG.STORAGE_KEYS.LAST_ANSWER, String(userAnswer));
+  let questionsAsked=parseInt(localStorage.getItem(CONFIG.STORAGE_KEYS.QUESTIONS_ASKED),10); if(isNaN(questionsAsked)) questionsAsked=0; questionsAsked+=1;
+  let score=parseInt(localStorage.getItem(CONFIG.STORAGE_KEYS.SCORE),10); if(isNaN(score)) score=0;
+  const correctNumber=Number(currentPlayer?.number ?? NaN);
+  if(!isNaN(correctNumber) && correctNumber===userAnswer) score+=1;
+  localStorage.setItem(CONFIG.STORAGE_KEYS.QUESTIONS_ASKED,String(questionsAsked));
+  localStorage.setItem(CONFIG.STORAGE_KEYS.SCORE,String(score));
 
-  // total questions answered
-  let questionsAsked = parseInt(localStorage.getItem(CONFIG.STORAGE_KEYS.QUESTIONS_ASKED), 10);
-  if (isNaN(questionsAsked)) questionsAsked = 0;
-  questionsAsked += 1;
-  localStorage.setItem(CONFIG.STORAGE_KEYS.QUESTIONS_ASKED, String(questionsAsked));
-
-  const correctNumber = Number(currentPlayer?.number ?? NaN);
-
-  // previous counts
-  let correct = parseInt(localStorage.getItem('correctAnswers'), 10);
-  if (isNaN(correct)) correct = 0;
-  let wrong = parseInt(localStorage.getItem('incorrectAnswers'), 10);
-  if (isNaN(wrong)) wrong = 0;
-
-  if (!isNaN(correctNumber) && correctNumber === userAnswer) {
-    correct += 1;
-    localStorage.setItem('correctAnswers', String(correct));
-  } else {
-    wrong += 1;
-    localStorage.setItem('incorrectAnswers', String(wrong));
-  }
-
-  // update scoreboard in all views
-  updateScoreboard();
-
-  log(`Answer submitted for player ${currentPlayer?.player_name}: guess=${userAnswer} correct=${correctNumber === userAnswer}`);
+  log(`Answer submitted for player ${currentPlayer?.player_name}: guess=${userAnswer} correct=${correctNumber===userAnswer}`);
   showAnswerView();
 }
 
@@ -495,7 +445,4 @@ window.addEventListener("DOMContentLoaded", () => {
 }
 });
 // Initialize once DOM is ready
-window.addEventListener('DOMContentLoaded', () => {
-  init();
-  updateScoreboard();
-});
+window.addEventListener("DOMContentLoaded", init);
