@@ -115,12 +115,18 @@ if (playerStatsEl) {
   }
 }
   // --- Achievements ---
-  const achievementsBox = document.getElementById('player-achievements');
-  if (achievementsBox) {
-    const achArr = Array.isArray(player?.achievements) ? player.achievements : [];
-    achievementsBox.innerHTML = achArr.length ? achArr.map(a => a.trim()).join('<br>') : '';
-    achievementsBox.style.display = achArr.length ? 'block' : 'none';
+const achievementsWrapper = document.getElementById('player-achievements-wrapper');
+const achievementsBox = document.getElementById('player-achievements');
+if (achievementsWrapper && achievementsBox) {
+  const achArr = Array.isArray(player?.achievements) ? player.achievements : [];
+  if (achArr.length) {
+    achievementsBox.innerHTML = achArr.map(a => a.trim()).join('<br>');
+    achievementsWrapper.style.display = 'block';
+  } else {
+    achievementsBox.innerHTML = '';
+    achievementsWrapper.style.display = 'none';
   }
+}
   // --- Player stats ---
 const statsEl = document.getElementById('player-stats');
 if (statsEl) {
