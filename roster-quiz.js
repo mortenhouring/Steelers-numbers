@@ -275,7 +275,7 @@ async function init() {
 
     // Pick first player
     try {
-        window.currentPlayer = pickNextPlayer();
+        pickNextPlayer();
         console.log('First player selected:', currentPlayer?.player_name || '(name missing)');
     } catch (e) {
         console.error('Error picking first player:', e);
