@@ -240,7 +240,7 @@ function saveScore(mode, correctAnswers, totalQuestions) {
 async function init() {
     console.log('Quiz init started');
 
-    // Wait for DOM to be fully loaded
+    // Wait for DOM
     if (document.readyState === 'loading') {
         await new Promise(resolve => {
             document.addEventListener('DOMContentLoaded', resolve);
@@ -248,43 +248,35 @@ async function init() {
         console.log('DOM fully loaded');
     }
 
-    // Load roster.json safely
+    // Load roster.json
     try {
-        const resp = await fetch('roster.json', { cache: 'no-store' });
+        const resp = await fetch(CONFIG.ROSTER_JSON, { cache: 'no-store' });
         if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
         const data = await resp.json();
         window.loadedRoster = data;
         console.log('Roster loaded:', loadedRoster.length, 'players');
     } catch (e) {
         console.error('Failed to load roster.json:', e);
-        // Show user-friendly message
         const el = document.getElementById('quiz1-view');
         if (el) el.innerHTML = '<p style="color:red">Failed to load roster. Please reload the page.</p>';
-        return; // Stop further execution
-    }
-
-    // LocalStorage fallback
-    try {
-        const saved = localStorage.getItem('currentRoster');
-        window.currentRoster = saved ? JSON.parse(saved) : [...loadedRoster];
-        console.log('Current roster loaded from localStorage or default:', currentRoster.length);
-    } catch (e) {
-        console.warn('localStorage error, using default roster:', e);
-        window.currentRoster = [...loadedRoster];
-    }
-
-    // Ensure we have players to show
-    if (!currentRoster || currentRoster.length === 0) {
-        console.error('No players available to start the quiz');
-        const el = document.getElementById('quiz1-view');
-        if (el) el.innerHTML = '<p style="color:red">No players available. Check roster.json.</p>';
         return;
     }
 
-    // Pick the first player safely
+    // ✅ Initialize localStorage roster if empty or invalid
+    let storedRoster = safeParseJSON(localStorage.getItem(CONFIG.STORAGE_KEYS.CURRENT_ROSTER));
+    if (!Array.isArray(storedRoster) || storedRoster.length === 0) {
+        console.log('Initializing roster-currentRoster from loadedRoster');
+        localStorage.setItem(CONFIG.STORAGE_KEYS.CURRENT_ROSTER, JSON.stringify([...loadedRoster]));
+        storedRoster = [...loadedRoster];
+    }
+
+    window.currentRoster = storedRoster;
+    console.log('Current roster ready, length:', currentRoster.length);
+
+    // Pick first player
     try {
         window.currentPlayer = pickNextPlayer();
-        console.log('First player selected:', currentPlayer?.name || '(name missing)');
+        console.log('First player selected:', currentPlayer?.player_name || '(name missing)');
     } catch (e) {
         console.error('Error picking first player:', e);
         return;
@@ -298,12 +290,12 @@ async function init() {
         console.error('Error updating UI:', e);
     }
 
+    updateScoreboard();
     console.log('Quiz init complete ✅');
 }
 
 // Call init
 init();
-}
 
 ///////////////////////////
 // PICK NEXT PLAYER
@@ -504,6 +496,6 @@ window.addEventListener("DOMContentLoaded", () => {
 });
 // Initialize once DOM is ready
 window.addEventListener('DOMContentLoaded', () => {
-  init();                // your existing setup
-  updateScoreboard();    // show correct/wrong totals right away
+  init();
+  updateScoreboard();
 });
