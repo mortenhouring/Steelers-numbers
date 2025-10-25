@@ -241,7 +241,8 @@ function saveScore(mode, correctAnswers, totalQuestions) {
 ///////////////////////////
 async function init() {
   log('init() start');
-
+  // show loading message immediately
+  questionDisplay.textContent = 'Loading roster...';
   // Load roster JSON
   let loadedRoster = [];
   try {
