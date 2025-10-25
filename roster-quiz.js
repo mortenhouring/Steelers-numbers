@@ -176,10 +176,10 @@ const playerTriviaEl = document.getElementById(ids.PLAYER_TRIVIA);
 const scoreEl = document.getElementById(ids.SCORE);
 const remainingEl = document.getElementById(ids.REMAINING);
 // scoreboard
-const scoreboardcorrectvalue = document.getElementById('scoreboardcorrectvalue');   // correct answers
-const scoreboardincorrectvalue = document.getElementById('scoreboardincorrectvalue'); // incorrect answers
-const scoreboardMiddle = document.getElementById('scoreboard-middle');               // NEXT button
-///////////////////////////
+const correctEls = document.querySelectorAll('.scoreboard-value.correct');
+const incorrectEls = document.querySelectorAll('.scoreboard-value.incorrect');
+const scoreboardMiddle = document.querySelector('.scoreboard-middle'); // optional
+//////////////////////////
 // STATE
 ///////////////////////////
 let currentPlayer = null;
@@ -191,12 +191,11 @@ let initialRosterCount = 0;
 
 //Scoreboard//
 function updateScoreboard() {
-  if(scoreboardcorrectvalue) {
-    scoreboardcorrectvalue.textContent = parseInt(localStorage.getItem('correctAnswers'), 10) || 0;
-  }
-  if(scoreboardincorrectvalue) {
-    scoreboardincorrectvalue.textContent = parseInt(localStorage.getItem('incorrectAnswers'), 10) || 0;
-  }
+  const correct = parseInt(localStorage.getItem('correctAnswers'), 10) || 0;
+  const wrong = parseInt(localStorage.getItem('incorrectAnswers'), 10) || 0;
+
+  correctEls.forEach(el => el.textContent = correct);
+  incorrectEls.forEach(el => el.textContent = wrong);
 }
 
 function log(...args) { console.log('[hof-quiz]', ...args); }
@@ -340,7 +339,7 @@ function handleSubmit() {
 
   const correctNumber = Number(currentPlayer?.number ?? NaN);
 
-  // read previous counts
+  // previous counts
   let correct = parseInt(localStorage.getItem('correctAnswers'), 10);
   if (isNaN(correct)) correct = 0;
   let wrong = parseInt(localStorage.getItem('incorrectAnswers'), 10);
@@ -354,8 +353,9 @@ function handleSubmit() {
     localStorage.setItem('incorrectAnswers', String(wrong));
   }
 
-  // refresh scoreboard
+  // update scoreboard in all views
   updateScoreboard();
+
   log(`Answer submitted for player ${currentPlayer?.player_name}: guess=${userAnswer} correct=${correctNumber === userAnswer}`);
   showAnswerView();
 }
@@ -487,4 +487,7 @@ window.addEventListener("DOMContentLoaded", () => {
 }
 });
 // Initialize once DOM is ready
-window.addEventListener("DOMContentLoaded", init);
+window.addEventListener('DOMContentLoaded', () => {
+  init();                // your existing setup
+  updateScoreboard();    // show correct/wrong totals right away
+});
