@@ -146,6 +146,67 @@
   text-overflow: ellipsis;
   
 }
+/* ACHIEVEMENTS Wrapper to contain both bars */
+#player-achievements-wrapper {
+  position: relative;          
+  margin: 2vh auto 0 auto;    /* pulls wrapper closer to info container */
+  padding: 0;                  /* no extra spacing */
+  display: flex;
+  flex-direction: column;
+  align-items: center;         /* center children horizontally */
+  z-index: 6;
+}
+
+/* Smaller header bar (flush with main bar) */
+#player-achievements-header {
+  background-color: rgba(255, 182, 18, 0.7);
+  color: black;
+  padding: 0.3% 1%;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 550;
+  font-size: 11px;
+  text-align: center;
+  white-space: nowrap;
+  display: inline-block;       /* width matches text */
+  line-height: 1.1;
+
+  /* rounded top corners only */
+  border-top-left-radius: 0.5em;
+  border-top-right-radius: 0.5em;
+
+  /* flush join with main bar */
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  box-shadow: none;
+  margin-bottom: 0;            /* flush with main bar */
+}
+
+/* Main achievements bar (flush with header) */
+#player-achievements {
+  background-color: rgba(255, 182, 18, 0.7);
+  color: black;
+  padding: 0.5% 3%;
+  font-size: 19px;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 550;
+  text-align: center;
+  display: flex;
+  gap: 1em;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  /* rounded bottom corners only */
+  border-bottom-left-radius: 0.2em;
+  border-bottom-right-radius: 0.2em;
+  border-top-left-radius: 0.2rem;
+  border-top-right-radius: 0.2rem;
+
+  margin: 0;                   /* flush with header */
+  max-width: 100%;
+}
 /*------ HOF styling --------------*/
 
 #hof-player-image {
@@ -261,7 +322,10 @@
   <img id="roster-player-image" src="https://raw.githubusercontent.com/mortenhouring/Steelers-numbers/9e12dca686f8436daf86dc134bcbf6cfadbf5838/fetchimages/images/espn-images/espn-alex_highsmith.png" alt="Player Image" />
   <img id="lazy-image" class="lazy-image" src="https://raw.githubusercontent.com/mortenhouring/Steelers-numbers/9e12dca686f8436daf86dc134bcbf6cfadbf5838/fetchimages/images/lazy-images/alex_highsmith_lazy.jpg" alt="Background lazy image" />
 </div>
-
+<div id="player-achievements-wrapper">
+  <div id="player-achievements-header">Career achievements</div>
+  <div id="player-achievements"></div>
+</div>
 <div id="hof-trivia-box">
   <div id="hof-trivia-inner">
     <div id="player-trivia"></div>
