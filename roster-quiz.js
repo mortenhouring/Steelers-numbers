@@ -120,7 +120,7 @@ const achievementsBox = document.getElementById('player-achievements');
 if (achievementsWrapper && achievementsBox) {
   const achArr = Array.isArray(player?.achievements) ? player.achievements : [];
   if (achArr.length) {
-    achievementsBox.innerHTML = achArr.map(a => a.trim()).join('<br>');
+    achievementsBox.textContent = achArr.map(a => a.trim()).join(' • ');
     achievementsWrapper.style.display = 'block';
   } else {
     achievementsBox.innerHTML = '';
