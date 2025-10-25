@@ -292,7 +292,7 @@ async function init() {
 
     // Update UI
     try {
-        prefillQuizElements(currentPlayer);
+        prefillQuiz2Elements(currentPlayer);
         console.log('UI initialized successfully');
     } catch (e) {
         console.error('Error updating UI:', e);
