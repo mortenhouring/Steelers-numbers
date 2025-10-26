@@ -183,11 +183,11 @@
 /* ACHIEVEMENTS Wrapper to contain both bars */
 #player-achievements-wrapper {
   position: relative;          
-  margin: 2vh auto 0 auto;    /* pulls wrapper closer to info container */
-  padding: 0;                  /* no extra spacing */
+  margin: 2vh auto 0 auto;
+  padding: 0;
   display: flex;
   flex-direction: column;
-  align-items: center;         /* center children horizontally */
+  align-items: center;
   z-index: 6;
 }
 
@@ -201,17 +201,19 @@
   font-size: 12px;
   text-align: center;
   white-space: nowrap;
-  display: inline-block;       /* width matches text */
+  display: flex; /* Ensures block behavior for vertical stacking */
+  justify-content: center;
   line-height: 1;
   
   /* rounded top corners only */
   border-top-left-radius: 0.5em;
   border-top-right-radius: 0.5em;
 
-  /* flush join with main bar */
-  border-bottom-left-radius: 0.0em;
-  border-bottom-right-radius: 0.0em;
+  /* FIX: Ensure zero radius at the bottom for a perfect vertical join */
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
   box-shadow: none;
+  margin-bottom: 0; /* FIX: Eliminate any margin below */
 }
 
 /* Main achievements bar (flush with header) */
@@ -223,25 +225,26 @@
   font-family: 'Roboto', sans-serif;
   font-weight: 550;
   text-align: center;
-  display: inline-flex;
+  display: flex; /* Ensures block behavior for vertical stacking */
   flex-wrap: wrap;
-  row-gap: 0.3em; /* vertical spacing between lines */
+  row-gap: 0.3em;
   column-gap: 1em;
   align-items: center;
   justify-content: center;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 
+  /* FIX: Introduce 1px overlap to guarantee a flush join */
+  margin: -1px 0 0 0;
+  
+  /* FIX: Ensure zero radius at the top for a perfect vertical join */
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  
   /* rounded bottom corners only */
   border-bottom-left-radius: 0.2em;
   border-bottom-right-radius: 0.2em;
-  border-top-left-radius: 0.0rem;
-  border-top-right-radius: 0.0rem;
-
-  margin: 0;                   /* flush with header */
   max-width: 100%;
 }
+
 /*------ HOF styling --------------*/
 
 #hof-player-image {
