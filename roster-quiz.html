@@ -201,7 +201,8 @@
   font-size: 12px;
   text-align: center;
   white-space: nowrap;
-  display: flex; /* Ensures block behavior for vertical stacking */
+  /* FIX: Use inline-flex to achieve shrink-wrap width */
+  display: inline-flex;
   justify-content: center;
   line-height: 1;
   
@@ -209,11 +210,11 @@
   border-top-left-radius: 0.5em;
   border-top-right-radius: 0.5em;
 
-  /* FIX: Ensure zero radius at the bottom for a perfect vertical join */
+  /* Ensure zero radius at the bottom for a perfect vertical join */
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
   box-shadow: none;
-  margin-bottom: 0; /* FIX: Eliminate any margin below */
+  margin-bottom: 0; /* Eliminate any margin below */
 }
 
 /* Main achievements bar (flush with header) */
@@ -225,17 +226,17 @@
   font-family: 'Roboto', sans-serif;
   font-weight: 550;
   text-align: center;
-  display: flex; /* Ensures block behavior for vertical stacking */
+  display: flex;
   flex-wrap: wrap;
   row-gap: 0.3em;
   column-gap: 1em;
   align-items: center;
   justify-content: center;
 
-  /* FIX: Introduce 1px overlap to guarantee a flush join */
+  /* FIX: Introduce 1px overlap (negative margin) to guarantee a flush, gapless join */
   margin: -1px 0 0 0;
   
-  /* FIX: Ensure zero radius at the top for a perfect vertical join */
+  /* Ensure zero radius at the top for a perfect vertical join */
   border-top-left-radius: 0;
   border-top-right-radius: 0;
   
