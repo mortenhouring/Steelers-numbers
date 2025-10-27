@@ -201,7 +201,7 @@
   font-size: 12px;
   text-align: center;
   white-space: nowrap;
-  /* FIX: Use inline-flex to achieve shrink-wrap width */
+  
   display: inline-flex;
   justify-content: center;
   line-height: 1;
@@ -209,12 +209,13 @@
   /* rounded top corners only */
   border-top-left-radius: 0.5em;
   border-top-right-radius: 0.5em;
-
+  width: fit-content;
   /* Ensure zero radius at the bottom for a perfect vertical join */
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
   box-shadow: none;
-  margin-bottom: 0; /* Eliminate any margin below */
+  margin-bottom: 0;
+  
 }
 
 /* Main achievements bar (flush with header) */
@@ -230,6 +231,7 @@
   flex-wrap: wrap;
   row-gap: 0.3em;
   column-gap: 1em;
+  gap: 6px;
   align-items: center;
   justify-content: center;
   white-space: normal;
@@ -244,6 +246,7 @@
   border-bottom-right-radius: 0.2em;
   max-width: 100%;
   min-width: 60%;
+  min-width: calc(100% + 1%);
 }
 
 /*------ HOF styling --------------*/
