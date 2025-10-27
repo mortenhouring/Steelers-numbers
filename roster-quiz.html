@@ -300,13 +300,15 @@
   left: 0;
   right: 0;
   bottom: 0;
-  height: 1.5rem;
+  height: 5.1rem;
   pointer-events: none;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0));
-  transition: opacity 0.3s ease;
-  opacity: 1;                           /* visible by default */
-  z-index: 2;
-}
+  background: linear-gradient(
+    to top,
+    rgba(255, 182, 18, 0.75) 0%,   /* strong gold at the bottom edge */
+    rgba(255, 182, 18, 0.08) 40%,  /* gentle yellow tone extending upward */
+    rgba(255, 182, 18, 0.03) 75%,  /* barely noticeable mid fade */
+    rgba(255, 182, 18, 0) 100%     /* transparent near the top */
+  );
 </style>
 </head>
 <body>
