@@ -20,18 +20,17 @@
 /* ===========================
    BASE CSS FOR ROSTER INFO
    =========================== */
-/*ACHIEVEMENTS*/
 #player-achievements-wrapper {
   width: 96%;
-  margin: 5vh auto 0 auto;
-  border: 2px red solid; /* for visibility */
-  display: flex;
+  margin: 5vh auto 0 auto;      /* vertical spacing from top */
+  border: 2px red solid;        /* visual debug */
+  display: flex;                /* stack children vertically */
   flex-direction: column;
-  align-items: flex-start;
+  align-items: flex-start;      /* left-align items so header + main bar are flush */
 }
 
 #player-achievements-header {
-  display: inline-block;   /* shrink to text width */
+  display: inline-block;        /* shrink to text width */
   background-color: rgba(255, 182, 18, 0.7);
   color: black;
   font-family: 'Roboto', sans-serif;
@@ -40,21 +39,20 @@
   text-align: center;
   padding: 0.2em 0.5em;
   white-space: nowrap;
-  outline: 2px green;
+  outline: 2px green;          /* visual debug */
 }
-/* Achievements main bar */
+
 #player-achievements {
-  display: inline-flex;    /* shrink to fit content */
-  flex-wrap: wrap;
-  gap: 0.8em;
+  display: flex;                /* horizontal line of achievements */
+  flex-wrap: wrap;              /* wrap to new line if needed */
+  gap: 0.8em;                   /* space between items */
   background-color: rgba(255, 182, 18, 0.7);
   color: black;
   padding: 0.5% 3%;
   font-size: 19px;
   font-family: 'Roboto', sans-serif;
   font-weight: 550;
-  outline: 2px blue;       /* visual debug */
-  vertical-align: top;     /* keeps it flush under the header */
+  outline: 2px blue;            /* visual debug */
 }
 /* TOP Container */
 #roster-info-container {
