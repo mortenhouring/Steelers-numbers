@@ -20,43 +20,13 @@
 /* ===========================
    BASE CSS FOR ROSTER INFO
    =========================== */
+/* PLAYER ACHIEVEMENTS WRAPPER */
 #player-achievements-wrapper {
-  width: 96%;
-  height: 15%;
-  margin: 5vh auto 0 auto;      /* vertical spacing from top */
-  border: 2px red solid;        /* visual debug */
-  display: flex;                /* stack children vertically */
-  flex-direction: column;
-  align-items: flex-start;      /* left-align items so header + main bar are flush */
-}
-
-#player-achievements-header {
-  display: inline-block;        /* shrink to text width */
-  background-color: rgba(255, 182, 18, 0.7);
-  color: black;
-  font-family: 'Roboto', sans-serif;
-  font-weight: 550;
-  font-size: 12px;
-  text-align: center;
-  padding: 0.2em 0.5em;
-  white-space: nowrap;
-  outline: 2px green;          /* visual debug */
-}
-
-#player-achievements {
-  display: flex;                /* horizontal line of achievements */
-  flex-wrap: wrap;              /* wrap to new line if needed */
-  gap: 0.8em;                   /* space between items */
-  background-color: rgba(255, 182, 18, 0.7);
-  color: black;
-  padding: 0.5% 3%;
-  font-size: 19px;
-  font-family: 'Roboto', sans-serif;
-  font-weight: 550;
-  /* TESTING */
-  text-align: center;
-  display: inline-block;
-  outline: 2px blue;            /* visual debug */
+  width: 100vw;
+  height: 50px;
+  margin-top: 1vh;
+  position: relative;
+  outline: 1px solid red;
 }
 /* TOP Container */
 #roster-info-container {
