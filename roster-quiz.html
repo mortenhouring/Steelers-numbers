@@ -20,7 +20,12 @@
 /* ===========================
    BASE CSS FOR ROSTER INFO
    =========================== */
-/* PLAYER ACHIEVEMENTS WRAPPER */
+/* PLAYER ACHIEVEMENTS*/
+/* elements/arrays pulled from json*/
+.achievement-item {
+  white-space: nowrap;
+}
+
 /* Wrapper stays the same */
 #player-achievements-wrapper {
   width: 100vw;
@@ -58,6 +63,11 @@
   padding-left: 10px;        /* horizontal padding */
   padding-right: 10px;       /* horizontal padding */
   /*top: 12px;             adjust vertical position as needed */
+  display: flex;               /* arrange children horizontally */
+  flex-wrap: wrap;             /* wrap to next line when needed */
+  justify-content: center;     /* center all lines horizontally */
+  column-gap: 8px;             /* space between items on same line */
+  row-gap: 4px;
 }
 /* TOP Container */
 #roster-info-container {
