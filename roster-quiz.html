@@ -21,26 +21,42 @@
    BASE CSS FOR ROSTER INFO
    =========================== */
 /* PLAYER ACHIEVEMENTS WRAPPER */
+/* Wrapper stays the same */
 #player-achievements-wrapper {
   width: 100vw;
   height: 50px;
   margin-top: 1vh;
   position: relative;
-  justify-content: center;
   outline: 1px solid red;
 }
-/* PLAYER ACHIEVEMENTS HEADER */
+
+/* Header */
 #player-achievements-header {
   background-color: rgba(255, 182, 18, 0.7);
   color: black;
   font-family: 'Roboto', sans-serif;
   font-weight: 550;
   font-size: 12px;
-  height: 12px;
   text-align: center;
-  margin-top: 0;             /* ensures flush with wrapper’s top edge */
-  width: 40%;               /* matches wrapper width */
-  
+  width: fit-content;    /* shrink to content width */
+  margin: 0 auto;        /* horizontally center */
+  position: relative;    /* allows vertical offset if needed */
+  top: 0;                /* flush with top */
+}
+
+/* Second element */
+#player-achievements {
+  background-color: rgba(255, 182, 18, 0.7);
+  color: black;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 550;
+  font-size: 12px;
+  text-align: center;
+  width: fit-content;
+  margin: 0 auto;        /* horizontally center */
+  position: relative;
+  top: 25px;             /* adjust vertical position as needed */
+}
 /* TOP Container */
 #roster-info-container {
   position: relative;
