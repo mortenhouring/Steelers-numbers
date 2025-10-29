@@ -72,7 +72,7 @@ Header placeholder must be same height as defined in height in header.html
   width: 90%;
   max-width: 400px;
   padding: 1rem 1rem 1rem 3.5rem;
-  margin-top: 1rem;
+  
   border-radius: 1.5rem;
   border: 1px solid rgba(255, 255, 255);
   background-color: rgba(0,0,0,0.7);
@@ -192,7 +192,12 @@ Header placeholder must be same height as defined in height in header.html
 #score-remaining {
   font-size: 1em;
   font-weight: bold;
-  margin: 0.2vh 1.7vw 1.7vw;   /* top:5px, sides/bottom:20px */
+  #player-achievements-wrapper {
+  margin-top: 1vh;
+  margin-bottom: 1vh;
+  margin-left: 4vw;
+  margin-right: 4vw;
+}
   text-align: center;
 }
 
