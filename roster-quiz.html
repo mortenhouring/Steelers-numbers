@@ -314,8 +314,9 @@
   width: 92vw;
   max-width: 92vw;
   flex-grow: 1;       /* expand to fill remaining space */
-  min-height: 8vh;    /* prevents disappearing completely */
   overflow-y: auto;   /* scroll content if needed */
+  flex-shrink: 1;   /* allow shrinking if siblings grow */
+  min-height: 0;     /* allows proper flexbox shrink behavior */
   border: 1px solid rgba(0, 0, 0, 0.2);
   border-radius: 8px;
   margin-bottom: 3vh;
@@ -362,6 +363,7 @@
     rgba(255, 182, 18, 0.03) 75%,  /* barely noticeable mid fade */
     rgba(255, 182, 18, 0) 100%     /* transparent near the top */
   );
+}
 </style>
 </head>
 <body>
