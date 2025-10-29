@@ -192,7 +192,10 @@ Header placeholder must be same height as defined in height in header.html
 #score-remaining {
   font-size: 1em;
   font-weight: bold;
-  margin: 0.2vh 1.7vw 1.7vw;   /* top:5px, sides/bottom:20px */
+  margin-top: 1vh;
+  margin-bottom: 1vh;
+  margin-left: 1.7vw;
+  margin-right: 1.7vw;
   text-align: center;
 }
 
