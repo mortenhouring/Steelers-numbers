@@ -64,16 +64,14 @@
   box-sizing: border-box;
 }
 /* Fixed-height elements stay fixed and do not shrink */
+/* Fixed-height elements (must not shrink) */
 #header-placeholder,
 #feedback,
 #roster-info-container,
 #player-achievements-wrapper,
-#score-remaining,
-#next-button {
-  flex-shrink: 0;
+#quiz2-footer {         /* <-- use the footer wrapper, not individual button IDs */
+  flex: 0 0 auto;       /* shorthand: no grow, no shrink, auto basis = fixed-size behavior */
 }
-
-
 
 /* header placeholder */
 #header-placeholder {
