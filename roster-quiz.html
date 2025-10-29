@@ -46,9 +46,18 @@
   margin: 0 auto;        /* horizontally center */
   position: relative;    /* allows vertical offset if needed */
   top: 0;                /* flush with top */
+  /* TESTING */
+  /*rounded top corners only */
+  border-top-left-radius: 0.5em;
+  border-top-right-radius: 0.5em;
+
+  /* flush join with main bar */
+  border-bottom-left-radius:  0;
+  border-bottom-right-radius: 0;
+  /* END TESTING*/
 }
 
-/* Second element */
+/* Main element */
 #player-achievements {
   background-color: rgba(255, 182, 18, 0.7);
   color: black;
@@ -67,6 +76,13 @@
   justify-content: center;     /* center all lines horizontally */
   column-gap: 10px;             /* space between items on same line */
   row-gap: 4px;
+  /* TESTING */
+  /* rounded corners */
+  border-bottom-left-radius: 0.2em;
+  border-bottom-right-radius: 0.2em;
+  border-top-left-radius: 0.2rem;
+  border-top-right-radius: 0.2rem;
+  /*END TESTING*/
 
 }
 /* TOP Container */
