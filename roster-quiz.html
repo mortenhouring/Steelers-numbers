@@ -21,11 +21,13 @@
    BASE CSS FOR ROSTER INFO
    =========================== */
 #quiz2-footer {
-  flex-shrink: 0;
+  flex-shrink: 0;            /* always visible */
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 1vh;
+  padding: 1vh 2vw;
+  background-color: rgba(0,0,0,0.7);  /* optional */
+  z-index: 10;
 }
 
 .next-btn {
@@ -49,11 +51,6 @@
   background-repeat: no-repeat;
   background-size: 1.75rem 1.75rem;
   background-position: 1rem center;
-  /* TESTING */
-  
-  bottom: 2vh;
-  left: 50%;
-  transform: translateX(-50%); /* centers horizontally */
   z-index: 999; /* keeps it above other elements */
 }
   
@@ -64,6 +61,7 @@
   display: flex;
   flex-direction: column;
   height: 100vh;  /* full viewport height */
+  box-sizing: border-box;
 }
 /* Fixed-height elements stay fixed and do not shrink */
 #header-placeholder,
@@ -196,7 +194,6 @@
   padding: 0.5% 1%;
   border-radius: 0.5em;
   white-space: nowrap;               /* keep text on one line */
-  width, max 3em */
   overflow: hidden;
   transform: scaleY(1.2);
   display: inline-block;
