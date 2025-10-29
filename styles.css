@@ -290,6 +290,7 @@ Header placeholder must be same height as defined in height in header.html
   max-width: 300px;
   overflow-wrap: break-word;
   margin-top: 1.5vh;
+  margin-bottom: 3vh;
 }
 
 /* ------------------------------
