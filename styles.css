@@ -190,12 +190,8 @@ Header placeholder must be same height as defined in height in header.html
 
 /* counters in quiz */
 #score-remaining {
-  font-size: 1em;
+  font-size: 16px;
   font-weight: bold;
-  margin-top: 1vh;
-  margin-bottom: 1vh;
-  margin-left: 1.7vw;
-  margin-right: 1.7vw;
   text-align: center;
 }
 
