@@ -20,6 +20,12 @@ På<!-- roster-quiz.html rework-->
 /* ===========================
    BASE CSS FOR ROSTER INFO
    =========================== */
+#score-remaining {
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 7%;
+}
 #quiz2-footer {
   flex-shrink: 0;            /* always visible */
   display: flex;
@@ -60,7 +66,7 @@ På<!-- roster-quiz.html rework-->
 #quiz2-view > .quiz2 {
   display: flex;
   flex-direction: column;
-  height: 100vh;  /* full viewport height */
+  height: calc(100vh - 8vh); /* Use calc() to subtract the header's height */
   box-sizing: border-box;
 }
 /* Fixed-height elements stay fixed and do not shrink */
