@@ -20,14 +20,6 @@
 /* ===========================
    BASE CSS FOR ROSTER INFO
    =========================== */
-#quiz2-footer {
-  flex-shrink: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 1vh;
-}
-
 .next-btn {
   display: flex;
   align-items: center;
@@ -50,7 +42,7 @@
   background-size: 1.75rem 1.75rem;
   background-position: 1rem center;
   /* TESTING */
-  
+  position: fixed;
   bottom: 2vh;
   left: 50%;
   transform: translateX(-50%); /* centers horizontally */
@@ -443,14 +435,12 @@
   </div>
   <div id="scroll-gradient"></div>
 </div>
-<div id="quiz2-footer">
-  <div id="score-remaining">
+      <div id="score-remaining">
         <span id="score"></span> | <span id="remaining"></span>
       </div>
 
       <button id="next-button" class="next-btn">Next Player</button>
     </div>
-</div>
 </div>
   </main>
 
