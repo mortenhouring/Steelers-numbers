@@ -57,7 +57,7 @@ main > div:not(.end-buttons-container) {
 Header placeholder must be same height as defined in height in header.html
 ------------------------------ */
 #header-placeholder {
-  height: 8vh;
+  /*height: 8vh;*/
   width: 100%;
 }
 /* ------------------------------
