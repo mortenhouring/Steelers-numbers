@@ -20,32 +20,12 @@
 /* ===========================
    BASE CSS FOR ROSTER INFO
    =========================== */
-#feedback {
-  font-size: 1.5em;
-  text-align: center;
-  line-height: 1.2;
-  margin: 0;
-  width: 90%;
-  max-width: 300px;
-  overflow-wrap: break-word;
-  margin-top: 1.5vh;
-  margin-bottom: 1.5vh;
-}
-#score-remaining {
-  font-size: 16px;
-  font-weight: bold;
-  text-align: center;
-  margin-bottom: 1vh;
-  margin-top: 0.5vh;
-}
 #quiz2-footer {
-  flex-shrink: 0;            /* always visible */
+  flex-shrink: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 0.5vh 2vw;
-  background-color: rgba(0,0,0,0.7);  /* optional */
-  z-index: 10;
+  margin-top: 1vh;
 }
 
 .next-btn {
@@ -54,8 +34,8 @@
   justify-content: flex-start;
   width: 90%;
   max-width: 400px;
-  padding: 1.5vh 3.5rem 1.5vh 3.5rem;
-  margin-top: 1vh;
+  padding: 1rem 1rem 1rem 3.5rem;
+  margin-top: 1rem;
   border-radius: 1.5rem;
   border: 1px solid rgba(255, 255, 255);
   background-color: rgba(0,0,0,0.7);
@@ -69,6 +49,11 @@
   background-repeat: no-repeat;
   background-size: 1.75rem 1.75rem;
   background-position: 1rem center;
+  /* TESTING */
+  
+  bottom: 2vh;
+  left: 50%;
+  transform: translateX(-50%); /* centers horizontally */
   z-index: 999; /* keeps it above other elements */
 }
   
@@ -78,19 +63,19 @@
 #quiz2-view > .quiz2 {
   display: flex;
   flex-direction: column;
-  height: calc(100vh - 8vh); /* Use calc() to subtract the header's height */
-  box-sizing: border-box;
-  overflow: hidden;
+  height: 100vh;  /* full viewport height */
 }
 /* Fixed-height elements stay fixed and do not shrink */
-/* Fixed-height elements (must not shrink) */
 #header-placeholder,
 #feedback,
 #roster-info-container,
 #player-achievements-wrapper,
-#quiz2-footer {         /* <-- use the footer wrapper, not individual button IDs */
-  flex: 0 0 auto;       /* shorthand: no grow, no shrink, auto basis = fixed-size behavior */
+#score-remaining,
+#next-button {
+  flex-shrink: 0;
 }
+
+
 
 /* header placeholder */
 #header-placeholder {
@@ -211,6 +196,7 @@
   padding: 0.5% 1%;
   border-radius: 0.5em;
   white-space: nowrap;               /* keep text on one line */
+  width, max 3em */
   overflow: hidden;
   transform: scaleY(1.2);
   display: inline-block;
@@ -248,7 +234,7 @@
   font-size: 13px;
   text-align: left;
   color: rgb(255, 182, 18, 1);
-  background-color: rgba(0, 0, 0, 0);
+  background-color: rgba();
   opacity: 1;
   z-index: 3;
   padding: 0.5% 1%;
@@ -345,14 +331,13 @@
   margin-top: 1vh;
   color: #fff;
   box-sizing: border-box;
-  display: flex; 
-  flex-direction: column;
+  max-height: 30vh;  /* optional */
 }
 
 #hof-trivia-inner {
+  height: 100%;
   overflow-y: auto;
   overflow-x: hidden;
-  flex: 1 1 auto;
   -webkit-overflow-scrolling: touch;
   padding: 8px;
   box-sizing: border-box;
