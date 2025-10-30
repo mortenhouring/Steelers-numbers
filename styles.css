@@ -282,17 +282,7 @@ Header placeholder must be same height as defined in height in header.html
 /* ------------------------------
    Feedback Text
    ------------------------------ */
-#feedback {
-  font-size: 1.5em;
-  text-align: center;
-  line-height: 1.2;
-  margin: 0;
-  width: 90%;
-  max-width: 300px;
-  overflow-wrap: break-word;
-  margin-top: 1.5vh;
-  margin-bottom: 1.5vh;
-}
+
 
 /* ------------------------------
    Number + Player Image
