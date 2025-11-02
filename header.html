@@ -5,14 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Numbers Game - Mobile Header</title>
   <style>
-    /* 
-      All pixel units converted to screen percentages (vw/vh).
+    /* All pixel units converted to screen percentages (vw/vh).
       - Increasing vh values increases vertical header space.
       - Increasing vw values enlarges elements horizontally.
       Based on a 2532 x 1170 reference resolution.
     */
 
-     {
+    /* UPDATED: Corrected the typo from ' ' to '*' */
+    * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
@@ -36,7 +36,7 @@
     }
 
     .mobile-header {
-      position: fixed;
+      position: fixed; /* This makes it the positioning context for the child menu */
       top: 0;
       left: 0;
       width: 100%;
@@ -84,28 +84,19 @@
 
 /* Hamburger Lines */
 .hamburger-line {
-  width: 50%;               /* relative to button width */
-  height: 0.5vh;            /* proportional to button height */
-  background-color: #FFB600;
-  margin: 0.5vh 0;          /* vertical spacing between lines */
+  width: 8vh;               /* relative to button width */
+  height: 2vh;            /* proportional to button height */
+  background-color: white;
+  margin: 0.3vh 0;          /* vertical spacing between lines */
   border-radius: 0.25vh;    /* slightly rounded ends for style */
-}
-
-/* Optional: scale for very small screens */
-@media (max-width: 400px) {
-  .hamburger-button {
-    height: 10vw;           /* scale down proportionally */
-    width: 10vw;
-  }
-  .hamburger-line {
-    height: 0.7vw;
-  }
 }
 
     .dropdown-menu {
       position: absolute;
-      top: 7vh;               /* match header height */
-      right: 1.71vw;             /* 20px */
+      /* UPDATED: Should be 8vh to appear *below* the 8vh header */
+      top: 8vh;
+      /* UPDATED: Should be 0.26vw to align with the header's padding */
+      right: 0.26vw;
       width: 17.1vw;             /* 200px */
       background-color: black;
       border: 0.17vw solid #FFB600;
@@ -175,17 +166,17 @@
       <div class="hamburger-line"></div>
       <div class="hamburger-line"></div>
     </button>
+
+    <nav class="dropdown-menu" id="dropdownMenu">
+      <a href="index.html" class="dropdown-item">Front office</a>
+      <a href="quizstart.html" class="dropdown-item">Current roster</a>
+      <a href="newfaces1.html" class="dropdown-item">New Faces</a>
+      <a href="legends1.html" class="dropdown-item">Team Legends</a>
+      <a href="scoreboard.html" class="dropdown-item">Scoreboard</a>
+    </nav>
   </header>
 
   <div class="dropdown-overlay" id="dropdownOverlay"></div>
-
-  <nav class="dropdown-menu" id="dropdownMenu">
-    <a href="index.html" class="dropdown-item">Front office</a>
-    <a href="quizstart.html" class="dropdown-item">Current roster</a>
-    <a href="newfaces1.html" class="dropdown-item">New Faces</a>
-    <a href="legends1.html" class="dropdown-item">Team Legends</a>
-    <a href="scoreboard.html" class="dropdown-item">Scoreboard</a>
-  </nav>
 
   <script>
     const hamburgerButton = document.getElementById('hamburgerButton');
