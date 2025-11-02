@@ -72,7 +72,7 @@ function prefillQuiz2Elements(player) {
 
   // --- Player overlay (number only) ---
 const overlayEl = document.getElementById('player-overlay');
-const positionEl = document.getElementById('player-position');
+const positionEl = document.getElementById('player-position').textContent = `POS: ${player.position}`;
 const num = player.number ?? '';
 const pos = player.position ?? '';
 
