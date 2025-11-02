@@ -187,7 +187,7 @@
   display: inline-block;
 }
 
-/* Number/Position Overlay */
+/* Number Overlay */
 #player-overlay {
   position: absolute;
   right: 3%;                       /* distance from left edge */
@@ -210,7 +210,22 @@
   white-space: nowrap;
   overflow: hidden;
 }
-
+/*Player Position */
+#player-position
+  position: absolute;
+  top: 31%;
+  left: 1.8%;
+  font-size: 14px;
+  text-align: left;
+  color: rgb(255, 182, 18, 1);
+  background-color: rgba();
+  opacity: 1;
+  z-index: 3;
+  padding: 0.5% 1%;
+  border-radius: 0.5em;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 550;
+  outline: 1px solid red;
 /* Player Info */
 #player-info {
   position: absolute;
@@ -226,6 +241,7 @@
   border-radius: 0.5em;
   font-family: 'Roboto', sans-serif;
   font-weight: 550;
+  outline: 1px solid blue;
 }
 
 /* STATS Wrapper to contain both stats bars */
