@@ -82,7 +82,7 @@ if (overlayEl) {
 
 // --- Separate position display ---
 if (positionEl) {
-  positionEl.textContent = pos || '';
+  positionEl.textContent = 'POS: ' + (pos || '')
 }
 
   // --- Player info ---
