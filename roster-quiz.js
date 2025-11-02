@@ -46,13 +46,11 @@ const CONFIG = {
     "What number is {player}?",
     "Which digits are on {player}'s jersey?",
     "Which number’s on {player}'s back?",
-    "What’s {player}'s Steel Curtain number?",
+    "What’s {player}'s Steelers number?",
     "What jersey number is {player}?",
-    "Which digits does {player} rep for Steelers Nation?",
+    "Which digits does {player} wear for Steelers?",
     "What’s {player}'s jersey number?",
-    "What number’s on {player}'s helmet stripe?",
     "Which jersey number does {player} wear?",
-    "What number’s stitched on {player}'s uniform?"
   ]
 };
 
@@ -362,8 +360,8 @@ function showAnswerView(){
       "Oops, try again.",
       "Not quite.",
       "Wrong number.",
-      "Close, but no.",
       "Missed it.",
+      "Incomplete.",
       "Incorrect this time."
     ]);
   }
