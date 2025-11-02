@@ -5,6 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Numbers Game - Mobile Header</title>
   <style>
+  /* Prevent right-side cutoff due to overflow */
+html, body {
+  width: 100%;
+  overflow-x: visible; /* ensure dropdown can extend fully */
+}
     /* 
       All pixel units converted to screen percentages (vw/vh).
       - Increasing vh values increases vertical header space.
@@ -12,11 +17,12 @@
       Based on a 2532 x 1170 reference resolution.
     */
 
-     {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+     /* Global reset (fix missing selector) */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
     .header-title {
       position: absolute;
