@@ -5,11 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Numbers Game - Mobile Header</title>
   <style>
-  /* Prevent right-side cutoff due to overflow */
-html, body {
-  width: 100%;
-  overflow-x: visible; /* ensure dropdown can extend fully */
-}
     /* 
       All pixel units converted to screen percentages (vw/vh).
       - Increasing vh values increases vertical header space.
@@ -17,12 +12,11 @@ html, body {
       Based on a 2532 x 1170 reference resolution.
     */
 
-     /* Global reset (fix missing selector) */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+     {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
     .header-title {
       position: absolute;
@@ -90,33 +84,37 @@ html, body {
 
 /* Hamburger Lines */
 .hamburger-line {
-  width: 8vh;               /* relative to button width */
-  height: 2vh;            /* proportional to button height */
-  background-color: white;
-  margin: 0.3vh 0;          /* vertical spacing between lines */
+  width: 50%;               /* relative to button width */
+  height: 0.5vh;            /* proportional to button height */
+  background-color: #FFB600;
+  margin: 0.5vh 0;          /* vertical spacing between lines */
   border-radius: 0.25vh;    /* slightly rounded ends for style */
 }
 
-/* .dropdown-menu — viewport-fixed, safe-area aware */
-.dropdown-menu {
-  position: fixed; /* keep fixed to viewport */
-  top: 8vh;        /* below header */
-  /* respect safe-area on devices (iPhone notch / rounded corners). Fallback to 0.26vw. */
-  right: calc(0.26vw + env(safe-area-inset-right, 0px));
-  /* also set logical property for browsers that use inset-inline-end */
-  inset-inline-end: calc(0.26vw + env(safe-area-inset-right, 0px));
-  width: 17.1vw;
-  max-width: calc(100% - 2vw);
-  background-color: black;
-  border: 0.17vw solid #FFB600;
-  border-radius: 0.34vw;
-  box-shadow: 0.17vw 0.17vw 0.51vw rgba(0, 0, 0, 0.3);
-  display: none;
-  z-index: 1001;
-  /* ensure box is rendered smoothly on mobile compositing */
-  -webkit-transform: translateZ(0);
-  transform: translateZ(0);
+/* Optional: scale for very small screens */
+@media (max-width: 400px) {
+  .hamburger-button {
+    height: 10vw;           /* scale down proportionally */
+    width: 10vw;
+  }
+  .hamburger-line {
+    height: 0.7vw;
+  }
 }
+
+    .dropdown-menu {
+      position: absolute;
+      top: 7vh;               /* match header height */
+      right: 1.71vw;             /* 20px */
+      width: 17.1vw;             /* 200px */
+      background-color: black;
+      border: 0.17vw solid #FFB600;
+      border-radius: 0.34vw;     /* 4px */
+      box-shadow: 0.17vw 0.17vw 0.51vw rgba(0, 0, 0, 0.3);
+      display: none;
+      z-index: 999;
+    }
+
     .dropdown-menu.show {
       display: block;
     }
