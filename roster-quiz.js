@@ -70,13 +70,20 @@ function prefillQuiz2Elements(player) {
   const quiz2PlayerNameEl = document.getElementById('quiz2-player-name');
   if (quiz2PlayerNameEl) quiz2PlayerNameEl.textContent = player.player_name || '';
 
-  // --- Player overlay ---
-  const overlayEl = document.getElementById('player-overlay');
-  if (overlayEl) {
-    const num = player.number ?? '';
-    const pos = player.position ?? '';
-    overlayEl.textContent = `#${num || '—'} ${pos || ''}`;
-  }
+  // --- Player overlay (number only) ---
+const overlayEl = document.getElementById('player-overlay');
+const positionEl = document.getElementById('player-position');
+const num = player.number ?? '';
+const pos = player.position ?? '';
+
+if (overlayEl) {
+  overlayEl.textContent = `#${num || '—'}`;
+}
+
+// --- Separate position display ---
+if (positionEl) {
+  positionEl.textContent = pos || '';
+}
 
   // --- Player info ---
   if (playerInfoEl) {
