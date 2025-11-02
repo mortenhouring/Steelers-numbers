@@ -97,21 +97,26 @@ html, body {
   border-radius: 0.25vh;    /* slightly rounded ends for style */
 }
 
-/* Replace existing .dropdown-menu block with this minimal, QA-checked version */
+/* .dropdown-menu — viewport-fixed, safe-area aware */
 .dropdown-menu {
-  position: fixed;           /* fixed to viewport to avoid ancestor clipping */
-  top: 8vh;                  /* sit just under the header (header height = 8vh) */
-  right: 0.26vw;             /* align with header's horizontal padding for visual flush */
-  width: 17.1vw;             /* preserved original width for scale */
-  max-width: calc(100% - 2vw); /* prevent overflow on very narrow viewports */
+  position: fixed; /* keep fixed to viewport */
+  top: 8vh;        /* below header */
+  /* respect safe-area on devices (iPhone notch / rounded corners). Fallback to 0.26vw. */
+  right: calc(0.26vw + env(safe-area-inset-right, 0px));
+  /* also set logical property for browsers that use inset-inline-end */
+  inset-inline-end: calc(0.26vw + env(safe-area-inset-right, 0px));
+  width: 17.1vw;
+  max-width: calc(100% - 2vw);
   background-color: black;
   border: 0.17vw solid #FFB600;
-  border-radius: 0.34vw;     /* 4px */
+  border-radius: 0.34vw;
   box-shadow: 0.17vw 0.17vw 0.51vw rgba(0, 0, 0, 0.3);
   display: none;
-  z-index: 1001;             /* must be above .mobile-header (1000) */
+  z-index: 1001;
+  /* ensure box is rendered smoothly on mobile compositing */
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
 }
-
     .dropdown-menu.show {
       display: block;
     }
