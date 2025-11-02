@@ -8,6 +8,7 @@
    ------------------------------ */
 html, body {
   overflow-y: hidden;           /* prevent vertical scroll */
+  overflow-x: hidden;
   width: 100%;                  
   height: 100dvh;               /* dynamic viewport height to prevent black bar */
   margin: 0;
@@ -42,7 +43,7 @@ body {
   background-repeat: no-repeat;
   
   box-sizing: border-box;        /* prevents children from overflowing body */
-  overflow-x: hidden;            /* prevents horizontal scroll from rounding errors */
+              /* prevents horizontal scroll from rounding errors */
 }
 
 
