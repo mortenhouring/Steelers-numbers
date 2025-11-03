@@ -36,7 +36,7 @@ body {
   display: flex;               
   flex-direction: column;        /* stack children vertically */
   
-  background-image: url('blackgrey-background.PNG');
+  background-image: url('grey-background.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -51,16 +51,14 @@ main > div:not(.end-buttons-container) {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 0.39vw;          /* 10px → 0.39vw */
 }
 
 /* ------------------------------ 
 Header placeholder must be same height as defined in height in header.html
 ------------------------------ */
 #header-placeholder {
-  height: 8vh;
+  /*height: 8vh;*/
   width: 100%;
-  margin-bottom: 0.5vh;  /* tweak vertical gap to #player-name */
 }
 /* ------------------------------
    Frontpage Buttons
@@ -74,7 +72,7 @@ Header placeholder must be same height as defined in height in header.html
   padding: 1rem 1rem 1rem 3.5rem;
   margin-top: 1rem;
   border-radius: 1.5rem;
-  border: none;
+  border: 1px solid rgba(255, 255, 255);
   background-color: rgba(0,0,0,0.7);
   color: var(--white) !important;
   font-weight: bold;
@@ -190,10 +188,11 @@ Header placeholder must be same height as defined in height in header.html
 
 /* counters in quiz */
 #score-remaining {
-  font-size: 1em;
+  
+  font-size: 16px;
   font-weight: bold;
-  margin: 0.2vh 1.7vw 1.7vw;   /* top:5px, sides/bottom:20px */
   text-align: center;
+  margin-bottom: 1vh;
 }
 
 #info-text {
@@ -219,10 +218,10 @@ Header placeholder must be same height as defined in height in header.html
   width: 4rem;
   height: 4rem;
   font-size: 2em;
-  border: none;
-  border-radius: 0.1rem;
-  background-color: rgba(255, 182, 18, 0.9); /* semi-transparent white */
-  color:  rgba(0, 0, 0) !important; /* solid white text */
+  border-radius: 1.5rem;
+  border: 1px solid rgba(255, 255, 255);
+  background-color: rgba(0,0,0,0.7);
+  color: var(--white) !important;
     font-family: 'Helvetica Neue', Arial, sans-serif;
     font-weight: 700;
   display: flex;
@@ -258,13 +257,7 @@ Header placeholder must be same height as defined in height in header.html
 /* ------------------------------
    Root Variables for Scaling
    ------------------------------ */
-:root {
-  --header-height: 0px;
-  --feedback-gap: 0vh;
-  --element-gap: 3vh;
-  --number-size: 61vw;
-  --image-width: 51vw;
-}
+
 
 /* ------------------------------
    Main Quiz Content
@@ -282,14 +275,15 @@ Header placeholder must be same height as defined in height in header.html
    Feedback Text
    ------------------------------ */
 #feedback {
-  font-size: 1.5em;
+  font-size: 17px;
   text-align: center;
   line-height: 1.2;
   margin: 0;
   width: 90%;
   max-width: 300px;
   overflow-wrap: break-word;
-  margin-top: 1.5vh;
+  margin-top: 1vh;
+  margin-bottom: 1vh;
 }
 
 /* ------------------------------
