@@ -103,9 +103,12 @@
 }
 
     .dropdown-menu {
-      position: absolute;
-      top: 7vh;               /* match header height */
-      right: 1.71vw;             /* 20px */
+      /* CRITICAL CHANGE: Use fixed position relative to the viewport */
+      position: fixed;               
+      /* Set to 8vh to sit directly below the 8vh header */
+      top: 8vh;               
+      /* Set to 0 to flush against the absolute right edge of the screen */
+      right: 0;             
       width: 17.1vw;             /* 200px */
       background-color: black;
       border: 0.17vw solid #FFB600;
@@ -114,6 +117,7 @@
       display: none;
       z-index: 999;
     }
+
 
     .dropdown-menu.show {
       display: block;
