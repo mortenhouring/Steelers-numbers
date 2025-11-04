@@ -1,81 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Steelers Roster Quiz</title>
-<style>
-  body { font-family: Arial, sans-serif; text-align: center; margin-top: 10vh; }
-  button { margin: 10px; padding: 10px 20px; font-size: 1.2em; cursor: pointer; }
-  #status { margin-top: 20px; font-size: 1.1em; }
-</style>
+  <meta charset="UTF-8" />
+  <title>Steelers Roster Quiz</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <h1>Steelers Roster Quiz</h1>
-  <div id="content"></div>
+  <main id="start-container">
+    <h1>Steelers Roster Quiz</h1>
+    <div id="status"></div>
+    <div id="buttons"></div>
+  </main>
 
-<script>
-const CONFIG = {
-  STORAGE_KEYS: {
-    CURRENT_ROSTER: 'roster-currentRoster',
-    TOTAL_QUESTIONS: 'roster-totalQuestions',
-    LAST_PLAYER: 'roster-lastPlayer',
-    LAST_ANSWER: 'roster-lastAnswer',
-    QUESTIONS_ASKED: 'roster-questionsAsked',
-    SCORE: 'roster-score'
-  },
-  QUIZ_PAGE: 'roster-quiz.html'
-};
-
-function hasOngoingGame() {
-  return (
-    localStorage.getItem(CONFIG.STORAGE_KEYS.CURRENT_ROSTER) ||
-    localStorage.getItem(CONFIG.STORAGE_KEYS.LAST_PLAYER)
-  );
-}
-
-function getGameProgress() {
-  const score = parseInt(localStorage.getItem(CONFIG.STORAGE_KEYS.SCORE), 10) || 0;
-  const total = parseInt(localStorage.getItem(CONFIG.STORAGE_KEYS.TOTAL_QUESTIONS), 10) || 0;
-  const remaining = (JSON.parse(localStorage.getItem(CONFIG.STORAGE_KEYS.CURRENT_ROSTER)) || []).length;
-  return { score, total, remaining };
-}
-
-function resetGameProgress() {
-  Object.values(CONFIG.STORAGE_KEYS).forEach(k => localStorage.removeItem(k));
-}
-
-function render() {
-  const container = document.getElementById('content');
-  container.innerHTML = '';
-
-  if (hasOngoingGame()) {
-    const { score, total, remaining } = getGameProgress();
-    const p = document.createElement('p');
-    p.textContent = `Game in progress — Score: ${score}/${total} (${remaining} remaining)`;
-    container.appendChild(p);
-
-    const contBtn = document.createElement('button');
-    contBtn.textContent = 'Continue game';
-    contBtn.onclick = () => (window.location.href = CONFIG.QUIZ_PAGE);
-    container.appendChild(contBtn);
-
-    const restartBtn = document.createElement('button');
-    restartBtn.textContent = 'Start over';
-    restartBtn.onclick = () => {
-      resetGameProgress();
-      window.location.href = CONFIG.QUIZ_PAGE;
+  <script>
+    // --- Use same CONFIG keys as roster-quiz.js ---
+    const CONFIG = {
+      STORAGE_KEYS: {
+        CURRENT_ROSTER: 'roster-currentRoster',
+        TOTAL_QUESTIONS: 'roster-totalQuestions',
+        LAST_PLAYER: 'roster-lastPlayer',
+        LAST_ANSWER: 'roster-lastAnswer',
+        QUESTIONS_ASKED: 'roster-questionsAsked',
+        SCORE: 'roster-score'
+      }
     };
-    container.appendChild(restartBtn);
-  } else {
-    const startBtn = document.createElement('button');
-    startBtn.textContent = 'Start game';
-    startBtn.onclick = () => (window.location.href = CONFIG.QUIZ_PAGE);
-    container.appendChild(startBtn);
-  }
-}
 
-window.addEventListener('DOMContentLoaded', render);
-</script>
+    const statusDiv = document.getElementById('status');
+    const buttonsDiv = document.getElementById('buttons');
+
+    // --- Detect if a game is in progress ---
+    const currentRoster = localStorage.getItem(CONFIG.STORAGE_KEYS.CURRENT_ROSTER);
+    const totalQ = parseInt(localStorage.getItem(CONFIG.STORAGE_KEYS.TOTAL_QUESTIONS), 10);
+    const score = parseInt(localStorage.getItem(CONFIG.STORAGE_KEYS.SCORE), 10) || 0;
+
+    const hasGame = currentRoster && currentRoster !== '[]';
+
+    if (hasGame) {
+      const remaining = JSON.parse(currentRoster || '[]').length;
+      statusDiv.innerHTML = `
+        <p><strong>Game in progress!</strong></p>
+        <p>Score: ${score}/${totalQ || '—'}</p>
+        <p>Remaining questions: ${remaining}</p>
+      `;
+
+      buttonsDiv.innerHTML = `
+        <button id="continue-btn">Continue game</button>
+        <button id="restart-btn">Start over</button>
+      `;
+
+      document.getElementById('continue-btn').addEventListener('click', () => {
+        window.location.href = 'roster-quiz.html';
+      });
+
+      document.getElementById('restart-btn').addEventListener('click', () => {
+        // Clear everything for a clean start
+        Object.values(CONFIG.STORAGE_KEYS).forEach(k => localStorage.removeItem(k));
+        window.location.href = 'roster-quiz.html';
+      });
+
+    } else {
+      statusDiv.innerHTML = `<p>No active game.</p>`;
+      buttonsDiv.innerHTML = `<button id="start-btn">Start game</button>`;
+      document.getElementById('start-btn').addEventListener('click', () => {
+        Object.values(CONFIG.STORAGE_KEYS).forEach(k => localStorage.removeItem(k));
+        window.location.href = 'roster-quiz.html';
+      });
+    }
+  </script>
 </body>
 </html>
