@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz Start</title>
+  <script src="headerscript.js" defer></script>
+
+  <style>
+    :root {
+      /* ===== Adjustable Style Variables ===== */
+      --font-body: Arial, sans-serif;
+      --font-button: 'Courier New', Courier, monospace;
+      --text-color: #000;
+      --background-color: #fff;
+      --button-bg: #000;
+      --button-text: #fff;
+      --button-font-size: 20px;
+      --button-width: 80%;
+      --button-max-width: 200px;
+      --button-height: 50px;
+      --button-radius: 0px;
+      --intro-font-size: 1.5em;
+      --intro-max-width: 400px;
+      --margin: 20px;
+    }
+
+    body {
+      font-family: var(--font-body);
+      color: var(--text-color);
+      background-color: var(--background-color);
+      text-align: center;
+      margin: var(--margin);
+    }
+
+    #intro-text {
+      font-size: var(--intro-font-size);
+      width: 90%;
+      max-width: var(--intro-max-width);
+      margin: 0 auto 30px auto;
+      text-align: center;
+    }
+
+    .frontpage-btn {
+      background-color: var(--button-bg);
+      color: var(--button-text);
+      font-family: var(--font-button);
+      font-size: var(--button-font-size);
+      width: var(--button-width);
+      max-width: var(--button-max-width);
+      height: var(--button-height);
+      margin: 10px;
+      border: none;
+      cursor: pointer;
+      text-align: center;
+      border-radius: var(--button-radius);
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      transition: transform 0.1s ease-in-out;
+    }
+
+    .frontpage-btn:active {
+      transform: scale(0.95);
+    }
+  </style>
+</head>
+
+<body>
+  <div id="header-placeholder"></div>
+
+  <div id="intro-text"></div>
+
+  <button id="new-game-btn" class="frontpage-btn"></button>
+  <br>
+  <button id="continue-btn" class="frontpage-btn"></button>
+
+  <script>
+    ////////////////////////////////
+    // CONFIGURATION (EASY EDITS)
+    ////////////////////////////////
+    const CONFIG = {
+      introText: "Check your knowledge of every player on the roster. The big names, the new guys and the guys waiting for their shot.",
+      buttons: {
+        newGame: "New Game",
+        continue: "Continue"
+      },
+      jsonPath: "currentroster.json",
+      quizPage: "currentquiz.html",
+      localStorageKeys: {
+        score: "score",
+        questions: "questionsAsked",
+        index: "currentIndex",
+        roster: "shuffledRoster"
+      },
+      messages: {
+        noSaveFound: "No saved game found. Starting a new game instead."
+      }
+    };
+
+    ////////////////////////////////
+    // INITIAL SETUP
+    ////////////////////////////////
+    document.getElementById('intro-text').textContent = CONFIG.introText;
+    document.getElementById('new-game-btn').textContent = CONFIG.buttons.newGame;
+    document.getElementById('continue-btn').textContent = CONFIG.buttons.continue;
+
+    ////////////////////////////////
+    // CORE FUNCTIONS
+    ////////////////////////////////
+    function shuffleArray(arr) {
+      const a = arr.slice();
+      for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+      }
+      return a;
+    }
+
+    async function loadRoster() {
+      const resp = await fetch(CONFIG.jsonPath);
+      return resp.json();
+    }
+
+    async function startNewGame() {
+      const roster = await loadRoster();
+      const playerIds = roster.map(p => p.id);
+      const shuffled = shuffleArray(playerIds);
+
+      localStorage.setItem(CONFIG.localStorageKeys.score, 0);
+      localStorage.setItem(CONFIG.localStorageKeys.questions, 0);
+      localStorage.setItem(CONFIG.localStorageKeys.index, 0);
+      localStorage.setItem(CONFIG.localStorageKeys.roster, JSON.stringify(shuffled));
+
+      window.location.href = CONFIG.quizPage;
+    }
+
+    function continueGame() {
+      const saved = localStorage.getItem(CONFIG.localStorageKeys.roster);
+      if (!saved) {
+        alert(CONFIG.messages.noSaveFound);
+        startNewGame();
+        return;
+      }
+      window.location.href = CONFIG.quizPage;
+    }
+
+    ////////////////////////////////
+    // EVENT LISTENERS
+    ////////////////////////////////
+    document.getElementById('new-game-btn').addEventListener('click', startNewGame);
+    document.getElementById('continue-btn').addEventListener('click', continueGame);
+  </script>
+</body>
+</html>
