@@ -1,155 +1,81 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Quiz Start</title>
-  <script src="headerscript.js" defer></script>
-
-  <style>
-    :root {
-      /* ===== Adjustable Style Variables ===== */
-      --font-body: Arial, sans-serif;
-      --font-button: 'Courier New', Courier, monospace;
-      --text-color: #000;
-      --background-color: #fff;
-      --button-bg: #000;
-      --button-text: #fff;
-      --button-font-size: 20px;
-      --button-width: 80%;
-      --button-max-width: 200px;
-      --button-height: 50px;
-      --button-radius: 0px;
-      --intro-font-size: 1.5em;
-      --intro-max-width: 400px;
-      --margin: 20px;
-    }
-
-    body {
-      font-family: var(--font-body);
-      color: var(--text-color);
-      background-color: var(--background-color);
-      text-align: center;
-      margin: var(--margin);
-    }
-
-    #intro-text {
-      font-size: var(--intro-font-size);
-      width: 90%;
-      max-width: var(--intro-max-width);
-      margin: 0 auto 30px auto;
-      text-align: center;
-    }
-
-    .frontpage-btn {
-      background-color: var(--button-bg);
-      color: var(--button-text);
-      font-family: var(--font-button);
-      font-size: var(--button-font-size);
-      width: var(--button-width);
-      max-width: var(--button-max-width);
-      height: var(--button-height);
-      margin: 10px;
-      border: none;
-      cursor: pointer;
-      text-align: center;
-      border-radius: var(--button-radius);
-      -webkit-appearance: none;
-      -moz-appearance: none;
-      appearance: none;
-      transition: transform 0.1s ease-in-out;
-    }
-
-    .frontpage-btn:active {
-      transform: scale(0.95);
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Steelers Roster Quiz</title>
+<style>
+  body { font-family: Arial, sans-serif; text-align: center; margin-top: 10vh; }
+  button { margin: 10px; padding: 10px 20px; font-size: 1.2em; cursor: pointer; }
+  #status { margin-top: 20px; font-size: 1.1em; }
+</style>
 </head>
-
 <body>
-  <div id="header-placeholder"></div>
+  <h1>Steelers Roster Quiz</h1>
+  <div id="content"></div>
 
-  <div id="intro-text"></div>
+<script>
+const CONFIG = {
+  STORAGE_KEYS: {
+    CURRENT_ROSTER: 'roster-currentRoster',
+    TOTAL_QUESTIONS: 'roster-totalQuestions',
+    LAST_PLAYER: 'roster-lastPlayer',
+    LAST_ANSWER: 'roster-lastAnswer',
+    QUESTIONS_ASKED: 'roster-questionsAsked',
+    SCORE: 'roster-score'
+  },
+  QUIZ_PAGE: 'roster-quiz.html'
+};
 
-  <button id="new-game-btn" class="frontpage-btn"></button>
-  <br>
-  <button id="continue-btn" class="frontpage-btn"></button>
+function hasOngoingGame() {
+  return (
+    localStorage.getItem(CONFIG.STORAGE_KEYS.CURRENT_ROSTER) ||
+    localStorage.getItem(CONFIG.STORAGE_KEYS.LAST_PLAYER)
+  );
+}
 
-  <script>
-    ////////////////////////////////
-    // CONFIGURATION (EASY EDITS)
-    ////////////////////////////////
-    const CONFIG = {
-      introText: "Check your knowledge of every player on the roster. The big names, the new guys and the guys waiting for their shot.",
-      buttons: {
-        newGame: "New Game",
-        continue: "Continue"
-      },
-      jsonPath: "currentroster.json",
-      quizPage: "currentquiz.html",
-      localStorageKeys: {
-        score: "score",
-        questions: "questionsAsked",
-        index: "currentIndex",
-        roster: "shuffledRoster"
-      },
-      messages: {
-        noSaveFound: "No saved game found. Starting a new game instead."
-      }
+function getGameProgress() {
+  const score = parseInt(localStorage.getItem(CONFIG.STORAGE_KEYS.SCORE), 10) || 0;
+  const total = parseInt(localStorage.getItem(CONFIG.STORAGE_KEYS.TOTAL_QUESTIONS), 10) || 0;
+  const remaining = (JSON.parse(localStorage.getItem(CONFIG.STORAGE_KEYS.CURRENT_ROSTER)) || []).length;
+  return { score, total, remaining };
+}
+
+function resetGameProgress() {
+  Object.values(CONFIG.STORAGE_KEYS).forEach(k => localStorage.removeItem(k));
+}
+
+function render() {
+  const container = document.getElementById('content');
+  container.innerHTML = '';
+
+  if (hasOngoingGame()) {
+    const { score, total, remaining } = getGameProgress();
+    const p = document.createElement('p');
+    p.textContent = `Game in progress — Score: ${score}/${total} (${remaining} remaining)`;
+    container.appendChild(p);
+
+    const contBtn = document.createElement('button');
+    contBtn.textContent = 'Continue game';
+    contBtn.onclick = () => (window.location.href = CONFIG.QUIZ_PAGE);
+    container.appendChild(contBtn);
+
+    const restartBtn = document.createElement('button');
+    restartBtn.textContent = 'Start over';
+    restartBtn.onclick = () => {
+      resetGameProgress();
+      window.location.href = CONFIG.QUIZ_PAGE;
     };
+    container.appendChild(restartBtn);
+  } else {
+    const startBtn = document.createElement('button');
+    startBtn.textContent = 'Start game';
+    startBtn.onclick = () => (window.location.href = CONFIG.QUIZ_PAGE);
+    container.appendChild(startBtn);
+  }
+}
 
-    ////////////////////////////////
-    // INITIAL SETUP
-    ////////////////////////////////
-    document.getElementById('intro-text').textContent = CONFIG.introText;
-    document.getElementById('new-game-btn').textContent = CONFIG.buttons.newGame;
-    document.getElementById('continue-btn').textContent = CONFIG.buttons.continue;
-
-    ////////////////////////////////
-    // CORE FUNCTIONS
-    ////////////////////////////////
-    function shuffleArray(arr) {
-      const a = arr.slice();
-      for (let i = a.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [a[i], a[j]] = [a[j], a[i]];
-      }
-      return a;
-    }
-
-    async function loadRoster() {
-      const resp = await fetch(CONFIG.jsonPath);
-      return resp.json();
-    }
-
-    async function startNewGame() {
-      const roster = await loadRoster();
-      const playerIds = roster.map(p => p.id);
-      const shuffled = shuffleArray(playerIds);
-
-      localStorage.setItem(CONFIG.localStorageKeys.score, 0);
-      localStorage.setItem(CONFIG.localStorageKeys.questions, 0);
-      localStorage.setItem(CONFIG.localStorageKeys.index, 0);
-      localStorage.setItem(CONFIG.localStorageKeys.roster, JSON.stringify(shuffled));
-
-      window.location.href = CONFIG.quizPage;
-    }
-
-    function continueGame() {
-      const saved = localStorage.getItem(CONFIG.localStorageKeys.roster);
-      if (!saved) {
-        alert(CONFIG.messages.noSaveFound);
-        startNewGame();
-        return;
-      }
-      window.location.href = CONFIG.quizPage;
-    }
-
-    ////////////////////////////////
-    // EVENT LISTENERS
-    ////////////////////////////////
-    document.getElementById('new-game-btn').addEventListener('click', startNewGame);
-    document.getElementById('continue-btn').addEventListener('click', continueGame);
-  </script>
+window.addEventListener('DOMContentLoaded', render);
+</script>
 </body>
 </html>
