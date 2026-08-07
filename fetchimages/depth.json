@@ -1,10 +1,30 @@
 [
   {
-    "depth_name": "Brodericka Jones",
-    "depth_pos": "1Left Tackle"
+    "depth_name": "DK Metcalf",
+    "depth_pos": "Wide Receiver"
   },
   {
-    "depth_name": "Isaac Seumalo",
+    "depth_name": "Ben Skowronek",
+    "depth_pos": "Wide Receiver"
+  },
+  {
+    "depth_name": "A.T. Perry",
+    "depth_pos": "Wide Receiver"
+  },
+  {
+    "depth_name": "Levi Wentz",
+    "depth_pos": "Wide Receiver"
+  },
+  {
+    "depth_name": "Jakobie Keeney-James",
+    "depth_pos": "Wide Receiver"
+  },
+  {
+    "depth_name": "Troy Fautanu",
+    "depth_pos": "Left Tackle"
+  },
+  {
+    "depth_name": "Mason McCormick",
     "depth_pos": "Left Guard"
   },
   {
@@ -12,83 +32,91 @@
     "depth_pos": "Center"
   },
   {
-    "depth_name": "Mason McCormick",
+    "depth_name": "Spencer Anderson",
     "depth_pos": "Right Guard"
   },
   {
-    "depth_name": "Troy Fautanu",
+    "depth_name": "Dylan Cook",
     "depth_pos": "Right Tackle"
-  },
-  {
-    "depth_name": "Jaylen Warren",
-    "depth_pos": "Running Back"
-  },
-  {
-    "depth_name": "Kenneth Gainwell",
-    "depth_pos": "2nd Running Back | Kick Returner"
-  },
-  {
-    "depth_name": "Kaleb Johnson",
-    "depth_pos": "3rd Running Back | Kick Returner"
-  },
-  {
-    "depth_name": "Aaron Rodgers",
-    "depth_pos": "Quarterback"
-  },
-  {
-    "depth_name": "Calvin Austin III",
-    "depth_pos": "Wide Receiver | Punt Returner"
   },
   {
     "depth_name": "Roman Wilson",
     "depth_pos": "Wide Receiver"
   },
   {
-    "depth_name": "DK Metcalf",
+    "depth_name": "Kaden Wetjen",
+    "depth_pos": "Wide Receiver | Kick Returner | Punt Returner"
+  },
+  {
+    "depth_name": "Max Hurleman",
     "depth_pos": "Wide Receiver"
   },
   {
-    "depth_name": "Scotty Miller",
-    "depth_pos": "Wide Receiver | Punt Returner"
+    "depth_name": "Michael Pittman Jr.",
+    "depth_pos": "Wide Receiver"
   },
   {
-    "depth_name": "Ben Skowronek",
+    "depth_name": "Germie Bernard",
     "depth_pos": "Wide Receiver"
+  },
+  {
+    "depth_name": "Brandon Smith",
+    "depth_pos": "Wide Receiver"
+  },
+  {
+    "depth_name": "Joaquin Davis",
+    "depth_pos": "Wide Receiver"
+  },
+  {
+    "depth_name": "Aaron Rodgers",
+    "depth_pos": "Quarterback"
+  },
+  {
+    "depth_name": "Jaylen Warren",
+    "depth_pos": "Running Back | Kick Returner"
+  },
+  {
+    "depth_name": "Rico Dowdle",
+    "depth_pos": "2nd Running Back | Punt Returner"
+  },
+  {
+    "depth_name": "Kaleb Johnson",
+    "depth_pos": "3rd Running Back"
   },
   {
     "depth_name": "Pat Freiermuth",
     "depth_pos": "Tight End"
   },
   {
-    "depth_name": "Jonnu Smith",
+    "depth_name": "Darnell Washington",
     "depth_pos": "2nd Tight End"
   },
   {
-    "depth_name": "Darnell Washington",
+    "depth_name": "Robert Tonyan",
     "depth_pos": "3rd Tight End"
-  },
-  {
-    "depth_name": "Cameron Heyward",
-    "depth_pos": "Defensive Tackle"
-  },
-  {
-    "depth_name": "Keeanu Benton",
-    "depth_pos": "Nose Tackle"
   },
   {
     "depth_name": "Derrick Harmon",
     "depth_pos": "Defensive End"
   },
   {
-    "depth_name": "Yahya Black",
+    "depth_name": "Gabriel Rubio",
     "depth_pos": "2nd Defensive End"
+  },
+  {
+    "depth_name": "Yahya Black",
+    "depth_pos": "Nose Tackle"
+  },
+  {
+    "depth_name": "Cameron Heyward",
+    "depth_pos": "Defensive Tackle"
   },
   {
     "depth_name": "T.J. Watt",
     "depth_pos": "Left Outside Linebacker"
   },
   {
-    "depth_name": "Jack Sawyer",
+    "depth_name": "Nick Herbig",
     "depth_pos": "2nd Left Outside Linebacker"
   },
   {
@@ -104,43 +132,15 @@
     "depth_pos": "Right Outside Linebacker"
   },
   {
-    "depth_name": "Nick Herbig",
+    "depth_name": "Jack Sawyer",
     "depth_pos": "2nd Right Outside Linebacker"
-  },
-  {
-    "depth_name": "Darius Slay",
-    "depth_pos": "Cornerback"
-  },
-  {
-    "depth_name": "Brandin Echols",
-    "depth_pos": "Cornerback"
-  },
-  {
-    "depth_name": "Juan Thornhill",
-    "depth_pos": "Free Safety"
-  },
-  {
-    "depth_name": "DeShon Elliott",
-    "depth_pos": "Strong Safety"
-  },
-  {
-    "depth_name": "Chuck Clark",
-    "depth_pos": "2nd Strong Safety"
-  },
-  {
-    "depth_name": "Joey Porter Jr.",
-    "depth_pos": "Cornerback"
-  },
-  {
-    "depth_name": "Jalen Ramsey",
-    "depth_pos": "Cornerback"
-  },
-  {
-    "depth_name": "Corliss Waitman",
-    "depth_pos": "Punter"
   },
   {
     "depth_name": "Chris Boswell",
     "depth_pos": "Kicker"
+  },
+  {
+    "depth_name": "Cameron Johnston",
+    "depth_pos": "Punter"
   }
 ]
