@@ -25,14 +25,16 @@ jobs:
       - name: Install dependencies
         run: npm install --no-package-lock
 
-      - name: Run roster fetch
-        run: node roster-fetch.js
+      - name: Run roster fetch (2026)
+        run: node roster-fetch-2026.js
 
       - name: Commit and push new images
         run: |
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
           git add fetchimages/images/*.jpeg || true
+          git add fetchimages/images/*.jpg || true
+          git add fetchimages/images/*.png || true
           git add fetchimages/images/espn-images/*.png || true
           git add fetchimages/images/lazy-images/*.jpg || true
           git add fetchimages/images/lazy-images/*.png || true
