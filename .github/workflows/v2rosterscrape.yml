@@ -20,13 +20,13 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 20
+          node-version: 24
 
       - name: Install dependencies
         run: npm install --no-package-lock
 
       - name: Run roster fetch (2026)
-        run: node roster-fetch-2026.js
+        run: node roster-fetch-2026.mjs
 
       - name: Commit and push new images
         run: |
