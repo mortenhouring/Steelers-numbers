@@ -1,7 +1,7 @@
-const axios = require('axios');
-const { JSDOM } = require('jsdom');
-const fs = require('fs').promises;
-const path = require('path');
+import axios from 'axios';
+import { JSDOM } from 'jsdom';
+import fs from 'fs/promises';
+import path from 'path';
 
 const TEAM_ABBR = 'pit';
 const TEAM_SLUG = 'pittsburgh-steelers';
