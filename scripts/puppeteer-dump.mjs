@@ -26,6 +26,36 @@ const puppeteer = require('puppeteer');
     await fs.writeFile('fetch-debug/puppeteer-initial-state.json', JSON.stringify(state, null, 2));
     console.log('Wrote fetch-debug/puppeteer-initial-state.json');
 
+    // If all captured state objects are null or empty, also save the hydrated DOM for inspection
+    const allNull = Object.values(state).every(v => v === null || (typeof v === 'object' && Object.keys(v).length === 0));
+    if (allNull) {
+      console.log('No window state found — saving hydrated DOM for inspection');
+      try {
+        const content = await page.content();
+        await fs.writeFile('fetch-debug/puppeteer-page.html', content);
+        console.log('Wrote fetch-debug/puppeteer-page.html');
+      } catch (err) {
+        console.warn('Failed to save page content:', err.message);
+      }
+
+      // Also attempt to capture any XHR/fetch requests made during page load by inspecting performance entries
+      try {
+        const requests = await page.evaluate(() => {
+          try {
+            return (window.performance && window.performance.getEntriesByType) ? window.performance.getEntriesByType('resource').slice(-50) : null;
+          } catch (e) {
+            return null;
+          }
+        });
+        if (requests) {
+          await fs.writeFile('fetch-debug/puppeteer-requests.json', JSON.stringify(requests, null, 2));
+          console.log('Wrote fetch-debug/puppeteer-requests.json');
+        }
+      } catch (err) {
+        console.warn('Failed to capture resource performance entries:', err.message);
+      }
+    }
+
     await browser.close();
   } catch (err) {
     console.error('Puppeteer dump failed:', err);
