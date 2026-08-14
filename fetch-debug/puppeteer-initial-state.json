@@ -1,0 +1,1062 @@
+{
+  "__INITIAL_STATE__": null,
+  "__DATA__": null,
+  "__CONFIG__": {
+    "uid": "espnfitt",
+    "strictMode": false,
+    "mode": "universal",
+    "logLevel": "info",
+    "logOutput": "json",
+    "tms": {
+      "enabled": true,
+      "env": "dev",
+      "tag": "https://nexus.ensighten.com/TWDC-DTCI/dev/Bootstrap.js",
+      "tagNS": "Boostrapper",
+      "emitEvent": "tms:ready",
+      "loadScript": false,
+      "loadAsync": false
+    },
+    "allowMocks": true,
+    "globalVar": "__espnfitt__",
+    "cdnPath": "//cdn1.espn.net/fitt-v3/fa5bcede5f69-2.0.5372/client",
+    "buildHash": false,
+    "http": {
+      "timeout": {
+        "client": 5000
+      }
+    },
+    "apiEnv": "production",
+    "envName": "prod",
+    "mockDataPort": 1981,
+    "host": "localhost",
+    "basename": "",
+    "routeVersion": "v3",
+    "toodles": {
+      "enabled": true,
+      "serviceName": "fitt",
+      "hostedZone": "espnsb.com",
+      "clusterName": "NodeCluster",
+      "apiHost": "https://edge.us-east-1.aws.hosted.espnsb.com",
+      "customQueryParamsTab": [
+        {
+          "name": "General",
+          "elements": [
+            {
+              "paramName": "_adblock",
+              "type": "toggle",
+              "tooltipText": "Removes ads"
+            },
+            {
+              "paramName": "_adobeEnv",
+              "type": "select",
+              "tooltipText": "Passes a different response.auth baseURL and streamlimiter.baseURL to player",
+              "values": [
+                {
+                  "text": "stage",
+                  "value": "stage"
+                }
+              ]
+            },
+            {
+              "paramName": "_bamConfigEnv",
+              "type": "select",
+              "tooltipText": "DSS SDK environments",
+              "values": [
+                {
+                  "text": "dev",
+                  "value": "dev"
+                },
+                {
+                  "text": "staging",
+                  "value": "staging"
+                },
+                {
+                  "text": "prod",
+                  "value": "prod"
+                }
+              ]
+            },
+            {
+              "paramName": "_debugAirings",
+              "type": "toggle",
+              "tooltipText": "Passes through the debugAirings param to the site API to simulate live, buy, replay"
+            },
+            {
+              "paramName": "_fctopics",
+              "type": "select",
+              "tooltipText": "DSS SDK environments",
+              "values": [
+                {
+                  "text": "topic1",
+                  "value": "topic1"
+                },
+                {
+                  "text": "topic2",
+                  "value": "topic2"
+                }
+              ]
+            },
+            {
+              "paramName": "fcDiscoveryHost",
+              "type": "select",
+              "tooltipText": "Use perf/QA fastcast topic connection",
+              "values": [
+                {
+                  "text": "stage.fastcast.semfs.engsvc.go.com",
+                  "value": "stage.fastcast.semfs.engsvc.go.com"
+                }
+              ]
+            },
+            {
+              "paramName": "_previousPlayTester",
+              "type": "toggle",
+              "tooltipText": "Use in combination with _status=in&modifier=debug&_topic=none to run the previousPlayTester UI"
+            },
+            {
+              "paramName": "_status",
+              "type": "select",
+              "tooltipText": "Use perf/QA fastcast topic connection",
+              "values": [
+                {
+                  "text": "pre",
+                  "value": "pre"
+                },
+                {
+                  "text": "in",
+                  "value": "in"
+                },
+                {
+                  "text": "post",
+                  "value": "post"
+                }
+              ]
+            },
+            {
+              "paramName": "modifier",
+              "type": "select",
+              "tooltipText": "Simulate a partial webview for the app",
+              "values": [
+                {
+                  "text": "webview",
+                  "value": "webview"
+                },
+                {
+                  "text": "iframe",
+                  "value": "iframe"
+                },
+                {
+                  "text": "debug",
+                  "value": "debug"
+                }
+              ]
+            },
+            {
+              "paramName": "_topic",
+              "type": "select",
+              "tooltipText": "Override fastcast topic",
+              "values": [
+                {
+                  "text": "none",
+                  "value": "none"
+                }
+              ]
+            },
+            {
+              "paramName": "_showHttp",
+              "type": "toggle",
+              "tooltipText": "Display the server calls for the page"
+            },
+            {
+              "paramName": "_syndicatedLoginHostOverride",
+              "type": "select",
+              "tooltipText": "Override the syndicated player login href host",
+              "values": [
+                {
+                  "text": "",
+                  "value": ""
+                }
+              ]
+            },
+            {
+              "paramName": "_testTopEventsId",
+              "type": "select",
+              "tooltipText": "Override top events CMS collection for header scoreboard",
+              "values": [
+                {
+                  "text": "",
+                  "value": ""
+                }
+              ]
+            },
+            {
+              "paramName": "_usPrivacyOverride",
+              "type": "select",
+              "tooltipText": "Override usPrivacy cookie value for testing purposes",
+              "values": [
+                {
+                  "text": "1YYY",
+                  "value": "1YYY"
+                },
+                {
+                  "text": "1YNY",
+                  "value": "1YNY"
+                }
+              ]
+            },
+            {
+              "paramName": "appearance",
+              "type": "select",
+              "tooltipText": "View the app in dark mode",
+              "values": [
+                {
+                  "text": "dark",
+                  "value": "dark"
+                },
+                {
+                  "text": "light",
+                  "value": "light"
+                }
+              ]
+            },
+            {
+              "paramName": "buyWindow",
+              "type": "select",
+              "tooltipText": "Tells the api how far in advance to return buyable ppv airings (default is 1m)",
+              "values": [
+                {
+                  "text": "1m",
+                  "value": "1m"
+                },
+                {
+                  "text": "2w",
+                  "value": "2w"
+                },
+                {
+                  "text": "1w",
+                  "value": "1w"
+                }
+              ]
+            },
+            {
+              "paramName": "edition-view",
+              "type": "select",
+              "tooltipText": "Display a different edition on the TLD you are currently viewing",
+              "values": [
+                {
+                  "text": "espn-pt-br",
+                  "value": "espn-pt-br"
+                },
+                {
+                  "text": "espn-es-mx",
+                  "value": "espn-es-mx"
+                },
+                {
+                  "text": "espn-en-uk",
+                  "value": "espn-en-uk"
+                }
+              ]
+            },
+            {
+              "paramName": "enable",
+              "type": "select",
+              "tooltipText": "Force either sandbox or QA",
+              "values": [
+                {
+                  "text": "qaAPI",
+                  "value": "qaAPI"
+                },
+                {
+                  "text": "sbAPI",
+                  "value": "sbAPI"
+                },
+                {
+                  "text": "localAPI",
+                  "value": "localAPI"
+                },
+                {
+                  "text": "stagingAPI",
+                  "value": "stagingAPI"
+                }
+              ]
+            },
+            {
+              "paramName": "eventsEnv",
+              "type": "select",
+              "tooltipText": "Appends _env.events.api to site api calls to hit different events api environments",
+              "values": [
+                {
+                  "text": "qa",
+                  "value": "qa"
+                },
+                {
+                  "text": "prod",
+                  "value": "prod"
+                }
+              ]
+            },
+            {
+              "paramName": "forcePicker",
+              "type": "toggle",
+              "tooltipText": "Forces the streampicker lightbox when clicking on any watch tile"
+            },
+            {
+              "paramName": "platform",
+              "type": "select",
+              "tooltipText": "Use with modifier to simulate a specific client",
+              "values": [
+                {
+                  "text": "ios",
+                  "value": "ios"
+                },
+                {
+                  "text": "android",
+                  "value": "android"
+                }
+              ]
+            },
+            {
+              "paramName": "test",
+              "type": "toggle",
+              "tooltipText": "Add to platform=ios to disable LL calls from firing"
+            },
+            {
+              "paramName": "statsview",
+              "type": "toggle",
+              "tooltipText": "Param to display just the boxscore tab under the video player within the app (not synched with ID3 tags)"
+            },
+            {
+              "paramName": "videoEnv",
+              "type": "select",
+              "tooltipText": "appends _env.video.api to site api calls to hit different PCC environments",
+              "values": [
+                {
+                  "text": "prod",
+                  "value": "prod"
+                },
+                {
+                  "text": "qa",
+                  "value": "qa"
+                },
+                {
+                  "text": "uat",
+                  "value": "uat"
+                }
+              ]
+            },
+            {
+              "paramName": "videoview",
+              "type": "toggle",
+              "tooltipText": "Param to display the gamepackage under the video player within the app (minus some features such as video tab, etc. Used when GP wallclock is synched with video ID3 tags)"
+            },
+            {
+              "paramName": "_suggestionsId",
+              "type": "select",
+              "tooltipText": "Override for preferences scibe id that drives suggestions in the left rail",
+              "values": [
+                {
+                  "text": "",
+                  "value": ""
+                }
+              ]
+            },
+            {
+              "paramName": "fantasyGamepackage",
+              "type": "select",
+              "tooltipText": "",
+              "values": [
+                {
+                  "text": "",
+                  "value": ""
+                }
+              ]
+            },
+            {
+              "paramName": "isEmbedded",
+              "type": "toggle",
+              "tooltipText": ""
+            },
+            {
+              "paramName": "_nocache",
+              "type": "toggle",
+              "tooltipText": ""
+            },
+            {
+              "paramName": "_navId",
+              "type": "select",
+              "tooltipText": "CMS Content Id",
+              "values": [
+                {
+                  "text": "",
+                  "value": ""
+                }
+              ]
+            },
+            {
+              "paramName": "edition-host",
+              "type": "select",
+              "tooltipText": "",
+              "values": [
+                {
+                  "text": "espn.com",
+                  "value": "espn.com"
+                },
+                {
+                  "text": "espn.com.au",
+                  "value": "espn.com.au"
+                },
+                {
+                  "text": "espn.in",
+                  "value": "espn.in"
+                },
+                {
+                  "text": "espn.com.ar",
+                  "value": "espn.com.ar"
+                },
+                {
+                  "text": "espn.cl",
+                  "value": "espn.cl"
+                }
+              ]
+            },
+            {
+              "paramName": "_favs",
+              "type": "select",
+              "tooltipText": "",
+              "values": [
+                {
+                  "text": "nfl",
+                  "value": "nfl"
+                },
+                {
+                  "text": "28 nba",
+                  "value": "28 nba"
+                },
+                {
+                  "text": "46 mlb",
+                  "value": "46 mlb"
+                },
+                {
+                  "text": "10 ncaaf",
+                  "value": "10 ncaaf"
+                },
+                {
+                  "text": "23 soccer",
+                  "value": "23 soccer"
+                }
+              ]
+            },
+            {
+              "paramName": "_noViewCache",
+              "type": "toggle",
+              "tooltipText": ""
+            },
+            {
+              "paramName": "_asyncRender",
+              "type": "toggle",
+              "tooltipText": ""
+            },
+            {
+              "paramName": "_translate",
+              "type": "toggle",
+              "tooltipText": ""
+            },
+            {
+              "paramName": "_spDebug",
+              "type": "toggle",
+              "tooltipText": ""
+            },
+            {
+              "paramName": "shieldEnv",
+              "type": "select",
+              "tooltipText": "",
+              "values": [
+                {
+                  "text": "QA",
+                  "value": "QA"
+                }
+              ]
+            },
+            {
+              "paramName": "adEnv",
+              "type": "select",
+              "tooltipText": "This can be used to load QA player configs and test Brightcove player and player plugins only published in QA (https://api.config.watchabc.go.com/appsconfig/qa/js-mmp-espn/001/1.0.0/config.json)",
+              "values": [
+                {
+                  "text": "",
+                  "value": ""
+                }
+              ]
+            },
+            {
+              "paramName": "oneIdEnv",
+              "type": "select",
+              "tooltipText": "Allows you to specify staging oneId env to test license plate flow and purchase flow with a staging account (same as everywhere else in espn fitt)",
+              "values": [
+                {
+                  "text": "stage",
+                  "value": "stage"
+                }
+              ]
+            },
+            {
+              "paramName": "envName",
+              "type": "select",
+              "tooltipText": "Specific to this page, you can override the default envName set in fitt state to inform which purchase flow environment you want to use. By default espnqa.com will route to QA purchase flow (https://qa-secure.web.plus.espn.com)",
+              "values": [
+                {
+                  "text": "",
+                  "value": ""
+                }
+              ]
+            },
+            {
+              "paramName": "adobePassEnv",
+              "type": "select",
+              "tooltipText": "Specific to this page, can set staging Adobe Pass Env to test mvpd license plate flow.",
+              "values": [
+                {
+                  "text": "staging",
+                  "value": "staging"
+                }
+              ]
+            },
+            {
+              "paramName": "adobePassV2",
+              "type": "toggle",
+              "tooltipText": "Enable Adobe Pass v2 SDK (AdobePassClient + AffiliateClient) instead of v1 WatchSDK AuthenticationManager."
+            },
+            {
+              "paramName": "affiliateEnv",
+              "type": "select",
+              "tooltipText": "Override AffiliateAPI environment (AffiliateClient). Values: production, qa.",
+              "values": [
+                {
+                  "text": "production",
+                  "value": "production"
+                },
+                {
+                  "text": "qa",
+                  "value": "qa"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Env API",
+          "elements": [
+            {
+              "paramName": "_env.api.app",
+              "type": "select",
+              "tooltipText": "V1 Core APIs App",
+              "values": [
+                {
+                  "text": "api-app.espn.com",
+                  "value": "api-app.espn.com"
+                },
+                {
+                  "text": "api-app.espnqa.com",
+                  "value": "api-app.espnqa.com"
+                },
+                {
+                  "text": "api-app.espnsb.com",
+                  "value": "api-app.espnsb.com"
+                }
+              ]
+            },
+            {
+              "paramName": "_env.api.v1",
+              "type": "select",
+              "tooltipText": "V1 Core APIs",
+              "values": [
+                {
+                  "text": "dev",
+                  "value": "dev"
+                },
+                {
+                  "text": "qa",
+                  "value": "qa"
+                },
+                {
+                  "text": "prod",
+                  "value": "prod"
+                }
+              ]
+            },
+            {
+              "paramName": "_env.api.blogs",
+              "type": "select",
+              "tooltipText": "Blogs API",
+              "values": [
+                {
+                  "text": "dev",
+                  "value": "dev"
+                },
+                {
+                  "text": "qa",
+                  "value": "qa"
+                },
+                {
+                  "text": "prod",
+                  "value": "prod"
+                }
+              ]
+            },
+            {
+              "paramName": "_env.api.core.uk",
+              "type": "select",
+              "tooltipText": "UK Core APIs",
+              "values": [
+                {
+                  "text": "dev",
+                  "value": "dev"
+                },
+                {
+                  "text": "qa",
+                  "value": "qa"
+                },
+                {
+                  "text": "prod",
+                  "value": "prod"
+                }
+              ]
+            },
+            {
+              "paramName": "_env.api.dcs.deportes",
+              "type": "select",
+              "tooltipText": "Deportes DCS",
+              "values": [
+                {
+                  "text": "sandbox",
+                  "value": "sandbox"
+                },
+                {
+                  "text": "sandbox-dcs",
+                  "value": "sandbox-dcs"
+                },
+                {
+                  "text": "qa",
+                  "value": "qa"
+                },
+                {
+                  "text": "qa-dcs",
+                  "value": "qa-dcs"
+                },
+                {
+                  "text": "prod",
+                  "value": "prod"
+                },
+                {
+                  "text": "prod-preview",
+                  "value": "prod-preview"
+                }
+              ]
+            },
+            {
+              "paramName": "_env.api.dcs.domestic",
+              "type": "select",
+              "tooltipText": "Domestic DCS",
+              "values": [
+                {
+                  "text": "sandbox",
+                  "value": "sandbox"
+                },
+                {
+                  "text": "sandbox-dcs",
+                  "value": "sandbox-dcs"
+                },
+                {
+                  "text": "qa",
+                  "value": "qa"
+                },
+                {
+                  "text": "qa-dcs",
+                  "value": "qa-dcs"
+                },
+                {
+                  "text": "prod",
+                  "value": "prod"
+                },
+                {
+                  "text": "prod-preview",
+                  "value": "prod-preview"
+                }
+              ]
+            },
+            {
+              "paramName": "_env.api.dcs.soccernet",
+              "type": "select",
+              "tooltipText": "Domestic DCS",
+              "values": [
+                {
+                  "text": "sandbox",
+                  "value": "sandbox"
+                },
+                {
+                  "text": "sandbox-dcs",
+                  "value": "sandbox-dcs"
+                },
+                {
+                  "text": "qa",
+                  "value": "qa"
+                },
+                {
+                  "text": "qa-dcs",
+                  "value": "qa-dcs"
+                },
+                {
+                  "text": "prod",
+                  "value": "prod"
+                },
+                {
+                  "text": "prod-preview",
+                  "value": "prod-preview"
+                }
+              ]
+            },
+            {
+              "paramName": "_env.api.events.api",
+              "type": "select",
+              "tooltipText": "Event Calendar API",
+              "values": [
+                {
+                  "text": "dev",
+                  "value": "dev"
+                },
+                {
+                  "text": "qa",
+                  "value": "qa"
+                },
+                {
+                  "text": "prod",
+                  "value": "prod"
+                }
+              ]
+            },
+            {
+              "paramName": "_env.api.fantasy.api",
+              "type": "select",
+              "tooltipText": "Fantasy APIs",
+              "values": [
+                {
+                  "text": "dev",
+                  "value": "dev"
+                },
+                {
+                  "text": "qa",
+                  "value": "qa"
+                },
+                {
+                  "text": "prod",
+                  "value": "prod"
+                }
+              ]
+            },
+            {
+              "paramName": "_env.api.new.core.uk",
+              "type": "select",
+              "tooltipText": "New UK Core APIs",
+              "values": [
+                {
+                  "text": "dev",
+                  "value": "dev"
+                },
+                {
+                  "text": "qa",
+                  "value": "qa"
+                },
+                {
+                  "text": "prod",
+                  "value": "prod"
+                }
+              ]
+            },
+            {
+              "paramName": "_env.api.now.core",
+              "type": "select",
+              "tooltipText": "Now core API requests",
+              "values": [
+                {
+                  "text": "dev",
+                  "value": "dev"
+                },
+                {
+                  "text": "qa",
+                  "value": "qa"
+                },
+                {
+                  "text": "prod",
+                  "value": "prod"
+                }
+              ]
+            },
+            {
+              "paramName": "_env.api.restrictions.api",
+              "type": "select",
+              "tooltipText": "Restrictions API",
+              "values": [
+                {
+                  "text": "dev",
+                  "value": "dev"
+                },
+                {
+                  "text": "qa",
+                  "value": "qa"
+                },
+                {
+                  "text": "prod",
+                  "value": "prod"
+                }
+              ]
+            },
+            {
+              "paramName": "_env.api.searchguru.api",
+              "type": "select",
+              "tooltipText": "SearchGuru API",
+              "values": [
+                {
+                  "text": "dev",
+                  "value": "dev"
+                },
+                {
+                  "text": "qa",
+                  "value": "qa"
+                },
+                {
+                  "text": "prod",
+                  "value": "prod"
+                }
+              ]
+            },
+            {
+              "paramName": "_env.api.site.bc",
+              "type": "select",
+              "tooltipText": "Site API backchannel calls",
+              "values": [
+                {
+                  "text": "dev",
+                  "value": "dev"
+                },
+                {
+                  "text": "qa",
+                  "value": "qa"
+                },
+                {
+                  "text": "prod",
+                  "value": "prod"
+                }
+              ]
+            },
+            {
+              "paramName": "_env.api.sports.core",
+              "type": "select",
+              "tooltipText": "Sports Core API requests",
+              "values": [
+                {
+                  "text": "dev",
+                  "value": "dev"
+                },
+                {
+                  "text": "qa",
+                  "value": "qa"
+                },
+                {
+                  "text": "prod",
+                  "value": "prod"
+                }
+              ]
+            },
+            {
+              "paramName": "_env.api.video.api",
+              "type": "select",
+              "tooltipText": "Video (PCC) API",
+              "values": [
+                {
+                  "text": "dev",
+                  "value": "dev"
+                },
+                {
+                  "text": "qa",
+                  "value": "qa"
+                },
+                {
+                  "text": "prod",
+                  "value": "prod"
+                }
+              ]
+            },
+            {
+              "paramName": "_env.api.watch.graph.api",
+              "type": "select",
+              "tooltipText": "Watch Graph API",
+              "values": [
+                {
+                  "text": "dev",
+                  "value": "dev"
+                },
+                {
+                  "text": "qa",
+                  "value": "qa"
+                },
+                {
+                  "text": "prod",
+                  "value": "prod"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Player",
+          "elements": [
+            {
+              "paramName": "dwp",
+              "type": "select",
+              "tooltipText": "Override Disney Web Player bundle version loaded from CDN.",
+              "values": [
+                {
+                  "text": "latest",
+                  "value": "latest"
+                },
+                {
+                  "text": "rc",
+                  "value": "rc"
+                }
+              ]
+            },
+            {
+              "paramName": "_useLocalWebPlayer",
+              "type": "toggle",
+              "tooltipText": "Load player bundles from local dev server (localhost:8053) instead of CDN. Requires local DWP dev server running."
+            },
+            {
+              "paramName": "_forceLoader",
+              "type": "toggle",
+              "tooltipText": "Force remote loader mode regardless of LaunchDarkly flag. Overrides the loader-enabled feature flag."
+            },
+            {
+              "paramName": "_forceBundled",
+              "type": "toggle",
+              "tooltipText": "Force bundled mode (skip remote loading). Player code comes from webpack bundle."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "__espnBootData__": null,
+  "dataLayer": {
+    "subscribedEventNames": [
+      "__dataLayer.pageView",
+      "__dataLayer.click",
+      "__dataLayer.ecommerce",
+      "__dataLayer.customEvent",
+      "__dataLayer.dtci.media",
+      "__dataLayer.ConsentIDPopulated"
+    ],
+    "queueExpirationTimer": null,
+    "shouldQueuePublishEvents": true,
+    "publishQueues": {},
+    "readyState": "complete",
+    "pageViewed": false,
+    "publish": {},
+    "helpersEnabled": false,
+    "envName": "prod",
+    "routingParams": {
+      "id": "4035687",
+      "_slug_": "michael-pittman-jr",
+      "sport": "football",
+      "pageType": "player",
+      "rawPageType": "overview",
+      "subPageType": null,
+      "league": "nfl",
+      "slug": "michael-pittman-jr",
+      "adobePassV2": true
+    },
+    "isFirstLoad": true,
+    "site": {
+      "edition": "en-us",
+      "language": "en_us",
+      "orientation": "desktop",
+      "site": "espn",
+      "portal": "sports",
+      "application_name": "Espn Web - Fitt",
+      "country": "us",
+      "age_restricted": false
+    },
+    "pzn": {
+      "auto_start": "no",
+      "disneyplus_bundle": "no",
+      "entitlements": "",
+      "has_fantasy": "no",
+      "has_favorites": "no",
+      "has_notifications": "no",
+      "login_status": "anonymous",
+      "plethoraTraceId": "not available",
+      "subscriber_type": "",
+      "affiliate_name": "not authenticated",
+      "clientsidetest": "",
+      "betaccountlinked": "no",
+      "hidebetting": "false",
+      "userab_1": "",
+      "league_manager": "no",
+      "paywallshown": "no",
+      "isptveauthenticated": "no",
+      "ssotveauthenticated": "no",
+      "tveauthenticated": "no"
+    },
+    "page": {
+      "author": "",
+      "content_category": "",
+      "content_type": "",
+      "espnplus_category": "",
+      "espnplus_content": "",
+      "espnplus_products": "",
+      "feed_rule": "",
+      "feed_type": "",
+      "game_detail": "",
+      "game_id": "",
+      "game_state": "",
+      "league": "Not Applicable",
+      "mktg_campaign": "",
+      "nav_method": "",
+      "page_infrastructure": "fitt",
+      "page_name": "",
+      "play_location": "",
+      "player_team_detail": "",
+      "premium": "",
+      "prev_page": "",
+      "purchase_method": "",
+      "section": "",
+      "sport": "",
+      "story_id": "",
+      "story_title": "",
+      "play_loc_override": "",
+      "play_loc_name_override": "",
+      "referer": "",
+      "search_query": "",
+      "start_type": "",
+      "tileplacement": "",
+      "videoAutoplayInTile": false,
+      "videoAutoplayTileCount": 0,
+      "videoAutoplayTilePresent": "no",
+      "videoHeaderPresent": "no",
+      "videoHeaderAutoplayPresent": "no",
+      "videoPlayedFromAutoplayTile": false
+    },
+    "visitor": {
+      "ad_blocker": "no",
+      "consent_groups": "",
+      "dssid": "",
+      "swid": "",
+      "wholesale_user": "no",
+      "wholesale_mvpd_user": "no",
+      "wholesale_provider": "no provider"
+    },
+    "space": "espn",
+    "initialized": true,
+    "subscribeReady": true,
+    "eventQueue": [],
+    "mediaEvents": []
+  }
+}
