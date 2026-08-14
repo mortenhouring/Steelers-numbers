@@ -1,0 +1,6 @@
+(async function(){
+
+  // --- patch: add embedded JSON fallback and debug counts ---
+  // Modifies parseRosterPage in roster-fetch-2026.mjs
+
+})();
