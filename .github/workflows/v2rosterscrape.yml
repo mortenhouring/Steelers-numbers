@@ -22,6 +22,18 @@ jobs:
         with:
           node-version: 24
 
+      - name: Dump hydrated state with Puppeteer
+        run: |
+          # Install puppeteer for this step only (no package.json change)
+          npm install puppeteer --no-save
+          node scripts/puppeteer-dump.mjs "https://www.espn.com/nfl/player/_/id/4035687/michael-pittman-jr"
+
+      - name: Upload initial-state artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: espn-initial-state
+          path: fetch-debug/puppeteer-initial-state.json
+
       - name: Install dependencies
         run: npm install --no-package-lock
 

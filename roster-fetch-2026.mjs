@@ -28,6 +28,31 @@ async function fetchHtml(url) {
   return res.data;
 }
 
+// Try to extract inline JS-initialized JSON blobs from the raw HTML
+function extractInlineState(html) {
+  const patterns = [
+    /window\.__INITIAL_STATE__\s*=\s*(\{[\s\S]*?\})\s*;/i,
+    /window\[['"]__INITIAL_STATE__['"]\]\s*=\s*(\{[\s\S]*?\})\s*;/i,
+    /window\.__DATA__\s*=\s*(\{[\s\S]*?\})\s*;/i,
+    /window\.__CONFIG__\s*=\s*(\{[\s\S]*?\})\s*;/i,
+    /__dataLayer\s*=\s*(\{[\s\S]*?\})\s*;/i,
+    /var\s+espnBootData\s*=\s*(\{[\s\S]*?\})\s*;/i
+  ];
+
+  for (const re of patterns) {
+    const m = re.exec(html);
+    if (m && m[1]) {
+      try {
+        return JSON.parse(m[1]);
+      } catch (e) {
+        // Could be JS object literal not strict JSON; return raw string for inspection
+        return m[1];
+      }
+    }
+  }
+  return null;
+}
+
 async function downloadImage(url, destPath) {
   if (!url) return false;
   try {
@@ -179,6 +204,30 @@ async function fetchProfileImageUrl(profileUrl) {
 async function buildRoster() {
   console.log(`Fetching ESPN roster: ${ROSTER_URL}`);
   const html = await fetchHtml(ROSTER_URL);
+
+  // Save the raw roster HTML for debugging
+  try {
+    await fs.mkdir('fetch-debug', { recursive: true });
+    await fs.writeFile('fetch-debug/espn-roster.html', html);
+    console.log('Saved fetch-debug/espn-roster.html');
+  } catch (e) {
+    console.warn('Failed to save debug HTML:', e.message);
+  }
+
+  // Try to extract inline initial-state if present and save it for inspection
+  try {
+    const state = extractInlineState(html);
+    if (state) {
+      const data = typeof state === 'string' ? state : JSON.stringify(state, null, 2);
+      await fs.writeFile('fetch-debug/initial-state.raw.txt', data);
+      console.log('Saved fetch-debug/initial-state.raw.txt');
+    } else {
+      console.log('No inline initial-state JSON found in roster HTML');
+    }
+  } catch (e) {
+    console.warn('Failed to extract/save inline state:', e.message);
+  }
+
   const players = await parseRosterPage(html);
   console.log(`Found ${players.length} players on ESPN roster`);
 
