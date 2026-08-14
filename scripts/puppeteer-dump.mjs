@@ -1,5 +1,5 @@
-const fs = require('fs/promises');
-const puppeteer = require('puppeteer');
+import fs from 'fs/promises';
+import puppeteer from 'puppeteer';
 
 // Usage: node scripts/puppeteer-dump.mjs <profile-url>
 (async () => {
