@@ -18,7 +18,7 @@
     },
     "allowMocks": true,
     "globalVar": "__espnfitt__",
-    "cdnPath": "//cdn1.espn.net/fitt-v3/fa5bcede5f69-2.0.5372/client",
+    "cdnPath": "//cdn1.espn.net/fitt/5a6b8a22e6cf-release-08-11-2026.2.0.5373/client",
     "buildHash": false,
     "http": {
       "timeout": {
@@ -30,7 +30,6 @@
     "mockDataPort": 1981,
     "host": "localhost",
     "basename": "",
-    "routeVersion": "v3",
     "toodles": {
       "enabled": true,
       "serviceName": "fitt",
