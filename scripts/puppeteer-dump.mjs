@@ -1,12 +1,36 @@
 import fs from 'fs/promises';
-import puppeteer from 'puppeteer';
+import puppeteer from 'puppeteer-core';
+import { execSync } from 'child_process';
 
 // Usage: node scripts/puppeteer-dump.mjs <profile-url>
+function findChrome() {
+  const candidates = ['chromium', 'chromium-browser', 'google-chrome-stable', 'google-chrome', 'chrome'];
+  for (const cmd of candidates) {
+    try {
+      const p = execSync(`which ${cmd}`, { stdio: ['ignore', 'pipe', 'ignore'] }).toString().trim();
+      if (p) return p;
+    } catch (e) {
+      // ignore
+    }
+  }
+  return null;
+}
+
 (async () => {
   try {
     const url = process.argv[2] || 'https://www.espn.com/nfl/player/_/id/4035687/michael-pittman-jr';
     console.log('Launching headless browser...');
-    const browser = await puppeteer.launch({ args: ['--no-sandbox', '--disable-setuid-sandbox'] });
+
+    const chromePath = process.env.CHROME_PATH || findChrome();
+    if (!chromePath) console.warn('No system Chrome/Chromium binary found in PATH; puppeteer-core may fail to launch.');
+    else console.log(`Using Chrome executable at: ${chromePath}`);
+
+    const launchOpts = {
+      args: ['--no-sandbox', '--disable-setuid-sandbox']
+    };
+    if (chromePath) launchOpts.executablePath = chromePath;
+
+    const browser = await puppeteer.launch(launchOpts);
     const page = await browser.newPage();
     await page.setUserAgent('Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115 Safari/537.36');
 
@@ -81,7 +105,7 @@ import puppeteer from 'puppeteer';
           __INITIAL_STATE__: typeof window.__INITIAL_STATE__ !== 'undefined' ? window.__INITIAL_STATE__ : null,
           __DATA__: typeof window.__DATA__ !== 'undefined' ? window.__DATA__ : null,
           __CONFIG__: typeof window.__CONFIG__ !== 'undefined' ? window.__CONFIG__ : null,
-          __espnBootData__: typeof window.espnBootData !== 'undefined' ? window.espnBootData : null,
+          __espnBootData__: typeof window.espnBootData !== 'undefined' ? window.__espnBootData : null,
           dataLayer: typeof window.__dataLayer !== 'undefined' ? window.__dataLayer : null
         };
       } catch (e) {
