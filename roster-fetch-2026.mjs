@@ -54,6 +54,7 @@ async function parseRosterPage(html) {
   const dom = new JSDOM(html);
   const doc = dom.window.document;
   const tables = Array.from(doc.querySelectorAll('table'));
+  console.log(`parseRosterPage: tables=${tables.length}`);
 
   // Try to find table with headers including No and Name and Pos
   for (const table of tables) {
@@ -97,12 +98,16 @@ async function parseRosterPage(html) {
 
         players.push({ player_name, number, position, espnProfileUrl, info, stats: [], achievements: [], trivia: { pro_career: [], career_highlights_regular: [], career_highlights_post: [] } });
       }
-      if (players.length) return players;
+      if (players.length) {
+        console.log(`parseRosterPage: found ${players.length} players via table`);
+        return players;
+      }
     }
   }
 
-  // Fallback: find player links anywhere
+  // Anchor-based fallback
   const anchors = Array.from(doc.querySelectorAll('a'));
+  console.log(`parseRosterPage: anchors=${anchors.length}`);
   const playerAnchors = anchors.filter(a => {
     const href = a.getAttribute('href') || '';
     return /player\//.test(href) && a.textContent && a.textContent.trim().length > 1;
@@ -110,11 +115,33 @@ async function parseRosterPage(html) {
   const unique = new Map();
   for (const a of playerAnchors) {
     const name = a.textContent.trim();
-    const href = a.getAttribute('href');
+    const href = a.getAttribute('href') || '';
     const url = href.startsWith('http') ? href : `https://www.espn.com${href}`;
     if (!unique.has(name)) unique.set(name, { player_name: name, number: null, position: '', espnProfileUrl: url, info: '', stats: [], achievements: [], trivia: { pro_career: [], career_highlights_regular: [], career_highlights_post: [] } });
   }
-  return Array.from(unique.values());
+  if (unique.size) {
+    console.log(`parseRosterPage: found ${unique.size} players via anchors`);
+    return Array.from(unique.values());
+  }
+
+  // Embedded JSON fallback (scan raw HTML)
+  const jsonRegex = /"name":"([^"]+)"[\s\S]*?"headshot":"([^"]+)"/g;
+  const jsonMatches = [];
+  let m;
+  while ((m = jsonRegex.exec(html)) !== null) {
+    const name = m[1].trim();
+    let headshot = m[2].trim();
+    if (headshot && headshot.startsWith('//')) headshot = 'https:' + headshot;
+    else if (headshot && !headshot.startsWith('http')) headshot = 'https:' + headshot;
+    jsonMatches.push({ player_name: name, number: null, position: '', espnProfileUrl: null, info: '', stats: [], achievements: [], trivia: { pro_career: [], career_highlights_regular: [], career_highlights_post: [] }, _headshotUrl: headshot });
+  }
+  if (jsonMatches.length) {
+    console.log(`parseRosterPage: fallback found ${jsonMatches.length} players in embedded JSON`);
+    return jsonMatches;
+  }
+
+  console.log('parseRosterPage: no players found');
+  return [];
 }
 
 async function fetchProfileImageUrl(profileUrl) {
@@ -165,13 +192,16 @@ async function buildRoster() {
     const filePath = `fetchimages/images/${fileName}`;
     const lazyFile = `fetchimages/images/lazy-images/${slug}_lazy.${ext}`;
 
-    // Try to fetch profile image
+    // Try to fetch profile image (prefer embedded headshot if present)
     let imageUrl = null;
-    if (p.espnProfileUrl) {
+    if (p._headshotUrl) {
+      imageUrl = p._headshotUrl;
+      console.log(`Using embedded headshot for ${p.player_name}: ${imageUrl}`);
+    } else if (p.espnProfileUrl) {
       imageUrl = await fetchProfileImageUrl(p.espnProfileUrl);
     }
 
-    // If imageUrl absent, try common ESPN headshot pattern
+    // If imageUrl absent, try common ESPN headshot pattern (skip)
     if (!imageUrl && p.espnProfileUrl) {
       // try to construct from player id in url
       // not guaranteed; skip
